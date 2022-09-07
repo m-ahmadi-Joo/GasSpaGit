@@ -1,0 +1,88 @@
+<form [formGroup]="cgmForm" >
+  <!-- (ngSubmit)="manage(cgmForm.value)" -->
+
+  <nb-card class="inline-form-card">
+    <nb-card-header>
+      اطلاعات مهندسان
+
+    </nb-card-header>
+    <nb-card-body>
+
+      <nb-card class="inline-form-card">
+        <nb-card-body>
+          <nb-card>
+            <nb-card-body class="mb-5">
+              <div class="row mb-4">
+                <div class="form-group col-md-3">
+                  <label>
+                    انتخاب مهندس:
+                  </label>
+
+                  <input formControlName="selectEngineer" [typeahead]="engineers" typeaheadOptionField="itemForSearch"
+                    (typeaheadOnSelect)="onSelectEngineer($event)" [typeaheadOptionsLimit]="7" [typeaheadMinLength]="0"
+                    class="form-control" style="width: 98%;" />
+                </div>
+
+                <!-- <div class="col-md-1"></div>
+                        <div *ngFor="
+                            let validation of INPUT_VALIDATION_MESSAGES.selectEngineer
+                          ">
+                          <span class="text-danger" *ngIf="
+                              cgmForm
+                                .get('selectEngineer')
+                                .hasError(validation.type) &&
+                              (cgmForm.get('selectEngineer').dirty ||
+                                cgmForm.get('selectEngineer').touched)
+                            ">
+                            {{ validation.message }}</span>
+                        </div> -->
+
+
+              </div>
+
+
+              <div class="row mb-4 mt-3" *ngIf="cgmForm.get('selectEngineer').value !== ''">
+                <div class="col-sm-3">
+                  <label>نام و نام خانوادگی</label>
+                  <input nbInput type="text" fullWidth readOnly id="engineerFullName"
+                    formControlName="engineerFullName" />
+                </div>
+                <div class="col-sm-3">
+                  <label>کد ملی</label>
+                  <input nbInput type="text" fullWidth readOnly id="nationalCode" formControlName="nationalCode" />
+                </div>
+                <div class="col-sm-3">
+                  <label>موبایل</label>
+                  <input nbInput type="text" fullWidth readOnly id="phoneNumber" formControlName="phoneNumber" />
+                </div>
+              </div>
+              <div class="row mb-4">
+                <div class="col-sm-3">
+                  <label>پایه نظارت</label>
+                  <input nbInput type="text" fullWidth readOnly id="observerGrade" formControlName="observerGrade" />
+                </div>
+                <div class="col-sm-3">
+                  <label>وضعیت مرخصی</label>
+                  <input nbInput type="text" fullWidth readOnly id="vacation" formControlName="vacation" />
+                </div>
+                <div class="col-sm-3">
+                  <label>منطقه کاری</label>
+                  <input nbInput type="text" fullWidth readOnly id="workingArea" formControlName="workingArea" />
+                </div>
+                <div class="col-sm-3">
+                  <label>امتیاز</label>
+                  <input nbInput type="text" fullWidth readOnly id="rate" formControlName="rate" />
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+
+        </nb-card-body>
+      </nb-card>
+    </nb-card-body>
+  </nb-card>
+
+
+
+
+</form>

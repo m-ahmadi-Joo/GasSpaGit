@@ -1,0 +1,75 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <nb-card>
+    <nb-card-header>ثبت نتیجه</nb-card-header>
+    <nb-card-body>
+      <div class="row mr-3">
+        <label for="hasProblem" style="margin-left: 0.45rem;">
+          <span class="text-danger font-weight-bold ml-1">*</span>
+          دارای اشکال</label>
+
+        <nb-radio-group #rdbhasProblem class="form-inline radio-x-inline" formControlName="hasProblem" id="hasProblem"
+          name="hasProblem" style="margin-top: 1.61rem;">
+          <nb-radio value="1">بلی</nb-radio>
+          <nb-radio value="2">خیر</nb-radio>
+        </nb-radio-group>
+
+        <div *ngIf="isSubmitted">
+          <div *ngFor="
+              let validation of INPUT_VALIDATION_MESSAGES.hasProblem
+            ">
+            <span class="text-danger" *ngIf="
+                form.controls.hasProblem.value === '' &&
+                isSubmitted
+              ">{{ validation.message }}</span>
+          </div>
+        </div>
+
+      </div>
+
+      <nb-card>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <label for="problemDescription" style="margin-left: 0.45rem;">
+                <span class="text-danger font-weight-bold ml-1">*</span>
+                شرح مشکل:</label>
+
+              <textarea name="problemDescription" id="problemDescription" rows="7" nbInput fullWidth
+                formControlName="problemDescription"></textarea>
+
+              <div *ngFor="
+                        let validation of INPUT_VALIDATION_MESSAGES.problemDescription
+                      ">
+                <span class="text-danger" *ngIf="
+                          form.get('problemDescription').hasError(validation.type) &&
+                          (form.get('problemDescription').dirty ||
+                            form.get('problemDescription').touched ||
+                            isSubmitted)
+                        ">{{ validation.message }}</span>
+              </div>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+      
+      <nb-card>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-xs-12 col-sm-6">
+              <button type="submit" nbButton status="success" class="btn btn-success btn-block" [nbSpinner]="loading"
+                nbSpinnerStatus="info" nbSpinnerSize="large" [disabled]="form.invalid || loading">
+                ثبت
+              </button>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <button type="button" nbButton status="primary" class="btn btn-primary btn-block"
+                [routerLink]="[ '/pages/forms/GreatSupervisionList']" [disabled]="loading">
+                بازگشت به لیست
+              </button>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </nb-card-body>
+  </nb-card>
+</form>

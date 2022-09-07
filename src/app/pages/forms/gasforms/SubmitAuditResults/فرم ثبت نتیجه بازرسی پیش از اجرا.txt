@@ -1,0 +1,36 @@
+// فرم ثبت نتیجه بازرسی پیش از اجرا
+// فرم ثبت نتیجه بازرسی اول و دوم مثل همینه
+// اما با این تفاوقت که قسمت بازرسی جوش و ایمنی نداره
+// و بعد از تایید بازرسی مرحله اول فرم مجوز پوشش ماده می شود
+// بعد از تایید مرحله دوم هم نامه اتمام کار آماده میشود
+// اما در آن مراحل تغییرات ساختمان بررسی می شود
+
+submitAuditResultForm: FormGroup;
+
+نتیجه بازرسی { تاییند ، عدم تایید } :
+اگر نتیجه بازرسی عدم تایید بود ذکر دلیل :
+اصلاح نقشه :
+توضیحات :
+ایا بازرسی جوش مورد نیاز است ؟ :
+اگر بازرسی جوش مورد نیاز است تعداد سرجوش هامشخص شود :
+ایا ساختمان تغییرات دارد و نیاز به بازرسی های مجدد دارد ؟ :
+ایا بازرسی ایمنی طبقات مورد نیاز است ؟ :
+نوع بازرسی مشخص شود { پیش از اجرا ، مرحله اول ، مرحله نهایی } :
+موقعیت جغرافیایی { کوردینیت } :
+ایا نیاز به لوله کشی انتظار دارم ؟ :
+نوع بازرسی لوله کشی انتظار از { پیش از اجرا ، مرحله اول } :
+
+this.submitAuditResultForm = this.fb.group({
+	scrAuditResult-ctrl: ['', Validators.required],
+	scrDeniedFor-ctrl: [''],
+	scrIsNeedMapChange-ctrl: [''],
+	scrComment-ctrl: ['', Validators.required],
+	scrIsNeedJointAudit-ctrl: [''],
+	scrJointCount-ctrl: [''],
+	scrIsNeedMoreAudits-ctrl: [''],
+	scrIsFloorsNeedAudit-ctrl: [''],
+	scrAuditType: ['', Validators.required],
+	scrProjectGeoLocation: ['', Validators.required],
+	scrIsPipesNeedAudit: [''],
+	scrPipesAuditType: [''],
+});

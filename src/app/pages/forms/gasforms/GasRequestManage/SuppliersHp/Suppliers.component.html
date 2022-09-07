@@ -1,0 +1,268 @@
+<form [formGroup]="cgmForm" (ngSubmit)="submit()">
+  <nb-card>
+    <nb-card-header>انتخاب تامین کننده</nb-card-header>
+    <nb-card-body>
+      <nb-card class="inline-form-card">
+        <nb-card-body>
+          <div class="row">
+            <div class="form-group col-md-5">
+              <label>
+                 تامین کننده :
+              </label>
+
+              <input
+                formControlName="supplierSelect"
+                [typeahead]="suppliers"
+                typeaheadOptionField="itemForSearch"
+                (typeaheadOnSelect)="onSelectSupplier($event)"
+                [typeaheadOptionsLimit]="7"
+                [typeaheadMinLength]="0"
+                class="form-control"
+                style="width: 98%;"
+              />
+              <div
+              *ngFor="
+                let validation of INPUT_VALIDATION_MESSAGES.supplierSelect
+              "
+            >
+              <span
+                class="text-danger"
+                *ngIf="
+                  cgmForm
+                    .get('supplierSelect')
+                    .hasError(validation.type) &&
+                  (cgmForm.get('supplierSelect').dirty ||
+                    cgmForm.get('supplierSelect').touched)
+                "
+              >
+                {{ validation.message }}</span
+              >
+            </div>
+            </div>
+
+            <div class="col-md-1"></div>
+            <div class="col-md-6 col-sm-6 col-lg-6">
+              <div *ngFor="let a of selectedOptionGas">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>کد عضویت</th>
+                      <th>نام پدر</th>
+                      <th>صلاحیت</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{ a?.code }}</td>
+                      <td>{{ a?.fatherName }}</td>
+                      <td>{{ a?.capability }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <nb-card>
+            <nb-card-body>
+              <div class="row">
+                <label for="cmt"> شرح: </label>
+                <textarea
+                  name="cmt"
+                  id="cmt"
+                  rows="7"
+                  nbInput
+                  fullWidth
+                  formControlName="desc"
+                ></textarea>
+              </div>
+            </nb-card-body>
+          </nb-card>
+          <nb-card>
+            <nb-card-header>
+              تعیین مصالح
+            </nb-card-header>
+            <nb-card-body>
+              <nb-card *ngIf="!hasSupplier">
+                <nb-card-body>
+                  <div class="mb-4">
+                    <label for="">اضافه کردن: &nbsp;&nbsp;</label>
+                    <button
+                      id="btnAddInputFields"
+                      type="button"
+                      (click)="addInputFields()"
+                      nbButton
+                      status="info"
+                      size="tiny"
+                      class="btn"
+                    >
+                      <nb-icon
+                        [options]="{ animation: { type: 'pulse' } }"
+                        class="icon-button"
+                        icon="plus"
+                      >
+                      </nb-icon>
+                    </button>
+                  </div>
+                  <div formArrayName="goodsCollectionDtos">
+                    <!-- <div
+                      [formGroupName]="i"
+                      *ngFor="
+                        let item of cgmForm.get('gasMeterCollectionDtos')['controls'];
+                        let i = index
+                      "
+                    > -->
+                    <div class="row">
+                      <table class="table table-hover" style="width: 100%;">
+                        <thead>
+                          <tr>
+                            <th style="width: 15%;">نام کالا</th>
+                            <th style="width: 15%;">تعداد کالا</th>
+
+                            <th style="width: 70%;">شرح کالا</th>
+                          </tr>
+                        </thead>
+                        <tbody
+                          [formGroupName]="i"
+                          *ngFor="
+                            let item of cgmForm.get('goodsCollectionDtos')[
+                              'controls'
+                            ];
+                            let i = index
+                          "
+                        >
+                          <td>
+                            <input
+                              fullWidth
+                              nbInput
+                              id="cnt"
+                              formControlName="productName"
+                              min="0"
+                            />
+
+                          </td>
+                          <td>
+                            <input
+                              fullWidth
+                              type="number"
+                              nbInput
+                              id="cnt"
+                              formControlName="productCount"
+                              min="0"
+                            />
+                          </td>
+                          <td>
+                            <input
+                              fullWidth
+                              nbInput
+                              id="cnt"
+                              formControlName="productDesc"
+                            />
+                          </td>
+
+                          <td
+                            *ngIf="
+                              cgmForm.controls['goodsCollectionDtos'].length > 1
+                            "
+                          >
+                            <button
+                              type="button"
+                              (click)="removeInputFields(i)"
+                              nbButton
+                              status="danger"
+                              size="tiny"
+                              class="btn h-75"
+                            >
+                              <nb-icon
+                                [options]="{ animation: { type: 'pulse' } }"
+                                class="icon-button"
+                                icon="close"
+                              >
+                              </nb-icon>
+                            </button>
+                          </td>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+              <nb-card *ngIf="hasSupplier">
+                <nb-card-body>
+                  <div formArrayName="goodsCollectionDtos">
+                    <div class="row">
+                      <table class="table table-hover" style="width: 100%;">
+                        <thead>
+                          <tr>
+                            <th style="width: 15%;">نام کالا</th>
+                            <th style="width: 10%;">تعداد کالا</th>
+                            <th style="width: 45%;">شرح کالا</th>
+                          </tr>
+                        </thead>
+                        <tbody
+                          [formGroupName]="i"
+                          *ngFor="
+                            let item of cgmForm.get('goodsCollectionDtos')[
+                              'controls'
+                            ];
+                            let i = index
+                          "
+                        >
+                          <td>
+                            <input
+                              fullWidth
+                              nbInput
+                              id="cnt"
+                              readonly
+                              formControlName="productName"
+                              min="0"
+                            />
+                          </td>
+                          <td>
+                            <input
+                              fullWidth
+                              type="number"
+                              nbInput
+                              id="cnt"
+                              readonly
+                              formControlName="productCount"
+                              min="0"
+                            />
+                          </td>
+                          <td>
+                            <input
+                              fullWidth
+                              nbInput
+                              id="cnt"
+                              readonly
+                              formControlName="productDesc"
+                            />
+                          </td>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            </nb-card-body>
+          </nb-card>
+
+          <nb-card>
+            <nb-card-body>
+              <button
+                nbSpinnerStatus="info"
+                nbSpinnerSize="large"
+                type="submit"
+                nbButton
+                status="success"
+                class="btn btn-success btn-block"
+                [disabled]="cgmForm.invalid"
+              >
+                ثبت
+              </button>
+            </nb-card-body>
+          </nb-card>
+        </nb-card-body>
+      </nb-card>
+    </nb-card-body>
+  </nb-card>
+</form>

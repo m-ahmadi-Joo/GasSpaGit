@@ -1,0 +1,104 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <nb-card>
+    <nb-card-header>درخواست بازرسی</nb-card-header>
+    <nb-card-body>
+      <div class="row mr-3">
+        <label class="mt-2 pl-2" for="cd">تاریخ آمادگی: </label>
+        <dp-date-picker
+          name="cd"
+          fullWidth
+          id="cd"
+          nbInput
+          dir="rtl"
+          mode="day"
+          theme="dp-material"
+          formControlName="requestDate"
+        ></dp-date-picker>
+        <div
+        *ngFor="
+          let validation of INPUT_VALIDATION_MESSAGES.requestDate
+        "
+      >
+        <span
+          class="text-danger"
+          *ngIf="
+            form
+              .get('requestDate')
+              .hasError(validation.type) &&
+            (form.get('requestDate').dirty ||
+              form.get('requestDate').touched)
+          "
+        >
+          {{ validation.message }}</span
+        >
+        </div>
+      </div>
+      <nb-card>
+        <nb-card-body>
+          <label for="cmt" class="mt-2 pl-2"> اقدامات انجام گرفته: </label>
+          <textarea
+            name="cmt"
+            id="cmt"
+            rows="7"
+            nbInput
+            fullWidth
+            formControlName="executorActions"
+          ></textarea>
+          <div
+          *ngFor="
+            let validation of INPUT_VALIDATION_MESSAGES.executorActions
+          "
+        >
+          <span
+            class="text-danger"
+            *ngIf="
+              form
+                .get('executorActions')
+                .hasError(validation.type) &&
+              (form.get('executorActions').dirty ||
+                form.get('executorActions').touched)
+            "
+          >
+            {{ validation.message }}</span
+          >
+        </div>
+        </nb-card-body>
+      </nb-card>
+
+      <nb-card>
+        <nb-card-body>
+          <div class="row" style="text-align: left; direction: ltr;">
+            <div class="col-sm-6 col-md-2 col-lg-2 p-1">
+              <button *ngIf="className==='SafetyAndLeakInspectionRequest'" type="button" nbButton status="warning" class="btn btn-block"
+                [routerLink]="['/pages/forms/PeriodicVisitsList']"
+                [disabled]="loading">
+                بازگشت به لیست
+              </button>
+              <button *ngIf="className!=='SafetyAndLeakInspectionRequest'" type="button" nbButton status="warning" class="btn btn-block"
+              [routerLink]="['/pages/forms/GasReqList']"
+              [disabled]="loading">
+              بازگشت به لیست
+            </button>
+            </div>
+            <div class="col-sm-26 col-md-2 col-lg-2 p-1">
+              <button
+                [nbSpinner]="loading"
+                nbSpinnerStatus="info"
+                nbSpinnerSize="large"
+                class="btn"
+                nbButton
+                status="success"
+                style="width: 100%;"
+                type="submit"
+                [disabled]="!form.valid || loading"
+              >
+                ثبت
+              </button>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+
+    </nb-card-body>
+  </nb-card>
+</form>

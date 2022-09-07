@@ -1,0 +1,344 @@
+<style>
+  table td {
+    vertical-align: middle;
+    padding: 4px !important;
+  }
+</style>
+
+<nb-card>
+  <nb-card-header class="text-center">
+    <h4 class="mb-3">سوابق کنترل مضاعف</h4>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-4 col-md-4 col-lg-4">
+        <label>نام و نام خانوادگی مالک</label>
+        <input
+          fullWidth
+          autocomplete="false"
+          id="fn"
+          nbInput
+          readonly="true"
+          [value]="history?.gasRequestHistoryDto.owner"
+          type="text"
+        />
+      </div>
+      <div class="col-sm-4 col-md-4 col-lg-4">
+        <label>کد ملی مالک</label>
+        <input
+          fullWidth
+          autocomplete="false"
+          id="fn"
+          nbInput
+          readonly="true"
+          [value]="history?.gasRequestHistoryDto.ownerNationalCode"
+          type="text"
+        />
+      </div>
+    </div>
+
+    <nb-card>
+      <nb-card-body>
+        <h5 class="mt-4" style="font-size: 14px;">
+          <label>عملیات:</label>
+        </h5>
+
+        <div class="row">
+          <div class="col-sm-12 col-md-12 col-lg-12">
+            <table class="table table-striped" style="width: 100% !important;">
+              <thead>
+                <tr>
+                  <th>ردیف</th>
+                  <th>عنوان درخواست</th>
+                  <th class="text-center">زمان ثبت</th>
+                  <th class="text-center">اپراتور - نقش ها</th>
+                  <th class="text-center">توضیحات</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let step of history?.doubleControlStateHistoryDtos;
+                    let i = index
+                  "
+                >
+                  <td class="text-center" width="2%">{{ i + 1 }}</td>
+                  <td width="29%">{{ step?.requestStateTypeTitle }}</td>
+                  <td class="text-center" width="18%">
+                    {{ step?.requestStateTime }}
+                  </td>
+                  <td class="text-center" width="21%">
+                    {{ step?.registrarInfo }}
+                    <span *ngIf="step?.registrarInfo == null">
+                      ثبت سیستم
+                    </span>
+                  </td>
+                  <td *ngIf="step?.doubleControlEngineer !== null" width="30%">
+                    <span class="ml-2 font-weight-bold">
+                      نام ناظر:
+                    </span>
+                    <span class="ml-2 font-weight-bold">
+                      {{ step?.doubleControlEngineer }}
+                    </span>
+                    <p class="text-justify mb-2">
+                      <span class="ml-2 font-weight-bold">
+                        کد ملی ناظر:
+                      </span>
+                      <span class="ml-2 font-weight-bold">
+                        {{ step?.doubleControlEngineerNationalCode }}
+                      </span>
+                    </p>
+                  </td>
+                  <td *ngIf="step?.result !== null">
+                    <div *ngIf="step?.result === false">
+                      <span class="font-weight-bold"> نتیجه: </span>
+                      <span class="ml-4 font-weight-bold text-danger">
+                        عدم تایید</span
+                      >
+                    </div>
+                    <div *ngIf="step?.result === true">
+                      <span class="font-weight-bold"> نتیجه: </span>
+                      <span class="ml-4 font-weight-bold text-success">
+                        تایید</span
+                      >
+                    </div>
+                  </td>
+                  <!-- <td
+                    *ngIf="
+                      step?.result !== null &&
+                      step?.className === 'MaterialControlByExecuterHP'
+                    "
+                  >
+                    <div *ngIf="step?.result === false">
+                      <span class="font-weight-bold"> نتیجه: </span>
+                      <span class="ml-4 font-weight-bold text-danger">
+                        عدم تایید</span
+                      >
+                    </div>
+                    <div *ngIf="step?.result === true">
+                      <span class="font-weight-bold"> نتیجه: </span>
+                      <span class="ml-4 font-weight-bold text-success">
+                        تایید</span
+                      >
+                    </div>
+                  </td> -->
+
+                  <!-- <td width="33%">
+                    <div *ngIf="step?.comment !== null">
+                      <div *ngIf="step?.result === true">
+                        <span class="font-weight-bold">نتیجه بازرسی : </span>
+                        <span class="ml-2 font-weight-bold text-success">
+                          تایید</span>
+
+                        <p class="text-justify mb-0">
+                          <span class="font-weight-bold">توضیحات : </span>
+                          {{ step?.comment }}
+                        </p>
+                      </div>
+                      <div *ngIf="step?.result === false">
+                        <span class="font-weight-bold"> نتیجه بازرسی : </span>
+                        <span class="ml-4 font-weight-bold text-danger">
+                          عدم تایید</span
+                        >
+                        <br />
+                        <p
+                          *ngIf="step?.inspectionRejectionReason !== null"
+                          class="text-justify mb-0"
+                        >
+                          <span class="font-weight-bold">به دلیل : </span>
+                          {{ step?.inspectionRejectionReason }}
+                        </p>
+                        <p class="text-justify mb-0">
+                          <span class="font-weight-bold">توضیحات : </span>
+                          {{ step?.comment }}
+                        </p>
+                      </div>
+
+                      <span *ngIf="step?.mapRevision === true">
+                        <span class="font-weight-bold">
+                          نیاز به اصلاح نقشه :
+                        </span>
+                        <span class="ml-2 font-weight-bold text-success">
+                          دارد</span
+                        ><br />
+                      </span>
+
+                      <span *ngIf="step?.safetyInspection === true">
+                        <span class="font-weight-bold">
+                          نیاز به بازرسی ایمنی :
+                        </span>
+                        <span class="ml-2 font-weight-bold text-success">
+                          دارد</span
+                        ><br />
+                      </span>
+
+                      <span *ngIf="step?.isLinearInspectionWelding === true">
+                        <span class="font-weight-bold">
+                          نیاز به بازرسی جوش خطی :
+                        </span>
+                        <span class="ml-2 font-weight-bold text-success">
+                          دارد</span
+                        ><br />
+                      </span>
+
+                      <span *ngIf="step?.isCollectorInspectionWelding === true">
+                        <span class="font-weight-bold">
+                          نیاز به بازرسی جوش کلکتوری :
+                        </span>
+                        <span class="ml-2 font-weight-bold text-success">
+                          دارد</span
+                        ><br />
+                      </span>
+
+                    </div>
+
+                    <div *ngIf="step?.confirmDocuments != null">
+                      <div *ngIf="step?.confirmDocuments === true">
+                        <span class="font-weight-bold"> نتیجه : </span>
+                        <span class="text-success font-weight-bold">
+                          تایید
+                        </span>
+                        <br />
+                        <p class="text-justify mb-0">
+                          <span class="font-weight-bold">توضیحات : </span>
+                          {{ step?.controlConfirmComment }}
+                        </p>
+                      </div>
+                      <div *ngIf="step?.confirmDocuments === false">
+                        <span class="font-weight-bold"> نتیجه : </span>
+                        <span class="text-danger font-weight-bold">
+                          عدم تایید
+                        </span>
+                        <br />
+                        <p class="text-justify mb-0">
+                          <span class="font-weight-bold">توضیحات : </span>
+                          {{ step?.controlConfirmComment }}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div
+                      *ngIf="step?.controlConfirmInspectionPreExecution != null"
+                    >
+                      <div
+                        *ngIf="
+                          step?.controlConfirmInspectionPreExecution === true
+                        "
+                      >
+                        <span class="font-weight-bold"> نتیجه : </span>
+                        <span class="text-success font-weight-bold">
+                          تایید
+                        </span>
+                        <br />
+                        <p class="text-justify mb-0">
+                          <span class="font-weight-bold">توضیحات : </span>
+                          {{
+                            step?.controlConfirmInspectionPreExecutionComment
+                          }}
+                        </p>
+                      </div>
+                      <div
+                        *ngIf="
+                          step?.controlConfirmInspectionPreExecution === false
+                        "
+                      >
+                        <span class="font-weight-bold"> نتیجه : </span>
+                        <span class="text-danger font-weight-bold">
+                          عدم تایید
+                        </span>
+                        <br />
+                        <p class="text-justify mb-0">
+                          <span class="font-weight-bold">توضیحات : </span>
+                          {{
+                            step?.controlConfirmInspectionPreExecutionComment
+                          }}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div
+                      *ngIf="step?.controlConfirmInspectionFirstStage != null"
+                    >
+                      <div
+                        *ngIf="
+                          step?.controlConfirmInspectionFirstStage === true
+                        "
+                      >
+                        <span class="font-weight-bold"> نتیجه : </span>
+                        <span class="text-success font-weight-bold">
+                          تایید
+                        </span>
+                      </div>
+                      <div
+                        *ngIf="
+                          step?.controlConfirmInspectionFirstStage === false
+                        "
+                      >
+                        <span class="font-weight-bold"> نتیجه : </span>
+                        <span class="text-danger font-weight-bold">
+                          عدم تایید
+                        </span>
+                      </div>
+                      <br />
+                      <p class="text-justify mb-0">
+                        <span class="font-weight-bold">توضیحات : </span>
+                        {{ step?.controlConfirmInspectionFirstStageComment }}
+                      </p>
+                    </div>
+
+                    <div *ngIf="step?.controlConfirmInspectionFinal != null">
+                      <div *ngIf="step?.controlConfirmInspectionFinal === true">
+                        <span class="font-weight-bold"> نتیجه : </span>
+                        <span class="text-success font-weight-bold">
+                          تایید
+                        </span>
+                        <br />
+                        <p class="text-justify mb-0">
+                          <span class="font-weight-bold">توضیحات : </span>
+                          {{ step?.controlConfirmInspectionFinalComment }}
+                        </p>
+                      </div>
+                      <div
+                        *ngIf="step?.controlConfirmInspectionFinal === false"
+                      >
+                        <span class="font-weight-bold"> نتیجه : </span>
+                        <span class="text-danger font-weight-bold">
+                          عدم تایید
+                        </span>
+                        <br />
+                        <p class="text-justify mb-0">
+                          <span class="font-weight-bold">توضیحات : </span>
+                          {{ step?.controlConfirmInspectionFinalComment }}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div *ngIf="step?.price != ''">
+                      <span class="font-weight-bold"> مبلغ : </span>
+                      <span class="font-weight-bold">
+                        {{ step?.price }}
+                      </span>
+                    </div>
+
+                    <div *ngIf="step?.observer != null">
+                      <span class="font-weight-bold"> ناظر : </span>
+                      <span class="font-weight-bold">
+                        {{ step?.observer }}
+                      </span>
+                    </div>
+                     <div *ngIf="step?.welder != null">
+                      <span class="font-weight-bold"> جوشکار : </span>
+                      <span class="font-weight-bold">
+                        {{ step?.welder }}
+                      </span>
+                    </div>
+                  </td> -->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+</nb-card>

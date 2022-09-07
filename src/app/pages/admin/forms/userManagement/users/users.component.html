@@ -1,0 +1,466 @@
+<style>
+  .row {
+    width: 100%;
+  }
+
+  .col-sm-4 {
+    vertical-align: top;
+  }
+
+  button {
+    padding: 0.555rem 0.225rem;
+  }
+
+  .alert p {
+    font-size: 0.879rem;
+  }
+
+  /* ng2-smart-table /deep/ tbody tr.selected {
+    background: #67e448 !important;
+  } */
+
+  /* .pagination /deep/ .ngx-pagination .current {
+    background: lightseagreen;
+  }
+
+  .pagination /deep/ pagination-template {
+    width: 100% !important;
+  }
+  .pagination {
+    text-align: center !important;
+  }
+
+  nb-select.pageSizeSelect /deep/ .select-button {
+    min-width: 8rem !important;
+  } */
+</style>
+
+<nb-card class="card-inside-tab">
+  <!-- <nb-card-header style="padding-bottom:25px">
+    <span class="pull-right" style="padding-top: 7px">
+      <button (click)="onToggleUserList()" nbButton hero status="primary">
+        <span style="position: relative;top:2px;left:2px">لیست کاربران</span>
+        <nb-icon *ngIf="!showList" icon="arrow-ios-downward-outline">
+        </nb-icon>
+        <nb-icon *ngIf="showList" icon="arrow-ios-upward-outline">
+        </nb-icon>
+      </button>
+    </span>
+    <span class="pull-left">
+
+      <button (click)="onToggleUserRole()" nbButton hero status="success">
+  <span style="position: relative;top:2px;left:2px">تعریف کاربر جدید</span>
+        <nb-icon *ngIf="!showForm" icon="arrow-ios-downward-outline">
+        </nb-icon>
+        <nb-icon *ngIf="showForm" icon="arrow-ios-upward-outline">
+        </nb-icon>
+      </button>
+    </span>
+    <span class="clearfix"></span>
+  </nb-card-header> -->
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-12 mb-4">
+        <form (ngSubmit)="submit()" [formGroup]="userRegister">
+          <div class="row">
+            <div class="col-sm-4">
+              <label>نام</label>
+              <input formControlName="firstName" fullWidth id="fName" nbInput type="text" />
+              <div *ngFor="let validation of INPUT_Validation_Message.firstName">
+                <span class="text-danger" *ngIf="
+                    userRegister.get('firstName').hasError(validation.type) &&
+                    (userRegister.get('firstName').dirty ||
+                      userRegister.get('firstName').touched)
+                  ">{{ validation.message }}</span>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <label>نام خانوادگی</label>
+              <input formControlName="lastName" fullWidth id="lName" nbInput type="text" />
+              <div *ngFor="let validation of INPUT_Validation_Message.lastName">
+                <span class="text-danger" *ngIf="
+                    userRegister.get('lastName').hasError(validation.type) &&
+                    (userRegister.get('lastName').dirty ||
+                      userRegister.get('lastName').touched)
+                  ">{{ validation.message }}</span>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <label>کد ملی</label>
+              <input [status]="
+                  userRegister.get('nationalID').touched ||
+                  userRegister.get('nationalID').dirty
+                    ? userRegister.get('nationalID').invalid
+                      ? 'danger'
+                      : 'success'
+                    : ''
+                " formControlName="nationalID" fullWidth id="nId" nbInput type="text" />
+
+              <div *ngFor="let validation of INPUT_Validation_Message.nationalID">
+                <span class="text-danger" *ngIf="
+                    userRegister.get('nationalID').hasError(validation.type) &&
+                    (userRegister.get('nationalID').dirty ||
+                      userRegister.get('nationalID').touched)
+                  ">
+                  {{ validation.message }}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="row d-block mt-4">
+            <div class="col-sm-4">
+              <div>
+                <label> جنسیت</label>
+                <nb-radio-group class="form-inline radio-x-inline" formControlName="gender" id="rbgGender"
+                  name="rbgGender">
+                  <nb-radio value="0">
+                    مرد
+                  </nb-radio>
+                  <nb-radio value="1">
+                    زن
+                  </nb-radio>
+                </nb-radio-group>
+                <div *ngFor="let validation of INPUT_Validation_Message.gender">
+                  <span class="text-danger" *ngIf="
+                      userRegister.get('gender').hasError(validation.type) &&
+                      (userRegister.get('gender').dirty ||
+                        userRegister.get('gender').touched)
+                    ">{{ validation.message }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <label>تلفن همراه</label>
+              <input formControlName="phoneNumber" fullWidth id="mobile" nbInput type="text"
+                placeholder="تلفن همراه به همراه صفر ابتدا" />
+              <div *ngFor="let validation of INPUT_Validation_Message.phoneNumber">
+                <span class="text-danger" *ngIf="
+                    userRegister.get('phoneNumber').hasError(validation.type) &&
+                    (userRegister.get('phoneNumber').dirty ||
+                      userRegister.get('phoneNumber').touched)
+                  ">{{ validation.message }}
+                </span>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <label>
+                نقش مرتبط
+              </label>
+              <!-- <nb-select
+                formControlName="roleSelect"
+                multiple
+                fullWidth
+                #selectedRole
+                (selectedChange) = "onRoleSelected($event)"
+                placeholder="--انتخاب کنید--"
+              > -->
+              <nb-select multiple #selectedRole formControlName="roleSelect" id="roleSelect" fullWidth
+                placeholder="--انتخاب کنید--">
+                <nb-option *ngFor="let role of roleList" [value]="role.name">
+                  {{ role.persianName }}
+                </nb-option>
+              </nb-select>
+            </div>
+          </div>
+          <div class="row d-block" *ngIf="showTowns">
+            <div class="col-sm-4 float-left">
+              <label>
+                شهر محل کار
+              </label>
+              <nb-select formControlName="townSelect" multiple fullWidth #selectedTown placeholder="--انتخاب کنید--">
+                <nb-option *ngFor="let town of towns" [value]="town.townId">
+                  {{ town.townName }}
+                </nb-option>
+              </nb-select>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="row d-block">
+            <div class="col-sm-8">
+              <div _ngcontent-ccd-c19="" class="alert alert-info p-2 mt-2">
+                <p _ngcontent-ccd-c19="" class="text-justify mb-0" style="line-height: 1.8">
+                  برای <strong _ngcontent-ccd-c19="">ثبت کاربر جدید</strong> تنها مجاز به انتخاب نقش های
+                  <strong>کارمند دفتر گاز</strong>،
+                  <strong>پیشخوان</strong>،
+                  <strong>اتحادیه</strong>،
+                  <strong>کارمند گاز فشار قوی</strong>،
+                  <strong>کارمند ضوابط گاز فشار قوی</strong>،
+                  <strong>مسئول گاز فشار قوی</strong> و
+                  <strong>مسئول بازرسی فنی</strong>
+                  می باشید </p>
+              </div>
+            </div>
+            <div class="col-sm-7 pl-0" *ngIf="showTowns"></div>
+            <div class="col-sm-5">
+              <div class="w-100 text-left pl-2">
+
+
+                <!-- <button
+                  class="btn"
+                  nbButton
+                  status="success"
+                  [nbSpinner]="loading"
+                  nbSpinnerStatus="info"
+                  nbSpinnerSize="large"
+                  [disabled]="loading || !userRegister.valid ||
+                  !(
+                  (userRegister.get('roleSelect').value === 'GasEmployee')
+                  || (userRegister.get('roleSelect').value === 'Pishkhan')
+                  || (userRegister.get('roleSelect').value === 'Association')
+                  )"
+                  type="submit"
+                > -->
+
+                <button class="p-2 btn" nbButton status="success" [nbSpinner]="loading" nbSpinnerStatus="info"
+                  nbSpinnerSize="large" [disabled]="loading || !userRegister.valid" type="submit">
+
+                  <nb-icon [options]="{ animation: { type: 'pulse' } }" class="ml-1 icon-button" icon="save-outline">
+                  </nb-icon>
+                  <span style="position:relative;top:3px;right: 2px;">ثبت</span>
+                </button>
+
+                <a class="p-2 btn half-width-btn mx-2" (click)="onSerach()" nbButton status="info" [nbSpinner]="loading"
+                  nbSpinnerStatus="info" nbSpinnerSize="large">
+                  <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button ml-1" icon="search-outline">
+                  </nb-icon>
+                  جستجو
+                </a>
+
+                <a [disabled]="loading" class="p-2 btn" nbButton status="primary" (click)="resetForms()">
+                  <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button ml-1" icon="refresh-outline">
+                  </nb-icon>
+                  بازسازی
+                </a>
+
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <!-- <button
+                  class="btn half-width-btn mr-3"
+                  (click) = "onSerach()"
+                  nbButton
+                  status="primary"
+                  [nbSpinner]="loading"
+                  nbSpinnerStatus="info"
+                  nbSpinnerSize="large">
+                  جستجو
+                </button> -->
+      </div>
+
+      <div class="col-sm-12 mt-4">
+
+        <div class="table-wrapper w-100">
+          <ng2-smart-table [settings]="settings" [source]="source | paginate: pagingConfig" (custom)="onCustom($event)"
+            style="direction:ltr"></ng2-smart-table>
+        </div>
+
+        <span *ngFor="let item of collection | paginate: pagingConfig"></span>
+
+        <nb-card>
+          <nb-card-body>
+            <div class="row">
+              <div class="input-group">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 form-inline pull-left">
+                  <span for="pageSize" style="margin-left: 0.45rem;">
+                    تعداد رکورد:
+                  </span>
+                  <nb-select [selected]="pagination.itemsPerPage"
+                    style="margin: 0;display: inline-block;width: 100px !important;" status="info" #pageSizeSelect
+                    class="pageSizeSelect" (selectedChange)="changePageSize(pageSizeSelect.selected)" id="pageSize"
+                    placeholder="انتخاب ...">
+                    <nb-option *ngFor="let p of pageSizes" [value]="p.id">
+                      {{ p.display }}
+                    </nb-option>
+                  </nb-select>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                  <div class="d-flex justify-content-center">
+                    <pagination-controls class="pagination" (pageChange)="pageChanged($event)" previousLabel=""
+                      nextLabel="">
+                    </pagination-controls>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 form-inline pull-right">
+                  <span for="pageNumber" style="margin-left: 0.45rem;">
+                    شماره صفحه:
+                  </span>
+                  <input [value]="pagination.currentPage" style="width:30%" #pageNumber size="tiny" id="pageNumber"
+                    nbInput type="number" min="1" max="pagination.totalPages"
+                    (keydown.enter)="pageChanged(pageNumber.value)" />
+                </div>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+
+      <!-- <div class="col-sm-12" *ngIf="user">
+            <app-userDetail
+              *ngIf="dismiss"
+              [selectedUser]="user"
+              (dissmiss)="onDismiss()"
+            ></app-userDetail>
+          </div> -->
+    </div>
+
+    <!-- <div class="row d-block mt-5">
+      <div class="col-md-12">
+        <nb-card class="own-scroll">
+          <nb-card-body>
+            <nb-list nbInfiniteList [threshold]="500">
+              <nb-list-item
+                *ngFor="let user of usersian"
+                (click)="onSelectUser(user.id)"
+              >
+                <span>{{ user.firstName }} {{ user.lastName }}</span>
+              </nb-list-item>
+            </nb-list>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div> -->
+  </nb-card-body>
+</nb-card>
+
+<!--
+{{ userRegister.value | json }} <br />
+{{ userRegister.status | json }} -->
+
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card status="danger" accent="danger">
+    <nb-card-header>
+      <h4 style="color: linen">هشدار</h4>
+    </nb-card-header>
+    <nb-card-body>
+      <h6>آیا از حذف مورد اطمینان دارید؟</h6>
+    </nb-card-body>
+    <nb-card-footer>
+      <div class="row">
+        <div class="col-sm-6">
+          <button [disabled]="loadingDelete" [nbSpinner]="loadingDelete" nbSpinnerStatus="info" nbSpinnerSize="large"
+            fullWidth nbButton hero status="danger" (click)="confirmDelete(data)">
+            بلی
+          </button>
+        </div>
+        <div class="col-sm-6">
+          <button [disabled]="loadingDelete" fullWidth nbButton hero status="primary" (click)="rejectDelete(data)">
+            انصراف
+          </button>
+        </div>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+<ng-template #disableDialog let-data let-ref="disableDialogRef">
+  <nb-card status="danger" accent="danger">
+    <nb-card-header>
+      <h4 style="color: linen">هشدار</h4>
+    </nb-card-header>
+    <nb-card-body>
+      <h6 *ngIf="!data.isDisabled">آیا از غیرفعال سازی اطمینان دارید؟</h6>
+      <h6 *ngIf="data.isDisabled">آیا از فعال سازی اطمینان دارید؟</h6>
+    </nb-card-body>
+    <nb-card-footer>
+      <div class="row m-0">
+        <div class="col-sm-6">
+          <button [disabled]="loadingDisable" [nbSpinner]="loadingDisable" nbSpinnerStatus="info" nbSpinnerSize="large"
+            fullWidth nbButton hero status="danger" (click)="confirmDisable(data)">
+            بلی
+          </button>
+        </div>
+        <div class="col-sm-6">
+          <button [disabled]="loadingDisable" fullWidth nbButton hero status="info" (click)="disableDialogRef.close()">
+            انصراف
+          </button>
+        </div>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+<ng-template #changePasswordDialog let-data let-ref="changePasswordDialogRef">
+  <nb-card>
+      <nb-card-header>
+          تغییر رمزعبور
+        </nb-card-header>
+    <nb-card-body>
+        <nb-card >
+            <form [formGroup]="formChangePassword" (ngSubmit)="changePasswordConfirm(data)">
+           
+              <nb-card-body>
+                <div class="row">
+                  <div class="col-lg-12 col-md-12 col-sm-12 mr-3">
+                    <label>رمز عبور</label>
+                    <input formControlName="password" size="small" fullWidth id="password" nbInput type="text" />
+                  </div>
+        
+                </div>
+        
+              </nb-card-body>
+              <nb-card-footer>
+                <div class="row m-0">
+                  <div class="col-sm-6">
+                    <button fullWidth nbButton hero status="submit" type="submit" status="success">
+                      تایید
+                    </button>
+                  </div>
+                  <div class="col-sm-6">
+                    <button [disabled]="loadingDisable" fullWidth nbButton hero status="danger"
+                      (click)="changePasswordDialogRef.close()">
+                      انصراف
+                    </button>
+                  </div>
+                </div>
+              </nb-card-footer>
+            </form>
+          </nb-card>
+    </nb-card-body>
+  </nb-card>
+
+</ng-template>
+<ng-template #resetPasswordDialog let-data let-ref="resetPasswordDialogRef">
+  <nb-card>
+      <nb-card-header>
+          بازنشانی رمزعبور
+        </nb-card-header>
+    <nb-card-body>
+        <nb-card >
+            <form [formGroup]="formResetPassword" (ngSubmit)="resetPasswordConfirm(data)">
+           
+              <nb-card-body>
+                <div class="row">
+                  <div class="col-lg-12 col-md-12 col-sm-12 mr-3">
+                    <label>نام کاربری</label>
+                    <input formControlName="nationalID" size="small" fullWidth id="nationalID" readonly="readonly" nbInput type="text" />
+                  </div>
+        
+                </div>
+        
+              </nb-card-body>
+              <nb-card-footer>
+                <div class="row m-0">
+                  <div class="col-sm-6">
+                    <button fullWidth nbButton hero status="submit" type="submit" status="success">
+                      تایید
+                    </button>
+                  </div>
+                  <div class="col-sm-6">
+                    <button [disabled]="loadingDisable" fullWidth nbButton hero status="danger"
+                      (click)="resetPasswordDialogRef.close()">
+                      انصراف
+                    </button>
+                  </div>
+                </div>
+              </nb-card-footer>
+            </form>
+          </nb-card>
+    </nb-card-body>
+  </nb-card>
+
+</ng-template>

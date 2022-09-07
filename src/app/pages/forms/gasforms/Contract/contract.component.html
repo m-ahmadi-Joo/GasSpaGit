@@ -1,0 +1,422 @@
+<style>
+  /* table tr:first-child th {
+    height:auto;
+  } */
+  .tip {
+    font-weight: bold;
+    margin: 5px;
+    color: #c50c1e !important;
+
+  }
+</style>
+
+<form [formGroup]="cgmForm" (ngSubmit)="manage(cgmForm.value)">
+  <div class="row">
+    <div class="col-md-12">
+      <nb-card class="inline-form-card">
+        <nb-card-header>
+          قرارداد
+          <span *ngIf="isEdit">
+            شماره
+            <span style="color: #3366ff;">
+              {{ contractNumber }}
+            </span>
+          </span>
+        </nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div style="width: 100%;">
+              <nb-card style="margin-bottom: 0;">
+                <!-- <nb-card-body> -->
+                <!-- <div class="form-group"> -->
+                <nb-card-body>
+                  <div class="row mb-3">
+                    <div class="col-md-6 col-sm-6 col-lg-6 col-xs-12">
+                      <label class="col-sm-3" for="cd">شروع قرارداد:</label>
+                      <dp-date-picker name="cd" fullWidth id="cd" nbInput dir="rtl" mode="day" theme="dp-material"
+                        formControlName="dateStart" class="col-sm-9"></dp-date-picker>
+
+                      <!-- [config]="dateConfig" -->
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.dateStart
+                        ">
+                        <span class="text-danger" *ngIf="
+                            cgmForm
+                              .get('dateStart')
+                              .hasError(validation.type) &&
+                            (cgmForm.get('dateStart').dirty ||
+                              cgmForm.get('dateStart').touched)
+                          ">
+                          {{ validation.message }}</span>
+                      </div>
+                    </div>
+
+                    <!-- <div class="col-md-2 col-sm-2 col-lg-2 "></div> -->
+                    <div class="col-md-6 col-sm-6 col-lg-6 col-xs-12">
+                      <label class="col-sm-3" for="cd">پایان قرارداد: </label>
+                      <dp-date-picker name="cd" fullWidth id="cd" nbInput dir="rtl" mode="day" theme="dp-material"
+                        formControlName="dateEnd" class="col-sm-9"></dp-date-picker>
+
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.dateEnd
+                        ">
+                        <span class="text-danger" *ngIf="
+                            cgmForm.get('dateEnd').hasError(validation.type) &&
+                            (cgmForm.get('dateEnd').dirty ||
+                              cgmForm.get('dateEnd').touched)
+                          ">
+                          {{ validation.message }}</span>
+                      </div>
+                    </div>
+
+                    <span class="text-danger" *ngIf="
+                        cgmForm.get('dateStart').value >
+                          cgmForm.get('dateEnd').value &&
+                        cgmForm.get('dateEnd').value !== ''
+                      " style="margin-right: 28px; margin-top: 5px;">
+                      تاریخ شروع قرارداد می بایست کوچکتر از پایان قرارداد باشد
+                    </span>
+                  </div>
+                </nb-card-body>
+                <!-- </div> -->
+                <!-- </nb-card-body> -->
+              </nb-card>
+            </div>
+
+            <!-- <div class="form-group col-md-6"></div> -->
+          </div>
+          <nb-card>
+            <nb-card-body>
+              <div class="row" *ngIf="requestStateType == 'ContractHP'">
+                <div class="col-sm-5 col-md-5 col-lg-5">
+                  <label for="cmt"> مبلغ قرارداد: </label>
+                  <input fullWidth type="number" nbInput id="kn" formControlName="meterSerial" min="0" />
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+          <nb-card class="inline-form-card">
+            <nb-card-body>
+              <div class="row" *ngIf="requestStateType !== 'ContractHP'">
+                <div class="form-group col-md-5">
+                  <label>
+                    شماره درخواست:
+                  </label>
+
+                  <input formControlName="gasRequestSelect" [typeahead]="gasStates" typeaheadOptionField="searchItem"
+                    (typeaheadOnSelect)="onSelectGas($event)" [typeaheadOptionsLimit]="7" [typeaheadMinLength]="0"
+                    class="form-control" style="width: 98%;" />
+                </div>
+
+                <div class="col-md-1"></div>
+                <div *ngFor="
+                    let validation of INPUT_VALIDATION_MESSAGES.gasRequestSelect
+                  ">
+                  <span class="text-danger" *ngIf="
+                      cgmForm
+                        .get('gasRequestSelect')
+                        .hasError(validation.type) &&
+                      (cgmForm.get('gasRequestSelect').dirty ||
+                        cgmForm.get('gasRequestSelect').touched)
+                    ">
+                    {{ validation.message }}</span>
+                </div>
+                <div class="col-md-5" style="padding-left: 7px; padding-right: 28px;"
+                  *ngIf="cgmForm.get('gasRequestSelect').value !== ''">
+                  <div *ngFor="let a of selectedOptionGas">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>شماره درخواست</th>
+                          <th>آدرس</th>
+                          <th>تعداد واحد</th>
+                          <th>تعداد طبقه</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{{ a?.fileNumber }}</td>
+                          <td>{{ a?.address.substring(0, 7) }} ...</td>
+                          <td style="color: red;">{{ a?.unitCount }}</td>
+                          <td>{{ a?.floorCount }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-5">
+                  <label>
+                    نام مجری:
+                  </label>
+                  <input formControlName="executerSelect" [typeahead]="states" typeaheadOptionField="searchItem"
+                    (typeaheadOnSelect)="onSelect($event)" [typeaheadOptionsLimit]="7" [typeaheadMinLength]="0"
+                    class="form-control" style="width: 98%;" />
+                </div>
+                <div class="col-md-1"></div>
+                <div *ngFor="
+                    let validation of INPUT_VALIDATION_MESSAGES.executerSelect
+                      | keyvalue
+                  ">
+                  <span class="text-danger" *ngIf="
+                      cgmForm.get('executerSelect').hasError(validation.type) &&
+                      (cgmForm.get('executerSelect').dirty ||
+                        cgmForm.get('executerSelect').touched)
+                    ">
+                    {{ validation.message }}</span>
+                </div>
+                <div class="col-md-5" style="padding-left: 7px; padding-right: 28px;"
+                  *ngIf="cgmForm.get('executerSelect').value !== ''">
+                  <div *ngFor="let a of selectedOption">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>نام و نام خانوادگی</th>
+                          <th>نام پدر</th>
+                          <th>کد ملی</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{{ a?.fullName }}</td>
+                          <td>{{ a?.fatherName }}</td>
+                          <td>{{ a?.nathinalCode }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <!-- <input
+                formControlName="designerSelect"
+                [typeahead]="designers"
+                typeaheadOptionField="searchItem"
+                (typeaheadOnSelect)="onSelectDesigner($event)"
+                [typeaheadOptionsLimit]="7"
+                [typeaheadMinLength]="0"
+                class="form-control"
+                style="width: 98%;"
+              /> -->
+              <div class="row ">
+                <span class="tip ">
+                  جهت کنتورهای سایز بزرگ تنها می توان ناظرینی به عنوان طراح انتخاب نمود که دارای پروانه اشتغال به کار از
+                  اداره مسکن وشهر سازی باشند
+                </span>
+
+              </div>
+              <div class="row">
+                <div class="form-group col-md-5">
+                  <label>
+                    نام طراح:
+                  </label>
+                  <nb-radio-group (valueChange)="onChangeDesignerType($event)"  class="form-inline radio-x-inline"
+                    formControlName="designerType"  name="designerType" style="margin-top: 1.61rem">
+                    <nb-radio [value]="'executer'">
+                      مجری
+                    </nb-radio>
+                    <nb-radio [value]="'engineer'">
+                      مهندس
+                    </nb-radio>
+                  </nb-radio-group>
+
+                  <nb-select #dSelect formControlName="designerSelect"   (selectedChange)="onSelectDesigner(dSelect.selected)"  fullWidth placeholder="انتخاب طراح">
+                    <nb-option  click *ngFor="let d of designers" [value]="d.id">
+                      {{ d.fullName }}
+                    </nb-option>
+
+                  </nb-select>
+
+
+                </div>
+                <div class="col-md-1"></div>
+                <div *ngFor="
+                    let validation of INPUT_VALIDATION_MESSAGES.designerSelect
+                      | keyvalue
+                  ">
+                  <span class="text-danger" *ngIf="
+                      cgmForm.get('designerSelect').hasError(validation.type) &&
+                      (cgmForm.get('designerSelect').dirty ||
+                        cgmForm.get('designerSelect').touched)
+                    ">
+                    {{ validation.message }}</span>
+                </div>
+                <div class="col-md-5" style="padding-left: 7px; padding-right: 28px;"
+                  *ngIf="cgmForm.get('designerSelect').value !== ''">
+                  <div *ngFor="let a of designerSelectedOption">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>نام و نام خانوادگی</th>
+                          <th>نام پدر</th>
+                          <th>کد ملی</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{{ a?.fullName }}</td>
+                          <td>{{ a?.fatherName }}</td>
+                          <td>{{ a?.nathinalCode }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-5 col-md-5 col-lg-5 mt-3">
+                  <label>شماره قرار داد اتحادیه:</label>
+                  <input fullWidth nbInput id="kn" style="width: 355px;" formControlName="associationNumber" min="0" />
+                </div>
+              </div>
+              <div class="row" *ngIf="requestStateType != 'ContractHP'">
+                <div class="col-sm-5 col-md-5 col-lg-5 mt-3">
+                  <label>تعداد واحد:</label>
+                  <input fullWidth type="number" nbInput id="kn" [readOnly]="requestStateType === 'ChangeExecutor'"
+                    style="width: 355px;" formControlName="unitCount" min="0" />
+                </div>
+                <div class="col-sm-5 col-md-5 col-lg-5 mt-5">
+                  <label *ngIf="accessUnit === 0" style="color: red;">برای تمام واحد ها قرارداد بسته شده است</label>
+                  <label *ngIf="accessUnit !== 0">تعداد واحد مجاز:<label style="color: red;">{{
+                      accessUnit
+                      }}</label></label>
+                </div>
+              </div>
+              <div class="row mt-2" *ngIf="executerList.length > 0">
+                <div class="col-sm-5"></div>
+                <div class="col-sm-2"><strong>لیست مجری های ملک:</strong></div>
+                <div class="col-sm-5">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>نام و نام خانوادگی</th>
+
+                        <th>کد ملی</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let a of executerList">
+                        <td>{{ a?.firstName + " " + a?.lastName }}</td>
+
+                        <td>{{ a?.nationalID }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- <div class="row">
+                <div class="col-lg-5 col-md-5 col-sm-5">
+                  <label for="fn">مبلغ قرارداد :</label>
+                  <input formControlName="contractCost" fullWidth autocomplete="false" id="fn" nbInput type="number"  />
+                </div>
+              </div>
+              <div *ngFor="
+                  let validation of INPUT_VALIDATION_MESSAGES.contractCost
+                ">
+                <span class="text-danger" *ngIf="
+                    cgmForm.get('contractCost').hasError(validation.type) &&
+                    (cgmForm.get('contractCost').dirty ||
+                      cgmForm.get('contractCost').touched)
+                  ">
+                  {{ validation.message }}</span>
+              </div> -->
+
+              <nb-card>
+                <nb-card-body>
+                  <div class="row">
+                    <label for="cmt"> شرح: </label>
+                    <textarea name="cmt" id="cmt" rows="7" nbInput fullWidth formControlName="desc"></textarea>
+                  </div>
+                  <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.desc">
+                    <span class="text-danger" *ngIf="
+                        cgmForm.get('desc').hasError(validation.type) &&
+                        (cgmForm.get('desc').dirty ||
+                          cgmForm.get('desc').touched)
+                      ">
+                      {{ validation.message }}</span>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 m-0 p-0">
+                <label for="file">فایل قرار داد</label>
+                <div *ngFor="let a of inputCount; let i = index">
+                  <strong class="mb-2" style="
+                      color: rgb(0, 68, 255);
+                      display: block;
+                      font-size: 11px;
+                    ">
+                    حداکثر حجم {{ sizeTitles[i] }} - فرمت ها ({{
+                    a.extentions
+                    }})
+                  </strong>
+                  <app-uploader [formControlName]="a.formControlName" [filePath]="imagePathEdit"
+                    [fileExtentions]="a.extentions" [fileSize]="a.size">
+                  </app-uploader>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </nb-card-body>
+      </nb-card>
+      <nb-card class="inline-form-card">
+        <nb-card-body>
+          <div class="row">
+            <div class="col-md-6">
+              <ng-container *ngIf="!isEdit; then btnRegister; else btnEdit">
+              </ng-container>
+              <ng-template #btnRegister>
+                <button [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" type="submit" nbButton
+                  status="success" class="btn btn-success btn-block" [disabled]="
+                    accessUnit === 0 ||
+                    loading ||
+                    !cgmForm.valid ||
+                    cgmForm.get('dateStart').value >
+                      cgmForm.get('dateEnd').value
+                  ">
+                  ثبت
+                </button>
+              </ng-template>
+              <ng-template #btnEdit>
+                <button type="submit" nbButton status="success" class="btn btn-success btn-block"
+                  [disabled]="!cgmForm.valid || loading" [nbSpinner]="loading" nbSpinnerStatus="info"
+                  nbSpinnerSize="large">
+                  ویرایش
+                </button>
+              </ng-template>
+            </div>
+            <div class="col-md-6">
+              <button type="button" nbButton status="warning" class="btn btn-block" (click)="onPrintContract()"
+                [disabled]="!cgmForm.valid || loading || !isEdit">
+                چاپ قرارداد
+              </button>
+            </div>
+          </div>
+
+          <div class="row" style="height: 15px;"></div>
+
+          <div class="row">
+            <!-- <div class="col-md-6">
+              <button
+                type="button"
+                nbButton
+                status="danger"
+                class="btn btn-block"
+                [disabled]="!cgmForm.valid"
+              >
+                آپلود نسخه امضا شده
+              </button>
+            </div> -->
+            <div class="col-md-6">
+              <button type="button" nbButton (click)="reset()" status="primary" class="btn btn-block"
+                [disabled]="!cgmForm.valid || loading">
+                جدید
+              </button>
+            </div>
+          </div>
+          <div class="row" style="height: 12px;"></div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</form>

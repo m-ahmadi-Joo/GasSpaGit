@@ -1,0 +1,117 @@
+<nb-card>
+  <nb-card-header>
+    ساخت تعرفه بازرسی
+  </nb-card-header>
+  <nb-card-body>
+    <form (ngSubmit)="onSubmit()" [formGroup]="sendForm">
+      <div class="row mb-3">
+        <div class="col-sm-3">
+          <label>تاریخ اعمال</label>
+          <dp-date-picker name="cd" [config]="dateConfig" fullWidth id="cd" nbInput dir="rtl" mode="day" theme="dp-material"
+            formControlName="dateStart" class="col-sm-9 mt-5"></dp-date-picker>
+
+        </div>
+        <div class="col-sm-3">
+          <label>حداقل زیربنا</label>
+          <input fullWidth type="number" nbInput id="kn" formControlName="foundationMin" min="0" />
+        </div>
+        <div class="col-sm-3">
+          <label>حداکثر زیربنا</label>
+          <input fullWidth type="number" nbInput id="kn" formControlName="foundationMax" min="0" />
+        </div>
+        <div class="col-sm-3">
+          <label>رنج حداقل مصرف</label>
+          <input fullWidth type="number" nbInput id="kn" formControlName="consumptionRangMin" min="0" />
+        </div>
+      </div>
+      <div class="row  mb-3">
+
+        <div class="col-sm-3">
+          <label>رنج حداکثر مصرف</label>
+          <input fullWidth type="number" nbInput id="kn" formControlName="consumptionRangMax" min="0" />
+        </div>
+        <div class="col-sm-3">
+          <label>مبلغ بازرسی</label>
+          <input fullWidth type="number" nbInput id="kn" formControlName="inspectionPrice" min="0" />
+        </div>
+        <div class="col-sm-3">
+          <label> مبلغ بازرسی مجدد</label>
+          <input fullWidth type="number" nbInput id="kn" formControlName="reInspectionPrice" min="0" />
+        </div>
+        <div class="col-sm-3">
+          <label>مبلغ مشاوره</label>
+          <input fullWidth type="number" nbInput id="kn" formControlName="consultationPrice" min="0" />
+
+        </div>
+      </div>
+      <div class="row  mb-3">
+
+        <div class="col-sm-3">
+          <label>مبلغ ورودی بازرسی جوش</label>
+          <input fullWidth type="number" nbInput id="kn" formControlName="welidingFixPrice" min="0" />
+
+        </div>
+        <div class="col-sm-3">
+          <label>مبلغ به ازای هر سرجوش</label>
+          <input fullWidth type="number" nbInput id="kn" formControlName="weldingVariablePrice" min="0" />
+
+        </div>
+        <div class="col-sm-3">
+          <label>سقف مبلغ بازرسی جوش</label>
+          <input fullWidth type="number" nbInput id="kn" formControlName="weldingMaxPrice" min="0" />
+
+        </div>
+        <div class="col-sm-3">
+          <label>مبلغ اصلاحیه نقشه قبل از بازرسی</label>
+          <input fullWidth type="number" nbInput id="kn" formControlName="mapRevisionPriceBeforeInspection" min="0" />
+
+        </div>
+      </div>
+      <div class="row  mb-3">
+
+        <div class="col-sm-3">
+          <label>مبلغ اصلاحیه نقشه بعد از بازرسی</label>
+          <input fullWidth type="number" nbInput id="kn" formControlName="mapRevisionPriceAfterInspection" min="0" />
+
+        </div>
+        <div class="col-sm-3">
+          <label>انتخاب نوع کنتور</label>
+          <nb-select  #meterType placeholder="انتخاب نوع کنتور" fullWidth id="meterType"
+            formControlName="meterType">
+            <nb-option [value]="null">هیچ کدام</nb-option>
+            <nb-option *ngFor="let meterType of meterTypes" [value]="meterType.id">
+              {{ meterType.title }}
+            </nb-option>
+          </nb-select>
+        </div>
+        <div class="col-sm-3">
+          <label>انتخاب نوع تعرفه</label>
+          <nb-select  #tariffType placeholder="انتخاب نوع تعرفه" fullWidth id="tariffType"
+            formControlName="tariffType">
+            <nb-option [value]="null">هیچ کدام</nb-option>
+            <nb-option *ngFor="let tariffType of tariffTypes" [value]="tariffType.id">
+              {{ tariffType.title }}
+            </nb-option>
+          </nb-select>
+        </div>
+      </div>
+      <nb-card>
+        <nb-card-body>
+          <div class="row" style="text-align: left; direction: ltr;">
+
+            <button class="btn" *ngIf="isEdit===false" nbButton status="success" style="width: 100%;" type="submit"
+              [disabled]="sendForm.invalid">
+              ثبت
+            </button>
+            <button class="btn" *ngIf="isEdit===true" nbButton status="warning" style="width: 100%;" type="submit"
+              [disabled]="sendForm.invalid">
+              ویرایش
+            </button>
+
+
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </form>
+  </nb-card-body>
+</nb-card>

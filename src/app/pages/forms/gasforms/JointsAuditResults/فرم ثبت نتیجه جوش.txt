@@ -1,0 +1,30 @@
+// ثبت نتیجه بازرسی جوش
+
+submitJointsAuditResult: FormGroup;
+
+استاندارد الکترود :
+قطبیت { Polarity in welding } :
+نوع دستگاه جوشکاری :
+آموزش مهارت جوشکاری {قابل قبول ، مردود } :
+// آیا جوشکاری بدون عیب است ؟ => { (اگر بدون عیب نبود)
+شرح عیب :
+شماره اتصال :
+محل اتصال :
+روش رفع عیب :
+شرح کامل :
+توضیحات :
+// }
+
+this.submitJointsAuditResult = this.fb.group({
+	sjarElectordType-ctrl: ['', Validators.required],
+	sjarPolarity-ctrl: ['', Validators.required],
+	sjarWeldingMachineType-ctrl: ['', Validators.required],
+	sjarIsWelderSkilled-ctrl: ['', Validators.required],
+	sjarIsJointsOK-ctrl: ['', Validators.required],
+	sjarProblemDescription-ctrl: [''],
+	sjarJointNumber-ctrl: [''],
+	sjarJointPosition-ctrl: [''],
+	sjarHowToFixProblem-ctrl: [''],
+	sjarCompleteProblemDescription-ctrl: [''],
+	sjarComments-ctrl: ['', Validators.required],
+});

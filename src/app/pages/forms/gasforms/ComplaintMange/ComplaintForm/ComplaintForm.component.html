@@ -1,0 +1,246 @@
+
+<!-- <style>
+  nb-select.selectDefendants /deep/ .select-button {
+     width:100%;
+     /* min-width: 18rem !important;
+     max-width: 20rem !important; */
+   }
+
+   nb-select.selectFileNumber /deep/ .select-button {
+     width:100%;
+     /* min-width: 15rem !important;
+     max-width: 18rem !important; */
+   }
+ </style> -->
+
+   <form
+   [formGroup]="complaintForm"
+   (ngSubmit)="submit()"
+ >
+   <div class="row">
+     <div class="col-md-12">
+       <nb-card class="inline-form-card">
+         <nb-card-header>فرم ثبت شکواییه</nb-card-header>
+         <nb-card-body>
+           <div class="col-md-12">
+               <nb-card>
+                 <nb-card-body>
+                   <div class="row">
+
+                      <div class="col-sm-4 col-md-4 col-lg-4">
+                          <label class="ml-1" for="fileNumber">
+                          شماره درخواست گاز
+                          </label>
+                          <div class="form-group">
+                            <nb-select
+                                #gasRequestSelect
+                                (selectedChange)="getAllPossibleDefendants(gasRequestSelect.selected)"
+                                formControlName="gasRequestId" id="fileNumber" placeholder="انتخاب پرونده" class="selectFileNumber">
+                                <nb-option *ngFor="let item of gasRequests"
+                                [value]="item.gasRequestId"> {{ item.fileNumber }}
+                                  </nb-option>
+                            </nb-select>
+
+                            <div *ngIf="isSubmited">
+                                <div
+                                  *ngIf="
+                                    complaintForm.get('gasRequestId').value
+                                      .length === 0
+                                  "
+                                >
+                                  <div
+                                    *ngFor="
+                                      let validation of complaint_validation_messages.gasRequestId
+                                    "
+                                  >
+                                    <span class="text-danger">{{
+                                      validation.message
+                                    }}</span>
+                                  </div>
+                                </div>
+                              </div>
+                          </div>
+                      </div>
+
+                     <div class="col-sm-8 col-md-8 col-lg-8">
+                       <label class="ml-1" for="defendantIds">مشتکی عنه</label>
+                       <div class="form-group">
+                            <nb-select
+                              formControlName="defendantIds"
+                              multiple
+                              placeholder="انتخاب مشتکی عنه"
+                              class="selectDefendants"
+                            >
+                            <nb-option
+                              *ngFor="let item of defendants"
+                              [value]="item.userId"
+                            >
+                              &nbsp; {{ item.display }}
+                              </nb-option
+                            >
+                          </nb-select>
+                         <div *ngIf="isSubmited">
+                           <div
+                             *ngIf="
+                               complaintForm.get('defendantIds').value
+                                 .length === 0
+                             "
+                           >
+                             <div
+                               *ngFor="
+                                 let validation of complaint_validation_messages.defendantIds
+                               "
+                             >
+                               <span class="text-danger">{{
+                                 validation.message
+                               }}</span>
+                             </div>
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+
+                   </div>
+
+                   <div class="row">
+
+                      <div class="col-md-12">
+                          <div class="form-group">
+                            <label for="title">عنوان:</label>
+                            <input
+                              id="title"
+                              rows="5"
+                              nbInput
+                              fullWidth
+                              formControlName="title"
+                              [status]="
+                                complaintForm.get('title').dirty
+                                  ? complaintForm.get('title').invalid
+                                    ? 'danger'
+                                    : 'success'
+                                  : ''
+                              "
+                           />
+                          </div>
+                          <div
+                            *ngFor="
+                              let validation of complaint_validation_messages.title
+                            "
+                          >
+                            <span
+                              class="text-danger"
+                              *ngIf="
+                                complaintForm
+                                  .get('title')
+                                  .hasError(validation.type) &&
+                                (complaintForm.get('content').dirty ||
+                                  complaintForm.get('content').touched)
+                              "
+                              >{{ validation.message }}</span
+                            >
+                          </div>
+                        </div>
+
+                     <div class="col-md-12">
+                       <div class="form-group">
+                         <label for="content">شرح:</label>
+                         <textarea
+                           id="content"
+                           rows="10"
+                           nbInput
+                           fullWidth
+                           formControlName="content"
+                           [status]="
+                             complaintForm.get('content').dirty
+                               ? complaintForm.get('content').invalid
+                                 ? 'danger'
+                                 : 'success'
+                               : ''
+                           "
+                         ></textarea>
+                       </div>
+                       <div
+                         *ngFor="
+                           let validation of complaint_validation_messages.content
+                         "
+                       >
+                         <span
+                           class="text-danger"
+                           *ngIf="
+                             complaintForm
+                               .get('content')
+                               .hasError(validation.type) &&
+                             (complaintForm.get('content').dirty ||
+                               complaintForm.get('content').touched)
+                           "
+                           >{{ validation.message }}</span
+                         >
+                       </div>
+                     </div>
+                   </div>
+
+                       <div class="row">
+                         <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="!isEdit">
+                             <button
+                             type="submit"
+                             nbButton
+                             fullWidth
+                             [disabled]="
+                             loading ||
+                             !complaintForm.valid ||
+                             complaintForm.get('defendantIds').value.length === 0 ||
+                             complaintForm.get('gasRequestId').value.length === 0"
+                             hero
+                             status="success"
+                             [nbSpinner]="loading"
+                          nbSpinnerStatus="info"
+                          nbSpinnerSize="large"
+                           >
+                              ثبت
+                           </button>
+                         </div>
+
+                         <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="isEdit">
+                             <button
+                             type="submit"
+                             nbButton
+                             fullWidth
+                             [disabled]="
+                             loading ||
+                               !complaintForm.valid ||
+                               complaintForm.get('defendantIds').value.length === 0 ||
+                               complaintForm.get('gasRequestId').value.length === 0
+                             "
+                             hero
+                             status="primary"
+                             [nbSpinner]="loading"
+                          nbSpinnerStatus="info"
+                          nbSpinnerSize="large"
+                           >
+                            ویرایش
+                           </button>
+                         </div>
+
+                         <div class="col-lg-6 col-md-6 col-sm-6">
+                             <button
+                             [disabled]="loading"
+                               nbButton
+                               hero
+                               status="warning"
+                               fullWidth
+                               type="button"
+                               [routerLink]="['/pages/forms/ComplaintList']"
+                             >
+                               بازگشت به لیست
+                             </button>
+                         </div>
+                       </div>
+
+                 </nb-card-body>
+               </nb-card>
+           </div>
+         </nb-card-body>
+       </nb-card>
+     </div>
+   </div>
+ </form>

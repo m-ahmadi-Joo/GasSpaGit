@@ -1,0 +1,98 @@
+<nb-card>
+  <nb-card-header *ngIf="requestStateType === 'SpecifyRunTime'">
+    تاریخ شروع به اجرا
+  </nb-card-header>
+  <nb-card-header *ngIf="requestStateType === 'SpecifyInspectionTimeHP'">
+    تاریخ آمادگی جهت انجام بازرسی
+  </nb-card-header>
+  <nb-card-body>
+    <nb-card>
+      <nb-card-body>
+        <app-gasRequestDetailBox
+          [gasRequestId]="gasReqId"
+        ></app-gasRequestDetailBox>
+      </nb-card-body>
+    </nb-card>
+
+    <form (ngSubmit)="onSubmit()" [formGroup]="specifyRuntimeForm">
+      <div class="row">
+        <div class="col-sm-6">
+          <label class="ml-1 mr-4" for="cd">انتخاب تاریخ:</label>
+          <dp-date-picker
+            name="cd"
+            fullWidth
+            id="cd"
+            nbInput
+            [config]="datePickerConfig"
+            dir="rtl"
+            mode="day"
+            theme="dp-material"
+            formControlName="workDate"
+            class="col-sm-9"
+          ></dp-date-picker>
+        </div>
+        <div class="col-sm-6">
+          <label for="InspectionLocation" style="margin-left: 0.45rem;"
+            >محل بازرسی</label
+          >
+          <nb-radio-group
+            id="InspectionLocation"
+            class="form-inline"
+            formControlName="inspectionLocation"
+          >
+            <nb-radio value="1">
+              بازرسی در محل دفتر
+            </nb-radio>
+            <nb-radio value="2">
+              بازرسی در محل پروژه
+            </nb-radio>
+          </nb-radio-group>
+        </div>
+      </div>
+
+      <nb-card class="mb-0">
+          <nb-card-body>
+            <label for="locationAddress"> آدرس محل بازرسی: </label>
+            <textarea
+              id="locationAddress"
+              rows="3"
+              nbInput
+              fullWidth
+              formControlName="inspectionAddress"
+            ></textarea>
+          </nb-card-body>
+        </nb-card>
+
+      <nb-card>
+        <nb-card-body>
+          <label for="cmt"> شرح: </label>
+          <textarea
+            name="cmt"
+            id="cmt"
+            rows="7"
+            nbInput
+            fullWidth
+            formControlName="workDesc"
+          ></textarea>
+        </nb-card-body>
+      </nb-card>
+      <nb-card>
+        <nb-card-body>
+          <button
+            nbSpinnerStatus="info"
+            nbSpinnerSize="large"
+            type="submit"
+            nbButton
+            status="success"
+            class="btn btn-success btn-block"
+            [disabled]="!specifyRuntimeForm.valid || loading"
+          >
+            ثبت
+          </button>
+
+          <!-- {{specifyRuntimeForm.value | json}} -->
+        </nb-card-body>
+      </nb-card>
+    </form>
+  </nb-card-body>
+</nb-card>

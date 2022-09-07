@@ -1,0 +1,40 @@
+// فرم تایید آلبوم معماری
+
+// آلبوم معماری
+ArchitectureAlbum = AtAl[];
+
+// فرم اعمال نظر تایید کننده
+approveArchitectureAlbumForm: FormGroup;
+
+
+////
+فشار گاز مورد نیاز :
+// 1/4 psi
+// or
+// 2-60 pound
+////
+
+//// yes no questions :
+{
+مغایرت تعداد واحد در موافقت نامه اصولی با نقشه :
+استعلام محل علمک :
+محل کنتور :
+مسیر لوله کشی :
+محل عبور رایزرها یا خیز ها :
+محل شیر فرعی :
+محل داکت دودکش ها یا مجرای عبور :
+}
+
+توضیحات ، نظرات ، پیشنهادات :
+
+this.approveArchitectureAlbumForm = this.fb.group({
+	aaaGasPressureNeeded-ctrl: ['', Validators.require],
+	aaaApartmentDifference-ctrl: ['', Validators.require],
+	aaaGasMeterAuditRes-ctrl: ['', Validators.require],
+	aaaGasKontoorLocation-ctrl: ['', Validators.require],
+	aaaPipeHighWay-ctrl: ['', Validators.require],
+	aaaRisersHighWay-ctrl: ['', Validators.require],
+	aaaRestValvePosition-ctrl: ['', Validators.require],
+	aaaChimneyDuct-ctrl: ['', Validators.require],
+	aaaComments-ctrl: ['', Validators.require],
+});

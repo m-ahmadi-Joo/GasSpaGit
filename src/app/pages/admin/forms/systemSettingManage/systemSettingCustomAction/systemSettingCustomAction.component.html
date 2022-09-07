@@ -1,0 +1,23 @@
+<button nbTooltip="ویرایش" nbTooltipPlacement="top" *appHasRole="['Admin']"
+  [disabled]="!rData.editable" [ngStyle]="{ cursor: rData.hasUnit ? 'not-allowed' : 'pointer' }" size="tiny"
+  class="mb-2 mr-1" nbButton (click)="onEdit(rData)" status="warning">
+  <nb-icon [options]="{ animation: { type: 'zoom' } }" class="icon-button" icon="edit-2-outline">
+  </nb-icon>
+</button>
+<!-- <button
+  nbTooltip="حذف"
+  nbTooltipPlacement="top"
+  size="tiny"
+  class="mb-2 mr-1"
+  nbButton
+  status="danger"
+  (click)="onDelet(rData)"
+  *appHasRole= "['Admin']"
+>
+  <nb-icon
+    [options]="{ animation: { type: 'zoom' } }"
+    class="icon-button"
+    icon="close-outline"
+  >
+  </nb-icon>
+</button> -->

@@ -1,0 +1,120 @@
+<style>
+  .pagination /deep/ .ngx-pagination .current {
+    background: lightseagreen;
+  }
+
+  .pagination /deep/ pagination-template {
+    width: 100% !important;
+  }
+
+  .pagination {
+    text-align: center !important;
+  }
+
+  dp-date-picker /deep/ .dp-input-container .dp-picker-input {
+    width: 220px !important;
+  }
+
+  nb-select.pageSizeSelect /deep/ .select-button {
+    min-width: 8rem !important;
+  }
+
+  nb-select.workStatus /deep/ .select-button {
+    /* width:100%;
+          min-width: 19rem !important;
+          max-width: 22rem !important; */
+    padding: 0.3rem 1.125rem !important;
+  }
+
+  nb-accordion nb-accordion-item-body /deep/ .item-body {
+    padding: 0 !important;
+  }
+
+  nb-accordion nb-accordion-item-body /deep/ .map-position {
+    position: relative;
+    top: 0;
+    right: 0;
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px 0;
+  }
+
+  .col-lg-3.col-md-3.col-sm-6.col-xs-12,
+  .col-lg-2.col-md-2.col-sm-6.col-xs-12 {
+    padding: 7px;
+  }
+</style>
+
+<nb-card class="table-x-mine" style="box-shadow: 0 0 4px">
+  <nb-card-header class="pt-4" style="border-bottom: 0">
+    <div class="pull-right pt-2">
+      <span>کارتابل مدیریت</span>
+      <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="arrow-ios-back-outline">
+      </nb-icon>
+      <span class="mr-1" style="color:#3366ff">فیش حقوقی</span>
+    </div>
+
+    <div class="pull-left">
+      <button (click)="onPrint()" class="ml-1" nbButton status="primary" hero *appHasRole="['Admin', 'GasEmployee']" >
+        <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="printer-outline">
+        </nb-icon>
+         چاپ فیش حقوقی
+      </button>
+    </div>
+
+    <div class="clearfix"></div>
+  </nb-card-header>
+  <!-- (userRowSelect)="pooriya($event)" -->
+  <nb-card-body>
+    <div style="clear: both;"></div>
+    <ng2-smart-table [settings]="settings" [source]="source | paginate: pagingConfig"
+      style="direction: ltr;"></ng2-smart-table>
+
+    <span *ngFor="let item of src | paginate: pagingConfig"></span>
+
+    <nb-card>
+      <nb-card-body>
+        <div class="row">
+          <div class="input-group">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 form-inline pull-right">
+              <label for="pageSize" style="margin-left: 0;">
+                رکورد صفحه:
+              </label>
+              <nb-select status="info" #pageSizeSelect class="pageSizeSelect" [selected]="pagination.itemsPerPage"
+                (selectedChange)="changePageSize(pageSizeSelect.selected)" id="pageSize" placeholder="انتخاب ...">
+                <nb-option *ngFor="let p of pageSizes" [value]="p.id">
+                  {{ p.display }}
+                </nb-option>
+              </nb-select>
+            </div>
+
+            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 mt-2 ">
+              <div class="d-flex justify-content-center">
+                <pagination-controls class="pagination" (pageChange)="pageChanged($event)" previousLabel=""
+                  nextLabel="">
+                </pagination-controls>
+              </div>
+            </div>
+            <!-- <div
+              class="col-lg-2 col-md-2 col-sm-6 col-xs-6 form-inline pull-left"
+            >
+              <label for="pageSize" style="margin-left: 0.45rem;">
+                تعداد رکورد:{{ pagination.totalItems }}
+              </label>
+            </div> -->
+            <div style="padding-right: 7% !important;"
+              class="col-lg-4 col-md-4 col-sm-6 col-xs-6 form-inline pull-left">
+              <label for="pageNumber" style="margin-left: 0.45rem;">
+                صفحه:
+              </label>
+              <input [value]="pagination.currentPage" style="width: 30%;" #pageNumber size="tiny" id="pageNumber"
+                nbInput type="number" min="1" max="pagination.totalPages"
+                (keydown.enter)="pageChanged(pageNumber.value)" />
+              <span> از {{ pagination.totalItems }} نتیجه</span>
+            </div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+</nb-card>

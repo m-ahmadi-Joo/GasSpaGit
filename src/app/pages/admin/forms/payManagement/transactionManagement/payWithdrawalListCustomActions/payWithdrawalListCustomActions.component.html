@@ -1,0 +1,18 @@
+
+<button
+*appHasRole="['Admin']"
+[disabled] = "rData.isDeleted"
+title="حذف"
+size="tiny"
+class="mb-2 mr-1"
+nbButton
+status="danger"
+(click)="onDelete(rData)"
+>
+<nb-icon
+  [options]="{ animation: { type: 'zoom' } }"
+  class="icon-button"
+  icon="close-outline"
+>
+</nb-icon>
+</button> 

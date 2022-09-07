@@ -1,0 +1,252 @@
+<style>
+  #inspection {
+    margin: 30px;
+  }
+</style>
+<form [formGroup]="cgmForm" (ngSubmit)="submit()">
+  <nb-card>
+    <nb-card-header>
+      <strong> نتیجه بازرسی عالی</strong>
+    </nb-card-header>
+    <nb-card-body>
+      <section id="inspection">
+        <div class="row mb-4">
+          <label>
+            <strong>
+              حضور عوامل مجری و نظارت:
+            </strong>
+          </label>
+          <textarea
+            formControlName="presenceExecutorAndObserver"
+            fullWidth
+            nbInput
+            placeholder="ارزیابی"
+            rows="3"
+            shape="round"
+          ></textarea>
+          <div
+            *ngFor="
+              let validation of INPUT_VALIDATION_MESSAGES.presenceExecutorAndObserver
+            "
+          >
+            <span
+              class="text-danger"
+              *ngIf="
+                cgmForm
+                  .get('presenceExecutorAndObserver')
+                  .hasError(validation.type) &&
+                (cgmForm.get('presenceExecutorAndObserver').dirty ||
+                  cgmForm.get('presenceExecutorAndObserver').touched)
+              "
+            >
+              {{ validation.message }}</span
+            >
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label
+            ><strong>
+              مدارک فنی از قبیل:نقشه های مصوب,تاییدیه بازرسی فنی کالا:</strong
+            ></label
+          >
+          <textarea
+            formControlName="technicalDocuments"
+            fullWidth
+            nbInput
+            placeholder="ارزیابی"
+            rows="3"
+            shape="round"
+          ></textarea>
+          <div
+            *ngFor="
+              let validation of INPUT_VALIDATION_MESSAGES.technicalDocuments
+            "
+          >
+            <span
+              class="text-danger"
+              *ngIf="
+                cgmForm.get('technicalDocuments').hasError(validation.type) &&
+                (cgmForm.get('technicalDocuments').dirty ||
+                  cgmForm.get('technicalDocuments').touched)
+              "
+            >
+              {{ validation.message }}</span
+            >
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label>
+            <strong>
+              کیفیت مصالح و تطابق با تاییدیه های بازرسی فنی:
+            </strong>
+          </label>
+          <textarea
+            formControlName="materialQuality"
+            fullWidth
+            nbInput
+            placeholder="ارزیابی"
+            rows="3"
+            shape="round"
+          ></textarea>
+          <div
+            *ngFor="let validation of INPUT_VALIDATION_MESSAGES.materialQuality"
+          >
+            <span
+              class="text-danger"
+              *ngIf="
+                cgmForm.get('materialQuality').hasError(validation.type) &&
+                (cgmForm.get('materialQuality').dirty ||
+                  cgmForm.get('materialQuality').touched)
+              "
+            >
+              {{ validation.message }}</span
+            >
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label>
+            <strong>
+              حفاری و خاکبرداری کانال و پرکردن آن:
+            </strong>
+          </label>
+          <textarea
+            formControlName="drillingAndExcavation"
+            fullWidth
+            placeholder="ارزیابی"
+            nbInput
+            rows="3"
+            shape="round"
+          ></textarea>
+          <div
+            *ngFor="
+              let validation of INPUT_VALIDATION_MESSAGES.drillingAndExcavation
+            "
+          >
+            <span
+              class="text-danger"
+              *ngIf="
+                cgmForm
+                  .get('drillingAndExcavation')
+                  .hasError(validation.type) &&
+                (cgmForm.get('drillingAndExcavation').dirty ||
+                  cgmForm.get('drillingAndExcavation').touched)
+              "
+            >
+              {{ validation.message }}</span
+            >
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label>
+            <strong>
+              کیفیت اجرای لوله کشی و جوشکاری پلی اتیلن:
+            </strong>
+          </label>
+          <textarea
+            formControlName="polyethylenePipingAndWelding"
+            fullWidth
+            nbInput
+            placeholder="ارزیابی"
+            rows="3"
+            shape="round"
+          ></textarea>
+          <div
+            *ngFor="
+              let validation of INPUT_VALIDATION_MESSAGES.polyethylenePipingAndWelding
+            "
+          >
+            <span
+              class="text-danger"
+              *ngIf="
+                cgmForm
+                  .get('polyethylenePipingAndWelding')
+                  .hasError(validation.type) &&
+                (cgmForm.get('polyethylenePipingAndWelding').dirty ||
+                  cgmForm.get('polyethylenePipingAndWelding').touched)
+              "
+            >
+              {{ validation.message }}</span
+            >
+          </div>
+        </div>
+        <div class="row mb-4">
+          <label class="mr-3">
+            <strong>
+              کیفیت اجرای لوله کشی و جوشکاری فلزی:
+            </strong>
+          </label>
+          <textarea
+            formControlName="metalPipingAndWelding"
+            fullWidth
+            nbInput
+            placeholder="ارزیابی"
+            rows="3"
+            shape="round"
+          ></textarea>
+          <div
+            *ngFor="
+              let validation of INPUT_VALIDATION_MESSAGES.metalPipingAndWelding
+            "
+          >
+            <span
+              class="text-danger"
+              *ngIf="
+                cgmForm
+                  .get('metalPipingAndWelding')
+                  .hasError(validation.type) &&
+                (cgmForm.get('metalPipingAndWelding').dirty ||
+                  cgmForm.get('metalPipingAndWelding').touched)
+              "
+            >
+              {{ validation.message }}</span
+            >
+          </div>
+        </div>
+      </section>
+      <nb-card class="mr-3">
+        <nb-card-body>
+          <label>
+            <strong>
+              ارزیابی نهایی:
+            </strong>
+          </label>
+          <nb-radio-group
+            class="form-inline mr-3 mb-4"
+            formControlName="result"
+            id="conf"
+            name="conf"
+          >
+            <nb-radio value="true">
+              تایید
+            </nb-radio>
+            <nb-radio value="false">
+              عدم تایید
+            </nb-radio>
+          </nb-radio-group>
+        </nb-card-body>
+        <!-- <button
+          class="btn"
+          nbButton
+          status="success"
+          style="width: 100%;"
+          type="submit"
+          (click)="submit()"
+          [disabled]="cgmForm.invalid"
+        >
+          ثبت
+        </button> -->
+
+        <button
+        class="btn"
+        nbButton
+        status="success"
+        style="width: 100%;"
+        type="submit"
+        [disabled]="cgmForm.invalid"
+      >
+        ثبت
+      </button>
+      </nb-card>
+    </nb-card-body>
+  </nb-card>
+</form>

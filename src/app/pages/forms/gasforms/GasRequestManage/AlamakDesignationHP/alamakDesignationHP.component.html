@@ -1,0 +1,191 @@
+<app-gasRequestDetailBox
+[gasRequestId]="gasReqId"
+></app-gasRequestDetailBox>
+<form [formGroup]="cgmForm" (ngSubmit)="onSubmit()">
+  <nb-card>
+    <nb-card-header>
+      ثبت اطلاعات ایستگاه/علمک
+    </nb-card-header>
+    <nb-card-body>
+      <nb-card>
+        <nb-card-body>
+   
+        </nb-card-body>
+      </nb-card>
+      <nb-card>
+        <nb-card-body class="p-0">
+          <nb-card-header>
+            مستندات آپلود شده:
+          </nb-card-header>
+          <div class="col-lg-12 col-md-12">
+            <!-- <label>مستندات آپلود شده:</label> -->
+            <div class="mt-3">
+              <DocumentsUploaded
+                [id]="gasReqId"
+                [type]="'GasRequest'"
+              ></DocumentsUploaded>
+            </div>
+            <!-- <a [href]="path" [download]="imageName">
+              دانلود
+          </a> -->
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <nb-card>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-sm-3 col-md-3 col-lg-3">
+              <label>
+                تعداد ایستگاه/علمک:
+              </label>
+              <input
+                formControlName="alamakRequireCount"
+                fullWidth
+                id="tb"
+                nbInput
+              />
+              <div
+              *ngFor="
+                let validation of INPUT_VALIDATION_MESSAGES.alamakRequireCount
+              "
+            >
+              <span
+                class="text-danger"
+                *ngIf="
+                  cgmForm
+                    .get('alamakRequireCount')
+                    .hasError(validation.type) &&
+                  (cgmForm.get('alamakRequireCount').dirty ||
+                    cgmForm.get('alamakRequireCount').touched)
+                "
+                >{{ validation.message }}</span
+              >
+            </div>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+
+      <nb-card>
+        <nb-card-body class="p-0">
+          <div class="col-lg-12 col-md-12 col-sm-12 input-group">
+            <label>اطلاعات ایستگاه/علمک:</label>
+            <textarea
+              formControlName="controlDescription"
+              fullWidth
+              nbInput
+              rows="5"
+              shape="round"
+            ></textarea>
+            <div
+            *ngFor="
+              let validation of INPUT_VALIDATION_MESSAGES.controlDescription
+            "
+          >
+            <span
+              class="text-danger"
+              *ngIf="
+                cgmForm
+                  .get('controlDescription')
+                  .hasError(validation.type) &&
+                (cgmForm.get('controlDescription').dirty ||
+                  cgmForm.get('controlDescription').touched)
+              "
+              >{{ validation.message }}</span
+            >
+          </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <nb-card>
+        <nb-card-body>
+          <!-- <label for="file">نقشه علمک:</label> -->
+          <div *ngFor="let a of inputCount; let i = index">
+            <label class="mb-0"> {{ a?.title }}</label>
+
+            <strong
+              class="mb-2"
+              style="color: rgb(0, 68, 255); display: block; font-size: 11px;"
+            >
+              حداکثر حجم {{ sizeTitles[i] }} - فرمت ها ({{ a.extentions }})
+            </strong>
+            <!-- <strong class="mb-2" style="color: red; display:block; font-size: 11px;">تایپ ها قابل بارگذاری</strong> -->
+            <app-uploader
+              [formControlName]="a.formControlName"
+              [fileExtentions]="a.extentions"
+              [fileSize]="a.size"
+            >
+            </app-uploader>
+
+            <!-- [progress]="progress"
+            [filePath]="imagePathEdit" -->
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <nb-card>
+        <nb-card-body>
+          <!-- <label for="file">نقشه علمک:</label> -->
+          <div *ngFor="let a of inputCountSalesContract; let i = index">
+            <label class="mb-0"> {{ a?.title }}</label>
+
+            <strong
+              class="mb-2"
+              style="color: rgb(0, 68, 255); display: block; font-size: 11px;"
+            >
+              حداکثر حجم {{ sizeTitlesSalesContract[i] }} - فرمت ها ({{ a.extentions }})
+            </strong>
+            <!-- <strong class="mb-2" style="color: red; display:block; font-size: 11px;">تایپ ها قابل بارگذاری</strong> -->
+            <app-uploader
+              [formControlName]="a.formControlName"
+              [fileExtentions]="a.extentions"
+              [fileSize]="a.size"
+            >
+            </app-uploader>
+
+            <!-- [progress]="progress"
+            [filePath]="imagePathEdit" -->
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <nb-card>
+        <nb-card-body>
+          <div class="row col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <button
+                type="button"
+                (click)="onSubmit()"
+                hero
+                nbButton
+                fullWidth
+                status="success"
+                class="btn"
+                [nbSpinner]="loading"
+                nbSpinnerStatus="info"
+                nbSpinnerSize="large"
+                [disabled]="cgmForm.invalid"
+              >
+                ثبت
+              </button>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <button
+                [routerLink]="['/pages/forms/GasReqList']"
+                nbSpinnerStatus="info"
+                nbSpinnerSize="large"
+                type="button"
+                nbButton
+                hero
+                fullWidth
+                status="primary"
+                class="btn"
+              >
+                بازگشت به لیست درخواست ها
+              </button>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </nb-card-body>
+  </nb-card>
+</form>

@@ -1,0 +1,83 @@
+<nb-card>
+  <nb-card-header>
+    <span>
+      {{selectedUser.firstName ? selectedUser.firstName : 'null'}}
+      {{selectedUser.lastName ? selectedUser.lastName : 'null'}}
+    </span>
+  </nb-card-header>
+  <nb-card-body>
+    <nb-card>
+      <nb-card-body style="text-align: end">
+        <label>
+          <strong>ID</strong> : {{selectedUser.id ? selectedUser.id : 'null'}}
+        </label>
+        <label>
+          <strong>National ID</strong> : {{selectedUser.nationalID ? selectedUser.nationalID : 'null'}}
+        </label>
+        <label>
+          <strong>Phone Number</strong> : {{selectedUser.phoneNumber ? selectedUser.phoneNumber : 'null'}}
+        </label>
+        <label>
+          <strong>Email</strong> : {{selectedUser.email ? selectedUser.email : 'null'}}
+        </label>
+        <label>
+          <strong>Tel</strong> : {{selectedUser.tel ? selectedUser.tel : 'null'}}
+        </label>
+        <label>
+          <strong>UserName</strong> : {{selectedUser.userName ? selectedUser.userName : 'null'}}
+        </label>
+      </nb-card-body>
+    </nb-card>
+    <nb-card>
+      <nb-card-header>
+        <div style="text-align: start;">
+          <span>
+            مجوزهای احدا شده به
+            {{selectedUser.lastName ? selectedUser.lastName : 'null'}}
+          </span>
+        </div>
+        <div style="text-align: end;">
+          <span>
+            <nb-icon
+              *ngIf="!viewMode"
+              (click)="onCancel()"
+              [options]="{ animation: { type: 'pulse' } }"
+              style="cursor: pointer;"
+              icon="close-outline"></nb-icon>
+            <nb-icon
+              *ngIf="!viewMode"
+              (click)="onSave()"
+              [options]="{ animation: { type: 'pulse' } }"
+              style="cursor: pointer;"
+              icon="checkmark-circle-outline"></nb-icon>
+            <nb-icon
+              *ngIf="viewMode"
+              (click)="onEdit()"
+              [options]="{ animation: { type: 'zoom' } }"
+              style="cursor: pointer;"
+              icon="edit-outline"></nb-icon>
+          </span>
+        </div>
+      </nb-card-header>
+      <nb-card-body>
+        <div class="col-md-12">
+          <span style="margin-bottom: 0.25rem;">
+            نقش مرتبط
+          </span>
+          <nb-select
+            [disabled]="viewMode"
+            [(selected)]="selectedRole"
+            fullWidth
+            #selectEl>
+            <nb-option [value]="'NoRole'">
+              <span>
+                بدون نقش
+              </span>
+            </nb-option>
+            <nb-option *ngFor="let role of roles" [value]="role.id">{{role.name}}</nb-option>
+          </nb-select>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+</nb-card>

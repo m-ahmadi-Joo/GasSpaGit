@@ -1,0 +1,164 @@
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <nb-card>
+      <nb-card-header>اطلاعات نقشه</nb-card-header>
+      <nb-card-body>
+        <div class="col-lg-1 col-md-1 col-sm-1">
+          <button
+            class="btn"
+            nbButton
+            size="tiny"
+            status="success"
+            style="margin: 1px;">+
+          </button>
+        </div>
+        <nb-card>
+          <nb-card-body>
+            <form (ngSubmit)="onSubmit()" [formGroup]="bpiForm">
+              <div class="form-group">
+                <div class="input-group full-name-input">
+                  <div class="col-lg-4 col-md-4 col-sm-4 input-item">
+                    <label for="mn">شماره طبقه</label>
+                    <input
+                      formControlName="bpiFloorNum"
+                      fullWidth
+                      id="mn"
+                      name="mn"
+                      nbInput
+                      type="text">
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-4 input-item">
+                    <label for="dr">جهت</label>
+                    <nb-select
+                      formControlName="bpiDirection"
+                      id="dr"
+                      multiple
+                      placeholder="جهت"
+                      style="max-width: 100%;">
+                      <nb-option value="شمالی">شمالی</nb-option>
+                      <nb-option value="جنوبی">جنوبی</nb-option>
+                      <nb-option value="غربی">غربی</nb-option>
+                      <nb-option value="شرقی">شرقی</nb-option>
+                    </nb-select>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-4 input-item">
+                    <label for="usage">میزان مصرف</label>
+                    <input
+                      formControlName="bpiGasUsage"
+                      fullWidth
+                      id="usage"
+                      name="usage"
+                      nbInput
+                      type="number">
+                  </div>
+                </div>
+                <div class="input-group full-name-input">
+                  <div class="col-lg-4 col-md-4 col-sm-4 input-item">
+                    <label for="fn">زیر بنای واحد</label>
+                    <input
+                      formControlName="bpiFundationMeter"
+                      fullWidth
+                      id="fn"
+                      name="fn"
+                      nbInput
+                      type="number">
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-4 input-item">
+                    <label for="pt">نوع لوله کشی</label>
+                    <input
+                      formControlName="bpiPipesType"
+                      fullWidth
+                      id="pt"
+                      name="pt"
+                      nbInput
+                      type="text">
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-4 input-item">
+                    <label for="tn">تعداد وسایل گاز سوز</label>
+                    <input
+                      formControlName="bpiGasUsingToolsCount"
+                      fullWidth
+                      id="tn"
+                      name="tn"
+                      nbInput
+                      type="text">
+                  </div>
+                </div>
+                <div class="input-group full-name-input">
+                  <div class="col-lg-4 col-md-4 col-sm-4 input-item">
+                    <label for="kt">نوع کنتور مورد استفاده</label>
+                    <input
+                      formControlName="bpiGasMeterType"
+                      fullWidth
+                      id="kt"
+                      name="kt"
+                      nbInput
+                      type="text">
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-4 input-item">
+                    <label for="cst">هزینه مورد نیاز</label>
+                    <input
+                      formControlName="bpiProjCost"
+                      fullWidth
+                      id="cst"
+                      name="cst"
+                      nbInput type="text">
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-4 input-item">
+                    <label for="mnb">شماره نقشه</label>
+                    <input
+                      formControlName="bpiBluePrintNumber"
+                      fullWidth
+                      id="mnb"
+                      name="mnb"
+                      nbInput
+                      type="text">
+                  </div>
+                </div>
+                <div class="input-group full-name-input">
+                  <div class="col-lg-10 col-md-10 col-sm-10 input-item">
+                    <label for="fil">فایل نقشه</label>
+                    <input
+                      formControlName="bpiBluePrintFile"
+                      fullWidth
+                      id="fil"
+                      name="fil"
+                      nbInput
+                      type="file">
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2 input-item">
+                    <label for="apn">واحد</label>
+                    <input
+                      formControlName="bpiApartmentNum"
+                      fullWidth
+                      id="apn"
+                      name="apn"
+                      nbInput
+                      type="text">
+                  </div>
+                </div>
+                <hr/>
+              </div>
+              <div class="btn-group col-lg-6 col-md-6 col-sm-6">
+                <button
+                  nbButton
+                  status="info"
+                  style="width: 100%;"
+                  type="submit">ثبت اطلاعات/ورود اطلاعات جدید
+                </button>
+              </div>
+              <div class="btn-group col-lg-6 col-md-6 col-sm-6">
+                <button
+                  nbButton
+                  status="success"
+                  style="width: 100%;"
+                  type="submit">ثبت اطلاعات و مرحله بعد
+                </button>
+              </div>
+            </form>
+          </nb-card-body>
+        </nb-card>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

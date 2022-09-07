@@ -1,0 +1,325 @@
+<form [formGroup]="cgmForm" (ngSubmit)="submit()">
+  <nb-card>
+    <nb-card-body>
+      <nb-card class="inline-form-card">
+        <nb-card-body>
+          <nb-card>
+            <nb-card-header>اطلاعات جوشکار فلزی:</nb-card-header>
+            <nb-card-body>
+              <div class="row">
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                  <strong>نام:</strong>
+                  <input
+                    fullWidth
+                    nbInput
+                    id="cnt"
+                    formControlName="metalFirstName"
+                  />
+                  <div
+                    *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.metalFirstName
+                    "
+                  >
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        cgmForm
+                          .get('metalFirstName')
+                          .hasError(validation.type) &&
+                        (cgmForm.get('metalFirstName').dirty ||
+                          cgmForm.get('metalFirstName').touched)
+                      "
+                      >{{ validation.message }}</span
+                    >
+                  </div>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                  <strong>نام خانوادگی:</strong>
+                  <input
+                    fullWidth
+                    nbInput
+                    id="cnt"
+                    formControlName="metalLastName"
+                  />
+                  <div
+                    *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.metalLastName
+                    "
+                  >
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        cgmForm
+                          .get('metalLastName')
+                          .hasError(validation.type) &&
+                        (cgmForm.get('metalLastName').dirty ||
+                          cgmForm.get('metalLastName').touched)
+                      "
+                      >{{ validation.message }}</span
+                    >
+                  </div>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                  <strong>موبایل:</strong>
+                  <input
+                    fullWidth
+                    nbInput
+                    id="cnt"
+                    formControlName="metalPhoneNumber"
+                  />
+                  <div
+                    *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.metalPhoneNumber
+                    "
+                  >
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        cgmForm
+                          .get('metalPhoneNumber')
+                          .hasError(validation.type) &&
+                        (cgmForm.get('metalPhoneNumber').dirty ||
+                          cgmForm.get('metalPhoneNumber').touched)
+                      "
+                      >{{ validation.message }}</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+
+          <nb-card>
+            <nb-card-header>اطلاعات جوشکار پلی اتیلن:</nb-card-header>
+            <nb-card-body>
+              <div class="row">
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                  <strong>نام:</strong>
+                  <input
+                    fullWidth
+                    nbInput
+                    id="cnt"
+                    formControlName="peFirstName"
+                  />
+                  <div
+                    *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.peFirstName
+                    "
+                  >
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        cgmForm.get('peFirstName').hasError(validation.type) &&
+                        (cgmForm.get('peFirstName').dirty ||
+                          cgmForm.get('peFirstName').touched)
+                      "
+                      >{{ validation.message }}</span
+                    >
+                  </div>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                  <strong>نام خانوادگی:</strong>
+                  <input
+                    fullWidth
+                    nbInput
+                    id="cnt"
+                    formControlName="peLastName"
+                  />
+                  <div
+                    *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.peLastName
+                    "
+                  >
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        cgmForm.get('peLastName').hasError(validation.type) &&
+                        (cgmForm.get('peLastName').dirty ||
+                          cgmForm.get('peLastName').touched)
+                      "
+                      >{{ validation.message }}</span
+                    >
+                  </div>
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                  <strong>موبایل:</strong>
+                  <input
+                    fullWidth
+                    nbInput
+                    id="cnt"
+                    formControlName="pePhoneNumber"
+                  />
+                  <div
+                    *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.pePhoneNumber
+                    "
+                  >
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        cgmForm
+                          .get('pePhoneNumber')
+                          .hasError(validation.type) &&
+                        (cgmForm.get('pePhoneNumber').dirty ||
+                          cgmForm.get('pePhoneNumber').touched)
+                      "
+                      >{{ validation.message }}</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+          <nb-card>
+            <nb-card-header>اطلاعات تست کننده:</nb-card-header>
+            <nb-card-body>
+              <div class="row">
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                  <strong>نام:</strong>
+                  <input
+                    fullWidth
+                    nbInput
+                    id="cnt"
+                    formControlName="testerFirstName"
+                  />
+                  <div
+                    *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.testerFirstName
+                    "
+                  >
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        cgmForm
+                          .get('testerFirstName')
+                          .hasError(validation.type) &&
+                        (cgmForm.get('testerFirstName').dirty ||
+                          cgmForm.get('testerFirstName').touched)
+                      "
+                      >{{ validation.message }}</span
+                    >
+                  </div>
+                </div>
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                  <strong>نام خانوادگی:</strong>
+                  <input
+                    fullWidth
+                    nbInput
+                    id="cnt"
+                    formControlName="testerLastName"
+                  />
+                  <div
+                    *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.testerLastName
+                    "
+                  >
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        cgmForm
+                          .get('testerLastName')
+                          .hasError(validation.type) &&
+                        (cgmForm.get('testerLastName').dirty ||
+                          cgmForm.get('testerLastName').touched)
+                      "
+                      >{{ validation.message }}</span
+                    >
+                  </div>
+                </div>
+                <div class="col-sm-3 col-md-4 col-lg-3">
+                  <strong>موبایل:</strong>
+                  <input
+                    fullWidth
+                    nbInput
+                    id="cnt"
+                    formControlName="testerPhoneNumber"
+                  />
+                  <div
+                    *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.testerPhoneNumber
+                    "
+                  >
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        cgmForm
+                          .get('testerPhoneNumber')
+                          .hasError(validation.type) &&
+                        (cgmForm.get('testerPhoneNumber').dirty ||
+                          cgmForm.get('testerPhoneNumber').touched)
+                      "
+                      >{{ validation.message }}</span
+                    >
+                  </div>
+                </div>
+                <div class="col-sm-3 col-md-4 col-lg-3">
+                  <strong>شماره X-Rayچادر:</strong>
+                  <input fullWidth nbInput id="cnt" formControlName="xRay" />
+                  <div
+                    *ngFor="let validation of INPUT_VALIDATION_MESSAGES.xRay"
+                  >
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        cgmForm.get('xRay').hasError(validation.type) &&
+                        (cgmForm.get('xRay').dirty ||
+                          cgmForm.get('xRay').touched)
+                      "
+                      >{{ validation.message }}</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+          <nb-card>
+            <nb-card-header>
+              گواهینامه کالیبراسیون دستگاه جوش پلی اتیلن:
+            </nb-card-header>
+            <nb-card-body>
+              <textarea
+                formControlName="controlDescription"
+                fullWidth
+                nbInput
+                rows="5"
+                shape="round"
+              ></textarea>
+              <div
+                *ngFor="
+                  let validation of INPUT_VALIDATION_MESSAGES.controlDescription
+                "
+              >
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    cgmForm
+                      .get('controlDescription')
+                      .hasError(validation.type) &&
+                    (cgmForm.get('controlDescription').dirty ||
+                      cgmForm.get('controlDescription').touched)
+                  "
+                  >{{ validation.message }}</span
+                >
+              </div>
+            </nb-card-body>
+          </nb-card>
+          <nb-card>
+            <nb-card-body>
+              <button
+                nbSpinnerStatus="info"
+                nbSpinnerSize="large"
+                type="submit"
+                nbButton
+                status="success"
+                class="btn btn-success btn-block"
+                [disabled]="cgmForm.invalid"
+              >
+                ثبت
+              </button>
+            </nb-card-body>
+          </nb-card>
+        </nb-card-body>
+      </nb-card>
+    </nb-card-body>
+  </nb-card>
+</form>

@@ -1,0 +1,95 @@
+<!-- <nb-card class="card-inside-tab">
+  <nb-card-header
+    class="permit-header">
+    صدور مجوز برای نقش های ثبت شده
+  </nb-card-header>
+  <nb-card-body>
+    <div class="col-md-4">
+      <nb-card>
+        <nb-card-header>نقش های مجوز دار</nb-card-header>
+        <nb-card-body>
+          <nb-list class="inline-list">
+            <nb-list-item
+              *ngFor="let role of roles;"
+              class="col-md-12">
+              <div>
+                <p><strong>{{role.name}}</strong></p>
+              </div>
+              <div class="stay-left">
+                <nb-icon
+                  [options]="{ animation: { type: 'shake' } }"
+                  class="icon-button"
+                  icon="close-circle-outline"></nb-icon>
+                <nb-icon
+                  [options]="{ animation: { type: 'pulse' } }"
+                  (click)="onEdit(role.id)"
+                  class="icon-button"
+                  icon="edit-outline"></nb-icon>
+              </div>
+            </nb-list-item>
+          </nb-list>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col-md-8">
+      <nb-card>
+        <nb-card-header>
+          <div>
+            <button
+              [disabled]="newMode || editMode"
+              (click)="onNew()"
+              nbButton
+              status="success">
+              تعریف نقش + مجوز جدید
+            </button>
+          </div>
+          <div *ngIf="(editMode || newMode)" class="stay-left">
+            <button
+              (click)="onCancel()"
+              nbButton
+              status="danger">
+              انصراف
+            </button>
+            <button
+              (click)="onSave(selectComponent.selected)"
+              nbButton
+              status="info">
+              ذخیره
+            </button>
+          </div>
+        </nb-card-header>
+        <nb-card-body>
+          <label *ngIf="!editMode" for="pName">
+            نقش مورد نظر را نام گذاری کنید
+          </label>
+          <label *ngIf="editMode" for="pName">
+            اختصاص نام جدید برای نقش انتخابی
+          </label>
+          <input
+            *ngIf="selectedRole"
+            [disabled]="(!newMode && !editMode)"
+            #inputElement
+            fullWidth
+            id="pName"
+            nbInput
+            [value]="selectedRole.name"
+            placeholder="اسم مورد نظر"
+            type="text">
+          <nb-select
+            #selectComponent
+            [disabled]="(!newMode && !editMode)"
+            class="select-inside-tab"
+            fullWidth
+            placeholder="مجوزها"
+            multiple>
+            <nb-option
+              *ngFor="let menu of loadedMenus"
+              [value]="menu['id']">
+              {{menu['title']}}
+            </nb-option>
+          </nb-select>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </nb-card-body>
+</nb-card> -->

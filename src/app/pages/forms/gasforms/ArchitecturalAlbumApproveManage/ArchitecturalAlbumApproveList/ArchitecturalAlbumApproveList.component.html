@@ -1,0 +1,33 @@
+<nb-card>
+  <nb-card-body>
+      <app-gasRequestDetailBox [gasRequestId]="gasReqId"></app-gasRequestDetailBox>
+  </nb-card-body>
+</nb-card>
+
+
+<nb-card class="table-x-mine">
+  <nb-card-header>
+    سوابق نتایج کمیسیون ضوابط گازرسانی
+  </nb-card-header>
+    <nb-card-body>
+      <!-- <div style="margin-bottom: 15px;float: left;">
+          <a class="btn btn-info btn-lg" style="color:#fff"
+          *appHasRole="['Owner','Admin']"
+          [routerLink]="[ '/pages/forms/GasRequest' ]">
+            <nb-icon
+              [options]="{ animation: { type: 'pulse' } }"
+              class="icon-button"
+              icon="home-outline">
+            </nb-icon>
+            ثبت ملک</a>
+      </div> -->
+
+      <div style="clear: both"></div>
+      <div class="table-wrapper">
+        <ng2-smart-table
+        [settings]="settings"
+        [source]="source"
+        style="direction:ltr"></ng2-smart-table>
+      </div>
+    </nb-card-body>
+  </nb-card>

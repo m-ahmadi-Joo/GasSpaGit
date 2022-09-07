@@ -1,0 +1,97 @@
+
+<!-- <style>
+  nb-select.selectDefendants /deep/ .select-button {
+     width:100%;
+     /* min-width: 18rem !important;
+     max-width: 20rem !important; */
+   }
+
+   nb-select.selectFileNumber /deep/ .select-button {
+     width:100%;
+     /* min-width: 15rem !important;
+     max-width: 18rem !important; */
+   }
+ </style> -->
+
+ <div class="row">
+   <div class="col-md-12">
+     <nb-card class="inline-form-card">
+       <nb-card-header>جزئیات شکواییه</nb-card-header>
+       <nb-card-body>
+         <div class="col-md-12">
+             <nb-card>
+               <nb-card-body>
+                 <div class="row">
+                    <div class="col-sm-4 col-md-4 col-lg-4">
+                      <strong>
+                        <label class="ml-1" for="fileNumber">
+                        شماره پرونده:
+                        </label>
+                      </strong>
+                        <label for="">
+                            {{info.complaintFileNumber}}
+                        </label>
+                    </div>
+
+                    <div class="col-sm-4 col-md-4 col-lg-4">
+                      <strong>
+                        <label class="ml-1" for="fileNumber">
+                        شماره درخواست گاز:
+                      </label>
+                      </strong>
+                            <label for="">
+                              {{info.gasRequestFileNumber}}
+                                <!-- {{info.gasRequestId}} -->
+                            </label>
+                    </div>
+                 </div>
+
+                 <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                      <strong>
+                        <label class="ml-1" for="defendantIds">شاکی: </label>
+                      </strong>
+                        <label for="">
+                          {{info.complainant}}
+                        </label>
+                    </div>
+                  </div>
+
+                 <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                      <strong>
+                        <label class="ml-1" for="defendantIds">مشتکی عنه ها: </label>
+                      </strong>
+                        <label for="">
+                          {{info.defendants}}
+                        </label>
+                    </div>
+                  </div>
+
+                 <div class="row">
+                    <div class="col-md-12">
+                        <strong>
+                          <label class="ml-1" for="title">عنوان: </label>
+                        </strong>
+                          <label for="">
+                              {{info.title}}
+                          </label>
+                      </div>
+
+                   <div class="col-md-12">
+                      <strong>
+                        <label class="ml-1" for="content">شرح: </label>
+                      </strong>
+                       <label for="">
+                          {{info.content}}
+                      </label>
+                   </div>
+                 </div>
+
+               </nb-card-body>
+             </nb-card>
+         </div>
+       </nb-card-body>
+     </nb-card>
+   </div>
+ </div>

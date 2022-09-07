@@ -1,0 +1,157 @@
+<nb-card>
+  <nb-card-header>کنترل قطعات</nb-card-header>
+  <nb-card-body>
+    <nb-card>
+      <nb-card-body>
+        <app-gasRequestDetailBox
+          [gasRequestId]="gasReqId"
+        ></app-gasRequestDetailBox>
+      </nb-card-body>
+    </nb-card>
+    <form [formGroup]="cgmForm" (ngSubmit)="submit()">
+      <strong>لیست کالا ها :</strong>
+      <nb-card class="border border-dark mt-2">
+        <nb-card-body>
+          <div class="row">
+            <div class="col-sm-4 col-md-4 mb-2">
+              <strong>نام کالا</strong>
+            </div>
+            <div class="col-sm-2 col-md-2 mb-2">
+              <strong>تعداد کالا</strong>
+            </div>
+            <div class="col-sm-2 col-md-2 mb-2">
+              <strong>قیمت واحد</strong>
+            </div>
+            <div class="col-sm-4 col-md-4 mb-2">
+              <strong>شرح کالا</strong>
+            </div>
+          </div>
+          <div *ngFor="let item of lstGoods">
+            <div class="row">
+              <div class="col-sm-4 col-md-4 mb-2">
+                <input
+                  fullWidth
+                  nbInput
+                  id="cnt"
+                  min="0"
+                  value="{{ item?.productName }}"
+                  readonly
+                />
+              </div>
+              <div class="col-sm-2 col-md-2 mb-2">
+                <input
+                  fullWidth
+                  type="number"
+                  nbInput
+                  id="cnt"
+                  min="0"
+                  value="{{ item?.productCount }}"
+                  readonly
+                />
+              </div>
+              <div class="col-sm-2 col-md-2 mb-2">
+                <input
+                  fullWidth
+                  type="number"
+                  nbInput
+                  id="cnt"
+                  min="0"
+                  value="{{ item?.price }}"
+                  readonly
+                />
+              </div>
+              <div class="col-sm-4 col-md-4 mb-2">
+                <input
+                  fullWidth
+                  nbInput
+                  id="cnt"
+                  value="{{ item?.productDesc }}"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <strong>لیست تامین کنندگان:</strong>
+      <nb-card class="border border-dark mt-2">
+        <nb-card-body>
+          <div class="row">
+            <div class="col-sm-4 col-md-4 mb-2">
+              <strong>نام</strong>
+            </div>
+            <div class="col-sm-4 col-md-4 mb-2">
+              <strong>نام خانوادگی</strong>
+            </div>
+            <div class="col-sm-4 col-md-4 mb-2">
+              <strong>کد ملی</strong>
+            </div>
+          </div>
+          <div *ngFor="let item of suppliers">
+            <div class="row">
+              <div class="col-sm-4 col-md-4 mb-2">
+                <input
+                  fullWidth
+                  nbInput
+                  value="{{ item?.firstName }}"
+                  readonly
+                />
+              </div>
+              <div class="col-sm-4 col-md-4 mb-2">
+                <input
+                  fullWidth
+                  nbInput
+                  value="{{ item?.lastName }}"
+                  readonly
+                />
+              </div>
+              <div class="col-sm-4 col-md-4 mb-2">
+                <input
+                  fullWidth
+                  nbInput
+                  value="{{ item?.nationalCode }}"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <nb-card>
+        <nb-card-header>
+          <strong>نتیجه:</strong>
+        </nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <nb-radio-group
+              class="form-inline radio-x-inline"
+              formControlName="result"
+            >
+              <nb-radio value="true">تایید</nb-radio>
+              <nb-radio value="false">عدم تایید</nb-radio>
+            </nb-radio-group>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </form>
+    <nb-card>
+      <nb-card-body>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <button
+            class="btn"
+            nbButton
+            status="success"
+            style="width: 100%;"
+            type="submit"
+            (click)="submit()"
+            nbSpinnerStatus="info"
+            nbSpinnerSize="large"
+            [disabled]="cgmForm.invalid"
+          >
+            ثبت
+          </button>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+</nb-card>

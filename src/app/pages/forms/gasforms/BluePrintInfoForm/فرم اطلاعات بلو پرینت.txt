@@ -1,0 +1,31 @@
+// فایل نقشه آپلودی است
+// این امکان وجود داشته باشد که در صورتی که مجتمع چند واحدی است
+// کاربر بتواند اطلاعات بلو پرینت هر واحد یا طبقه را وارد کند
+
+bluePrintInfoForm: FormGroup;
+
+شماره طبقه :
+جهت واحد شمالی ، جنوبی ، غربی ، شرقی :
+میزان مصرف :
+زیربنای ساختمان :
+نوع لوله کشی :
+تعداد وسایل گازسوز :
+نوع کنتور :
+هزینه مورد نیاز :
+شماره نقشه :
+فایل نقشه :
+شماره واحد :
+
+	this.bluePrintInfoForm = this.fb.group({
+		bpiFloorNum-ctrl: ['', Validators.required],
+		bpiDirection-ctrl: ['', Validators.required],
+		bpiGasUsage-ctrl: ['', Validators.required],
+		bpiFundationMeter-ctrl: ['', Validators.required],
+		bpiPipesType-ctrl: ['', Validators.required],
+		bpiGasUsingToolsCount-ctrl: ['', Validators.required],
+		bpiGasMeterType-ctrl: ['', Validators.required],
+		bpiProjCost-ctrl: ['', Validators.required],
+		bpiBluePrintNumber-ctrl: ['', Validators.required],
+		bpiBluePrintFile-ctrl: ['', Validators.required],
+		bpiApartmentNum-ctrl: ['', Validators.required],
+	});

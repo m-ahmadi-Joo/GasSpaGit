@@ -1,0 +1,320 @@
+<app-recordMapInformationDetailBox
+  [contractId]="contractId"
+  [requestUnitId]="requestUnitId"
+  *ngIf="requestStateType !== 'GoodsInspectionRequestHP'"
+></app-recordMapInformationDetailBox>
+
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <nb-card>
+      <nb-card-header>
+        درخواست
+        <span *ngIf="requestStateType === 'RequestInspectionPreExecution'"
+          >بازرسی پیش از اجرا
+        </span>
+         <span *ngIf="requestStateType === 'RequestInspectionPreExectionBecauseOfChanges'"
+          >بازرسی پیش از اجرا به دلیل تغییرات
+        </span>
+        <span *ngIf="requestStateType === 'RequestReInspectionPreExecution'"
+          >بازرسی مجدد پیش از اجرا
+        </span>
+        <span *ngIf="requestStateType === 'SafetyInspectionRequest'"
+          >بازرسی ایمنی
+        </span>
+        <span *ngIf="requestStateType === 'RequestInspectionWelding'"
+          >بازرسی جوش
+        </span>
+         <span *ngIf="requestStateType === 'RequestInspectionCollectorWelding'"
+          >بازرسی جوش کلکتوری
+        </span>
+        <span *ngIf="requestStateType === 'RequestInspectionOfTheFirstStage'"
+          >بازرسی مرحله اول
+        </span>
+         <span *ngIf="requestStateType === 'RequestInspectionOfTheFirstStageBecauseOfChanges'"
+          >بازرسی مرحله اول به دلیل تغییرات
+        </span>
+        <span *ngIf="requestStateType === 'ReRequestInspectionOfTheFirstStage'"
+          >بازرسی مجدد مرحله اول
+        </span>
+        <span *ngIf="requestStateType === 'RequestInspectionFinal'"
+          >بازرسی نهایی
+        </span>
+        <span *ngIf="requestStateType === 'RequestInspectionFinalBecauseOfChanges'"
+          >بازرسی نهایی به دلیل تغییرات
+        </span>
+        <span *ngIf="requestStateType === 'RequestReInspectionFinal'"
+          >بازرسی مجدد نهایی
+        </span>
+        <span
+          *ngIf="
+            requestStateType === 'RequestMapRevisionInspectionOfTheFirstStage'
+          "
+          >اصلاحیه نقشه بازرسی مرحله اول
+        </span>
+        <span *ngIf="requestStateType === 'RequestMapRevisionInspectionFinal'"
+          >نوبت اصلاحیه نقشه بازرسی نهایی
+        </span>
+        <span
+          *ngIf="
+            requestStateType === 'RequestMapRevisionInspectionPreExecution'
+          "
+          >اصلاحیه نقشه بازرسی پیش از اجرا
+        </span>
+        <span *ngIf="requestStateType === 'RequestInspectionSixMonth'"
+          >بازرسی شش ماه گذشته
+        </span>
+        <span *ngIf="requestStateType === 'RequestReInspectionSixMonth'"
+        >بازرسی مجدد شش ماه گذشته
+      </span>
+      <span *ngIf="requestStateType === 'RequestMapRevisionInspectionSixMonth'"
+      >درخواست نوبت اصلاحیه نقشه بازرسی شش ماه گذشته
+    </span>
+      </nb-card-header>
+      <nb-card-body>
+        <form
+          (ngSubmit)="onSubmit()"
+          [formGroup]="arForm"
+          autocomplete="off"
+          novalidate
+        >
+          <div class="row input-group">
+            <div class="full-name-inputs form-inline col-md-12">
+              <div
+                class="col-md-5"
+                *ngIf="
+                  requestStateType === 'RequestInspectionPreExecution' ||
+                  requestStateType === 'RequestInspectionPreExectionBecauseOfChanges' ||
+                  requestStateType === 'SafetyInspectionRequest' ||
+                  requestStateType === 'RequestReInspectionPreExecution' ||
+                  requestStateType === 'RequestInspectionOfTheFirstStage' ||
+                  requestStateType === 'RequestInspectionOfTheFirstStageBecauseOfChanges' ||
+                  requestStateType === 'RequestInspectionFinal' ||
+                  requestStateType === 'RequestInspectionFinalBecauseOfChanges' ||
+                  requestStateType === 'RequestReInspectionFinal' ||
+                  requestStateType === 'ReRequestInspectionOfTheFirstStage' ||
+                  requestStateType === 'RequestMapRevisionInspectionOfTheFirstStage' ||
+                  requestStateType === 'RequestMapRevisionInspectionFinal' ||
+                  requestStateType === 'RequestInspectionSixMonth' || 
+                  requestStateType === 'RequestReInspectionSixMonth'|| 
+                  requestStateType === 'RequestMapRevisionInspectionSixMonth'
+                "
+              >
+                <label class="d-block text-right mb-3">هزینه بازرسی:</label>
+
+                <input
+                  readonly
+                  formControlName="price"
+                  fullWidth
+                  nbInput
+                  type="text"
+                />
+                <input type="hidden" formControlName="auditPrice" />
+              </div>
+              <div
+                class="col-md-1"
+                *ngIf="
+                  requestStateType === 'RequestInspectionPreExecution' ||
+                  requestStateType === 'RequestInspectionPreExectionBecauseOfChanges' ||
+                  requestStateType === 'SafetyInspectionRequest' ||
+                  requestStateType === 'RequestReInspectionPreExecution' ||
+                  requestStateType === 'RequestInspectionOfTheFirstStage' ||
+                  requestStateType === 'RequestInspectionOfTheFirstStageBecauseOfChanges' ||
+                  requestStateType === 'RequestInspectionFinal' ||
+                  requestStateType === 'RequestInspectionFinalBecauseOfChanges' ||
+                  requestStateType === 'RequestReInspectionFinal' ||
+                  requestStateType === 'ReRequestInspectionOfTheFirstStage' ||
+                  requestStateType ===
+                    'RequestMapRevisionInspectionOfTheFirstStage' ||
+                  requestStateType === 'RequestMapRevisionInspectionFinal'
+                "
+              ></div>
+              <div
+                class="col-md-5"
+                *ngIf="
+                  requestStateType === 'RequestInspectionPreExecution' ||
+                  requestStateType === 'RequestInspectionPreExectionBecauseOfChanges' ||
+                  requestStateType === 'SafetyInspectionRequest' ||
+                  requestStateType === 'RequestReInspectionPreExecution' ||
+                  requestStateType === 'RequestInspectionOfTheFirstStage' ||
+                  requestStateType === 'RequestInspectionOfTheFirstStageBecauseOfChanges' ||
+                  requestStateType === 'RequestInspectionFinal' ||
+                  requestStateType === 'RequestInspectionFinalBecauseOfChanges' ||
+                  requestStateType === 'RequestReInspectionFinal' ||
+                  requestStateType === 'ReRequestInspectionOfTheFirstStage' ||
+                  requestStateType ===
+                    'RequestMapRevisionInspectionOfTheFirstStage' ||
+                  requestStateType === 'RequestMapRevisionInspectionFinal' ||
+                  requestStateType === 'GoodsInspectionRequestHP'
+                "
+                hidden
+              >
+                <label class="d-block text-right mb-3"
+                  >انتخاب تاریخ بازدید:</label
+                >
+                <dp-date-picker
+                  name="cd"
+                  fullWidth
+                  id="cd"
+                  nbInput
+                  dir="rtl"
+                  mode="day"
+                  [config]="datePickerConfig"
+                  theme="dp-material"
+                  formControlName="forDate"
+                ></dp-date-picker>
+                <div
+                  *ngFor="let validation of INPUT_VALIDATION_MESSAGES.forDate"
+                >
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      arForm.get('forDate').hasError(validation.type) &&
+                      (arForm.get('forDate').dirty ||
+                        arForm.get('forDate').touched)
+                    "
+                  >
+                    {{ validation.message }}</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            *ngIf="requestStateType === 'RequestInspectionWelding'
+            || requestStateType === 'RequestInspectionCollectorWelding'"
+            class="row"
+          >
+            <div class="col-md-5">
+              <div class="mr-3" *ngIf="!loadingWelders">
+                <label>
+                  جوشکار
+                </label>
+                <input
+                  formControlName="baseWelder"
+                  [typeahead]="baseWelders"
+                  typeaheadOptionField="searchItem"
+                  (typeaheadOnSelect)="onWelderSelect($event)"
+                  [typeaheadOptionsLimit]="10"
+                  [typeaheadMinLength]="0"
+                  class="form-control"
+                />
+                <div
+                  class="mt-2"
+                  *ngFor="
+                    let validation of INPUT_VALIDATION_MESSAGES_WELDER.baseWelder
+                  "
+                >
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      arForm.get('baseWelder').hasError(validation.type) &&
+                      (arForm.get('baseWelder').dirty ||
+                        arForm.get('baseWelder').touched)
+                    "
+                  >
+                    {{ validation.message }}</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-2"></div>
+            <div class="col-md-5">
+              <div class="ml-2">
+                <label>تعداد سرجوش</label>
+
+                <input
+                  formControlName="weldCount"
+                  fullWidth
+                  nbInput
+                  type="number"
+                />
+                <div
+                  class="mt-2"
+                  *ngFor="
+                    let validation of INPUT_VALIDATION_MESSAGES_WELDER.weldCount
+                  "
+                >
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      arForm.get('weldCount').hasError(validation.type) &&
+                      (arForm.get('weldCount').dirty ||
+                        arForm.get('weldCount').touched)
+                    "
+                  >
+                    {{ validation.message }}</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="full-name-inputs form-inline col-md-12 mr-3 ">
+              <label> شرح: </label>
+              <textarea
+                name="cmt"
+                id="cmt"
+                rows="7"
+                nbInput
+                fullWidth
+                formControlName="desc"
+              ></textarea>
+            </div>
+          </div>
+
+          <nb-card>
+            <nb-card-body>
+              <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                  <button
+                    *ngIf="requestStateType !== 'GoodsInspectionRequestHP'"
+                    class="btn"
+                    nbButton
+                    status="success"
+                    fullWidth
+                    type="submit"
+                    [disabled]="arForm.invalid || loading"
+                    [nbSpinner]="loading"
+                    nbSpinnerStatus="info"
+                    nbSpinnerSize="large"
+                  >
+                    <span *ngIf="requestStateType !== 'RequestMapRevisionInspectionPreExecution'">ثبت و پرداخت</span>
+                    <span *ngIf="requestStateType === 'RequestMapRevisionInspectionPreExecution'">ثبت</span>
+                  </button>
+                  <button
+                    *ngIf="requestStateType === 'GoodsInspectionRequestHP'"
+                    class="btn"
+                    nbButton
+                    status="success"
+                    fullWidth
+                    type="button"
+                    (click)="onConfirm()"
+                  >
+                    ثبت
+                  </button>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                  <button
+                    class="btn"
+                    nbButton
+                    status="primary"
+                    fullWidth
+                    type="button"
+                    [routerLink]="[listPath]"
+                    [disabled]="loading"
+                  >
+                    بازگشت به لیست
+                  </button>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

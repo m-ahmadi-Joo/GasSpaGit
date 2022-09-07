@@ -1,0 +1,120 @@
+<!-- <div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <nb-card>
+      <nb-card-header>
+        ثبت اطلاعات نماینده
+      </nb-card-header>
+      <nb-card-body>
+        <form (ngSubmit)="onSubmit()" [formGroup]="agentInfoForm">
+          <div class="row full-name-inputs">
+            <div class="col-lg-6 col-md-6 col-sm-6 input-group">
+              <label for="nc">کد ملی :</label>
+              <input
+                [status]="(agentInfoForm.controls.nidNationalCode.invalid
+               && agentInfoForm.controls.nidNationalCode.touched)
+               ? 'danger' : ''"
+                formControlName="nidNationalCode"
+                fullWidth
+                id="nc"
+                nbInput
+                type="number">
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 input-group">
+              <label for="ei">شناسه اقتصادی :</label>
+              <input
+                [status]="(agentInfoForm.controls.nidEcoIdentifier.invalid
+               && agentInfoForm.controls.nidEcoIdentifier.touched)
+               ? 'danger' : ''"
+                formControlName="nidEcoIdentifier"
+                fullWidth
+                id="ei"
+                nbInput
+                type="number">
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 input-group">
+              <label for="fn">نام کوچک :</label>
+              <input
+                [status]="(agentInfoForm.controls.nidFName.invalid
+               && agentInfoForm.controls.nidFName.touched)
+               ? 'danger' : ''"
+                formControlName="nidFName"
+                fullWidth
+                id="fn"
+                nbInput
+                type="text">
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 input-group">
+              <label for="ln">نام خانوادگی :</label>
+              <input
+                [status]="(agentInfoForm.controls.nidLName.invalid
+               && agentInfoForm.controls.nidLName.touched)
+               ? 'danger' : ''"
+                formControlName="nidLName"
+                fullWidth
+                id="ln"
+                nbInput
+                type="text">
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 input-group">
+              <label for="dn">نام پدر :</label>
+              <input
+                [status]="(agentInfoForm.controls.nidDName.invalid
+               && agentInfoForm.controls.nidDName.touched)
+               ? 'danger' : ''"
+                formControlName="nidDName"
+                fullWidth
+                id="dn"
+                nbInput
+                type="text">
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 input-group">
+              <label for="pc">کد پستی :</label>
+              <input
+                [status]="(agentInfoForm.controls.nidPostalCode.invalid
+               && agentInfoForm.controls.nidPostalCode.touched)
+               ? 'danger' : ''"
+                formControlName="nidPostalCode"
+                fullWidth
+                id="pc"
+                nbInput
+                type="number">
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 input-group">
+              <label for="mm">شماره همراه :</label>
+              <input
+                [status]="(agentInfoForm.controls.nidMobile.invalid
+               && agentInfoForm.controls.nidMobile.touched)
+               ? 'danger' : ''"
+                formControlName="nidMobile"
+                fullWidth
+                id="mm"
+                nbInput
+                type="number">
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 input-group">
+              <label for="pp">شماره ثابت :</label>
+              <input
+                [status]="(agentInfoForm.controls.nidPhone.invalid
+               && agentInfoForm.controls.nidPhone.touched)
+               ? 'danger' : ''"
+                formControlName="nidPhone"
+                fullWidth
+                id="pp"
+                nbInput
+                type="number">
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <button
+                [disabled]="agentInfoForm.invalid"
+                nbButton
+                status="success"
+                style="width: 100%;"
+                type="submit">ثبت اطلاعات
+              </button>
+            </div>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div> -->

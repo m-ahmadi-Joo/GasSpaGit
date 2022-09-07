@@ -1,0 +1,12 @@
+// درخواست بازرسی پیش از اجرا
+
+// درخواست بازرسی مرحله اول و دوم همین فیلدارو دارن فقط عنوان عوض میشه
+
+auditForm: FormGroup;
+
+هزینه ی بازرسی :
+تاریخ بازرسی :
+this.auditForm = this.fb.group({
+	auditPrice-ctrl: ['[readData]'],
+	auditDate-ctrl: ['', Validators.required],
+});

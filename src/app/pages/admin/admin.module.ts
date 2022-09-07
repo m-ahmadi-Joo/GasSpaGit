@@ -62,7 +62,7 @@ import { PayDiscountListCustomActionsComponent } from './forms/payManagement/dis
 import { GetPayDiscountInfoResolver } from 'src/app/@core/utils/getPayDiscountInfo-resolver';
 import { FreeAnalyzeItemsListResolver } from 'src/app/@core/utils/freeAnalyzeItemsList-resolver';
 import { GetPayDiscountListResolver } from 'src/app/@core/utils/getPayDiscountList-resolver';
-import { PayWithdrawalListCustomActionsComponent } from './forms/payManagement/transactionManagement/pay-withdrawal-list-custom-actions/pay-withdrawal-list-custom-actions.component';
+import { PayWithdrawalListCustomActionsComponent } from './forms/payManagement/transactionManagement/payWithdrawalListCustomActions/payWithdrawalListCustomActions.component';
 import { ManageEngineerAreaComponent } from './forms/manageEngineerArea/manageEngineerArea.component';
 // import { SharedModule } from '../shared/shared.module';
 // import { RichTextEditorAllModule } from '@syncfusion/ej2-angular-richtexteditor';

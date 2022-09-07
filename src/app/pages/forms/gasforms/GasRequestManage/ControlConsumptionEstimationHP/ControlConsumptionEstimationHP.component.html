@@ -1,0 +1,631 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="ControlDocFormg">
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <nb-card>
+        <nb-card-header> کنترل برآورد مصرف </nb-card-header>
+        <nb-card-body>
+          <!-- <img alt="ImageName" [src]="imageName"> -->
+
+          <!-- <a href="imagePath" [download]="imagePath">دانلود مستندات</a> -->
+          <app-gasRequestDetailBox
+            [gasRequestId]="gasReqId"
+          ></app-gasRequestDetailBox>
+          <div
+            *ngIf="
+              requestStateType !==
+                'ControlConsumptionEstimationGreateObserverIndustrial' &&
+              this.requestStateType !==
+                'ControlConsumptionEstimationSupervisorHPIndustrial' &&
+              this.requestStateType !==
+                'ControlConsumptionEstimationManagerHPIndustrial' &&
+              this.requestStateType !==
+                'ControlConsumptionEstimationAdminHPIndustrial'
+            "
+          >
+            <nb-card *ngFor="let index of daynamicItems">
+              <nb-card-body>
+                <div class="row">
+                  <div class="form-group col-md-2">
+                    <label for="kn">نام و یا شماره بلوک/مغازه</label>
+                    <input
+                      value="{{ index?.blockName }}"
+                      readonly="true"
+                      fullWidth
+                      nbInput
+                    />
+                  </div>
+
+                  <div class="form-group col-md-2 mt-3">
+                    <label for="cnt">تعدادواحد/مغازه</label>
+                    <input
+                      value="{{ index?.unitCount }}"
+                      readonly="true"
+                      type="number"
+                      nbInput
+                      id="cnt"
+                      min="0"
+                      style="width: 100%"
+                    />
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label for="cnt">حدود مصرف هر واحد یا مغازه M^3/Hr</label>
+                    <input
+                      fullWidth
+                      value="{{ index?.consumptionPerUnit }}"
+                      readonly="true"
+                      type="number"
+                      nbInput
+                      id="cnt"
+                      min="0"
+                    />
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label for="cnt">مصرف کل هر بلوک/مغازه ها M^3/Hr</label>
+                    <input
+                      fullWidth
+                      value="{{ index?.totalConsumptionBlock }}"
+                      readonly="true"
+                      type="number"
+                      nbInput
+                      id="cnt"
+                      min="0"
+                    />
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label for="cnt">تعداد/سایز علمک برای این بلوک</label>
+                    <input
+                      value="{{ index?.numberOfAlamakBlock }}"
+                      readonly="true"
+                      fullWidth
+                      type="number"
+                      nbInput
+                      id="cnt"
+                      min="0"
+                    />
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label for="cnt">ظرفیت و نوع رگولاتور مورد نیاز</label>
+                    <input
+                      fullWidth
+                      value="{{ index?.regulatorCapacity }}"
+                      readonly="true"
+                      type="number"
+                      nbInput
+                      id="cnt"
+                      min="0"
+                    />
+                  </div>
+                </div>
+              </nb-card-body>
+            </nb-card>
+          </div>
+
+          <table
+            class="table"
+            *ngIf="
+              requestStateType !==
+                'ControlConsumptionEstimationGreateObserverIndustrial' &&
+              this.requestStateType !==
+                'ControlConsumptionEstimationSupervisorHPIndustrial' &&
+              this.requestStateType !==
+                'ControlConsumptionEstimationManagerHPIndustrial' &&
+              this.requestStateType !==
+                'ControlConsumptionEstimationAdminHPIndustrial'
+            "
+          >
+            <thead>
+              <tr>
+                <th></th>
+                <th>مصرف کل هر بلوک/مغازه M^3/Hr</th>
+                <th>تعداد/سایز علمک برای این بلوک</th>
+                <th>ظرفیت و نوع رگولاتور مورد نیاز</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>مصرف گاز موتورخانه مرکزی بلوک یامجتمع</td>
+                <td>
+                  <input
+                    value="{{ firstItem?.totalConsumptionBlock }}"
+                    readonly="true"
+                    fullWidth
+                    type="number"
+                    nbInput
+                    id="cnt"
+                    min="0"
+                  />
+                </td>
+                <td>
+                  <input
+                    fullWidth
+                    value="4"
+                    readonly="{{ firstItem?.numberOfAlamakBlock }}"
+                    type="number"
+                    nbInput
+                    id="cnt"
+                    min="0"
+                  />
+                </td>
+                <td>
+                  <input
+                    value="{{ firstItem?.regulatorCapacity }}"
+                    readonly="true"
+                    fullWidth
+                    type="number"
+                    nbInput
+                    id="cnt"
+                    min="0"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>مصرف واحد های تجاری موجود در مجتمع مسکونی</td>
+                <td>
+                  <input
+                    fullWidth
+                    value="{{ secondItem?.totalConsumptionBlock }}"
+                    readonly="true"
+                    type="number"
+                    nbInput
+                    id="cnt"
+                    min="0"
+                  />
+                </td>
+                <td>
+                  <input
+                    fullWidth
+                    type="number"
+                    value="{{ secondItem?.numberOfAlamakBlock }}"
+                    readonly="true"
+                    nbInput
+                    id="cnt"
+                    min="0"
+                  />
+                </td>
+                <td>
+                  <input
+                    fullWidth
+                    type="number"
+                    value="{{ secondItem?.regulatorCapacity }}"
+                    readonly="true"
+                    nbInput
+                    id="cnt"
+                    min="0"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>طرح توسعه آتی M3/Hr</td>
+                <td>
+                  <input
+                    fullWidth
+                    type="number"
+                    nbInput
+                    value="{{ thirdItem?.totalConsumptionBlock }}"
+                    readonly="true"
+                    id="cnt"
+                    min="0"
+                  />
+                </td>
+                <td>
+                  <input
+                    fullWidth
+                    type="number"
+                    nbInput
+                    value="{{ thirdItem?.numberOfAlamakBlock }}"
+                    readonly="true"
+                    id="cnt"
+                    min="0"
+                  />
+                </td>
+                <td>
+                  <input
+                    fullWidth
+                    type="number"
+                    nbInput
+                    value="{{ thirdItem?.regulatorCapacity }}"
+                    readonly="true"
+                    id="cnt"
+                    min="0"
+                  />
+                </td>
+              </tr>
+              <tr>
+                <td>حداکثر مصرف گازبرآورد شده مورد نیاز M3/Hr</td>
+                <td>
+                  <input
+                    fullWidth
+                    type="number"
+                    nbInput
+                    id="cnt"
+                    value="{{ fourthItem?.totalConsumptionBlock }}"
+                    readonly="true"
+                    min="0"
+                  />
+                </td>
+                <td>بدون در نظر گرفتن ضریب همزمانی</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <nb-card
+            *ngIf="
+              requestStateType ===
+                'ControlConsumptionEstimationGreateObserverIndustrial' ||
+              this.requestStateType ===
+                'ControlConsumptionEstimationSupervisorHPIndustrial' ||
+              this.requestStateType ===
+                'ControlConsumptionEstimationManagerHPIndustrial' ||
+              this.requestStateType ===
+                'ControlConsumptionEstimationAdminHPIndustrial'
+            "
+          >
+            <nb-card-body>
+              <div class="row">
+                <table class="table table-hover" style="width: 100%">
+                  <thead>
+                    <tr>
+                      <th style="width: 17%">نام دستگاه</th>
+                      <th style="width: 16%">ظرفیت حرارتی یا تناژ دیگ بخار</th>
+                      <th style="width: 16%">psiفشار گاز مورد نیاز مشعل</th>
+                      <th style="width: 16%">مصرف گاز M^3/Hr</th>
+                      <th style="width: 16%">تعداد دستگاه</th>
+                      <th style="width: 16%">M^3/Hrمصرف کل گاز</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of items">
+                      <td>
+                        <input
+                          fullWidth
+                          nbInput
+                          readonly="true"
+                          id="cnt"
+                          value="{{ item?.deviceName }}"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          fullWidth
+                          nbInput
+                          readonly="true"
+                          value="{{ item?.thermalCpacity }}"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          fullWidth
+                          type="number"
+                          nbInput
+                          readonly="true"
+                          id="cnt"
+                          value="{{ item?.gasRequestRequiredTorch }}"
+                          min="0"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          fullWidth
+                          nbInput
+                          readonly="true"
+                          id="cnt"
+                          value="{{ item?.gasConsumption }}"
+                          min="0"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          fullWidth
+                          nbInput
+                          readonly="true"
+                          id="cnt"
+                          value="{{ item?.numberOfDevice }}"
+                          min="0"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          fullWidth
+                          nbInput
+                          readonly="true"
+                          id="cnt"
+                          value="{{ item?.totalGasConsumption }}"
+                          min="0"
+                        />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div
+                *ngIf="
+                  requestStateType ===
+                    'ControlConsumptionEstimationGreateObserverIndustrial' ||
+                  this.requestStateType ===
+                    'ControlConsumptionEstimationSupervisorHPIndustrial' ||
+                  this.requestStateType ===
+                    'ControlConsumptionEstimationManagerHPIndustrial' ||
+                  this.requestStateType ===
+                    'ControlConsumptionEstimationAdminHPIndustrial'
+                "
+              >
+                <div class="row">
+                  <div class="col-sm-2 mt-3">
+                    <strong>طرح توسعه</strong>
+                  </div>
+                  <div class="col-sm-2">
+                    <input
+                      fullWidth
+                      nbInput
+                      id="cnt"
+                      type="number"
+                      value="{{
+                        estimationConsuption?.thermalCpacityDevelopmentPlanIndustrial
+                      }}"
+                      min="0"
+                    />
+                  </div>
+                  <div class="col-sm-2">
+                    <input
+                      fullWidth
+                      nbInput
+                      type="number"
+                      id="cnt"
+                      value="{{
+                        estimationConsuption?.gasRequestRequiredTorchDevelopmentPlanIndustrial
+                      }}"
+                      min="0"
+                    />
+                  </div>
+                  <div class="col-sm-2">
+                    <input
+                      fullWidth
+                      nbInput
+                      type="number"
+                      id="cnt"
+                      value="{{
+                        estimationConsuption?.gasConsumptionDevelopmentPlanIndustrial
+                      }}"
+                      min="0"
+                    />
+                  </div>
+                  <div class="col-sm-2">
+                    <input
+                      fullWidth
+                      nbInput
+                      type="number"
+                      id="cnt"
+                      value="{{
+                        estimationConsuption?.numberOfDeviceDevelopmentPlanIndustrial
+                      }}"
+                      min="0"
+                    />
+                  </div>
+                  <div class="col-sm-2">
+                    <input
+                      fullWidth
+                      nbInput
+                      type="number"
+                      id="cnt"
+                      value="{{
+                        estimationConsuption?.totalGasConsumptionDevelopmentPlanIndustrial
+                      }}"
+                      min="0"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                *ngIf="
+                  requestStateType ===
+                    'ControlConsumptionEstimationGreateObserverIndustrial' ||
+                  this.requestStateType ===
+                    'ControlConsumptionEstimationSupervisorHPIndustrial' ||
+                  this.requestStateType ===
+                    'ControlConsumptionEstimationManagerHPIndustrial' ||
+                  this.requestStateType ===
+                    'ControlConsumptionEstimationAdminHPIndustrial'
+                "
+              >
+                <div class="row mt-4">
+                  <div class="col-sm-2 mt-3">
+                    <strong>جمع کل</strong>
+                  </div>
+                  <div class="col-sm-2">
+                    <input
+                      fullWidth
+                      nbInput
+                      id="cnt"
+                      value="{{
+                        estimationConsuption?.thermalCpacityTotalIndustrial
+                      }}"
+                      min="0"
+                    />
+                  </div>
+                  <div class="col-sm-2">
+                    <input
+                      fullWidth
+                      nbInput
+                      id="cnt"
+                      value="{{
+                        estimationConsuption?.gasRequestRequiredTorchTotalIndustrial
+                      }}"
+                      min="0"
+                    />
+                  </div>
+                  <div class="col-sm-2">
+                    <input
+                      fullWidth
+                      nbInput
+                      id="cnt"
+                      value="{{
+                        estimationConsuption?.gasConsumptionTotalIndustrial
+                      }}"
+                      min="0"
+                    />
+                  </div>
+                  <div class="col-sm-2">
+                    <input
+                      fullWidth
+                      nbInput
+                      id="cnt"
+                      value="{{
+                        estimationConsuption?.numberOfDeviceTotalIndustrial
+                      }}"
+                      min="0"
+                    />
+                  </div>
+                  <div class="col-sm-2">
+                    <input
+                      fullWidth
+                      nbInput
+                      id="cnt"
+                      value="{{
+                        estimationConsuption?.totalGasConsumptionTotalIndustrial
+                      }}"
+                      min="0"
+                    />
+                  </div>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+          <nb-card>
+            <nb-card-body>
+              <div class="col-lg-12 col-md-12">
+                <label>مستندات آپلود شده:</label>
+                <div class="mt-3">
+                  <DocumentsUploaded
+                    [id]="estimationId"
+                    [type]="'EstimationOfConsumption'"
+                  ></DocumentsUploaded>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+
+          <!-- <nb-card *ngIf="requestStateType == 'MapControl'">
+            <nb-card-body>
+              <nb-card-header>
+                مستندات آپلود شده:
+              </nb-card-header>
+              <div class="col-lg-12 col-md-12">
+                <div class="mt-3">
+                  <DocumentsUploaded
+                    [id]="gasReqId"
+                    [type]="'GasRequest'"
+                  ></DocumentsUploaded>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card> -->
+          <nb-card>
+            <nb-card-body>
+              <div class="row mr-3">
+                <div class="col-md-6 col-mg-6 col-sm-6">
+                  <strong>نیاز به ایستگاه یاکنتور عمده مشترک دارد؟</strong>
+
+                  <label class="mr-3">{{ isNeedCommomMeter }}</label>
+                </div>
+                <div class="col-md-6 col-mg-6 col-sm-6">
+                  <strong>فشار گاز مصرفی مورد نیاز: </strong>
+                  <label class="mr-3">{{ isGasPressure }}</label>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+
+          <div>
+            <nb-card>
+              <nb-card-body>
+                <div class="col-lg-12 col-md-12 col-sm-12 input-group">
+                  <div class="col-lg-6 col-md-6 col-sm-6">
+                    <label
+                      class="font-weight-bold"
+                      for="dk"
+                      style="display: inline-block"
+                    >
+                      نتیجه نهایی:
+                    </label>
+
+                    <!-- <div class="col-lg-6 col-md-6 col-sm-6"> -->
+                    <nb-radio-group
+                      class="form-inline"
+                      id="conf"
+                      name="conf"
+                      formControlName="result"
+                    >
+                      <nb-radio value="true"> تایید </nb-radio>
+                      <nb-radio value="false"> عدم تایید </nb-radio>
+                    </nb-radio-group>
+                    <div *ngIf="isSubmitted">
+                      <div *ngFor="let validation of validationMessages.result">
+                        <span
+                          class="text-danger"
+                          *ngIf="
+                            ControlDocFormg.get('result').hasError(
+                              validation.type
+                            )
+                          "
+                          >{{ validation.message }}</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- </div> -->
+              </nb-card-body>
+            </nb-card>
+
+            <nb-card>
+              <nb-card-body>
+                <div class="col-lg-12 col-md-12 col-sm-12 input-group">
+                  <textarea
+                    fullWidth
+                    nbInput
+                    formControlName="desc"
+                    placeholder="توضیحات و نظرات"
+                    rows="5"
+                    shape="round"
+                  ></textarea>
+                  <div *ngFor="let validation of validationMessages.desc">
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        ControlDocFormg.get('desc').hasError(validation.type) &&
+                        (ControlDocFormg.get('desc').dirty ||
+                          ControlDocFormg.get('desc').touched)
+                      "
+                      >{{ validation.message }}</span
+                    >
+                  </div>
+                </div>
+              </nb-card-body>
+            </nb-card>
+
+            <nb-card>
+              <nb-card-body>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                  <button
+                    [disabled]="!ControlDocFormg.valid || loading"
+                    class="btn"
+                    nbButton
+                    status="success"
+                    style="width: 100%"
+                    type="submit"
+                    [nbSpinner]="loading"
+                    nbSpinnerStatus="info"
+                    nbSpinnerSize="large"
+                  >
+                    ثبت
+                  </button>
+                </div>
+              </nb-card-body>
+            </nb-card>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</form>

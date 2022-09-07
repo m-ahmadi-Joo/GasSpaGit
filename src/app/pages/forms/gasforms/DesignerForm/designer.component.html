@@ -1,0 +1,129 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="designerForm">
+  <div class="row">
+    <div class="col-md-12">
+      <nb-card class="inline-form-card">
+        <nb-card-header>اطلاعات طراح</nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-md-6">
+              <nb-card>
+                <nb-card-body>
+                  <div class="form-group">
+                    <label for="ct"> کد طراح</label>
+                    <input
+                      formControlName="dgrIdentifierCode"
+                      fullWidth
+                      id="ct"
+                      nbInput
+                      placeholder="کد طراح"
+                      type="number"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="sge"> شناسه اقتصادی</label>
+                    <input
+                      formControlName="dgrEcoIdentifier"
+                      fullWidth
+                      id="sge"
+                      nbInput
+                      placeholder="شناسه اقتصادی"
+                      type="number"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="soz"> شماره عضویت</label>
+                    <input
+                      formControlName="dgrMembershipCode"
+                      fullWidth
+                      id="soz"
+                      nbInput
+                      placeholder="شناسه عضویت"
+                      type="number"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="sht"> تلفن همراه</label>
+                    <input
+                      formControlName="dgrMobile"
+                      fullWidth
+                      id="sht"
+                      nbInput
+                      placeholder="شماره تلفن همراه"
+                      type="number"
+                    />
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            </div>
+
+            <div class="col-md-6">
+              <nb-card>
+                <nb-card-body>
+                  <div class="form-group">
+                    <label for="cml"> کد ملی</label>
+                    <input
+                      formControlName="dgrNationalCode"
+                      fullWidth
+                      id="cml"
+                      nbInput
+                      placeholder="کد ملی"
+                      type="number"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="nkc"> نام</label>
+                    <input
+                      formControlName="dgrFirstName"
+                      fullWidth
+                      id="nkc"
+                      nbInput
+                      placeholder="نام کوچک"
+                      type="text"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="nkh"> نام خانوادگی</label>
+                    <input
+                      formControlName="dgrLastName"
+                      fullWidth
+                      id="nkh"
+                      nbInput
+                      placeholder="نام خانوادگی"
+                      type="text"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="npd"> نام پدر</label>
+                    <input
+                      formControlName="dgrDadName"
+                      fullWidth
+                      id="npd"
+                      nbInput
+                      placeholder="نام پدر"
+                      type="text"
+                    />
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <nb-card>
+        <button
+          class="btn"
+          nbButton
+          status="success"
+          style="width: 100%;"
+          type="submit"
+          [nbSpinner]="loading"
+          nbSpinnerStatus="info"
+          nbSpinnerSize="large"
+          [disabled]="loading"
+        >
+          ثبت
+        </button>
+      </nb-card>
+    </div>
+  </div>
+</form>

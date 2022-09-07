@@ -1,0 +1,95 @@
+<style>
+  .input-select,
+  .input-select::placeholder {
+    font-family: IRANSansWeb;
+  }
+
+  .select-khodemon {
+    max-height: 30rem;
+    max-width: 30rem;
+  }
+
+  .leaflet-container {
+    max-height: 700px !important;
+  }
+
+
+  /* .map-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 30px;
+}
+
+.map-frame {
+  border: 2px solid black;
+  height: 100%;
+} */
+
+#map {
+  height: 700px;
+  box-shadow: 0 0 10px;
+}
+
+</style>
+
+
+      <div id="map"></div>
+  
+
+<!-- <div class="row">
+  <div class="col-md-12">
+    <nb-card class="inline-form-card">
+      <nb-card-header>ثبت اطلاعات آدرس</nb-card-header>
+      <nb-card-body>
+        <form (ngSubmit)="onSubmit()" [formGroup]="addressForm"
+              class="form-inline">
+          <nb-select
+            formControlName="adiCity"
+            placeholder="شهرستان">
+            <nb-option *ngFor="let cy of City" [value]="cy">{{cy}}</nb-option>
+          </nb-select>
+
+          <nb-select
+            formControlName="adiArea"
+            multiple
+            placeholder="ناحیه/منطقه">
+
+            <nb-option-group title="شیراز">
+              <nb-option *ngFor="let sa of SA" [value]="sa">{{sa}}</nb-option>
+            </nb-option-group>
+
+            <nb-option-group title="شهرستان ها">
+              <nb-option *ngFor="let oa of OA" [value]="oa">{{oa}}</nb-option>
+            </nb-option-group>
+          </nb-select>
+
+          <nb-select
+            formControlName="adiVillage"
+            placeholder="روستا">
+            <nb-option *ngFor="let vlg of Villages" [value]="vlg">{{vlg}}</nb-option>
+          </nb-select>
+
+          <textarea formControlName="adiFullPath" fullWidth nbInput placeholder="آدرس دقیق و کامل"
+                    rows="5" shape="round"></textarea>
+
+          <div
+            class="btn-group col-lg-12 col-md-12 col-sm-12">
+            <button
+              nbButton
+              status="success"
+              [disabled]="addressForm.invalid"
+              style="width: 100%;"
+              type="submit">
+              ثبت
+            </button>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div> -->
+
+

@@ -1,0 +1,244 @@
+<style>
+ table th,
+  table td {
+    vertical-align: middle;
+    text-align: center;
+    padding: 2px;
+  }
+
+  table th {
+    padding:5px 1px;
+  }
+
+  td label {
+    margin-bottom: 0;
+  }
+
+  table thead {
+    background-image: linear-gradient(to right, #598bff, #3366ff);
+    color: #f6f6f6;
+    font-weight: 600;
+  }
+
+  dp-date-picker /deep/ .dp-picker-input {
+    width:110px !important;
+  }
+
+  nb-radio-group /deep/ label {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  nb-card /deep/ nb-card-body {
+    overflow: unset !important;
+  }
+
+  table td input {
+    background: #e8e5e5;
+    padding: 0.4375rem .305rem !important;
+  }
+
+  table td input[disabled="disabled"] {
+    background: #414141 !important;
+    color:#f5f5f5 !important;
+    text-align: center;
+  }
+
+  table td input[disabled="disabled"]:hover {
+    cursor: not-allowed;
+  }
+
+</style>
+
+<form [formGroup]="goodsInspectionForm" (ngSubmit)="onSubmit()">
+  <nb-card>
+    <nb-card-header>
+      <label>نتیجه بازرسی قطعات</label>
+    </nb-card-header>
+    <nb-card-body>
+      <app-gasRequestDetailBox
+        [gasRequestId]="gasReqId"
+      ></app-gasRequestDetailBox>
+      <nb-card class="inline-form-card">
+        <!-- <nb-card-header>
+          <label for="">اضافه کردن: &nbsp;&nbsp;</label>
+          <button
+            id="btnAddInputFields"
+            type="button"
+            (click)="addInputFields()"
+            nbButton
+            status="info"
+            size="tiny"
+            class="btn"
+          >
+            <nb-icon
+              [options]="{ animation: { type: 'pulse' } }"
+              class="icon-button"
+              icon="plus"
+            >
+            </nb-icon>
+          </button>
+        </nb-card-header> -->
+        <nb-card-body>
+          <div formArrayName="projectGoodsInspections">
+            <div class="row">
+              <table class="table table-bordered" style="width: 100%">
+                <thead>
+                  <tr>
+                    <th style="width: 9%">نام کالا</th>
+                    <th style="width: 8%">شرح کالا</th>
+                    <th style="width: 8%">تعداد این درخواست</th>
+                    <th style="width: 8%">تعداد مورد نیاز پروژه</th>
+                    <th style="width: 11%">مارک/سازنده</th>
+                    <th style="width: 11%">شماره مشخصات کالا/مشخصات فنی</th>
+                    <th style="width: 11%">تاریخ تولید</th>
+                    <th style="width: 11%">شماره تاییدیه سازنده</th>
+                    <th style="width: 11%">شماره برچسب بازرسی فنی</th>
+                    <th style="width: 12%" *ngIf="hpType==1">نتیجه</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                  [formGroupName]="i"
+                  *ngFor="
+                    let item of goodsInspectionForm.get('projectGoodsInspections')['controls'];
+                    let i = index"
+                  >
+                    <td>
+                      <input
+                        fullWidth
+                        nbInput
+                        formControlName="productName"
+                        disabled="disabled"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        fullWidth
+                        nbInput
+                        formControlName="productDesc"
+                        disabled="disabled"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        fullWidth
+                        type="number"
+                        nbInput
+                        formControlName="productCount"
+                        disabled="disabled"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        fullWidth
+                        type="number"
+                        min="0"
+                        nbInput
+                        formControlName="requiredCount"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        fullWidth
+                        nbInput
+                        formControlName="builder"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        fullWidth
+                        nbInput
+                        formControlName="detail"
+                      />
+                    </td>
+                    <td>
+                      <dp-date-picker
+                      fullWidth
+                      id="cd"
+                      nbInput
+                      dir="rtl"
+                      mode="day"
+                      [config]="datePickerConfig"
+                      theme="dp-material"
+                      placeholder="تاریخ"
+                      formControlName="buildDate"
+                    ></dp-date-picker>
+                    </td>
+                    <td>
+                      <input
+                        fullWidth
+                        nbInput
+                        formControlName="builderApprovalNumber"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        fullWidth
+                        nbInput
+                        formControlName="technicalInspectionNumber"
+                        min="0"
+                      />
+                      <input type="hidden" formControlName="projectGoodsHPId" />
+                    </td>
+                    <td *ngIf="hpType==1">
+                      <nb-radio-group
+                        class="form-inline"
+                        formControlName="result"
+                        id="{{i}}"
+                        name="{{i}}"
+                      >
+                        <nb-radio value="true">
+                          تایید
+                        </nb-radio>
+                        <nb-radio value="false">
+                          عدم تایید
+                        </nb-radio>
+                      </nb-radio-group>
+                    </td>
+                </tr>
+                </tbody>
+              </table>
+
+              <div class="row mb-3 w-100 mt-3">
+                <div class="col-lg-12 col-md-12 col-sm-12 input-group pr-5">
+                  <textarea
+                    formControlName="description"
+                    fullWidth
+                    nbInput
+                    placeholder="توضیحات و نظرات"
+                    rows="5"
+                    class="desc"
+                    shape="round"
+                  ></textarea>
+                </div>
+              </div>
+
+            </div>
+            </div>
+          <nb-card>
+            <nb-card-body>
+              <div class="col-lg-12 col-md-12 col-sm-12 pr-3 pl-4">
+                <button
+                  class="btn"
+                   [disabled]="!goodsInspectionForm.valid || loading"
+                  nbButton
+                  status="success"
+                  style="width: 100%;"
+                  type="submit"
+                  [nbSpinner]="loading"
+                  nbSpinnerStatus="info"
+                  nbSpinnerSize="large"
+                >
+                  ثبت
+                </button>
+
+              </div>
+            </nb-card-body>
+          </nb-card>
+          <!-- </div> -->
+        </nb-card-body>
+      </nb-card>
+    </nb-card-body>
+  </nb-card>
+</form>

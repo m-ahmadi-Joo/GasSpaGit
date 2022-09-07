@@ -1,0 +1,58 @@
+@import '../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+}
+
+nb-card-header {
+  font-family: IRANSansWeb;
+}
+
+nb-card-header button {
+  font-family: IRANSansWeb;
+}
+
+input[nbInput] {
+  font-family: IRANSansWeb;
+}
+
+.card-inside-tab {
+  margin-top: 1rem;
+}
+
+.card-inside-tab div {
+  display: inline-block;
+}
+
+.inline-list nb-list-item, p, button {
+  display: inline-block;
+}
+
+.stay-left {
+  position: absolute;
+  left: 0;
+}
+
+.icon-button {
+  cursor: pointer;
+  margin-right: 0.25rem;
+}
+
+div .stay-left button {
+  margin-right: 0.25rem;
+}
+
+.select-inside-tab {
+  margin-top: 0.30rem;
+  font-family: IRANSansWeb;
+}
+
+nb-select,
+nb-select-label {
+  font-family: IRANSansWeb;
+}
+
+.permit-header {
+  text-align: center;
+  font-weight: bolder;
+  //background-color: #8cfac7;
+}

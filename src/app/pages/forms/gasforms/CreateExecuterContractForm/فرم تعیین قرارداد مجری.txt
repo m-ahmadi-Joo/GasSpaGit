@@ -1,0 +1,18 @@
+// تعیین قرارداد مجری
+
+executerContractForm: FormGroup;
+
+کد رهگیری :
+// #### اطلاعات قرارداد
+تاریخ شروع قرارداد :
+تاریخ پایان قرارداد :
+شماره قرارداد :
+مبلغ قرارداد :
+
+this.execcuterContractForm = this.fb.group({
+	ectTrackingCode-ctrl: ['', Validators.required],
+	ectContractStartDate-ctrl: ['', Validators.required],
+	ectContractEndDate-ctrl: ['', Validators.required],
+	ectContractNumber-ctrl: ['', Validators.required],
+	ectContractPrice-ctrl: ['', Validators.required],
+});

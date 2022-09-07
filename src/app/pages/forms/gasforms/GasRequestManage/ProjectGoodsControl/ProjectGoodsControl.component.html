@@ -1,0 +1,120 @@
+<nb-card>
+  <nb-card-header>کنترل قطعات</nb-card-header>
+  <nb-card-body>
+    <nb-card>
+      <nb-card-body>
+        <app-gasRequestDetailBox
+          [gasRequestId]="gasReqId"
+        ></app-gasRequestDetailBox>
+      </nb-card-body>
+    </nb-card>
+    <form [formGroup]="cgmForm" (ngSubmit)="submit()">
+      <nb-card>
+        <nb-card-body>
+          <div formArrayName="goodsCollectionDtos">
+            <div class="row">
+              <table class="table table-hover" style="width: 100%;">
+                <thead>
+                  <tr>
+                    <th style="width: 15%;">نام کالا</th>
+                    <th style="width: 10%;">تعداد کالا</th>
+                    <th style="width: 15%;">قیمت واحد</th>
+                    <th style="width: 40%;">شرح کالا</th>
+                    <th style="width: 20%;">نتیجه</th>
+                  </tr>
+                </thead>
+                <tbody
+                  [formGroupName]="i"
+                  *ngFor="
+                    let item of cgmForm.get('goodsCollectionDtos')['controls'];
+                    let i = index
+                  "
+                >
+                  <td>
+                    <input
+                      fullWidth
+                      nbInput
+                      id="cnt"
+                      formControlName="productName"
+                      min="0"
+                    />
+                  </td>
+
+                  <td>
+                    <input
+                      fullWidth
+                      type="number"
+                      nbInput
+                      id="cnt"
+                      formControlName="productCount"
+                      min="0"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      fullWidth
+                      nbInput
+                      id="cnt"
+                      style="border-color: orange"
+                      formControlName="price"
+                      min="0"
+                      (input)="onPrice($event.target.value,i)"
+
+                    />
+                  </td>
+                  <td>
+                    <input
+                      fullWidth
+                      nbInput
+                      id="cnt"
+                      formControlName="productDesc"
+                    />
+                  </td>
+
+                  <td>
+                    <nb-radio-group
+                      class="form-inline radio-x-inline"
+                      formControlName="isSupply"
+                      id="{{ i }}"
+                      name="{{ i }}"
+                    >
+                      <nb-radio value="true">تامین میکنم</nb-radio>
+                      <nb-radio value="false">تامین نمیکنم</nb-radio>
+                    </nb-radio-group>
+                  </td>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <!-- <nb-card>
+        <nb-card-body>
+          <label
+            >قیمت کل:<strong>{{ totalPrice + totalCount }}</strong></label
+          >
+        </nb-card-body>
+      </nb-card> -->
+    </form>
+
+    <nb-card>
+      <nb-card-body>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <button
+            class="btn"
+            nbButton
+            status="success"
+            style="width: 100%;"
+            type="submit"
+            (click)="submit()"
+            nbSpinnerStatus="info"
+            nbSpinnerSize="large"
+            [disabled]="cgmForm.invalid"
+          >
+            ثبت
+          </button>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+</nb-card>

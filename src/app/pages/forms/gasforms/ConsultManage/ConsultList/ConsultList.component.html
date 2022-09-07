@@ -1,0 +1,277 @@
+<style>
+  .pagination /deep/ .ngx-pagination .current {
+    background: lightseagreen;
+  }
+
+  .pagination /deep/ pagination-template {
+    width: 100% !important;
+  }
+
+  .pagination {
+    text-align: center !important;
+  }
+
+  /* dp-date-picker /deep/ .dp-input-container .dp-picker-input{
+            width: 146px !important; } */
+
+  nb-select.pageSizeSelect /deep/ .select-button {
+    min-width: 8rem !important;
+  }
+
+  /* nb-select.workStatus /deep/ .select-button {
+          width:100%;
+          min-width: 19rem !important;
+          max-width: 19rem !important;
+        } */
+</style>
+
+<nb-card id="serachCard" style="box-shadow: 0 0 4px">
+  <nb-card-body>
+    <div class="container">
+      <form class="form-inline" (ngSubmit)="onSerach()" [formGroup]="form">
+        <ul>
+          <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.question">
+            <li *ngIf="
+                form.get('question').hasError(validation.type) &&
+                (form.get('question').dirty || form.get('question').touched)
+              ">
+              <span class="text-danger"> {{ validation.message }}</span>
+            </li>
+          </div>
+          <li class="text-danger" *ngIf="
+              form.get('dateStart').value > form.get('dateEnd').value &&
+              form.get('dateEnd').value !== ''
+            ">
+            <span class="text-danger">تاریخ شروع ثبت می بایست کوچکتر از پایان ثبت باشد.</span>
+          </li>
+        </ul>
+
+        <div class="row">
+          <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <label for="workStatus">
+              وضعیت ها:
+            </label>
+            <nb-select class="workStatus" multiple #workStates formControlName="workStates" status="info"
+              id="workStates" placeholder="انتخاب وضعیت ها..." #workStateSelect>
+              <nb-option [value]="null">هیچ کدام</nb-option>
+              <nb-option *ngFor="let p of workStatuses" [value]="p.className">
+                {{ p.title }}
+              </nb-option>
+            </nb-select>
+          </div>
+
+          <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <label for="workStatus">
+              زمان درخواست از:
+            </label>
+
+            <dp-date-picker name="ds" id="ds" nbInput dir="rtl" mode="day" theme="dp-material"
+              formControlName="dateStart" [config]="datePickerConfig" (open)="openStartDayPicker()"
+              (close)="closeStartDayPicker()" nbInput></dp-date-picker>
+          </div>
+
+          <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <label for="workStatus">
+              زمان درخواست تا:
+            </label>
+            <dp-date-picker name="de" id="de" nbInput dir="rtl" mode="day" theme="dp-material" formControlName="dateEnd"
+              [config]="datePickerConfig" (open)="openEndDayPicker()" (close)="closeEndDayPicker()" nbInput>
+            </dp-date-picker>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12 mt-3">
+            <label for="consultFileNumber">
+               شماره درخواست مشاوره:
+            </label>
+            <input formControlName="consultFileNumber" size="small" fullWidth id="consultFileNumber" nbInput type="text" />
+          </div>
+
+          <div class="form-group mt-3 col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <label for="fileNumber">
+              شماره ملک:
+            </label>
+
+            <input formControlName="fileNumber" size="small" fullWidth id="fileNumber" nbInput type="number"
+              min="1000" />
+          </div>
+
+          <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12 mt-3">
+            <label for="question">
+              سوال:
+            </label>
+            <input formControlName="question" size="small" fullWidth id="question" nbInput type="text" />
+          </div>
+
+          <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12 mt-3">
+            <label for="ownerName">
+              نام مالک:
+            </label>
+            <input formControlName="ownerName" size="small" fullWidth id="ownerName" nbInput type="text" />
+          </div>
+
+          <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12 float-right">
+            <button class="ml-1" nbTooltip="جستجو" nbTooltipPlacement="top" nbButton hero size="tiny" status="info" type="submit"
+              style="margin-top: 38px;height: 45%;">
+              <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="search-outline">
+              </nb-icon>
+            </button>
+
+            <button class="ml-1" nbTooltip="بازسازی" nbTooltipPlacement="top" size="tiny" nbButton hero status="primary"
+              type="button" (click)="resetFilters()"
+              style="margin-top: 38px;height: 45%;">
+              <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="refresh-outline">
+              </nb-icon>
+            </button>
+          </div>
+        </div>
+      </form>
+      <br />
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<nb-card class="table-x-mine">
+  <nb-card-header class="pt-4" style="border-bottom: 0">
+    <div class="pull-right pt-2">
+      <span class="ml-1">کارتابل ورودی</span>
+      <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="arrow-ios-back-outline">
+      </nb-icon>
+      <span class="mr-1" style="color:#3366ff">مشاوره</span>
+    </div>
+
+    <div class="pull-left">
+      <a class="btn btn-info ml-2" *appHasRole="['Owner', 'Executor']" style="color:#fff"
+        [routerLink]="['/pages/forms/ReqConsult']">
+        <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="home-outline">
+        </nb-icon>
+        درخواست مشاوره
+      </a>
+
+      <!-- <button [disabled]="!(selectedPay.length > 0)"
+                            [ngStyle]="{
+                              cursor: !(selectedPay.length > 0) ? 'not-allowed' : 'pointer'
+                            }"
+                        *appHasRole="['Owner','Admin','Executor']"
+                        class="btn btn-info ml-2" style="color:#fff" (click)="totalPay($event)">
+                            <nb-icon
+                            [options]="{ animation: { type: 'pulse' } }"
+                            class="icon-button"
+                            icon="credit-card-outline">
+                          </nb-icon>
+                          پرداخت جمعی
+                        </button> -->
+    </div>
+    <div class="clearfix"></div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <div style="clear: both"></div>
+    <div class="table-wrapper">
+      <ng2-smart-table [settings]="settings" [source]="source | paginate: pagingConfig" (custom)="onCustom($event)"
+        style="direction:ltr"></ng2-smart-table>
+    </div>
+
+    <span *ngFor="let item of collection | paginate: pagingConfig"></span>
+
+    <nb-card>
+      <nb-card-body>
+        <div class="row">
+          <div class="input-group">
+            <div
+              class="col-lg-3 col-md-3 col-sm-6 col-xs-6 form-inline pull-right"
+            >
+              <label for="pageSize" style="margin-left: 0;">
+                رکورد صفحه:
+              </label>
+              <nb-select
+                status="info"
+
+                #pageSizeSelect
+                class="pageSizeSelect"
+                [selected]="pagination.itemsPerPage"
+                (selectedChange)="changePageSize(pageSizeSelect.selected)"
+                id="pageSize"
+                placeholder="انتخاب ..."
+              >
+                <nb-option *ngFor="let p of pageSizes" [value]="p.id">
+                  {{ p.display }}
+                </nb-option>
+              </nb-select>
+            </div>
+
+            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 mt-2 ">
+              <div class="d-flex justify-content-center">
+                <pagination-controls
+                  class="pagination"
+                  (pageChange)="pageChanged($event)"
+                  previousLabel=""
+                  nextLabel=""
+                >
+                </pagination-controls>
+              </div>
+            </div>
+            <!-- <div
+              class="col-lg-2 col-md-2 col-sm-6 col-xs-6 form-inline pull-left"
+            >
+              <label for="pageSize" style="margin-left: 0.45rem;">
+                تعداد رکورد:{{ pagination.totalItems }}
+              </label>
+            </div> -->
+            <div
+            style="padding-right: 7% !important;"
+              class="col-lg-4 col-md-4 col-sm-6 col-xs-6 form-inline pull-left"
+            >
+              <label for="pageNumber" style="margin-left: 0.45rem;">
+                صفحه:
+              </label>
+              <input
+                [value]="pagination.currentPage"
+                style="width: 30%;"
+                #pageNumber
+                size="tiny"
+                id="pageNumber"
+                nbInput
+                type="number"
+                min="1"
+                max="pagination.totalPages"
+                (keydown.enter)="pageChanged(pageNumber.value)"
+              />
+              <span> از {{ pagination.totalItems }} نتیجه</span>
+            </div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card status="danger" accent="danger">
+    <nb-card-header>
+      <h4 style="color: linen">هشدار</h4>
+    </nb-card-header>
+    <nb-card-body>
+      <h6>آیا از حذف مورد اطمینان دارید؟</h6>
+    </nb-card-body>
+    <nb-card-footer>
+      <div class="row">
+        <div class="col-sm-6">
+          <button fullWidth nbButton hero status="danger" (click)="confirmDelete(data)">
+            بلی
+          </button>
+        </div>
+        <div class="col-sm-6">
+          <button fullWidth nbButton hero status="primary" (click)="dialogRef.close()">
+            انصراف
+          </button>
+        </div>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+<ng-template #contentDetailTemplate let-data>
+  <ngx-RequestConsultDetail [id]="data.id"></ngx-RequestConsultDetail>
+</ng-template>

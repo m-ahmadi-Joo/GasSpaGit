@@ -1,0 +1,10 @@
+// تایین محل علمک
+gasMeterLocationForm: FormGroup;
+
+
+محل علمک روی کروکی ** از پوینتر استفاده کنم ! :
+محل علمک جدید :{ منتهی الیه سمت راست ، منتهی الیه سمت چپ ، زیر خروجی } :
+this.gasMeterLocationForm = this.fb.group({
+	gmlPointOnKorok-ctrl: ['', Validators.required],
+	gmlGasMeterLocation-ctrl: ['', Validators.required],
+});

@@ -1,0 +1,144 @@
+<strong
+  *ngIf="invalidExtention"
+  class="mb-2"
+  style="color: red; display: block; font-size: 11px;"
+>
+  فرمت فایل غیر مجاز میباشد
+</strong>
+<strong
+  *ngIf="invalidFileSize"
+  class="mb-2"
+  style="color: red; display: block; font-size: 11px;"
+>
+  حجم فایل غیر مجاز میباشد
+</strong>
+<div class="row">
+  <div class="col-md-5"  *ngIf="ShowControl">
+    <div class="file-drop-area">
+      <span class="fake-btn">فایل را انتخاب کنید</span>
+      <span class="Pre-file-msg">{{
+        file ? "" : "فایل را بکشید و در اینجا رها کنید"
+      }}</span>
+      <!-- <div *ngFor="let f of file" class="files-msg" >
+      <span class="file-msg">{{ f.name }}</span>
+    </div> -->
+
+      <input class="file-input" type="file" multiple *ngIf="className !== 'MapRevisionResultInspectionPreExecution' ||
+      className !== 'ReMapRevisionResultInspectionPreExecution' ||
+      className !== 'MapRevisionResultInspectionOfTheFirstStage' ||
+      className !== 'ReMapRevisionResultInspectionOfTheFirstStage' ||
+      className !== 'MapRevisionResultInspectionFinal' ||
+      className !== 'ReMapRevisionResultInspectionFinal' ||
+      className !== ' ' || className !== undefined ||
+      className !== 'ReRegisterUnitMapChanges' "/>
+
+      <input class="file-input" type="file" *ngIf="className == 'MapRevisionResultInspectionPreExecution' ||
+      className == 'ReMapRevisionResultInspectionPreExecution' ||
+      className == 'MapRevisionResultInspectionOfTheFirstStage' ||
+      className == 'ReMapRevisionResultInspectionOfTheFirstStage' ||
+      className == 'MapRevisionResultInspectionFinal' ||
+      className == 'ReMapRevisionResultInspectionFinal' ||
+      className == 'ControlDocuments' ||
+      className ==  undefined ||
+      className == 'ReRegisterUnitMapChanges' "/>
+    </div>
+  </div>
+  <div class="col-md-7">
+    <!-- <table class="table table-borderd">
+      <tr > -->
+    <div>
+      <span *ngIf="extention.includes(fileExtention)">
+        <span class="img-wrapper" *ngFor="let img of urls; let i = index">
+          <img
+            class="imageSrc ml-3"
+            style="
+              border: 1px solid black;
+              padding: 3px;
+              box-shadow: 0 0 10px;
+              position: relative;
+              top: -10px;
+              cursor: pointer;
+            "
+            id="blah"
+            [src]="img"
+            alt="your image"
+            width="70px"
+            height="70px"
+          />
+          <!-- <span (click)="removeFile(i)">
+          <i class="fa fa-close" ></i>
+        </span> -->
+        </span>
+      </span>
+      <span *ngIf="!extention.includes(fileExtention) && urls.length > 0">
+        <nb-icon
+          style="
+            font-size: 60px;
+
+            position: relative;
+            top: -4px;
+            left: 20px;
+          "
+          [options]="{ animation: { type: 'pulse' } }"
+          class="icon-button"
+          icon="file-outline"
+        >
+        </nb-icon>
+        <!-- <span class="img-wrapper" *ngFor="let img of urls; let i = index">
+          <img
+            class="imageSrc ml-3"
+            style="border: 1px solid black;  padding: 3px;  box-shadow: 0 0 10px;  position: relative;  top: -10px; cursor: pointer; "
+            id="blah"
+            [src]="fileSrc"
+            alt="your image"
+            width="70px"
+            height="70px"
+          />
+
+        </span> -->
+      </span>
+
+      <span class="img-wrapper" *ngFor="let img of filePath; let i = index">
+        <img
+          class="imageSrc ml-3"
+          style="
+            border: 1px solid black;
+            padding: 3px;
+            box-shadow: 0 0 10px;
+            position: relative;
+            top: -10px;
+            cursor: pointer;
+          "
+          id="blah"
+          [src]="img"
+          alt="your image"
+          width="70px"
+          height="70px"
+          *ngIf="changeImage"
+        />
+        <!-- <span (click)="removeFile(i)">
+        <i class="fa fa-close" ></i>
+      </span> -->
+      </span>
+    </div>
+
+    <!-- <span class="file-msg">{{ img.name }}</span> -->
+
+    <!-- </tr>
+    </table> -->
+    <app-progress [progress]="progress"></app-progress>
+  </div>
+</div>
+<!-- <div *ngFor="let url of urls" >
+      <img
+
+      style="border: 1px solid black;  padding: 3px;  box-shadow: 0 0 10px;  position: relative;  top: -36px;  right: -40px; cursor: pointer;"
+      id="blah"
+      [src]="url"
+      *ngIf="url"
+      alt="your image"
+      width="100px"
+      height="100px"
+    />
+
+  </div> -->

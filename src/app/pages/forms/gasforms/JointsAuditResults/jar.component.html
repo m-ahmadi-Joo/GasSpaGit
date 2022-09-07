@@ -1,0 +1,177 @@
+<!-- <div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <nb-card>
+      <nb-card-header>ثبت نتیجه بازرسی جوش</nb-card-header>
+      <nb-card-body>
+        <form (ngSubmit)="onSubmit()" [formGroup]="sjarForm">
+          <nb-card class="form-inline-card">
+            <nb-card-body>
+              <div class="full-name-input">
+                <div class="input-group">
+                  <div class="col-lg-4 col-md-4 col-sm-4">
+                    <label for="reas">استاندارد الکترود</label>
+                    <input
+                      formControlName="sjarElectrod"
+                      fullWidth
+                      id="reas"
+                      name="reas"
+                      nbInput
+                      type="text"
+                    />
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-4">
+                    <label for="ghotb">قطبیت</label>
+                    <input
+                      formControlName="sjarPolarity"
+                      fullWidth
+                      id="ghotb"
+                      name="ghotb"
+                      nbInput
+                      type="text"
+                    />
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-4">
+                    <label for="wmt">نوع دستگاه جوشکاری</label>
+                    <input
+                      formControlName="sjarWeldingMachineType"
+                      fullWidth
+                      id="wmt"
+                      name="wmt"
+                      nbInput
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div class="input-group" style="margin-top: 2rem;">
+                  <div class="input-group col-md-6">
+                    <label for="res">آموزش مهارت جوشکاری</label>
+                    <nb-radio-group
+                      class="form-inline"
+                      formControlName="sjarIsWelderSkilled"
+                      id="res"
+                      name="res"
+                    >
+                      <nb-radio value="ok">
+                        <label class="radio-label">
+                          قابل قبول
+                        </label>
+                      </nb-radio>
+                      <nb-radio value="nok">
+                        <label class="radio-label">
+                          مردود
+                        </label>
+                      </nb-radio>
+                    </nb-radio-group>
+                  </div>
+                  <div class="input-group col-md-6">
+                    <nb-checkbox
+                      formControlName="sjarIsJointsOK"
+                      id="mr"
+                      status="warning"
+                    >
+                      بدون عیب
+                    </nb-checkbox>
+                  </div>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+          <nb-card>
+            <nb-card-body>
+              <div class="input-group full-name-input">
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                  <label for="pd">شرح عیب</label>
+                  <input
+                    formControlName="sjarProblemDescription"
+                    fullWidth
+                    id="pd"
+                    nbInput
+                  />
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                  <label for="jn">شماره اتصال</label>
+                  <input
+                    formControlName="sjarJointNumber"
+                    fullWidth
+                    id="jn"
+                    nbInput
+                  />
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                  <label for="jp">محل اتصال</label>
+                  <input
+                    formControlName="sjarJointPosition"
+                    fullWidth
+                    id="jp"
+                    nbInput
+                  />
+                </div>
+              </div>
+              <div class="input-group full-name-input">
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                  <label for="htfp">روش رفع عیب</label>
+                  <input
+                    formControlName="sjarHowToFixProblem"
+                    fullWidth
+                    id="htfp"
+                    nbInput
+                  />
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8">
+                  <label for="cpd">شرح</label>
+                  <textarea
+                    formControlName="sjarCompleteProblemDescription"
+                    fullWidth
+                    id="cpd"
+                    nbInput
+                    row="2"
+                  ></textarea>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <button
+                  (click)="onAddToList()"
+                  class="btn"
+                  nbButton
+                  status="info"
+                  style="width: 100%;"
+                  type="button"
+                >
+                  ثبت در لیست عیب های جوشکاری
+                </button>
+              </div>
+            </nb-card-body>
+          </nb-card>
+          <nb-card class="table-x-mine">
+            <nb-card-body>
+              <ng2-smart-table
+                (deleteConfirm)="onDeleteConfirm($event)"
+                [settings]="settings"
+                [source]="source"
+              >
+              </ng2-smart-table>
+            </nb-card-body>
+          </nb-card>
+          <div class="btn-group col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <button class="btn" nbButton status="danger" style="width: 100%;">
+                عدم تایید و بازگشت
+              </button>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <button
+                class="btn"
+                nbButton
+                status="success"
+                style="width: 100%;"
+                type="submit"
+              >
+                تایید و مرحله بعد
+              </button>
+            </div>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div> -->

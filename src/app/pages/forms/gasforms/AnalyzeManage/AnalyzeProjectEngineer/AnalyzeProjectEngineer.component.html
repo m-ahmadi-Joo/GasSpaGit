@@ -1,0 +1,184 @@
+<nb-card>
+  <nb-card-header>
+    ارجاع دستی لیست شماره {{analyzeNumber}} در {{areaTitle}}
+  </nb-card-header>
+
+  <nb-card-body>
+
+    
+    <form [formGroup]="cgmForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+
+        <div class="form-group col-md-4">
+          <label for="workInspectionDate">انتخاب روز بازرسی: </label>
+          <dp-date-picker
+            (ngModelChange)="changeWorkInspectionDate($event)"
+            [config]="dateConfig"
+            name="cd"
+            fullWidth
+            id="cd"
+            nbInput
+            dir="rtl"
+            mode="day"
+            theme="dp-material"
+            formControlName="workInspectionDate"
+            class="col-sm-9"
+          ></dp-date-picker>
+          <div
+            *ngFor="
+              let validation of INPUT_VALIDATION_MESSAGES.workInspectionDate
+            "
+          >
+            <span
+              class="text-danger"
+              *ngIf="
+                cgmForm.get('workInspectionDate').hasError(validation.type) &&
+                (cgmForm.get('workInspectionDate').dirty ||
+                  cgmForm.get('workInspectionDate').touched)
+              "
+            >
+              {{ validation.message }}</span
+            >
+          </div>
+        </div>
+
+        <div class="form-group col-md-4">
+          <label>
+            مهندس
+          </label>
+          <input formControlName="engineerSelect" [typeahead]="engineersList" (change)="changeEngineer($event)" [disabled]="temporaryDisable"
+            typeaheadOptionField="itemForSearch" (typeaheadOnSelect)="onSelect($event)" [typeaheadOptionsLimit]="7"
+            [typeaheadMinLength]="0" class="form-control" class="form-control">
+
+          <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.engineerSelect">
+            <span class="text-danger" *ngIf="
+                cgmForm.get('engineerSelect').hasError(validation.type) &&
+                (cgmForm.get('engineerSelect').dirty ||
+                  cgmForm.get('engineerSelect').touched ||
+                  isSubmitted)
+              ">
+              {{ validation.message }}</span>
+          </div>
+        </div>
+
+        <div class="form-group col-md-4">
+          <label for="engineerName">
+            استفاده از مهندسان ناحیه های دیگر:
+          </label>
+
+          <nb-select [selected]="selectedArea" (selectedChange)="onChangeArea($event)" #areasSelect
+            placeholder="انتخاب ناحیه" fullWidth id="neighborhood" formControlName="selectedArea">
+            <nb-option *ngFor="let area of areaList" [value]="area.id">
+              {{ area.title }}
+            </nb-option>
+          </nb-select>
+        </div>
+
+        <!-- <div class="form-group col-md-4">
+          <button >مشاهده آنالیز مهندسان</button>
+        </div> -->
+
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <label for="cmt">توضیحات</label>
+          <textarea formControlName="description" fullWidth id="cmt" name="cmt" nbInput rows="7"></textarea>
+
+          <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.description">
+            <span class="text-danger" *ngIf="
+                  cgmForm.get('description').hasError(validation.type) &&
+                  (cgmForm.get('description').dirty ||
+                    cgmForm.get('description').touched ||
+                    isSubmitted)
+                ">
+              {{ validation.message }}</span>
+          </div>
+        </div>
+
+        <!-- <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.description">
+          <span
+            class="text-danger"
+            *ngIf="
+              cgmForm.get('description').hasError(validation.type) &&
+              (cgmForm.get('description').dirty ||
+                cgmForm.get('description').touched)
+            "
+          >
+            {{ validation.message }}</span
+          >
+        </div> -->
+      </div>
+      <div class="row mt-2">
+        <div class="col-sm-6 col-md-6 col-lg-6">
+          <button [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" class="btn" nbButton
+            status="success" [disabled]="!cgmForm.valid || loading || !engineerId" fullWidth type="submit">
+            ثبت
+          </button>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+          <button class="btn" nbButton status="danger" [disabled]="loading" (click)="onCancle()" fullWidth
+            type="button">
+            انصراف
+          </button>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>
+
+
+<ng-template #listEngineers let-ref="dialogRef" let-data>
+  <nb-card status="primary" accent="primary">
+    <nb-card-header>
+      <h6 class="pull-right text-light">
+        لیست مهندسان در صف ارجاع ( وضعیت: {{data.isLocal === true ? 'بومی': 'غیر بومی'}}) در <bdi> {{ data.workDate }}</bdi>
+      </h6>
+      <span title="بستن" style="position:left;float: left;cursor: pointer" class="pull-left text-light"
+        (click)="dialogRef.close()">
+        &times;
+      </span>
+    </nb-card-header>
+
+    <nb-card-body *ngIf="data.reasonForNotFoundEngineer">
+      <p class="lead text-danger">
+        {{data.reasonForNotFoundEngineer}}
+      </p>
+    </nb-card-body>
+
+    <nb-card-body *ngIf="!data.reasonForNotFoundEngineer" style="overflow-y:scroll; max-height: 400px;">
+      <div>
+        <table class="table table-striped table-responsive">
+          <thead>
+            <tr>
+              <th>ردیف</th>
+              <!-- <th>شماره ( تست)</th> -->
+              <th>نام و نام خانوادگی</th>
+              <th> کد دفتر گاز</th>
+              <th>کد ملی</th>
+              <th>شهر محل سکونت</th>
+              <th>امتیاز کل</th>
+              <th>معیار آنالیز</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let en of data.engineersList; let row = index">
+              <td>{{ row + 1 }}</td>
+              <!-- <td>{{ en?.engineerId }}</td> -->
+              <td>{{ en?.fullName }}</td>
+              <td>{{ en?.engineerOrganizationCode }}</td>
+              <td>{{ en?.nationalCode }}</td>
+              <td>{{ en?.liveTownTitle }}</td>
+              <td>{{ roundNumber2Decimal(en?.totalRank)}}</td>
+              <!-- <td style="direction: ltr;">{{ paymentService.thousands_separators_realtime(en?.mainFactor) }}</td> -->
+              <td style="direction: ltr;"> {{en?.thousandSepratorOfMainFactor }} </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </nb-card-body>
+    <!-- <nb-card-footer>
+      <button nbButton class="btn pull-left float-left" hero status="primary" (click)="dialogRef.close()">
+        بستن
+      </button>
+    </nb-card-footer> -->
+  </nb-card>
+</ng-template>
+

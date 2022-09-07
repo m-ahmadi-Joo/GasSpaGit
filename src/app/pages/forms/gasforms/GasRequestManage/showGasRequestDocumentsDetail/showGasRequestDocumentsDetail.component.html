@@ -1,0 +1,30 @@
+<nb-card>
+  <nb-card-body>
+    <nb-card>
+      <nb-card-body>
+        <label> سند آپلود شده :</label>
+      
+        <div class="d-flex justify-content-center">
+          <span target="_blank" (click)="download()"
+            *ngIf="filePath != null && filePath.toString().indexOf('.pdf') === -1">
+            <img *ngIf="filePath != null"
+              style="border: 1px solid black;  padding: 3px;  box-shadow: 0 0 10px;  position: relative;  top: 0; cursor: pointer; "
+              [src]="filePath" width="600" height="600" />
+           
+
+          </span>
+
+          <span target="_blank" (click)="download()"
+            *ngIf="filePath != null && filePath.toString().indexOf('.pdf') !== -1">
+      
+            <pdf-viewer [src]="filePath"
+            [render-text]="true"
+            [original-size]="false"
+            style="width: 400px; height: 500px"
+            ></pdf-viewer>
+          </span>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+</nb-card>

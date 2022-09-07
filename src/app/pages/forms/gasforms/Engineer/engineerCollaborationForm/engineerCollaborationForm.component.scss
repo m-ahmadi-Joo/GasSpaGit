@@ -1,0 +1,13 @@
+@import "~leaflet/dist/leaflet.css";
+
+input,
+textarea {
+  background-color: #f2f4f9 !important;
+  border-color: #d9dadc !important;
+}
+
+nb-checkbox /deep/ .custom-checkbox {
+  height: 25px	!important;
+  width: 25px	!important;
+  border-color: #0c5460 !important;
+}

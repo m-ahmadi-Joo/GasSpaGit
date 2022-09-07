@@ -1,0 +1,47 @@
+<form [formGroup]="cgmForm" (ngSubmit)="submit()">
+  <nb-card>
+    <nb-card-header>نتیجه بازرسی</nb-card-header>
+    <nb-card-body>
+      <nb-card>
+        <nb-card-body>
+          <strong>نتیجه:</strong>
+          <nb-radio-group
+            class="form-inline radio-x-inline mt-2"
+            formControlName="result"
+            id="Result"
+            name="Result"
+          >
+            <nb-radio value="true">تایید</nb-radio>
+            <nb-radio value="false">عدم تایید</nb-radio>
+          </nb-radio-group>
+        </nb-card-body>
+      </nb-card>
+      <nb-card>
+        <nb-card-body>
+          <label for="cmt"> شرح: </label>
+          <textarea
+            name="cmt"
+            id="cmt"
+            rows="7"
+            nbInput
+            fullWidth
+            formControlName="desc"
+          ></textarea>
+        </nb-card-body>
+      </nb-card>
+      <nb-card>
+        <nb-card-body>
+          <button
+            type="submit"
+            nbButton
+            status="success"
+            class="btn btn-success btn-block"
+            [disabled]="cgmForm.invalid"
+          >
+            ثبت
+          </button>
+        </nb-card-body>
+      </nb-card>
+    </nb-card-body>
+  </nb-card>
+</form>

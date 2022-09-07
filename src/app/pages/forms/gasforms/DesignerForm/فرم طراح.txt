@@ -1,0 +1,21 @@
+designerForm: FormGroup;
+
+
+کد ملی :
+شناسه اقتصادی :
+کد مهندس طراح :
+شماره عضویت :
+نام کوچک :
+نام خانوادگی :
+نام پدر :
+تلفن همراه :
+
+this.designerForm = this.fb.group({
+	dgrNationalCode-ctrl: ['', Validators.required],
+	dgrEcoIdentifier-ctrl: ['', Validators.required],
+	dgrMembershipCode-ctrl: ['', Validators.required],
+	dgrFirstName-ctrl: ['', Validators.required],
+	dgrLastName-ctrl: ['', Validators.required],
+	dgrDadName-ctrl: ['', Validators.required],
+	dgrMobile-ctrl: ['', Validators.required],
+});

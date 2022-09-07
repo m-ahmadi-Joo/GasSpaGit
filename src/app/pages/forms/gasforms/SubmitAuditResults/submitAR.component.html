@@ -1,0 +1,569 @@
+<style>
+  .input-fileNumber {
+    border: none;
+    font-size: 0.9375rem;
+    font-weight: 600;
+  }
+
+  .dotted {
+    border: 0;
+    border-bottom: 2px dotted;
+  }
+</style>
+
+<app-recordMapInformationDetailBox *ngIf="
+    inspectionType !== 'InspectionResultHP' &&
+    checkAnalyze !== 'byAnalyze' &&
+    checkAnalyze !== 'Edit' &&
+    checkAnalyze !== 'View'
+  " [contractId]="contractId" [requestUnitId]="requestUnitId"></app-recordMapInformationDetailBox>
+<app-gasRequestDetailBox *ngIf="
+    inspectionType === 'InspectionResultHP' &&
+    checkAnalyze !== 'byAnalyze' &&
+    checkAnalyze !== 'Edit' &&
+    checkAnalyze !== 'View'
+  " [gasRequestId]="gasReqId"></app-gasRequestDetailBox>
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <nb-card>
+      <nb-card-header>
+        <span *ngIf="inspectionType == 'ResultInspectionPreExecution'">نتیجه بازرسی پیش از اجرا
+        </span>
+        <span *ngIf="inspectionType == 'ResultReInspectionPreExecution'">نتیجه بازرسی مجدد پیش از اجرا
+        </span>
+        <span *ngIf="inspectionType == 'SafetyInspectionResult'">نتیجه بازرسی ایمنی</span>
+        <span *ngIf="inspectionType == 'ResultInspectionWelding'">نتیجه بازرسی جوش خطی</span>
+        <span *ngIf="inspectionType == 'ResultInspectionCollectorWelding'">نتیجه بازرسی جوش کلکتوری</span>
+        <span *ngIf="inspectionType == 'ResultInspectionOfTheFirstStage'">نتیجه بازرسی مرحله اول
+        </span>
+        <span *ngIf="inspectionType == 'ResultReInspectionOfTheFirstStage'">نتیجه بازرسی مجدد مرحله اول
+        </span>
+        <span *ngIf="inspectionType == 'ResultInspectionFinal'">نتیجه بازرسی نهایی
+        </span>
+        <span *ngIf="inspectionType == 'ResultReInspectionFinal'">نتیجه بازرسی مجدد نهایی
+        </span>
+        <span *ngIf="inspectionType == 'ChangeResultInspectionPreExecution'">تغییر نتیجه بازرسی پیش از اجرا
+        </span>
+        <span *ngIf="inspectionType == 'ResultInspectionSixMonth'"> نتیجه بازرسی شش ماه گذشته
+        </span>
+        <span *ngIf="inspectionType == 'ResultReInspectionSixMonth'"> نتیجه مجدد بازرسی شش ماه گذشته
+        </span>
+      </nb-card-header>
+      <nb-card-body>
+        <form (ngSubmit)="onSubmit()" [formGroup]="sarForm">
+          <nb-card>
+            <nb-card-body>
+              <div class="input-group full-name-input">
+                <div class="row w-100 mt-2 mb-4" *ngIf="
+                    inspectionType == 'ResultInspectionPreExecution' ||
+                    inspectionType == 'ResultReInspectionPreExecution' ||
+                    inspectionType == 'ResultInspectionWelding' ||
+                    inspectionType == 'ResultInspectionCollectorWelding' ||
+                    inspectionType == 'SafetyInspectionResult' ||
+                    inspectionType == 'ResultInspectionOfTheFirstStage' ||
+                    inspectionType == 'ResultReInspectionOfTheFirstStage' ||
+                    inspectionType == 'ResultInspectionFinal' ||
+                    inspectionType == 'ResultReInspectionFinal' ||
+                    inspectionType == 'ChangeResultInspectionPreExecution' ||
+                    inspectionType == 'InspectionResultHP'||
+                    inspectionType == 'ResultInspectionSixMonth'||
+                    inspectionType == 'ResultReInspectionSixMonth'
+                  ">
+
+                  <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="
+                      inspectionType !== 'ChangeResultInspectionPreExecution' &&
+                      this.checkAnalyze !== 'View'
+                    ">
+                    <label for="res">نتیجه</label>
+                    <nb-radio-group class="form-inline pr-3" formControlName="scrAuditResult" [disabled]="
+                        inspectionType === 'ChangeResultInspectionPreExecution'
+                        ||this.checkAnalyze == 'View'
+                      " id="res" name="res">
+                      <nb-radio class="m-0" style="
+                          display: inline-block;
+                          margin-left: 15px !important;
+                        " value="true" (click)="onActive()">
+                        تایید
+                      </nb-radio>
+                      <nb-radio class="m-0" value="false" (click)="onDeactive()">
+                        عدم تایید
+                      </nb-radio>
+                    </nb-radio-group>
+                  </div>
+
+
+                  <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="
+                      inspectionType === 'ChangeResultInspectionPreExecution' ||
+                      this.checkAnalyze == 'View'
+                    ">
+                    <label for="res">نتیجه نهایی</label>
+                    <p class="text-success" *ngIf="sarForm.get('scrAuditResult').value === 'true'">
+                      تایید
+                    </p>
+                    <p class="text-danger" *ngIf="sarForm.get('scrAuditResult').value === 'false'">
+                      عدم تایید
+                    </p>
+                  </div>
+
+                  <div class="col-sm-8 col-md-8 col-lg-8 mt-4" *ngIf="
+                      (inspectionType === 'ResultInspectionPreExecution' ||
+                        inspectionType === 'ResultReInspectionPreExecution' ||
+                        inspectionType ===
+                          'ChangeResultInspectionPreExecution') &&
+                      noExecutablePermission_AbsenceOfOwnerIsShow
+                    ">
+                    <nb-radio-group #rdbInspectionRejectionReason class="form-inline radio-x-inline"
+                      formControlName="rejectReason" id="rejectReason" name="rejectReason" [disabled]="
+                      this.checkAnalyze == 'View'
+                    ">
+                      <nb-radio class="ml-0" value="absenceOfOwnerOrExecuter">عدم حضور مالک یا مجری</nb-radio>
+
+                      <nb-radio class="ml-0" value="dontHaveLicense">مجوز اجرا ندارد</nb-radio>
+                      <nb-radio class="ml-0" value="dontUseStandardMaterials">عدم استفاده از مصالح استاندارد</nb-radio>
+                    </nb-radio-group>
+                  </div>
+
+                  <div class="col-sm-3 col-md-3 col-lg-3 mt-4" *ngIf="
+                      (inspectionType == 'ResultInspectionOfTheFirstStage' ||
+                        inspectionType == 'ResultReInspectionOfTheFirstStage' ||
+                        inspectionType == 'ResultInspectionFinal' ||
+                        inspectionType == 'ResultReInspectionFinal' ||
+                        inspectionType == 'InspectionResultHP') &&
+                      noExecutablePermission_AbsenceOfOwnerIsShow
+                    ">
+                    <nb-checkbox name="absenceOfOwner" type="checkbox" [disabled]="this.checkAnalyze == 'View'"
+                      formControlName="isAbsenceOfOwner"></nb-checkbox>
+                    <label>عدم حضور مالک یا مجری</label>
+                  </div>
+                  <div class="col-sm-6 col-md-6 col-lg-6" *ngIf="
+                      (inspectionType === 'ResultInspectionFinal' ||
+                        inspectionType === 'ResultReInspectionFinal') &&
+                      sarForm.controls.scrAuditResult.value === 'false'
+                    ">
+                    <label> دلیل عدم تایید بازرسی</label>
+                    <nb-radio-group #rdbInspectionRejectionReason class="form-inline radio-x-inline"
+                      formControlName="inspectionRejectionReason" id="inspectionRejectionReason"
+                      [disabled]="this.checkAnalyze == 'View'" name="inspectionRejectionReason">
+                      <nb-radio class="ml-0" value="needAlamak">منوط به نصب علمک</nb-radio>
+
+                      <nb-radio class="ml-0" value="rejected">مردود</nb-radio>
+                    </nb-radio-group>
+                  </div>
+
+                  <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="
+                      checkAnalyze !== 'byAnalyze' &&
+                      checkAnalyze !== 'Edit' &&
+                      this.checkAnalyze !== 'View'
+                    ">
+                    <label class="d-block">موقعیت فعلی</label>
+
+                    <div class="pb-1">طول جغرافیایی : {{ lng }}</div>
+                    <div>عرض جغرافیایی : {{ lat }}</div>
+                  </div>
+                </div>
+
+                <div *ngIf="ResultInspectionWeldingNotConfirmed"  class="row w-100">
+                  <hr class="w-100" />
+                  <label>
+                    <span class="text-danger font-weight-bold">*</span>
+                    دلیل عدم تایید
+                  </label>
+                  <div class="col-sm-10">
+                    <nb-radio-group class="form-inline radio-x-inline" formControlName="NotConfirmedReason"
+                      id="NotConfirmedReason" name="NotConfirmedReason" style="margin-top: 1.75rem">
+                      <nb-radio value="1"  [checked]="NotConfirmedForEdit=== 1"  >عدم مهارت جوشکار</nb-radio>
+                      <nb-radio value="2"  [checked]="NotConfirmedForEdit === 2" >تعداد سرجوش</nb-radio>
+                      <nb-radio value="3"  [checked]="NotConfirmedForEdit === 3" >معیوب بودن جوش</nb-radio>
+                    </nb-radio-group>
+                    <div *ngIf="isSubmitted">
+                      <div *ngFor="
+                        let validation of INPUT_VALIDATION_MESSAGES.NotConfirmedReason
+                      ">
+                        <span class="text-danger" *ngIf="
+                          sarForm
+                            .get('NotConfirmedReason')
+                            .hasError(validation.type) &&
+                          (sarForm.get('NotConfirmedReason').dirty ||
+                            sarForm.get('NotConfirmedReason').touched)
+                        ">
+                          {{ validation.message }}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+
+
+
+                <div formArrayName="weldingInfoModels" class="row w-100" *ngIf="
+                  (inspectionType === 'ResultInspectionWelding' ||
+                  inspectionType === 'ResultInspectionCollectorWelding') &&
+                  weldingInfos.length > 0">
+                  <hr class="w-100" />
+                  <h6 class="w-100 mb-3" style="font-size: 0.9375rem;">
+                    تعداد سرجوش
+                  </h6>
+
+                  <!-- <div class="col-lg-4 col-md-4 col-sm-4 mb-3" *ngFor="let req of weldingInfos"> -->
+                  <div class="col-lg-4 col-md-4 col-sm-4 mb-3" [formGroupName]="i" *ngFor="
+                      let req of sarForm.get('weldingInfoModels')['controls'];
+                      let i = index">
+                    <div>
+                      <label for="weldCount" style="font-weight: 600;" *ngIf="!isEdit">
+                        واحد شماره : <input class="input-fileNumber" type="text" readonly
+                          formControlName="reqUnitFileNumber" />
+                      </label>
+                      <input formControlName="weldCount" style="width: 80%;" id="weldCount" nbInput
+                        [readOnly]="this.checkAnalyze === 'View'" type="number" />
+
+                      <input type="hidden" formControlName="reqUnitId" />
+                    </div>
+
+                  </div>
+
+
+
+                  <hr class="w-100 mt-3" />
+
+                </div>
+
+                <div class="row mt-2 mb-2 w-100">
+                  <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="(
+                      getLastUnitState == undefined ||
+                      getLastUnitState == 'ResultInspectionPreExecution' ||
+                      getLastUnitState == 'ResultInspectionPreExecution' ||
+                      getLastUnitState == 'ResultReInspectionPreExecution' ||
+                      getLastUnitState == 'ResultInspectionOfTheFirstStage' ||
+                      getLastUnitState == 'ResultReInspectionOfTheFirstStage' ||
+                      getLastUnitState == 'ResultInspectionFinal' ||
+                      getLastUnitState == 'ResultReInspectionFinal') &&
+                      (inspectionType == 'ResultInspectionPreExecution' ||
+                      inspectionType == 'ResultReInspectionPreExecution' ||
+                      inspectionType == 'ResultInspectionOfTheFirstStage' ||
+                      inspectionType == 'ResultReInspectionOfTheFirstStage' ||
+                      inspectionType == 'ResultInspectionFinal' ||
+                      inspectionType == 'ResultReInspectionFinal' ||
+                      inspectionType == 'ResultInspectionSixMonth'||
+                      inspectionType == 'ResultReInspectionSixMonth' )
+                      
+                    ">
+
+                    <label for="res">نیاز به اصلاح نقشه</label>
+                    <nb-radio-group class="form-inline pr-3" formControlName="mapRevision" id="mapRevision"
+                      name="mapRevision" *ngIf="this.checkAnalyze !== 'View'">
+                      <nb-radio value="true">
+                        دارد
+                      </nb-radio>
+                      <nb-radio value="false">
+                        ندارد
+                      </nb-radio>
+                    </nb-radio-group>
+                    <div *ngIf="this.checkAnalyze === 'View'">
+                      <p class="text-success" *ngIf="sarForm.get('mapRevision').value === 'true'">
+                        دارد
+                      </p>
+                      <p class="text-danger" *ngIf="sarForm.get('mapRevision').value === 'false'">
+                        ندارد
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="
+                      inspectionType == 'ResultInspectionPreExecution' ||
+                      inspectionType == 'ResultReInspectionPreExecution' ||
+                      (inspectionType == 'ChangeResultInspectionPreExecution' &&
+                        displaySafety)
+                    ">
+                    <!-- <nb-checkbox
+                      formControlName="safetyInspection"
+                      id="mr"
+                      status="warning"
+                      *ngIf="weldingSafetyIsShow"
+                    >
+                      نیاز به بازرسی ایمنی طبقات
+                    </nb-checkbox> -->
+                    <div *ngIf="weldingSafetyIsShow">
+                      <label for="safetyInspection">نیاز به بازرسی ایمنی طبقات</label>
+                      <nb-radio-group class="form-inline pr-3" formControlName="safetyInspection" id="safetyInspection"
+                        name="safetyInspection" *ngIf="this.checkAnalyze !== 'View'">
+                        <nb-radio value="true">
+                          دارد
+                        </nb-radio>
+                        <nb-radio value="false">
+                          ندارد
+                        </nb-radio>
+                      </nb-radio-group>
+                      <div *ngIf="this.checkAnalyze === 'View'">
+                        <p class="text-success" *ngIf="
+                            sarForm.get('safetyInspection').value === 'true'
+                          ">
+                          دارد
+                        </p>
+                        <p class="text-danger" *ngIf="
+                            sarForm.get('safetyInspection').value === 'false'
+                          ">
+                          ندارد
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="
+                      inspectionType == 'ResultInspectionPreExecution' ||
+                      inspectionType == 'ResultReInspectionPreExecution' ||
+                      (inspectionType == 'ChangeResultInspectionPreExecution' &&
+                        displayLinearWelding)
+                    ">
+                    <div *ngIf="weldingSafetyIsShow">
+                      <label for="isLinearInspectionWelding">نیاز به بازرسی جوش خطی</label>
+                      <nb-radio-group class="form-inline pr-3" formControlName="isLinearInspectionWelding"
+                        id="isLinearInspectionWelding" name="isLinearInspectionWelding"
+                        *ngIf="this.checkAnalyze !== 'View'">
+                        <nb-radio value="true">
+                          دارد
+                        </nb-radio>
+                        <nb-radio value="false">
+                          ندارد
+                        </nb-radio>
+                      </nb-radio-group>
+                      <div *ngIf="this.checkAnalyze === 'View'">
+                        <p class="text-success" *ngIf="
+                            sarForm.get('isLinearInspectionWelding').value ===
+                            'true'
+                          ">
+                          دارد
+                        </p>
+                        <p class="text-danger" *ngIf="
+                            sarForm.get('isLinearInspectionWelding').value ===
+                            'false'
+                          ">
+                          ندارد
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
+
+
+
+                  <div class="col-lg-2 col-md-2 col-sm-3" *ngIf="
+                  inspectionType == 'ResultInspectionPreExecution' ||
+                  inspectionType == 'ResultReInspectionPreExecution' ||
+                  (inspectionType == 'ChangeResultInspectionPreExecution' &&
+                    displaySafety)
+                ">
+                <div *ngIf="weldingSafetyIsShow && sarForm.get('safetyInspection').value === 'true'">
+                  <label for="safetyInspection">تعداد بازرسی ایمنی</label>
+                  <input class="form-inline pr-3" type="number" formControlName="safetyInspectionCount" id="safetyInspectionCount" fullWidth  nbInput min="1" *ngIf="this.checkAnalyze !== 'View'"/>
+
+                    
+                  <div *ngIf="this.checkAnalyze === 'View'">
+                    <p class="text-success" *ngIf="
+                        sarForm.get('safetyInspection').value === 'true'
+                      ">
+                      دارد
+                    </p>
+                    <p class="text-danger" *ngIf="
+                        sarForm.get('safetyInspection').value === 'false'
+                      ">
+                      ندارد
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              
+                  <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="!showCollectorWelding">
+                    <div>
+                      <label for="isCollectorInspectionWelding">نیاز به بازرسی جوش کلکتوری</label>
+                      <nb-radio-group *ngIf="this.checkAnalyze !== 'View'" class="form-inline pr-3"
+                        formControlName="isCollectorInspectionWelding" id="isCollectorInspectionWelding"
+                        name="isCollectorInspectionWelding">
+                        <nb-radio value="true">
+                          دارد
+                        </nb-radio>
+                        <nb-radio value="false">
+                          ندارد
+                        </nb-radio>
+                      </nb-radio-group>
+                    </div>
+                    <div *ngIf="this.checkAnalyze === 'View'">
+                      <p class="text-success" *ngIf="
+                          sarForm.get('isCollectorInspectionWelding').value ===
+                          'true'
+                        ">
+                        دارد
+                      </p>
+                      <p class="text-danger" *ngIf="
+                          sarForm.get('isCollectorInspectionWelding').value ===
+                          'false'
+                        ">
+                        ندارد
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-3 col-md-3 col-sm-3 pr-0 pl-0" *ngIf="
+                      inspectionType == 'ResultInspectionPreExecution' ||
+                      inspectionType == 'ResultReInspectionPreExecution' ||
+                      (inspectionType == 'ChangeResultInspectionPreExecution' &&
+                        displayColectorWelding)
+                    ">
+                  </div>
+                </div>
+                <div class="row mt-2 mb-2 w-100">
+                  <div *ngIf="
+                    (inspectionType === 'ResultInspectionPreExecution' ||
+                      inspectionType === 'ResultReInspectionPreExecution' ||
+                      inspectionType === 'ChangeResultInspectionPreExecution') &&
+                     this.checkAnalyze !== 'View' && showtypeofConsumables">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                      <label for="typeofConsumables"> نوع مصالح مصرفی :
+                      </label>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 form-inline mt-4 mr-5">
+                      <label> لوله :
+                        <input formControlName="pipeType" size="large" id="pipeType" class="mr-4 dotted" nbInput />
+                      </label>
+                      <label> اتصالات :
+                        <input formControlName="connectionType" size="large" id="connectionType" class="mr-4 dotted"
+                          nbInput />
+                      </label>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="row w-100" *ngIf="
+                    (inspectionType == 'ResultInspectionWelding' ||
+                      inspectionType == 'ResultInspectionCollectorWelding') &&
+                    weldingSafetyIsShow
+                  ">
+                  <div class="col-lg-4 col-md-4 col-sm-4">
+                    <label *ngIf="this.checkAnalyze == 'View'">استاندارد الکترود</label>
+                    <nb-select #selectComponent class="select-inside-tab pt-4 w-100" fullWidth
+                      placeholder="استاندارد الکترود" multiple style="width: 80% !important;"
+                      formControlName="baseElectrodeStandardTypes">
+                      <nb-option *ngFor="let type of baseElectrodeStandardTypes" [value]="type.id"
+                        [disabled]="this.checkAnalyze == 'View'">
+                        {{ type.title }}
+                      </nb-option>
+                    </nb-select>
+                    <!-- <div *ngIf="this.checkAnalyze === 'View'">
+                      <strong>استاندارد الکترود</strong>
+                      <div class="mt-2">
+                        <div
+                          *ngFor="let item of baseElectrodeStandardTypesView"
+                        >
+                          <label>{{ item.title }}</label>
+                        </div>
+                      </div>
+                    </div> -->
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-4">
+                    <label *ngIf="this.checkAnalyze == 'View'">قطبیت</label>
+                    <nb-select *ngIf="
+                        inspectionType == 'ResultInspectionWelding' ||
+                        inspectionType == 'ResultInspectionCollectorWelding'
+                      " #selectComponent class="select-inside-tab pt-4 w-100" fullWidth style="width: 80% !important;"
+                      placeholder="قطبیت" multiple formControlName="basePolarityTypes">
+                      <nb-option *ngFor="let type of basePolarityTypes" [value]="type.id"
+                        [disabled]="this.checkAnalyze == 'View'">
+                        {{ type.title }}
+                      </nb-option>
+                    </nb-select>
+                    <!-- <div *ngIf="this.checkAnalyze === 'View'">
+                      <strong>قطبیت</strong>
+                      <div *ngFor="let item of this.basePolarityTypesView">
+                        <label>{{ item.title }}</label>
+                      </div>
+                    </div> -->
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-4">
+                    <label *ngIf="this.checkAnalyze == 'View'">نوع دستگاه جوشکاری</label>
+                    <nb-select *ngIf="
+                        inspectionType == 'ResultInspectionWelding' ||
+                        inspectionType == 'ResultInspectionCollectorWelding'
+                      " #baseWeldingMachinTypeTest class="select-inside-tab pt-4 w-100" fullWidth
+                      style="width: 80% !important;" placeholder=" نوع دستگاه جوشکاری" multiple
+                      formControlName="baseWeldingMachinType">
+                      <nb-option *ngFor="let type of baseWeldingMachinType" [value]="type.id"
+                        [disabled]="this.checkAnalyze == 'View'">
+                        {{ type.title }}
+                      </nb-option>
+                    </nb-select>
+                    <!-- <div *ngIf="this.checkAnalyze === 'View'">
+                      <strong>نوع دستگاه جوشکاری</strong>
+                      <div *ngFor="let item of baseWeldingMachinTypeView">
+                        <label>{{ item.title }}</label>
+                      </div>
+                    </div> -->
+                  </div>
+                </div>
+
+                <!-- <div class="row pt-1">
+                   <div class="col-lg-4 col-md-4 col-sm-4">
+                  <label class="d-block">موقعیت فعلی</label>
+
+                  <div class="pr-4">طول جغرافیایی : {{ lng }}</div>
+                  <div class="pr-4">عرض جغرافیایی : {{ lat }}</div>
+                   </div>
+                </div> -->
+                <div class="row w-100 pt-2" *ngIf="
+                    inspectionType == 'ResultInspectionPreExecution' ||
+                    inspectionType == 'ResultReInspectionPreExecution' ||
+                    inspectionType == 'ResultInspectionWelding' ||
+                    inspectionType == 'ResultInspectionCollectorWelding' ||
+                    inspectionType == 'SafetyInspectionResult' ||
+                    inspectionType == 'ResultInspectionOfTheFirstStage' ||
+                    inspectionType == 'ResultReInspectionOfTheFirstStage' ||
+                    inspectionType == 'ResultInspectionFinal' ||
+                    inspectionType == 'ResultReInspectionFinal' ||
+                    inspectionType == 'ChangeResultInspectionPreExecution' ||
+                    inspectionType == 'InspectionResultHP'||
+                    inspectionType == 'ResultInspectionSixMonth'||
+                    inspectionType == 'ResultReInspectionSixMonth'
+                  ">
+                  <nb-card-body>
+                    <label for="cmt">توضیحات</label>
+                    <textarea formControlName="scrComment" fullWidth [readOnly]="this.checkAnalyze === 'View'" id="cmt"
+                      name="cmt" nbInput rows="8"></textarea>
+                  </nb-card-body>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+
+          <!-- <nb-card>
+            <nb-card-body>
+              <div class="col-lg-12 col-md-12 col-sm-12" *ngIf="inspectionType == 3">
+                <nb-card>
+                  <nb-card>
+                    <nb-card-header>موقعیت جغرافیایی</nb-card-header>
+                    <nb-card-body>
+                      <div (leafletMapReady)="onMapReady($event)" [leafletLayersControl]="layersControl"
+                        [leafletOptions]="options" class="map" leaflet></div>
+                    </nb-card-body>
+                  </nb-card>
+                </nb-card>
+              </div>
+            </nb-card-body>
+          </nb-card> -->
+
+          <!-- <div class="btn-group col-lg-12 col-md-12 col-sm-12"> -->
+          <button class="btn" nbButton [disabled]="!sarForm.valid || loading" status="success" style="width: 100%;"
+            type="submit" *ngIf="!isEdit" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large">
+            تایید
+          </button>
+          <button class="btn" nbButton *ngIf="isEdit && this.checkAnalyze != 'View'"
+            [disabled]="!sarForm.valid || loading" status="primary" style="width: 100%;" type="button"
+            (click)="submitEdit()" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large">
+            ویرایش
+          </button>
+          <!-- </div> -->
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

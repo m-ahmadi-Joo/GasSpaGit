@@ -1,0 +1,226 @@
+<form [formGroup]="cgmForm" (ngSubmit)="submit()">
+  <nb-card>
+    <nb-card-header>نقشه 1/2500 </nb-card-header>
+    <nb-card-body>
+      <nb-card>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-sm-4 col-md-4 col-lg-4">
+              <label>
+                سایز شبکه طبق نقشه 1/2500:
+              </label>
+              <input formControlName="netWorkSize" fullWidth id="tb" nbInput />
+              <div
+                *ngFor="let validation of INPUT_VALIDATION_MESSAGES.netWorkSize"
+              >
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    cgmForm.get('netWorkSize').hasError(validation.type) &&
+                    (cgmForm.get('netWorkSize').dirty ||
+                      cgmForm.get('netWorkSize').touched)
+                  "
+                  >{{ validation.message }}</span
+                >
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4">
+              <label>
+                فاصله خط شبکه تا درب ورودی طبق نقشه 1/2500:
+              </label>
+              <input
+                formControlName="distanceToEntranceDoor"
+                fullWidth
+                id="tb"
+                nbInput
+              />
+              <div
+                *ngFor="
+                  let validation of INPUT_VALIDATION_MESSAGES.distanceToEntranceDoor
+                "
+              >
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    cgmForm
+                      .get('distanceToEntranceDoor')
+                      .hasError(validation.type) &&
+                    (cgmForm.get('distanceToEntranceDoor').dirty ||
+                      cgmForm.get('distanceToEntranceDoor').touched)
+                  "
+                  >{{ validation.message }}</span
+                >
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4">
+              <label>
+                تعداد درب به شارع عام:
+              </label>
+              <input
+                formControlName="doorToGeneralPublic"
+                fullWidth
+                id="tb"
+                nbInput
+              />
+              <div
+                *ngFor="
+                  let validation of INPUT_VALIDATION_MESSAGES.doorToGeneralPublic
+                "
+              >
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    cgmForm
+                      .get('doorToGeneralPublic')
+                      .hasError(validation.type) &&
+                    (cgmForm.get('doorToGeneralPublic').dirty ||
+                      cgmForm.get('doorToGeneralPublic').touched)
+                  "
+                  >{{ validation.message }}</span
+                >
+              </div>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+
+      <nb-card>
+        <nb-card-body>
+          <label>
+            روی نقشه 1/2500 نقطه وصل به گاز مشخص و مهر و امضا گردید؟</label
+          >
+
+          <nb-radio-group
+            class="form-inline"
+            id="gasPoint"
+            name="gasPoint"
+            formControlName="gasPoint"
+          >
+            <nb-radio value="true">
+              بلی
+            </nb-radio>
+            <nb-radio value="false">
+              خیر
+            </nb-radio>
+          </nb-radio-group>
+        </nb-card-body>
+      </nb-card>
+      <nb-card>
+        <nb-card-body>
+          <label> نیاز به تکمیل شبکه می باشد ؟</label>
+
+          <nb-radio-group
+            class="form-inline"
+            id="completeNetwork"
+            name="completeNetwork"
+            formControlName="completeNetwork"
+          >
+            <nb-radio value="true">
+              بلی
+            </nb-radio>
+            <nb-radio value="false">
+              خیر
+            </nb-radio>
+          </nb-radio-group>
+        </nb-card-body>
+      </nb-card>
+      <nb-card>
+        <nb-card-body>
+          <label> نیاز به تعویض شبکه می باشد ؟</label>
+
+          <nb-radio-group
+            class="form-inline"
+            id="changeNetwork"
+            name="changeNetwork"
+            formControlName="changeNetwork"
+          >
+            <nb-radio value="true">
+              بلی
+            </nb-radio>
+            <nb-radio value="false">
+              خیر
+            </nb-radio>
+          </nb-radio-group>
+        </nb-card-body>
+      </nb-card>
+
+      <nb-card>
+        <nb-card-body>
+          <div *ngFor="let a of inputCount; let i = index">
+            <label> {{ a?.title }}</label>
+
+            <strong
+              class="mb-2"
+              style="color: rgb(0, 68, 255); display: block; font-size: 11px;"
+            >
+              حداکثر حجم {{ sizeTitles[i] }} - فرمت ها ({{ a.extentions }})
+            </strong>
+            <!-- <strong class="mb-2" style="color: red; display:block; font-size: 11px;">تایپ ها قابل بارگذاری</strong> -->
+            <app-uploader
+              [formControlName]="a.formControlName"
+              [fileExtentions]="a.extentions"
+              [fileSize]="a.size"
+            >
+            </app-uploader>
+
+            <!-- [progress]="progress"
+            [filePath]="imagePathEdit" -->
+          </div>
+          <!-- <div class="col-lg-12 col-md-12 col-sm-12 m-0 p-0">
+            <label for="file">فایل نقشه 1/2500</label>
+            <div *ngFor="let a of inputCount;let i=index">
+                <strong class="mb-2" style="color: red; display:block; font-size: 11px;">حداکثر حجم قابل بارگذاری {{sizeTitles[i]}}</strong>
+              <app-uploader [formControlName]="a.formControlName">
+              </app-uploader>
+            </div>
+          </div> -->
+        </nb-card-body>
+      </nb-card>
+      <nb-card>
+        <nb-card-body>
+          <textarea
+            fullWidth
+            nbInput
+            formControlName="description"
+            placeholder="توضیحات و نظرات"
+            rows="5"
+            shape="round"
+          ></textarea>
+        </nb-card-body>
+      </nb-card>
+      <nb-card>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <button
+                class="btn"
+                nbButton
+                status="success"
+                style="width: 100%;"
+                type="submit"
+                nbSpinnerStatus="info"
+                nbSpinnerSize="large"
+                [disabled]="cgmForm.invalid"
+              >
+                ثبت
+              </button>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <button
+                class="btn"
+                nbButton
+                type="button"
+                status="primary"
+                style="width: 100%;"
+                (click)="returnToList()"
+
+              >
+                بازگشت به لیست
+              </button>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </nb-card-body>
+  </nb-card>
+</form>

@@ -1,0 +1,94 @@
+<nb-card class="inline-form-card">
+    <nb-card-header>
+        نتیجه کنترل مضاعف
+      </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-5 col-md-5 col-lg-5">
+        <label>شماره پرونده:</label>
+        <input [value]="info?.fileNumber" id="ps" nbInput type="text"   [readOnly]="true"/>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <label for="cmt">شرح عیوب: </label>
+        <textarea
+          name="cmt"
+          id="cmt"
+          rows="7"
+          nbInput
+          fullWidth
+          [readOnly]="true"
+          [value]="info?.desc"
+        ></textarea>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+<form [formGroup]="cgmForm" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <div class="col-md-12">
+      <nb-card
+        class="inline-form-card"
+        [nbSpinner]="loading"
+        nbSpinnerStatus="danger"
+        nbSpinnerSize="large"
+        nbSpinnerMessage=""
+      >
+
+
+        <nb-card>
+            <nb-card-header>
+              نتیجه کنترل مضاعف مهندس ناظر
+              </nb-card-header>
+          <nb-card-body>
+            <div class="row">
+              <div class="col-sm-5 col-md-5 col-lg-5">
+                <label>نتیجه بازرسی:</label>
+                <nb-radio-group
+                  class="form-inline"
+                  formControlName="controlConfirm"
+                  id="conf"
+                  name="conf"
+                >
+                  <nb-radio value="true">
+                    تایید
+                  </nb-radio>
+                  <nb-radio value="false">
+                    عدم تایید
+                  </nb-radio>
+                </nb-radio-group>
+              </div>
+            </div>
+            <!-- *ngIf="cgmForm.get('controlConfirm').value==='false'" -->
+            <div class="row" >
+              <div class="col-sm-12 col-md-12 col-lg-12">
+                <label for="cmt"> شرح: </label>
+                <textarea
+                  name="cmt"
+                  id="cmt"
+                  rows="7"
+                  nbInput
+                  fullWidth
+
+                  formControlName="desc"
+                ></textarea>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              nbButton
+              status="success"
+              class="btn btn-success btn-block"
+              [disabled]="!cgmForm.valid"
+            >
+              ثبت
+            </button>
+          </nb-card-body>
+        </nb-card>
+      </nb-card>
+    </div>
+  </div>
+</form>

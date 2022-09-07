@@ -1,0 +1,43 @@
+
+  <div class="row">
+    <div class="col-md-12">
+      <nb-card class="inline-form-card">
+        <nb-card-header>درخواست مشاوره <strong class="text-info">{{details?.consultFileNumber}}</strong></nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-md-12">
+              <nb-card>
+                <nb-card-body>
+                  <div class="row">
+                    <div class="col-sm-7 col-md-7 col-lg-7">
+                      <label for="consultType">نوع مشاوره :</label>
+                      <input nbInput style="width: 100%"  [readOnly]="true" [value]="details?.consultTypes"  />
+                    </div>
+
+                    <div class="col-sm-5 col-md-5 col-lg-5">
+                      <label>
+                        شماره ملک:
+                      </label>
+                      <input nbInput [readOnly]="true" [value]="details?.gasRequestFileNumber"/>
+                    </div>
+                  </div>
+
+                  <div class="form-group mt-4">
+                    <label for="question">سوال:</label>
+                    <textarea
+                      id="question"
+                      rows="5"
+                      nbInput
+                      fullWidth
+                      [readOnly]="true"
+                      [value]="details?.question"
+                    ></textarea>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>

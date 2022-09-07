@@ -1,0 +1,86 @@
+<nb-card class="form-card">
+  <nb-card-header>
+    مناطق و زمانبدی کاری مهندس {{ info.fullName }} در سال {{info.currentYear}}
+
+  </nb-card-header>
+  <nb-card-body>
+
+    <div style="text-align:center">
+      <div class="row">
+        <div class="col">
+          <nb-card accent="primary" status="info">
+            <nb-card-header>مناطق کاری</nb-card-header>
+            <nb-card-body>
+              <div class="form-group">
+                <label for="" *ngFor="let item of info.workingArea, let i = index">
+                  <strong *ngIf="info.workingArea?.length > 1 && i < info.workingArea.length-1"> {{ item }} ،
+                    &nbsp;</strong>
+                  <strong *ngIf="i === info.workingArea.length-1"> {{ item }} </strong>
+                </label>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div style="text-align:center">
+      <div class="mt-12 row">
+        <div class="col">
+          <nb-card accent="primary" status="info">
+            <nb-card-header>شیفت و ساعت های کاری</nb-card-header>
+            <nb-card-body>
+              <div class="form-group">
+                <label for="">
+                  <strong> {{ info.shiftTimes }} </strong>
+                </label>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div style="text-align:center">
+      <div class="mt-12 row">
+        <div class="col">
+          <nb-card accent="primary" status="info">
+            <nb-card-header>وضعیت </nb-card-header>
+            <nb-card-body>
+              <div class="form-group">
+                <label for="">
+                  <strong [ngClass]="{'text-success': info.result=='فعال', 'text-danger': info.result!='فعال'}"> {{
+                    info.result }} </strong>
+                </label>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+        <div class="col">
+          <nb-card accent="primary" status="info">
+            <nb-card-header>کد ملی </nb-card-header>
+            <nb-card-body>
+              <div class="form-group">
+                <label for="">
+                  <strong> {{ info.nationalCode }} </strong>
+                </label>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+        <div class="col">
+          <nb-card accent="primary" status="info">
+            <nb-card-header>کد دفتر گاز </nb-card-header>
+            <nb-card-body>
+              <div class="form-group">
+                <label for="">
+                  <strong> {{ info.engineerOrganizationCode }} </strong>
+                </label>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

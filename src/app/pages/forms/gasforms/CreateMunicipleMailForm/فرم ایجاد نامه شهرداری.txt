@@ -1,0 +1,30 @@
+// فرم ایجاد نامه برای شهرداری
+
+// این فرم همراش نظرات و پیشنهادایی که مهندس اعمال کرده رو نشون میده
+
+createMailForMunicipalityForm: FormGroup;
+
+//// اطلاعات جمع آوری علمک {
+شماره کنتور :
+شماره انداز :
+//// }
+
+//// تعیین محل علمک {
+محل علمک جدید :
+////}
+
+//// تایید آلبوم معماری {
+توضیحات نهایی تایید آلبوم معماری :
+نوع فشار گاز :
+//// }
+
+توضیحات و نظرات مورد نیاز :
+
+this.createMailForMunicipalityForm = this.fb.group ({
+	cmfmGasMeterSerial-ctrl: ['', Validators.required],
+	cmfmGasCountNum-ctrl: ['', Validators.required],
+	cmfmGasMeterNewLocaion-ctrl: ['', Validators.required],
+	cmfmFinalResultOnArchitectureAlbum-ctrl: ['', Validators.required],
+	cmfmGasPressureType-ctrl: ['', Validators.required],
+	cmfmComments-ctrl: ['', Validators.required],
+});

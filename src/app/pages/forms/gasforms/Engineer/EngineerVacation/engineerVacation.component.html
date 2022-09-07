@@ -1,0 +1,155 @@
+<nb-card>
+  <nb-card-header>مرخصی مهندسان</nb-card-header>
+  <form [formGroup]="cgmForm" (ngSubmit)="onSubmit()">
+    <nb-card-body>
+      <div class="row">
+        <div class="col-sm-6 col-md-6 col-lg-6">
+          <label class="col-sm-2" for="cd">از تاریخ:</label>
+          <dp-date-picker
+            name="cd"
+            fullWidth
+            id="cd"
+            nbInput
+            dir="rtl"
+            mode="day"
+            [config]="dateConfig"
+            theme="dp-material"
+            formControlName="dateStart"
+            (onChange) = "checkVacationStartDate($event)"
+          ></dp-date-picker>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6">
+          <label class="col-sm-2" for="cd">تا تاریخ:</label>
+          <dp-date-picker
+            name="cd"
+            fullWidth
+            id="cd"
+            nbInput
+            dir="rtl"
+            mode="day"
+            (onChange)="checkVacationDate($event)"
+            [config]="dateConfig"
+            theme="dp-material"
+            formControlName="dateEnd"
+          ></dp-date-picker>
+        </div>
+        <span
+          class="text-danger"
+          *ngIf="
+            cgmForm.get('dateStart').value > cgmForm.get('dateEnd').value &&
+            cgmForm.get('dateEnd').value !== ''
+          "
+          style="margin-right: 28px; margin-top: 5px"
+        >
+          تاریخ شروع می بایست کوچکتر از پایان باشد
+        </span>
+
+        <span
+          class="text-danger"
+          *ngIf="lessThanWeek"
+          style="margin-right: 28px; margin-top: 5px"
+        >
+          حداقل بازه تاریخ مرخصی یک هفته میباشد
+        </span>
+      </div>
+      <div class="row"></div>
+      <nb-card>
+        <nb-card-body>
+          <div class="row mt-5">
+            <div class="form-group col-md-5">
+              <label class="form-inline"> مهندس جایگزین: </label>
+              <input
+                formControlName="engineerSelect"
+                [typeahead]="engineersList"
+                typeaheadOptionField="itemForSearch"
+                (typeaheadOnSelect)="onSelect($event)"
+                [typeaheadOptionsLimit]="7"
+                [typeaheadMinLength]="0"
+                class="form-control"
+              />
+              <div
+                *ngFor="
+                  let validation of INPUT_VALIDATION_MESSAGES.engineerSelect
+                "
+              >
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    cgmForm.get('engineerSelect').hasError(validation.type) &&
+                    (cgmForm.get('engineerSelect').dirty ||
+                      cgmForm.get('engineerSelect').touched)
+                  "
+                >
+                  {{ validation.message }}</span
+                >
+              </div>
+            </div>
+
+            <div class="col-md-2"></div>
+
+            <div class="col-md-5">
+              <div *ngFor="let a of selectedOption">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>نام و نام خانوادگی</th>
+                      <th>کد مهندس</th>
+                      <th>کد ملی مهندس</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{ a?.fullName }}</td>
+                      <td>{{ a?.membershipNumber }}</td>
+                      <td>{{ a?.nationalCode }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <label for="cmt">توضیحات</label>
+              <textarea
+                formControlName="description"
+                fullWidth
+                id="cmt"
+                name="cmt"
+                nbInput
+                rows="7"
+              ></textarea>
+            </div>
+            <div
+              *ngFor="let validation of INPUT_VALIDATION_MESSAGES.description"
+            >
+              <span
+                class="text-danger"
+                *ngIf="
+                  cgmForm.get('description').hasError(validation.type) &&
+                  (cgmForm.get('description').dirty ||
+                    cgmForm.get('description').touched)
+                "
+              >
+                {{ validation.message }}</span
+              >
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <!-- [nbSpinner]="loading" -->
+      <button
+        nbSpinnerStatus="info"
+        nbSpinnerSize="large"
+        type="submit"
+        nbButton
+        status="success"
+        class="btn btn-success btn-block"
+        [disabled]="
+          !cgmForm.valid ||
+          cgmForm.get('dateStart').value > cgmForm.get('dateEnd').value
+        "
+      >
+        ثبت
+      </button>
+    </nb-card-body>
+  </form>
+</nb-card>

@@ -1,0 +1,158 @@
+<app-gasRequestDetailBox *ngIf="requestStateType !== 'DefineObserverSafetyAndLeakInpection'" [gasRequestId]="id">
+</app-gasRequestDetailBox>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <div class="col-md-12">
+      <nb-card class="inline-form-card">
+        <nb-card-header>
+          تعیین ناظر
+          <!-- <span *ngIf="isEdit">
+            شماره
+            <span style="color:#3366ff">
+              {{ contractNumber }}
+            </span>
+          </span> -->
+        </nb-card-header>
+
+        <nb-card class="inline-form-card">
+          <nb-card-body>
+            <!-- <div
+              style="height: 295px"
+              class="col-lg-12 col-md-12 col-sm-12 overflow-auto"
+              *ngIf="
+                requestStateType === 'CollectiveDefineObserverPreExecution'
+              "
+            >
+              <app-CollectiveUnitsDetailForm> </app-CollectiveUnitsDetailForm>
+            </div> -->
+
+            <div class="row" *ngIf="requestStateType !== 'DefineObserverSafetyAndLeakInpection'">
+              <div class="form-group col-md-5">
+                <label>
+                  شماره ملک
+                </label>
+                <input readonly [value]="gasRequestInfo?.fileNumber" fullWidth nbInput type="number" />
+              </div>
+
+              <div class="col-md-2"></div>
+
+              <div class="col-md-5">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <!-- <th>شماره پرونده</th> -->
+                      <th>نام مالک</th>
+                      <th>تاریخ ثبت</th>
+                      <th>تعداد واحد</th>
+                      <th>زیر بنا</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <!-- <td>{{ gasRequestInfo?.fileNumber }}</td> -->
+                      <td> {{ gasRequestInfo?.ownerFullName }} </td>
+                      <td> {{ gasRequestInfo?.gasReqRegisterDate }}</td>
+                      <td> {{ gasRequestInfo?.unitCount }} </td>
+                      <td> {{ gasRequestInfo?.totalFoundation }} </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-md-5">
+                <label>
+                  مهندس
+                </label>
+                <input formControlName="engineerSelect" [typeahead]="engineersList" typeaheadOptionField="itemForSearch"
+                  (typeaheadOnSelect)="onSelect($event)" [typeaheadOptionsLimit]="7" [typeaheadMinLength]="0"
+                  class="form-control" />
+                <div *ngFor="
+                    let validation of INPUT_VALIDATION_MESSAGES.engineerSelect
+                  ">
+                  <span class="text-danger" *ngIf="
+                      form.get('engineerSelect').hasError(validation.type) &&
+                      (form.get('engineerSelect').dirty ||
+                        form.get('engineerSelect').touched)
+                    ">
+                    {{ validation.message }}</span>
+                </div>
+              </div>
+
+              <div class="col-md-2"></div>
+
+              <div class="col-md-5">
+                <div *ngFor="let a of selectedOption">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>نام و نام خانوادگی</th>
+                        <th>کد مهندس</th>
+                        <th>کد ملی مهندس</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>{{ a?.fullName }}</td>
+                        <td>{{ a?.membershipNumber }}</td>
+                        <td>{{ a?.nationalCode }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <label for="cmt">توضیحات</label>
+                <textarea formControlName="description" fullWidth id="cmt" name="cmt" nbInput rows="7"></textarea>
+              </div>
+              <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.description">
+                <span class="text-danger" *ngIf="
+                    form.get('description').hasError(validation.type) &&
+                    (form.get('description').dirty ||
+                      form.get('description').touched)
+                  ">
+                  {{ validation.message }}</span>
+              </div>
+            </div>
+
+            <!-- <ng-container *ngIf="!isEdit; then btnRegister; else btnEdit"> -->
+            <!-- <ng-container >
+            </ng-container>
+            <ng-template #btnRegister> -->
+
+            <div class="row">
+              <div class="col-sm-6">
+                <button [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" type="submit" nbButton
+                  status="success" class="btn btn-success btn-block" [disabled]="!form.valid || loading">
+                  ثبت
+                </button>
+              </div>
+              <div class="col-sm-6">
+                <button type="button" nbButton status="primary" class="btn btn-success btn-block" [disabled]="loading"
+                  routerLink="/pages/forms/GasReqList">
+                  بازگشت به لیست
+                </button>
+              </div>
+            </div>
+
+            <!-- </ng-template> -->
+            <!-- <ng-template #btnEdit>
+              <button
+                type="submit"
+                nbButton
+                status="success"
+                class="btn btn-success btn-block"
+                [disabled]="!form.valid"
+              >
+                ویرایش
+              </button>
+            </ng-template> -->
+          </nb-card-body>
+        </nb-card>
+      </nb-card>
+    </div>
+  </div>
+</form>

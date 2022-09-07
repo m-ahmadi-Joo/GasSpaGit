@@ -1,0 +1,34 @@
+<!-- <nb-checkbox name="forPay" [id]="rData.id" type="checkbox" (change)="onCheckChange($event)" (getSelectedPay)="getSelectedPay"
+ [disabled]="rData.nextStateType !== 'PayForGasRules' && rData.nextStateType !== 'PayDifferenceGasRule'"
+ ></nb-checkbox> -->
+
+<nb-checkbox
+  name="forPay"
+  [id]="rData.id"
+  type="checkbox"
+  (change)="onCheckChange($event)"
+  (totalDefineObserver)="(totalDefineObserver)"
+  [disabled]="
+  rData.nextStateType !== 'CollectiveDefineObserverPreExecution'&&
+  rData.nextStateType !== 'CollectiveControlDocument'
+"
+
+></nb-checkbox>
+
+
+<!-- [disabled]="
+    rData.nextStateType !== 'CollectiveDefineObserverPreExecution'
+  "
+  *ngIf="rData.nextStateType !== 'CollectiveControlDocument'" -->
+
+<!-- <nb-checkbox
+  name="forControlDocument"
+  [id]="rData.id"
+  type="checkbox"
+  (change)="onCheckChangeCollectiveControlDocument($event)"
+  (totalControlDocument)="(totalControlDocument)"
+  [disabled]="
+    rData.nextStateType !== 'CollectiveControlDocument'
+  "
+  *ngIf="rData.nextStateType == 'CollectiveControlDocument'"
+></nb-checkbox> -->

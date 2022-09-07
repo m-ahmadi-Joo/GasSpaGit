@@ -1,0 +1,22 @@
+namaiandeForm: FormGroup;
+
+
+کد ملی نماینده :
+شناسه اقتصادی نماینده :
+نام کوچک نماینده :
+نام خانوادگی نماینده :
+نام پدر نماینده :
+کد پستی نماینده :
+شماره همراه نماینده :
+شماره ثابت نماینده :
+	this.namaiandeForm = this.fb.group({
+		nidNationalCode-ctrl: ['', Validators.required],
+		nidEcoIdentifier-ctrl: ['', Validators.required],
+		nidFName-ctrl: ['', Validators.required],
+		nidLName-ctrl: ['', Validators.required],
+		nidDName-ctrl: ['', Validators.required],
+		nidPostalCode-ctrl: ['', Validators.required],
+		nidMobile-ctrl: ['', Validators.required],
+		nidPhone-ctrl: ['', Validators.required],
+	});
+	

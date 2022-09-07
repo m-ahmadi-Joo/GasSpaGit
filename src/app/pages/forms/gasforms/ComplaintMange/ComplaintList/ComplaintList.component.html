@@ -1,0 +1,252 @@
+<!-- <nb-card id="serachCard" style="box-shadow: 0 0 4px">
+        <nb-card-body>
+            <div class="container">
+                <form class="form-inline" (ngSubmit)="onSerach()" [formGroup]="form">
+                    <ul>
+                      <li class="text-danger"
+                      *ngIf="(form.get('fromDateStart').value > form.get('fromDateEnd').value) && (form.get('fromDateEnd').value !== '')">
+                          <span class="text-danger">بازه تاریخ انتخابی شروع قراداد نامعتبر است.</span>
+                      </li>
+
+                      <li class="text-danger"
+                      *ngIf="(form.get('toDateStart').value > form.get('toDateEnd').value) && (form.get('toDateEnd').value !== '')">
+                          <span class="text-danger">بازه تاریخ انتخابی پایان قراداد نامعتبر است.</span>
+                      </li>
+
+                      <li class="text-danger"
+                      *ngIf="(form.get('fromDateStart').value > form.get('toDateStart').value) && (form.get('toDateStart').value !== '')">
+                          <span class="text-danger">تاریخ انتخابی شروع قرارداد می بایست کوچکتر از تاریخ انتخابی پایان قرارداد باشد.</span>
+                      </li>
+
+                      <li class="text-danger"
+                      *ngIf="(form.get('fromDateEnd').value > form.get('toDateStart').value) && (form.get('toDateStart').value !== '')">
+                          <span class="text-danger">تاریخ انتخابی شروع قرارداد می بایست کوچکتر از تاریخ انتخابی پایان قرارداد باشد.</span>
+                      </li>
+                    </ul>
+
+                  <div class="row">
+
+                    <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                        <label for="fromDateStart">
+                          زمان انعقاد قرارداد از:
+                        </label>
+
+                      <dp-date-picker name="ds" id="ds" nbInput dir="rtl" mode="day" theme="dp-material"
+                      formControlName="fromDateStart"
+                      [config]="datePickerConfig"
+                      (open)="openFromStartDayPicker()"
+                      (close)="closeFromStartDayPicker()"
+                      nbInput
+                      ></dp-date-picker>
+
+                    </div>
+
+                    <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                        <label for="fromDateEnd">
+                            زمان انعقاد قرارداد تا:
+                        </label>
+
+                        <dp-date-picker name="de" id="de" nbInput dir="rtl" mode="day" theme="dp-material"
+                        formControlName="fromDateEnd"
+                        [config]="datePickerConfig"
+                        (open)="openFromEndDayPicker()"
+                        (close)="closeFromEndDayPicker()"
+                        nbInput
+                        ></dp-date-picker>
+                    </div>
+
+                    <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                        <label for="toDateStart">
+                          زمان پایان قرارداد از:
+                        </label>
+
+                      <dp-date-picker name="ds" id="ds" nbInput dir="rtl" mode="day" theme="dp-material"
+                      formControlName="toDateStart"
+                      [config]="datePickerConfig"
+                      (open)="openToStartDayPicker()"
+                      (close)="closeToStartDayPicker()"
+                      nbInput
+                      ></dp-date-picker>
+                    </div>
+
+                    <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                        <label for="toDateEnd">
+                            زمان پایان قرارداد تا:
+                        </label>
+
+                        <dp-date-picker name="de" id="de" nbInput dir="rtl" mode="day" theme="dp-material"
+                        formControlName="toDateEnd"
+                        [config]="datePickerConfig"
+                        (open)="openToEndDayPicker()"
+                        (close)="closeToEndDayPicker()"
+                        nbInput
+                        ></dp-date-picker>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12 mt-3 ">
+                        <label for="ownerName">
+                          نام مالک:
+                        </label>
+
+                            <input
+                              formControlName="ownerName"
+                              size='small'
+                              fullWidth
+                              id="ownerName"
+                              nbInput
+                              type="text"
+                            />
+                    </div>
+
+                    <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12 mt-3 ">
+                        <label for="executorName">
+                          نام مجری:
+                        </label>
+                        <input
+                          formControlName="executorName"
+                          size='small'
+                          fullWidth
+                          id="executorName"
+                          nbInput
+                          type="text"
+                        />
+                    </div>
+
+                    <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12  mt-3">
+                        <label for="fileNumber">
+                            شماره قرارداد:
+                        </label>
+
+                          <input
+                            formControlName="fileNumber"
+
+                            size='small'
+                            fullWidth
+                            id="fileNumber"
+                            nbInput
+                            type="number"
+                            min="1000"
+                          />
+
+                    </div>
+
+                    <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12 float-right mt-3">
+                      <button nbTooltip="جستجو" nbTooltipPlacement="top" nbButton hero size="tiny" status="info" type="submit"  style="margin-left:5px">
+                          <nb-icon
+                          [options]="{ animation: { type: 'pulse' } }"
+                          class="icon-button"
+                          icon="search-outline">
+                        </nb-icon>
+                      </button>
+
+                      <button nbTooltip="بازسازی" nbTooltipPlacement="top" size="tiny" nbButton hero status="primary" type="button" (click)="resetFilters()">
+                          <nb-icon
+                          [options]="{ animation: { type: 'pulse' } }"
+                          class="icon-button"
+                          icon="refresh-outline">
+                        </nb-icon>
+                      </button>
+                    </div>
+                </div>
+
+                </form>
+                <br>
+            </div>
+        </nb-card-body>
+      </nb-card> -->
+
+<nb-card class="table-x-mine" style="box-shadow: 0 0 4px">
+  <nb-card-header class="pt-4" style="border-bottom: 0">
+    <div class="pull-right pt-2">
+      <span class="ml-1">کارتابل ورودی</span>
+      <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="arrow-ios-back-outline">
+      </nb-icon>
+      <span class="mr-1" style="color:#3366ff">شکایات</span>
+    </div>
+    <div class="pull-left">
+      <a class="btn btn-info btn-lg" style="color:#fff" [routerLink]="['/pages/forms/Complaint']"
+        *appHasRole="['Executor','Engineer','Owner','Admin']">
+        <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="file-text-outline">
+        </nb-icon>
+        شکایت جدید
+      </a>
+    </div>
+    <div class="clearfix"></div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <div style="clear: both"></div>
+    <div class="table-wrapper">
+      <ng2-smart-table noDataMessage="داده یافت نشد." [settings]="settings" [source]="source | paginate: pagingConfig"
+        (custom)="onCustom($event)" style="direction:ltr"></ng2-smart-table>
+    </div>
+    <span *ngFor="let item of collection | paginate: pagingConfig"></span>
+
+    <nb-card>
+      <nb-card-body>
+        <div class="row">
+          <div class="input-group">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 form-inline pull-left">
+              <label for="pageSize" style="margin-left: 0.45rem;">
+                تعداد رکورد:
+              </label>
+              <nb-select status="info" #pageSizeSelect class="pageSizeSelect"
+                (selectedChange)="changePageSize(pageSizeSelect.selected)" id="pageSize" placeholder="انتخاب ...">
+                <nb-option *ngFor="let p of pageSizes" [value]="p.id">
+                  {{ p.display }}
+                </nb-option>
+              </nb-select>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              <div class="d-flex justify-content-center">
+                <pagination-controls class="pagination" (pageChange)="pageChanged($event)" previousLabel=""
+                  nextLabel="">
+                </pagination-controls>
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 form-inline pull-right">
+              <label for="pageNumber" style="margin-left: 0.45rem;">
+                شماره صفحه:
+              </label>
+              <input style="width:30%" #pageNumber size='tiny' id="pageNumber" nbInput type="number" min="1"
+                max="pagination.totalPages" (keydown.enter)="pageChanged(pageNumber.value)" />
+            </div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+
+  </nb-card-body>
+</nb-card>
+
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card status="danger" accent="danger">
+    <nb-card-header>
+      <h4 style="color: linen">هشدار</h4>
+    </nb-card-header>
+    <nb-card-body>
+      <h6>آیا از حذف مورد اطمینان دارید؟</h6>
+    </nb-card-body>
+    <nb-card-footer>
+      <div class="row">
+        <div class="col-sm-6">
+          <button fullWidth nbButton hero status="danger" (click)="confirmDelete(data)">بلی</button>
+        </div>
+        <div class="col-sm-6">
+          <button fullWidth nbButton hero status="primary" (click)="ref.close()">انصراف</button>
+        </div>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+
+<ng-template #contentDetailTemplate>
+  <ngx-ComplaintDetailForm></ngx-ComplaintDetailForm>
+</ng-template>

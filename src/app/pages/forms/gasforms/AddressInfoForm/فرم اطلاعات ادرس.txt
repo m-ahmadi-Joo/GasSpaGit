@@ -1,0 +1,14 @@
+addressInfoForm: FormGroup;
+
+	// منطقه یا ناحیه
+	// شهر یا شهرستان
+	// روستا
+	// موقعیت جغرافیایی
+	// آدرس دقیق
+	this.addressInfoForm = FormBuilder.group({
+		adiArea-ctrl: ['', Validators.required],
+		adiCity-ctrl: ['', Validators.required],
+		adiVilage-ctrl: ['', Validators.required],
+		adiGeoCordinate-ctrl: ['', Validators.required],
+		adiFullPath-ctrl: ['', Validators.required],
+	});

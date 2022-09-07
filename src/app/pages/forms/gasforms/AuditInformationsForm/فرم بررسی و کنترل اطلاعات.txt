@@ -1,0 +1,27 @@
+// بررسی و کنترل اطلاعات
+
+informationCheckingForm: FormGroup;
+
+شماره طبقه :
+جهت { شمالی ، جنوبی ، شرقی ، غربی} :
+میزان مصرف :
+زیر بنا :
+نوع لوله کشی :
+تعداد وسایل گازسوز :
+نوع کنتر :
+هزینه ای که مجری متقبل میشود :
+شماره نقشه :
+توضیحات :
+
+this.informationCheckingForm = this.fb.group({
+	icgFloorNumber-ctrl: ['[readData]'],
+	icgDirection-ctrl: ['[readData]'],
+	icgUsage-ctrl: ['[readData]'],
+	icgFundation-ctrl: ['[readData]'],
+	icgPipeType-ctrl: ['[readData]'],
+	icgGasBurnerTools-ctrl: ['[readData]'],
+	icgGasMeterType-ctrl: ['[readData]'],
+	icgExecuterCost-ctrl: ['[readData]'],
+	icgMapInfoNumber-ctrl: ['[readData]'],
+	icgDescripion-ctrl: ['[readData]'],
+});

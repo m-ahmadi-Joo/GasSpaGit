@@ -1,0 +1,192 @@
+<form [formGroup]="cgmForm" (ngSubmit)="manage(cgmForm.value)">
+  <div class="row">
+    <div class="col-md-12">
+      <nb-card class="inline-form-card">
+        <nb-card-header>
+          <div class="row">
+            <div class="col-md-6 col-sm-6 col-lg-6">
+              <button
+                type="button"
+                nbButton
+                status="success"
+                class="btn btn-success btn-block mr-6"
+                (click)="isRandom(false)"
+              >
+                 انتخاب ملک به صورت دستی
+              </button>
+            </div>
+            <div class="col-md-6 col-sm-6 col-lg-6">
+              <button
+                type="button"
+                nbButton
+                status="info"
+                class="btn btn-info btn-block mr-6"
+                (click)="isRandom(true)"
+              >
+                 انتخاب ملک به صورت رندوم
+              </button>
+            </div>
+          </div>
+        </nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div style="width:100%">
+              <nb-card style="margin-bottom: 0">
+                <!-- <nb-card-body> -->
+                <!-- <div class="form-group"> -->
+
+                <!-- </div> -->
+                <!-- </nb-card-body> -->
+              </nb-card>
+            </div>
+
+            <!-- <div class="form-group col-md-6"></div> -->
+          </div>
+
+          <nb-card class="inline-form-card">
+            <nb-card-body>
+              <div class="row" *ngIf="random === false">
+                <div class="form-group col-md-5">
+                  <label>
+                    شماره درخواست:
+                  </label>
+
+                  <input
+                    formControlName="gasRequestSelect"
+                    [typeahead]="gasStates"
+                    typeaheadOptionField="searchItem"
+                    (typeaheadOnSelect)="onSelectGas($event)"
+                    [typeaheadOptionsLimit]="7"
+                    [typeaheadMinLength]="0"
+                    class="form-control"
+                    style="width: 98%"
+                  />
+                </div>
+
+                <div class="col-md-1"></div>
+                <!-- <div
+                  *ngFor="
+                    let validation of INPUT_VALIDATION_MESSAGES.gasRequestSelect
+                  "
+                >
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      cgmForm
+                        .get('gasRequestSelect')
+                        .hasError(validation.type) &&
+                      (cgmForm.get('gasRequestSelect').dirty ||
+                        cgmForm.get('gasRequestSelect').touched)
+                    "
+                  >
+                    {{ validation.message }}</span
+                  >
+                </div> -->
+                <div
+                  class="col-md-5"
+                  style="padding-left: 7px;padding-right: 28px;"
+                  *ngIf="cgmForm.get('gasRequestSelect').value !== ''"
+                >
+                  <div *ngFor="let a of selectedOptionGas">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>شماره درخواست</th>
+                          <th>آدرس</th>
+                          <th>تعداد واحد</th>
+                          <th>تعداد طبقه</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{{ a?.fileNumber }}</td>
+                          <td>{{ a?.address.substring(0, 7) }} ...</td>
+                          <td>{{ a?.unitCount }}</td>
+                          <td>{{ a?.floorCount }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <nb-card *ngIf="random === true">
+                <nb-card-body>
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>شماره درخواست</th>
+                        <th>نام و نام خانوادگی مالک</th>
+                        <th>آدرس</th>
+                        <th>کد پستی</th>
+                        <th>تعداد واحد</th>
+                        <th>تعداد طبقه</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>{{ gasReqRandom?.fileNumber }}</td>
+                        <td>{{ gasReqRandom?.ownerFullName }}</td>
+                        <td>{{ gasReqRandom?.address.substring(0, 7) }} ...</td>
+                        <td>{{ gasReqRandom?.postalCode }}</td>
+                        <td>{{ gasReqRandom?.unitCount }}</td>
+                        <td>{{ gasReqRandom?.floorCount }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </nb-card-body>
+              </nb-card>
+              <nb-card>
+                <nb-card-body>
+                  <div class="row">
+                    <label for="cmt"> شرح: </label>
+                    <textarea
+                      name="cmt"
+                      id="cmt"
+                      rows="7"
+                      nbInput
+                      fullWidth
+                      formControlName="desc"
+                    ></textarea>
+                  </div>
+                  <!-- <div
+                    *ngFor="let validation of INPUT_VALIDATION_MESSAGES.desc"
+                  >
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        cgmForm.get('desc').hasError(validation.type) &&
+                        (cgmForm.get('desc').dirty ||
+                          cgmForm.get('desc').touched)
+                      "
+                    >
+                      {{ validation.message }}</span
+                    >
+                  </div> -->
+                </nb-card-body>
+              </nb-card>
+            </nb-card-body>
+          </nb-card>
+        </nb-card-body>
+      </nb-card>
+      <nb-card class="inline-form-card">
+        <nb-card-body>
+          <div class="row">
+            <div class="col-md-6 ">
+              <!-- <ng-template #btnRegister> -->
+              <button
+                type="submit"
+                nbButton
+                status="success"
+                class="btn btn-success btn-block mr-6"
+                [disabled]="!cgmForm.valid"
+              >
+                ثبت
+              </button>
+              <!-- </ng-template> -->
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</form>

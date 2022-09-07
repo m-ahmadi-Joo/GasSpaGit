@@ -1,0 +1,78 @@
+<div class="container h-100">
+  <div class="row h-100 justify-content-center align-items-center mt-5">
+    <div class="col-sm-6 center" style="padding: 30px;">
+      <nb-card class="single-card">
+        <nb-card-body>
+          <form
+            name="Submit-Ver-Code"
+            (ngSubmit)="onSubmit()"
+            [formGroup]="codeForm"
+          >
+            <div name="input">
+              <label for="code-inpt">
+                کد تایید را وارد کنید
+              </label>
+              <input
+                formControlName="codeControl"
+                fullWidth
+                id="code-inpt"
+                nbInput
+                type="text"
+                [status]="
+                  codeForm.controls.codeControl.touched ||
+                  codeForm.controls.codeControl.dirty
+                    ? codeForm.controls.codeControl.invalid
+                      ? 'danger'
+                      : 'success'
+                    : ''
+                "
+              />
+            </div>
+
+            <div
+              name="Validation-Output"
+              *ngFor="let validation of INPUT_VALIDATION_MESSAGES.Code"
+            >
+              <span
+                class="text-danger"
+                *ngIf="
+                  codeForm.controls.codeControl.hasError(validation.type) &&
+                  (codeForm.controls.codeControl.dirty ||
+                    codeForm.controls.codeControl.touched)
+                "
+              >
+                {{ validation.message }}
+              </span>
+            </div>
+            <p class="text-danger mt-2">ثانیه باقی مانده : {{ timeLeft }}</p>
+            <div name="Buttons">
+              <button
+                [nbSpinner]="loading"
+                nbSpinnerStatus="info"
+                nbSpinnerSize="large"
+                [disabled]="loading"
+                class="btn half-width-btn"
+                nbButton
+                style="width: 50%;"
+                status="success"
+                type="submit"
+              >
+                ثبت
+              </button>
+              <button
+                style="width: 50%;"
+                class="btn half-width-btn"
+                nbButton
+                (click)="onReturn()"
+                status="primary"
+                type="button"
+              >
+                بازگشت به صفحه اصلی
+              </button>
+            </div>
+          </form>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,159 @@
+<!-- <button
+  nbTooltip="چاپ قرارداد"
+  nbTooltipPlacement="top"
+  size="tiny"
+  class="mb-2 mr-1"
+  nbButton
+  status="secondary"
+  *appHasRole="['Admin', 'Owner', 'Association']"
+  (click)="onPrintContract(rData.id)"
+>
+  <nb-icon
+    [options]="{ animation: { type: 'zoom' } }"
+    class="icon-button"
+    icon="printer-outline"
+  >
+  </nb-icon>
+</button> -->
+
+<!-- <button
+  nbTooltip="حذف"
+  nbTooltipPlacement="top"
+  size="tiny"
+  class="mb-2 mr-1"
+  nbButton
+  status="danger"
+  (click)="onDeleteContract(rData)"
+  *appHasRole="['Admin']"
+>
+  <nb-icon
+    [options]="{ animation: { type: 'zoom' } }"
+    class="icon-button"
+    icon="close-outline"
+  >
+  </nb-icon>
+</button>
+
+<button
+  nbTooltip="ویرایش"
+  nbTooltipPlacement="top"
+  *appHasRole="['Admin']"
+  [disabled]="rData.hasUnit"
+  [ngStyle]="{ cursor: rData.hasUnit ? 'not-allowed' : 'pointer' }"
+  size="tiny"
+  class="mb-2 mr-1"
+  nbButton
+  status="warning"
+  (click)="onEditExecuter(rData.id)"
+>
+  <nb-icon
+    [options]="{ animation: { type: 'zoom' } }"
+    class="icon-button"
+    icon="edit-2-outline"
+  >
+  </nb-icon>
+</button> -->
+<!--
+<button
+  nbTooltip="مشاهده جزئیات"
+  nbTooltipPlacement="top"
+  size="tiny"
+  class="mb-2 mr-1"
+  nbButton
+  status="info"
+  (click)="onShowDetailContract()"
+>
+  <nb-icon
+    [options]="{ animation: { type: 'zoom' } }"
+    class="alert-circle-outline"
+    icon="eye-outline"
+  >
+  </nb-icon>
+</button> -->
+<nb-select placeholder="انتخاب عملیات"  status="success">
+  <!-- *ngIf="rData.nextStateType.includes('ControlePeriodicInspectionRequests')" -->
+  <nb-option *ngIf="rData.nextStepType.includes('ControlePeriodicInspectionRequests')">
+    <button
+      *appHasRole="['Admin', 'GasEmployee']"
+      fullWidth
+      nbButton
+      status="primary"
+      (click)="onCheckRequest(rData.id)"
+    >
+      کنترل درخواست
+    </button>
+  </nb-option>
+  <!-- *ngIf="rData.nextStateType.includes('SelectSafetyExecuter')" -->
+  <nb-option *ngIf="rData.nextStepType.includes('SelectSafetyExecuter')">
+    <button
+      *appHasRole="['Admin', 'ApplicantAdditionalService']"
+      fullWidth
+      nbButton
+      status="primary"
+      (click)="onSelectExecuter(rData.id, 'SelectSafetyExecuter')"
+    >
+      انتخاب مجری
+    </button>
+  </nb-option>
+  <!-- *ngIf="rData.nextStateType.includes('SafetyAndLeakInspectionRequest')" -->
+  <nb-option *ngIf="rData.nextStepType.includes('SafetyAndLeakInspectionRequest')" >
+    <button
+      *appHasRole="['Admin', 'ApplicantAdditionalService']"
+      fullWidth
+      nbButton
+      status="primary"
+      (click)="onInspectionRequest(rData.id, 'SafetyAndLeakInspectionRequest')"
+    >
+      درخواست بازرسی
+    </button>
+  </nb-option>
+  <!-- *ngIf="rData.nextStateType.includes('ResultChangeSafetyAndLeakInspection')" -->
+  <nb-option *ngIf="rData.nextStepType.includes('ResultChangeSafetyAndLeakInspection')">
+    <button
+      *appHasRole="['Admin', 'Executor']"
+      fullWidth
+      nbButton
+      status="primary"
+      (click)="onExecuterResult(rData.id)"
+    >
+      ثبت نتیجه اصلاحات
+    </button>
+  </nb-option>
+  <!-- *ngIf="rData.nextStateType.includes('DefineObserverSafetyAndLeakInpection')" -->
+  <!-- <nb-option *ngIf="rData.nextStepType.includes('DefineObserverSafetyAndLeakInpection')">
+    <button
+      *appHasRole="['Admin', 'ApplicantAdditionalService']"
+      fullWidth
+      nbButton
+      status="primary"
+      (click)="onDefineObserver(rData.id,'DefineObserverSafetyAndLeakInpection')"
+    >
+   انتخاب ناظر
+    </button>
+  </nb-option> -->
+
+  <nb-option *ngIf="rData.nextStepType.includes('DefineObserverSafetyAndLeakInpection')">
+    <button
+      *appHasRole="['Admin', 'GasEmployee']"
+      fullWidth
+      nbButton
+      status="primary"
+      (click)="onDefineObserver(rData.id,'DefineObserverSafetyAndLeakInpection')"
+    >
+   انتخاب ناظر
+    </button>
+  </nb-option>
+  
+  <!-- *ngIf="rData.nextStateType.includes('ResultSafetyAndLeakInspection')" -->
+  <nb-option  *ngIf="rData.nextStepType.includes('ResultSafetyAndLeakInspection')">
+    <button
+      *appHasRole="['Admin', 'Engineer']"
+      fullWidth
+      nbButton
+      status="primary"
+      (click)="onInspectionResult(rData.id,'ResultSafetyAndLeakInspection')"
+    >
+      ثبت نتیجه بازرسی
+    </button>
+  </nb-option>
+</nb-select>

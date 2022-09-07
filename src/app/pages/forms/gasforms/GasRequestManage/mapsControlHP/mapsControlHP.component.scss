@@ -1,0 +1,42 @@
+h6 {
+  font-size: 13px;
+  color: #64666b;
+}
+
+table th,
+table td {
+  vertical-align: middle;
+  text-align: center;
+}
+
+td label {
+  margin-bottom: 0;
+}
+
+table thead {
+  background-image: linear-gradient(to right, #598bff, #3366ff);
+  color: #f6f6f6;
+  font-weight: 600;
+}
+
+#btnAddProblem {
+  font-size: 1rem;
+}
+
+#problem-table td {
+  padding: 0.5rem !important;
+}
+
+#problem-table td input {
+  background: #e8e4e4 !important;
+}
+
+.hasLP-checkbox /deep/ .label {
+  padding-right: 7px !important;
+}
+
+.hasLP-checkbox /deep/ .label .text {
+  font-size: 0.9375rem !important;
+  font-weight: 600 !important;
+}
+

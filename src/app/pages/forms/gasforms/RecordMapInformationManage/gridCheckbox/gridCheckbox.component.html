@@ -1,0 +1,6 @@
+
+ <!-- <nb-checkbox name="forPay" [disabled]="!rData.nextStateType.includes('PayRequestInspectionPreExecution','PayRequestInspectionWelding')" [id]="rData.requestUnitId" type="checkbox" (change)="onCheckChange($event)" ></nb-checkbox> -->
+ <!-- (click)="onClick($event)" [indeterminate]="true"-->
+ <nb-checkbox name="forPay"
+ [disabled]="!hasPayType()"
+ [id]="rData.requestUnitId" type="checkbox" (change)="onCheckChange($event)" ></nb-checkbox>

@@ -1,0 +1,673 @@
+<style>
+  .row label {
+    height: 34px;
+  }
+</style>
+
+<nb-card>
+  <nb-card-header> برآورد مصرف </nb-card-header>
+  <nb-card-body>
+    <app-gasRequestDetailBox [gasRequestId]="gasReqId"></app-gasRequestDetailBox>
+  </nb-card-body>
+  <form [formGroup]="cgmForm" (submit)="onSubmit()">
+    <div class="row">
+      <div class="col-md-12">
+        <nb-card class="inline-form-card" *ngIf="requestStateType === 'ResidentialEstimation'">
+          <nb-card-body>
+            <div class="row">
+              <div class="form-group col-md-6"></div>
+            </div>
+
+            <nb-card class="inline-form-card">
+              <nb-card-header>
+                <label for="">اضافه کردن بلوک/مغازه: &nbsp;&nbsp;</label>
+                <button id="btnAddInputFields" type="button" (click)="addInputFields()" nbButton status="info"
+                  size="tiny" class="btn">
+                  <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="plus">
+                  </nb-icon>
+                </button>
+              </nb-card-header>
+              <nb-card-body>
+                <div formArrayName="estimationConsumptionCollectionDtos">
+                  <!-- <div
+                    [formGroupName]="i"
+                    *ngFor="
+                      let item of cgmForm.get('gasMeterCollectionDtos')['controls'];
+                      let i = index
+                    "
+                  > -->
+                  <div class="row">
+                    <table class="table table-hover" style="width: 100%">
+                      <thead>
+                        <tr>
+                          <th style="width: 17%">نام و یا شماره بلوک/مغازه</th>
+                          <th style="width: 16%">تعدادواحد/مغازه</th>
+                          <th style="width: 16%">
+                            حدود مصرف هر واحد یا مغازه M^3/Hr
+                          </th>
+                          <th style="width: 16%">
+                            مصرف کل هر بلوک/مغازه ها M^3/Hr
+                          </th>
+                          <th style="width: 16%">
+                            تعداد/سایز علمک برای این بلوک
+                          </th>
+                          <th style="width: 16%">
+                            ظرفیت و نوع رگولاتور مورد نیاز
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody [formGroupName]="i" *ngFor="
+                          let item of cgmForm.get(
+                            'estimationConsumptionCollectionDtos'
+                          )['controls'];
+                          let i = index
+                        ">
+                        <td>
+                          <input fullWidth nbInput id="cnt" formControlName="BlockName" />
+                          <div *ngFor="
+                              let validation of INPUT_VALIDATION_MESSAGES.BlockName
+                            ">
+                            <span class="text-danger" *ngIf="item.get('BlockName')
+                            .hasError(validation.type) &&( item.get('BlockName').dirty ||
+                            item.get('BlockName').touched)
+                           
+                    
+                              "> {{ validation.message }}</span>
+
+
+                          </div>
+                        </td>
+
+                        <td>
+                          <input fullWidth type="number" nbInput id="cnt" formControlName="UnitCount" min="0" />
+                          <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.UnitCount
+                        ">
+                            <span class="text-danger" *ngIf="item.get('UnitCount')
+                        .hasError(validation.type) &&( item.get('UnitCount').dirty ||
+                        item.get('UnitCount').touched)
+                       
+                
+                          "> {{ validation.message }}</span>
+
+
+                          </div>
+                        </td>
+
+                        <td>
+                          <input fullWidth type="number" nbInput id="cnt" formControlName="ConsumptionPerUnit"
+                            min="0" />
+                          <div *ngFor="
+                            let validation of INPUT_VALIDATION_MESSAGES.ConsumptionPerUnit
+                          ">
+                            <span class="text-danger" *ngIf="item.get('ConsumptionPerUnit')
+                          .hasError(validation.type) &&( item.get('ConsumptionPerUnit').dirty ||
+                          item.get('ConsumptionPerUnit').touched)
+                         
+                  
+                            "> {{ validation.message }}</span>
+
+
+                          </div>
+                        </td>
+
+                        <td>
+                          <input fullWidth nbInput id="cnt" formControlName="TotalConsumptionBlock" min="0" />
+                          <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.TotalConsumptionBlock
+                        ">
+                            <span class="text-danger" *ngIf="item.get('TotalConsumptionBlock')
+                        .hasError(validation.type) &&( item.get('TotalConsumptionBlock').dirty ||
+                        item.get('TotalConsumptionBlock').touched)
+                       
+                
+                          "> {{ validation.message }}</span>
+
+
+                          </div>
+                        </td>
+                        <td>
+                          <input fullWidth nbInput id="cnt" formControlName="NumberOfAlamakBlock" min="0" />
+                          <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.NumberOfAlamakBlock
+                        ">
+                            <span class="text-danger" *ngIf="item.get('NumberOfAlamakBlock')
+                        .hasError(validation.type) &&( item.get('NumberOfAlamakBlock').dirty ||
+                        item.get('NumberOfAlamakBlock').touched)
+                       
+                
+                          "> {{ validation.message }}</span>
+
+
+                          </div>
+                        </td>
+                        <td>
+                          <input fullWidth nbInput id="cnt" formControlName="RegulatorCapacity" min="0" />
+                          <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.RegulatorCapacity
+                        ">
+                            <span class="text-danger" *ngIf="item.get('RegulatorCapacity')
+                        .hasError(validation.type) &&( item.get('RegulatorCapacity').dirty ||
+                        item.get('RegulatorCapacity').touched)
+                       
+                
+                          "> {{ validation.message }}</span>
+
+
+                          </div>
+                        </td>
+
+                        <td *ngIf="
+                            cgmForm.controls[
+                              'estimationConsumptionCollectionDtos'
+                            ].length > 1
+                          ">
+                          <button type="button" (click)="removeInputFields(i)" nbButton status="danger" size="tiny"
+                            class="btn h-75">
+                            <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="close">
+                            </nb-icon>
+                          </button>
+                        </td>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <!-- </div> -->
+              </nb-card-body>
+            </nb-card>
+          </nb-card-body>
+        </nb-card>
+
+        <nb-card class="inline-form-card" *ngIf="requestStateType === 'IndustrialEstimation'">
+          <nb-card-body>
+            <div class="row">
+              <div class="form-group col-md-6"></div>
+            </div>
+
+            <nb-card class="inline-form-card">
+              <nb-card-header>
+                <label for="">مشخصات دیگ بخار/دیگ آب گرم/مشعل: &nbsp;&nbsp;</label>
+                <button id="btnAddInputFieldsIndustrial" type="button" (click)="addInputFieldsIndustrial()" nbButton
+                  status="info" size="tiny" class="btn">
+                  <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="plus">
+                  </nb-icon>
+                </button>
+              </nb-card-header>
+              <nb-card-body>
+                <div formArrayName="estimationOfConsumptionIndustrialStateHPDto">
+                  <!-- <div
+                    [formGroupName]="i"
+                    *ngFor="
+                      let item of cgmForm.get('gasMeterCollectionDtos')['controls'];
+                      let i = index
+                    "
+                  > -->
+                  <div class="row">
+                    <table class="table table-hover" style="width: 100%">
+                      <thead>
+                        <tr>
+                          <th style="width: 17%">نام دستگاه</th>
+                          <th style="width: 16%">
+                            ظرفیت حرارتی یا تناژ دیگ بخار
+                          </th>
+                          <th style="width: 16%">psiفشار گاز مورد نیاز مشعل</th>
+                          <th style="width: 16%">مصرف گاز M^3/Hr</th>
+                          <th style="width: 16%">تعداد دستگاه</th>
+                          <th style="width: 16%">M^3/Hrمصرف کل گاز</th>
+                        </tr>
+                      </thead>
+                      <tbody [formGroupName]="j" *ngFor="
+                          let item of cgmForm.get(
+                            'estimationOfConsumptionIndustrialStateHPDto'
+                          )['controls'];
+                          let j = index
+                        ">
+                        <td>
+                          <input fullWidth nbInput id="cnt" formControlName="deviceName" min="0" />
+                          <div *ngFor="
+                              let validation of INPUT_VALIDATION_MESSAGES.deviceName
+                            ">
+                            <span class="text-danger" *ngIf="item.get('deviceName')
+                            .hasError(validation.type) &&( item.get('deviceName').dirty ||
+                            item.get('deviceName').touched)
+                           
+                    
+                              "> {{ validation.message }}</span>
+
+
+                          </div>
+                        </td>
+                        <td>
+                          <input fullWidth type="number" nbInput id="cnt" formControlName="thermalCpacity" min="0" />
+                          <div *ngFor="
+                              let validation of INPUT_VALIDATION_MESSAGES.thermalCpacity
+                            ">
+                            <span class="text-danger" *ngIf="item.get('thermalCpacity')
+                            .hasError(validation.type) &&( item.get('thermalCpacity').dirty ||
+                            item.get('thermalCpacity').touched)
+                           
+                    
+                              "> {{ validation.message }}</span>
+
+
+                          </div>
+                        </td>
+                        <td>
+                          <input fullWidth type="number" nbInput id="cnt" formControlName="gasRequestRequiredTorch"
+                            min="0" />
+                          <div *ngFor="
+                            let validation of INPUT_VALIDATION_MESSAGES.gasRequestRequiredTorch
+                          ">
+                            <span class="text-danger" *ngIf="item.get('gasRequestRequiredTorch')
+                          .hasError(validation.type) &&( item.get('gasRequestRequiredTorch').dirty ||
+                          item.get('gasRequestRequiredTorch').touched)
+                         
+                  
+                            "> {{ validation.message }}</span>
+
+
+                          </div>
+                        </td>
+                        <td>
+                          <input fullWidth nbInput id="cnt" formControlName="gasConsumption" min="0" />
+                          <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.gasConsumption
+                        ">
+                            <span class="text-danger" *ngIf="item.get('gasConsumption')
+                        .hasError(validation.type) &&( item.get('gasConsumption').dirty ||
+                        item.get('gasConsumption').touched)
+                       
+                
+                          "> {{ validation.message }}</span>
+
+
+                          </div>
+                        </td>
+                        <td>
+                          <input fullWidth nbInput id="cnt" formControlName="numberOfDevice" min="0" />
+                          <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.numberOfDevice
+                        ">
+                            <span class="text-danger" *ngIf="item.get('numberOfDevice')
+                        .hasError(validation.type) &&( item.get('numberOfDevice').dirty ||
+                        item.get('numberOfDevice').touched)
+                       
+                
+                          "> {{ validation.message }}</span>
+
+
+                          </div>
+                        </td>
+                        <td>
+
+                          <input fullWidth nbInput id="cnt" formControlName="totalGasConsumption" min="0" />
+                          <div *ngFor="
+                            let validation of INPUT_VALIDATION_MESSAGES.totalGasConsumption
+                          ">
+                            <span class="text-danger" *ngIf="item.get('totalGasConsumption')
+                          .hasError(validation.type) &&( item.get('totalGasConsumption').dirty ||
+                          item.get('totalGasConsumption').touched)
+                         
+                  
+                            "> {{ validation.message }}</span>
+
+
+                          </div>
+                        </td>
+
+                        <td *ngIf="
+                            cgmForm.controls[
+                              'estimationOfConsumptionIndustrialStateHPDto'
+                            ].length > 1
+                          ">
+                          <button type="button" (click)="removeInputFieldsIndustrial(j)" nbButton status="danger"
+                            size="tiny" class="btn h-75">
+                            <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="close">
+                            </nb-icon>
+                          </button>
+                        </td>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div formArrayName="IndustrialDevelopmentPlanHPDto">
+                  <div class="row" [formGroupName]="w" *ngFor="
+                      let item of cgmForm.get('IndustrialDevelopmentPlanHPDto')['controls'];
+                      let w = index
+                    ">
+                    <div class="col-sm-2 mt-3">
+                      <strong>طرح توسعه</strong>
+                    </div>
+                    <div class="col-sm-2">
+                      <input fullWidth nbInput id="cnt" type="number" formControlName="thermalCpacity" min="0" />
+                      <div *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.thermalCpacity
+                    ">
+                        <span class="text-danger" *ngIf="item.get('thermalCpacity')
+                    .hasError(validation.type) &&( item.get('thermalCpacity').dirty ||
+                    item.get('thermalCpacity').touched)
+                   
+            
+                      "> {{ validation.message }}</span>
+
+
+                      </div>
+                    </div>
+                    <div class="col-sm-2">
+                      <input fullWidth nbInput type="number" id="cnt" formControlName="gasRequestRequiredTorch"
+                        min="0" />
+                      <div *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.gasRequestRequiredTorch
+                    ">
+                        <span class="text-danger" *ngIf="item.get('gasRequestRequiredTorch')
+                    .hasError(validation.type) &&( item.get('gasRequestRequiredTorch').dirty ||
+                    item.get('gasRequestRequiredTorch').touched)
+                   
+            
+                      "> {{ validation.message }}</span>
+
+
+                      </div>
+                    </div>
+                    <div class="col-sm-2">
+                      <input fullWidth nbInput type="number" id="cnt" formControlName="gasConsumption" min="0" />
+                      <div *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.gasConsumption
+                    ">
+                        <span class="text-danger" *ngIf="item.get('gasConsumption')
+                    .hasError(validation.type) &&( item.get('gasConsumption').dirty ||
+                    item.get('gasConsumption').touched)
+                   
+            
+                      "> {{ validation.message }}</span>
+
+
+                      </div>
+                    </div>
+                    <div class="col-sm-2">
+                      <input fullWidth nbInput type="number" id="cnt" formControlName="numberOfDevice" min="0" />
+                      <div *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.numberOfDevice
+                    ">
+                        <span class="text-danger" *ngIf="item.get('numberOfDevice')
+                    .hasError(validation.type) &&( item.get('numberOfDevice').dirty ||
+                    item.get('numberOfDevice').touched)
+                   
+            
+                      "> {{ validation.message }}</span>
+
+
+                      </div>
+                    </div>
+                    <div class="col-sm-2">
+                      <input fullWidth nbInput type="number" id="cnt" formControlName="totalGasConsumption" min="0" />
+                      <div *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.totalGasConsumption
+                    ">
+                        <span class="text-danger" *ngIf="item.get('totalGasConsumption')
+                    .hasError(validation.type) &&( item.get('totalGasConsumption').dirty ||
+                    item.get('totalGasConsumption').touched)
+                   
+            
+                      "> {{ validation.message }}</span>
+
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div formArrayName="IndustrialTotalHPDto">
+                  <div class="row mt-4" [formGroupName]="s" *ngFor="
+                      let item of cgmForm.get('IndustrialTotalHPDto')['controls'];
+                      let s = index
+                    ">
+                    <div class="col-sm-2 mt-3">
+                      <strong>جمع کل</strong>
+                    </div>
+                    <div class="col-sm-2">
+                      <input fullWidth nbInput id="cnt" formControlName="thermalCpacity" min="0" />
+                      <div *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.thermalCpacity
+                    ">
+                        <span class="text-danger" *ngIf="item.get('thermalCpacity')
+                    .hasError(validation.type) &&( item.get('thermalCpacity').dirty ||
+                    item.get('thermalCpacity').touched)
+                   
+            
+                      "> {{ validation.message }}</span>
+
+
+                      </div>
+                    </div>
+                    <div class="col-sm-2">
+                      <input fullWidth nbInput id="cnt" formControlName="gasRequestRequiredTorch" min="0" />
+                      <div *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.gasRequestRequiredTorch
+                    ">
+                        <span class="text-danger" *ngIf="item.get('gasRequestRequiredTorch')
+                    .hasError(validation.type) &&( item.get('gasRequestRequiredTorch').dirty ||
+                    item.get('gasRequestRequiredTorch').touched)
+                   
+            
+                      "> {{ validation.message }}</span>
+
+
+                      </div>
+                    </div>
+                    <div class="col-sm-2">
+                      <input fullWidth nbInput id="cnt" formControlName="gasConsumption" min="0" />
+                      <div *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.gasRequestRequiredTorch
+                    ">
+                        <span class="text-danger" *ngIf="item.get('gasRequestRequiredTorch')
+                    .hasError(validation.type) &&( item.get('gasRequestRequiredTorch').dirty ||
+                    item.get('gasRequestRequiredTorch').touched)
+                   
+            
+                      "> {{ validation.message }}</span>
+
+
+                      </div>
+                    </div>
+                    <div class="col-sm-2">
+                      <input fullWidth nbInput id="cnt" formControlName="numberOfDevice" min="0" />
+                      <div *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.numberOfDevice
+                    ">
+                        <span class="text-danger" *ngIf="item.get('numberOfDevice')
+                    .hasError(validation.type) &&( item.get('numberOfDevice').dirty ||
+                    item.get('numberOfDevice').touched)
+                   
+            
+                      "> {{ validation.message }}</span>
+
+
+                      </div>
+                    </div>
+                    <div class="col-sm-2">
+                      <input fullWidth nbInput id="cnt" formControlName="totalGasConsumption" min="0" />
+                      <div *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.totalGasConsumption
+                    ">
+                        <span class="text-danger" *ngIf="item.get('totalGasConsumption')
+                    .hasError(validation.type) &&( item.get('totalGasConsumption').dirty ||
+                    item.get('totalGasConsumption').touched)
+                   
+            
+                      "> {{ validation.message }}</span>
+
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- </div> -->
+              </nb-card-body>
+            </nb-card>
+          </nb-card-body>
+        </nb-card>
+
+        <nb-card *ngIf="requestStateType === 'ResidentialEstimation'">
+          <nb-card-body>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>مصرف کل هر بلوک/مغازه M^3/Hr</th>
+                  <th>تعداد/سایز علمک برای این بلوک</th>
+                  <th>ظرفیت و نوع رگولاتور مورد نیاز</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr formGroupName="complexGasConsumption">
+                  <td>مصرف گاز موتورخانه مرکزی بلوک یامجتمع</td>
+                  <td>
+                    <input fullWidth type="number" nbInput id="cnt" formControlName="totalConsimptionUnit" min="0" />
+                    <!-- <div *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.totalConsimptionUnit
+                    ">
+                      <span class="text-danger" *ngIf="complexGasConsumption.get('totalConsimptionUnit')
+                    .hasError(validation.type) &&( complexGasConsumption.get('totalConsimptionUnit').dirty ||
+                    complexGasConsumption.get('totalConsimptionUnit').touched)
+                   
+            
+                      "> {{ validation.message }}</span>
+
+
+                    </div> -->
+                  </td>
+                  <td>
+                    <input fullWidth type="number" nbInput id="cnt" formControlName="alamakCount" min="0" />
+                  </td>
+                  <td>
+                    <input fullWidth type="number" nbInput id="cnt" formControlName="regulatorCapacity" min="0" />
+                  </td>
+                </tr>
+                <tr formGroupName="consumptionOfCommercial">
+                  <td>مصرف واحد های تجاری موجود در مجتمع مسکونی</td>
+                  <td>
+                    <input fullWidth type="number" nbInput id="cnt" formControlName="totalConsimptionUnit" min="0" />
+                  </td>
+                  <td>
+                    <input fullWidth type="number" nbInput id="cnt" formControlName="alamakCount" min="0" />
+                  </td>
+                  <td>
+                    <input fullWidth type="number" nbInput id="cnt" formControlName="regulatorCapacity" min="0" />
+                  </td>
+                </tr>
+                <tr formGroupName="futureDevelopmentPlan">
+                  <td>طرح توسعه آتی M3/Hr</td>
+                  <td>
+                    <input fullWidth type="number" nbInput id="cnt" formControlName="totalConsimptionUnit" min="0" />
+                  </td>
+                  <td>
+                    <input fullWidth type="number" nbInput id="cnt" formControlName="alamakCount" min="0" />
+                  </td>
+                  <td>
+                    <input fullWidth type="number" nbInput id="cnt" formControlName="regulatorCapacity" min="0" />
+                  </td>
+                </tr>
+                <tr formGroupName="maximumConsumptionEstimation">
+                  <td>حداکثر مصرف گازبرآورد شده مورد نیاز M3/Hr</td>
+                  <td>
+                    <input fullWidth type="number" nbInput id="cnt" formControlName="totalConsimptionUnit" min="0" />
+                  </td>
+                  <td>بدون در نظر گرفتن ضریب همزمانی</td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </nb-card-body>
+        </nb-card>
+        <nb-card *ngIf="requestStateType === 'IndustrialEstimation'">
+          <nb-card-body class="mb-2">
+            <strong>نوع اشتراک:</strong>
+            <nb-radio-group class="form-inline radio-x-inline mt-2" formControlName="SubscriptionTypeHP"
+              id="subscriptionType" name="subscriptionType">
+              <nb-radio value="0">اشتراک جزء</nb-radio>
+              <nb-radio value="1">اشتراک 160-2-60</nb-radio>
+              <nb-radio value="2">اشتراک 400-60-60</nb-radio>
+              <nb-radio value="3">اشتراک 1000-60-60</nb-radio>
+              <nb-radio value="4">اشتراک 2500-60-60</nb-radio>
+              <nb-radio value="5">اشتراک 4000-60-60</nb-radio>
+            </nb-radio-group>
+          </nb-card-body>
+        </nb-card>
+        <nb-card>
+          <nb-card-body>
+            <div class="row">
+              <div class="col-md-4 col-mg-4 col-sm-4">
+                <strong>نیاز به ایستگاه یا کنتور عمده مشترک دارد؟</strong>
+                <nb-radio-group class="form-inline" formControlName="needCommomMeter" id="conf" name="conf">
+                  <nb-radio value="true"> دارد </nb-radio>
+                  <nb-radio value="false"> ندارد </nb-radio>
+                </nb-radio-group>
+              </div>
+
+              <div class="col-md-3 col-mg-3 col-sm-3">
+                <strong>فشار گاز مصرفی مورد نیاز: </strong>
+                <nb-radio-group class="form-inline" formControlName="gasPressure" id="conf1" name="conf1">
+                  <nb-radio value="1"> فشار قوی </nb-radio>
+                  <nb-radio value="0"> فشار ضعیف </nb-radio>
+                </nb-radio-group>
+              </div>
+              <div class="col-md-4 col-mg-4 col-sm-4">
+                <strong>فاصله کیلومتری از شیراز:</strong>
+                <input fullWidth type="number" nbInput id="cnt" formControlName="DistanceFromShiraz" min="0" />
+                <div *ngFor="
+                    let validation of INPUT_VALIDATION_MESSAGES.DistanceFromShiraz
+                  ">
+                  <span class="text-danger" *ngIf="
+                      cgmForm
+                        .get('DistanceFromShiraz')
+                        .hasError(validation.type) &&
+                      (cgmForm.get('DistanceFromShiraz').dirty ||
+                        cgmForm.get('DistanceFromShiraz').touched)
+                    ">
+                    {{ validation.message }}</span>
+                </div>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+        <nb-card [formGroup]="uploadFile">
+          <nb-card-body>
+            <label for="file">سایر مدارک:</label>
+            <div *ngFor="let a of inputCount; let i = index">
+              <strong class="mb-2" style="color: rgb(0, 68, 255); display: block; font-size: 11px">
+                حداکثر حجم {{ sizeTitles[i] }} - فرمت ها ({{ a.extentions }})
+              </strong>
+              <app-uploader [formControlName]="a.formControlName" [filePath]="imagePathEdit"
+                [fileExtentions]="a.extentions" [fileSize]="a.size">
+              </app-uploader>
+            </div>
+          </nb-card-body>
+        </nb-card>
+        <nb-card>
+          <nb-card-body>
+            <div class="row col-lg-12 col-md-12 col-sm-12">
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <button type="submit" hero nbButton fullWidth status="success" class="btn"
+                  [disabled]="cgmForm.invalid || uploadFile.invalid" nbSpinnerStatus="info" nbSpinnerSize="large">
+                  ثبت
+                </button>
+              </div>
+
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <button [routerLink]="['/pages/forms/GasReqList']" nbSpinnerStatus="info" nbSpinnerSize="large"
+                  type="button" nbButton hero fullWidth status="primary" class="btn">
+                  بازگشت به لیست درخواست ها
+                </button>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+  </form>
+</nb-card>
+<ng-template #uploader let-data>
+  <!-- (close)="closeRef()" -->
+  <ngx-estimationOfConsumptionUploader></ngx-estimationOfConsumptionUploader>
+</ng-template>

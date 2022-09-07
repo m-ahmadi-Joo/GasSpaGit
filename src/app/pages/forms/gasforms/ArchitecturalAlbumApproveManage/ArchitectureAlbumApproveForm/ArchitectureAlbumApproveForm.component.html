@@ -1,0 +1,438 @@
+<style>
+li{
+  width: 100%;
+  min-width: 300px;
+}
+</style>
+
+<app-gasRequestDetailBox [gasRequestId]="gasReqId"></app-gasRequestDetailBox>
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <nb-card>
+      <nb-card-header>
+       نتیجه کمیسیون ضوابط گازرسانی
+      </nb-card-header>
+      <nb-card-body>
+        <form (ngSubmit)="onSubmit()" [formGroup]="AproveAlbumFormg">
+          <div>
+            <nb-card>
+              <nb-card-body>
+                    <!-- <div class="row col-lg-6 col-md-6 col-sm-6 form-inline">
+                        <label for="tv">تعداد واحد</label>
+                        <input
+                          formControlName="aaaUnitCount"
+                          fullWidth
+                          id="tv"
+                          nbInput
+                          type="number"
+                        />
+                        <div
+                          *ngFor="
+                            let validation of validationMessages.unitCount
+                          "
+                        >
+                          <span
+                            class="text-danger"
+                            *ngIf="
+                              AproveAlbumFormg
+                                .get('aaaUnitCount')
+                                .hasError(validation.type) &&
+                              (AproveAlbumFormg.get('aaaUnitCount').dirty ||
+                                AproveAlbumFormg.get('aaaUnitCount').touched)
+                            "
+                            >{{ validation.message }}</span
+                          >
+                        </div>
+                    </div> -->
+
+                <ul>
+                    <div class="col-lg-12 col-md-12 col-sm-12 input-group">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                          <label for="rd" style="display: inline-block;">
+                            <li>فشار گاز مورد نیاز</li>
+                            </label>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <nb-radio-group
+
+                              class="form-inline"
+                              formControlName="aaaGasPressureNeeded"
+                              id="rd"
+                              name="rd">
+                              <nb-radio *ngFor="let pk of listProjectKinds"
+                                        [value]="pk.id">
+                                  {{pk.descp}}
+                              </nb-radio>
+                          </nb-radio-group>
+
+                          <div *ngIf="isSubmitted">
+                            <div *ngFor="
+                                let validation of validationMessages.baseProjectKindId">
+                              <span class="text-danger" *ngIf="
+                                  AproveAlbumFormg
+                                    .get('aaaGasPressureNeeded')
+                                    .hasError(validation.type)
+                                ">{{ validation.message }}</span>
+                            </div>
+                          </div>
+
+                      </div>
+                  </div>
+
+                  <div class="col-lg-12 col-md-12 col-sm-12 input-group">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                      <label for="vh" style="display: inline-block;">
+                        <li>مغایرت تعداد واحد در موافقت نامه اصولی با نقشه معماری</li>
+                      </label>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                      <nb-radio-group
+                        class="form-inline"
+                        formControlName="aaaApartmentDifference"
+                        id="vh"
+                        name="vh">
+                        <nb-radio
+                          name="darad"
+                          id="darad"
+                          value="true">
+                            دارد
+                        </nb-radio>
+                        <nb-radio value="false">
+                            ندارد
+                        </nb-radio>
+                      </nb-radio-group>
+
+                      <div *ngIf="isSubmitted">
+                          <div *ngFor="
+                              let validation of validationMessages.contradictionOfUnitCount">
+                            <span class="text-danger" *ngIf="
+                                AproveAlbumFormg
+                                  .get('aaaApartmentDifference')
+                                  .hasError(validation.type)
+                              ">{{ validation.message }}</span>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12 col-md-12 col-sm-12 input-group">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                      <label for="al" style="display: inline-block;">
+                        <li>نیاز به تعیین علمک</li>
+                      </label>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                      <nb-radio-group class="form-inline" formControlName="aaaIsRequiredAlamakDesignation" id="isRequiredAlamak" name="isRequiredAlamak">
+                        <nb-radio value="true">
+                            بلی
+                        </nb-radio>
+                        <nb-radio value="false">
+                           خیر
+                        </nb-radio>
+                      </nb-radio-group>
+
+                      <div *ngIf="isSubmitted">
+                          <div *ngFor="
+                              let validation of validationMessages.isRequiredAlamakDesignation">
+                            <span class="text-danger" *ngIf="
+                                  AproveAlbumFormg
+                                  .get('aaaIsRequiredAlamakDesignation')
+                                  .hasError(validation.type)
+                              ">{{ validation.message }}</span>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12 col-md-12 col-sm-12 input-group">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                      <label for="al" style="display: inline-block;">
+                        <li>استعلام محل علمک</li>
+                      </label>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                      <nb-radio-group class="form-inline" formControlName="aaaGasMeterAuditRes" id="al" name="al">
+                        <nb-radio value="true">
+                            دارد
+                        </nb-radio>
+                        <nb-radio value="false">
+                            ندارد
+                        </nb-radio>
+                      </nb-radio-group>
+
+                      <div *ngIf="isSubmitted">
+                          <div *ngFor="
+                              let validation of validationMessages.locationInquiry">
+                            <span class="text-danger" *ngIf="
+                                AproveAlbumFormg
+                                  .get('aaaGasMeterAuditRes')
+                                  .hasError(validation.type)
+                              ">{{ validation.message }}</span>
+                          </div>
+                        </div>
+
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12 col-md-12 col-sm-12 input-group">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                      <label for="kn" style="display: inline-block;">
+                        <li>محل کنتورها</li>
+                      </label>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                      <nb-radio-group class="form-inline" formControlName="aaaGasKontoorLocation" id="kn" name="kn">
+                        <nb-radio value="true">
+                            تایید
+                        </nb-radio>
+                        <nb-radio value="false">
+                            عدم تأیید
+                        </nb-radio>
+                      </nb-radio-group>
+                      <div *ngIf="isSubmitted">
+                          <div *ngFor="
+                              let validation of validationMessages.meterLocation">
+                            <span class="text-danger" *ngIf="
+                                AproveAlbumFormg
+                                  .get('aaaGasKontoorLocation')
+                                  .hasError(validation.type)
+                              ">{{ validation.message }}</span>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 col-md-12 col-sm-12 input-group">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                      <label for="lk" style="display: inline-block;">
+                        <li>مسیر لوله کشی</li>
+                      </label>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                      <nb-radio-group class="form-inline" formControlName="aaaPipeHighWay" id="lk" name="lk">
+                        <nb-radio value="true">
+                            تایید
+                        </nb-radio>
+                        <nb-radio value="false">
+                            عدم تأیید
+                        </nb-radio>
+                      </nb-radio-group>
+                      <div *ngIf="isSubmitted">
+                          <div *ngFor="
+                              let validation of validationMessages.pipingRoute">
+                            <span class="text-danger" *ngIf="
+                                AproveAlbumFormg
+                                  .get('aaaPipeHighWay')
+                                  .hasError(validation.type)
+                              ">{{ validation.message }}</span>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 col-md-12 col-sm-12 input-group">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                      <label for="ra" style="display: inline-block;">
+                        <li>محل عبور رایزرها</li>
+                      </label>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                      <nb-radio-group class="form-inline" formControlName="aaaRisersHighWay" id="ra" name="ra">
+                        <nb-radio value="true">
+                            تایید
+                        </nb-radio>
+                        <nb-radio value="false">
+                            عدم تأیید
+                        </nb-radio>
+                      </nb-radio-group>
+                      <div *ngIf="isSubmitted">
+                          <div *ngFor="
+                              let validation of validationMessages.rayzerPathway">
+                            <span class="text-danger" *ngIf="
+                                AproveAlbumFormg
+                                  .get('aaaRisersHighWay')
+                                  .hasError(validation.type)
+                              ">{{ validation.message }}</span>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 col-md-12 col-sm-12 input-group">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                      <label for="sh" style="display: inline-block;">
+                        <li>محل شیر فرعی واحد</li>
+                      </label>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                      <nb-radio-group class="form-inline" formControlName="aaaRestValvePosition" id="sh" name="sh">
+                        <nb-radio value="true">
+                            تایید
+                        </nb-radio>
+                        <nb-radio value="false">
+                            عدم تأیید
+                        </nb-radio>
+                      </nb-radio-group>
+                      <div *ngIf="isSubmitted">
+                          <div *ngFor="
+                              let validation of validationMessages.secondaryValueLocation">
+                            <span class="text-danger" *ngIf="
+                                AproveAlbumFormg
+                                  .get('aaaRestValvePosition')
+                                  .hasError(validation.type)
+                              ">{{ validation.message }}</span>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 col-md-12 col-sm-12 input-group">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                      <label for="dk" style="display: inline-block;">
+                        <li>محل داکت دودکش ها</li>
+                      </label>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                      <nb-radio-group class="form-inline" formControlName="aaaChimneyDuct" id="dk" name="dk">
+                        <nb-radio value="true">
+                            تایید
+                        </nb-radio>
+                        <nb-radio value="false">
+                            عدم تأیید
+                        </nb-radio>
+                      </nb-radio-group>
+                      <div *ngIf="isSubmitted">
+                          <div *ngFor="
+                              let validation of validationMessages.chimneyDuctLocation">
+                            <span class="text-danger" *ngIf="
+                                AproveAlbumFormg
+                                  .get('aaaChimneyDuct')
+                                  .hasError(validation.type)
+                              ">{{ validation.message }}</span>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12 col-md-12 col-sm-12 input-group">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                      <label for="dk" style="display: inline-block;">
+                        <li>نتیجه نهایی</li>
+                      </label>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                      <nb-radio-group class="form-inline" formControlName="aaaConfirm" id="conf" name="conf">
+                        <nb-radio value="true">
+                            تایید
+                        </nb-radio>
+                        <nb-radio value="false">
+                            عدم تأیید
+                        </nb-radio>
+                      </nb-radio-group>
+                      <div *ngIf="isSubmitted">
+                          <div *ngFor="
+                              let validation of validationMessages.result">
+                            <span class="text-danger" *ngIf="
+                                AproveAlbumFormg
+                                  .get('aaaConfirm')
+                                  .hasError(validation.type)
+                              ">{{ validation.message }}</span>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+
+                </ul>
+
+              </nb-card-body>
+            </nb-card>
+
+            <nb-card class="mt-n5">
+              <nb-card-body>
+                  <div class="col-lg-3 col-md-3 col-sm-3 input-group">
+                      <!-- <div class="col-lg-3 col-md-3 col-sm-3"> -->
+                          <label for="tv">تعداد واحد</label>
+                      <!-- </div> -->
+                      <!-- <div class="col-lg-3 col-md-3 col-sm-3"> -->
+                          <input
+                          formControlName="aaaUnitCount"
+                          fullWidth
+                          id="tv"
+                          nbInput
+                          type="number" />
+                        <div
+                        *ngFor="
+                          let validation of validationMessages.unitCount
+                        "
+                      >
+                        <span
+                          class="text-danger"
+                          *ngIf="
+                            AproveAlbumFormg
+                              .get('aaaUnitCount')
+                              .hasError(validation.type) &&
+                            (AproveAlbumFormg.get('aaaUnitCount').dirty ||
+                              AproveAlbumFormg.get('aaaUnitCount').touched)
+                          "
+                          >{{ validation.message }}</span
+                        >
+                        </div>
+                      <!-- </div> -->
+
+                      <!-- <div class="col-lg-6 col-md-6 col-sm-6"></div> -->
+                  </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 input-group">
+                   <label for="">توضیحات و نظرات</label>
+                    <textarea formControlName="aaaComments" fullWidth nbInput placeholder="توضیحات و نظرات"
+                        rows="5"
+                        shape="round"></textarea>
+                        <!-- <div *ngFor="
+                        let validation of validationMessages.comment">
+                            <span class="text-danger" *ngIf="
+                                AproveAlbumFormg
+                                  .get('aaaComments')
+                                  .hasError(validation.type) &&
+                                (AproveAlbumFormg.get('aaaComments').dirty ||
+                                  AproveAlbumFormg.get('aaaComments').touched)
+                              ">{{ validation.message }}</span>
+                        </div> -->
+                </div>
+              </nb-card-body>
+            </nb-card>
+
+            <nb-card>
+              <nb-card-body>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <button
+                          [nbSpinner]="loading"
+                          nbSpinnerStatus="info"
+                          nbSpinnerSize="large"
+                          [disabled]="!AproveAlbumFormg.valid || loading"
+                          class="btn"
+                          nbButton
+                          status="success"
+                          style="width: 100%;"
+                          type="submit">ثبت
+                        </button>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <button
+                          type="button"
+                          [disabled]="loading"
+                          [routerLink]="['/pages/forms/GasReqList']"
+                          class="btn"
+                          nbButton
+                          status="info"
+                          style="width: 100%;"
+                        >
+                          بازگشت به لیست درخواست ها
+                        </button>
+                      </div>
+                </div>
+              </nb-card-body>
+            </nb-card>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+

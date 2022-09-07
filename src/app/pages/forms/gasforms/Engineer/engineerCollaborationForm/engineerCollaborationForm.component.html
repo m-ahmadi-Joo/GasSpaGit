@@ -1,0 +1,615 @@
+<style>
+  nb-select.workStatus /deep/ .select-button {
+    width: 100%;
+    min-width: 19rem !important;
+    max-width: 22rem !important;
+    padding: 0.3rem 1.125rem !important;
+  }
+
+  nb-select.pageSizeSelect /deep/ .select-button {
+    min-width: 6rem !important;
+  }
+
+  p {
+    text-align: justify;
+    text-justify: inter-word;
+    line-height: 1.8;
+    font-size: 1rem;
+    margin: 0 20px 15px 20px;
+  }
+
+  .alert h3 {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+   #ck span:not(:only-child) {
+    margin-right: 1.5rem;
+    border: 1px solid red !important;
+    height: 25px;
+    width: 25px;
+  }
+
+
+
+  @media (max-width: 768px) {
+    p {
+      margin: 0 5px 10px 5px;
+      font-size: 0.9rem;
+    }
+  }
+</style>
+<nb-card *ngIf="!isEngineer">
+  <nb-card-header> فرم همکاری </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="cgmForm" (ngSubmit)="ngSubmit()">
+      <div class="alert alert-info p-4" role="alert">
+        <h3>همکاران گرامی :</h3>
+        <p class="justify-content-center">
+          نظر به تخصیص ظرفیت نظارت گاز در دو بخش شیراز و شهرستان ( شهر محل سکونت
+          و شهر خارج از محل سکونت ) نسبت به کامل کردن فیلدهای مربوطه اقدام گردد.
+        </p>
+        <p class="justify-content-center">
+          چنانچه میزان کارکرد در مناطق و نواحی انتخابی شما کمتر از میزان اختصاص
+          یافته بر اساس امتیاز باشد منطقه و نواحی دیگر به شما معرفی خواهد شد، در
+          صورت عدم تمایل، هیچ گونه مسئولیتی جهت تخصیص ظرفیت مجاز شما متوجه دفتر
+          کنترل نظارت و گاز نخواهد بود.
+        </p>
+        <p class="justify-content-center">
+          در صورت عدم حضور مهندس ناظر در محل بازرسی در ساعت اعلام شده براساس ضوابط اقدام خواهد شد
+        </p>
+        <p class="justify-content-center mb-0">
+          بازرسی های خارج از محل سکونت با اعمال ضریب در آنالیز اعمال خواهد شد.
+          مهندس ناظر موظف است در شهر محل سکونت خود با هر تعداد پرونده امور
+          بازرسی را انجام دهد.
+        </p>
+      </div>
+
+      <div class="row d-block mb-4">
+        <nb-checkbox id="ck"  formControlName="isAcceptCondition" [ngClass]="notSelected == true ? 'status-danger' : ''">
+          <span class="mb-0" style="font-size: 1rem">
+            موارد بالا را می پذیرم
+          </span>
+        </nb-checkbox>
+        <!-- <label class="text-info" for="ck" style="padding-top:5px"> </label> -->
+      </div>
+      <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.isAcceptCondition">
+        <span class="text-danger" *ngIf="
+              cgmForm.get('isAcceptCondition').hasError(validation.type) &&
+              (cgmForm.get('isAcceptCondition').dirty ||
+                cgmForm.get('isAcceptCondition').touched)
+            ">
+          {{ validation.message }}</span>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-4">
+          <label class="form-inline"> مهندس : </label>
+          <input id="engineerSelect" formControlName="engineerSelect" [typeahead]="engineersList"
+            typeaheadOptionField="itemForSearch" (typeaheadOnSelect)="onSelect($event)" [typeaheadOptionsLimit]="7"
+            [typeaheadMinLength]="0" class="form-control" />
+
+          <!-- <div
+          *ngFor="let validation of INPUT_VALIDATION_MESSAGES.engineerSelect"
+        >
+          <span
+            class="text-danger"
+            *ngIf="
+              cgmForm.get('engineerSelect').hasError(validation.type) &&
+              (cgmForm.get('engineerSelect').dirty ||
+                cgmForm.get('engineerSelect').touched)
+            "
+          >
+            {{ validation.message }}</span
+          >
+        </div> -->
+        </div>
+
+        <div class="col-md-2"></div>
+
+        <div class="col-md-5">
+          <div *ngFor="let a of selectedOption">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>نام و نام خانوادگی</th>
+                  <th>کد مهندس</th>
+                  <th>کد ملی مهندس</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{ a?.fullName }}</td>
+                  <td>{{ a?.membershipNumber }}</td>
+                  <td>{{ a?.nationalCode }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="collaborationId != null && collaborationId != 0" class="btn-warning col-sm-4 col-md-4 col-lg-4 pt-2">
+        <p>اطلاعات شما ثبت شده است</p>
+      </div>
+      <nb-card>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-sm-6 col-md-6 col-lg-6">
+              <label>شاغل به صورت:</label>
+              <nb-radio-group class="form-inline radio-x-inline" formControlName="workingKind" id="workingKind"
+                name="workingKind">
+                >
+                <nb-radio (valueChange)="checkPerviousSelected()" [value]="0"> تمام وقت </nb-radio>
+                <nb-radio (valueChange)="checkPerviousSelected()" [value]="1"> پاره وقت </nb-radio>
+                <nb-radio (valueChange)="checkPerviousSelected()" [value]="2"> اقماری </nb-radio>
+                <nb-radio (valueChange)="checkPerviousSelected()" [value]="3"> بازنشسته </nb-radio>
+                <nb-radio (valueChange)="checkPerviousSelected()" [value]="4"> آزاد </nb-radio>
+              </nb-radio-group>
+            </div>
+          </div>
+          <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.workingKind">
+            <span class="text-danger" *ngIf="
+              cgmForm.get('workingKind').hasError(validation.type) &&
+              (cgmForm.get('workingKind').dirty ||
+                cgmForm.get('workingKind').touched)
+            ">
+              {{ validation.message }}</span>
+          </div>
+          <div class="row mt-3">
+            <div class="col-sm-2 col-md-2 col-lg-2">
+              <label>دارای مجوز 2-60psi:</label>
+              <nb-radio-group class="form-inline radio-x-inline" formControlName="hasHighPressureLicense"
+                id="hasHighPressureLicense" name="hasHighPressureLicense">
+                >
+                <nb-radio (valueChange)="showHighPressure(true)" [value]="true">
+                  بلی
+                </nb-radio>
+                <nb-radio (valueChange)="showHighPressure(false)" [value]="false">
+                  خیر
+                </nb-radio>
+              </nb-radio-group>
+            </div>
+            <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.hasHighPressureLicense">
+              <span class="text-danger" *ngIf="
+              cgmForm.get('hasHighPressureLicense').hasError(validation.type) &&
+              (cgmForm.get('hasHighPressureLicense').dirty ||
+                cgmForm.get('hasHighPressureLicense').touched)
+            ">
+                {{ validation.message }}</span>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4" *ngIf="showHighPressureWant">
+              <label>متقاضی کار در بخش 2-60psi:</label>
+              <nb-radio-group class="form-inline radio-x-inline" formControlName="highPressureApplicant"
+                id="highPressureApplicant" name="highPressureApplicant">
+                >
+                <nb-radio [value]="true"> بلی </nb-radio>
+                <nb-radio [value]="false"> خیر </nb-radio>
+              </nb-radio-group>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4" *ngIf="showHighPressureWant">
+              <label>تمایل به همکاری در بخش ۱/۴ شهرستان</label>
+              <nb-radio-group class="form-inline radio-x-inline" formControlName="lowPressureApplicant"
+                id="lowPressureApplicant" name="lowPressureApplicant">
+                >
+                <nb-radio (valueChange)="showNote(true)" [value]="true"> دارم </nb-radio>
+                <nb-radio (valueChange)="showNote(false)" [value]="false"> ندارم </nb-radio>
+              </nb-radio-group>
+            </div>
+          </div>
+
+          <div class="row mt-3" *ngIf="showHighPressureWant">
+            <div class="alert alert-danger p-4" role="alert">
+              قابل توجه همکاران فعال در بخش ۲-۶۰ psi:
+              در صورت عدم همکاری در بازرسی های psi ۱/۴ شهرستان . سهم مجاز محاسبه
+              شده مربوط به این بخش به شما تعلق نخواهد گرفت.
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+
+      <nb-card>
+        <nb-card-header>
+          <label> محل سکونت: </label>
+        </nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-sm-offset-2 col-sm-4 col-md-offset-2 col-md-4 col-lg-offset-2 col-lg-4 col-xs-12 mb-3">
+              <label for="shiraz"> استان:</label>
+              <nb-select filled status="primary" hero style="box-shadow: 0 0 3px" #liveProvience fullWidth
+                placeholder="انتخاب استان" id="shiraz" formControlName="liveProvience"
+                (selectedChange)="getCity(liveProvience.selected)">
+                <nb-option *ngFor="let pr of baseProviences" [value]="pr.id">
+                  {{ pr.title }}
+                </nb-option>
+              </nb-select>
+            </div>
+
+            <div class="col-sm-offset-2 col-sm-4 col-md-offset-2 col-md-4 col-lg-offset-2 col-lg-4 col-xs-12 mb-3">
+              <label for="area">شهرستان:</label>
+              <!-- <nb-select
+                filled
+                status="info"
+                hero
+                style="box-shadow: 0 0 3px"
+                #liveCity
+                fullWidth
+                placeholder="انتخاب شهرستان"
+                [(selected)]="cgmForm.get('liveCity').value"
+                id="area"
+                formControlName="liveCity"
+              > -->
+              <nb-select filled status="info" hero style="box-shadow: 0 0 3px" #liveCity fullWidth
+                placeholder="انتخاب شهرستان" id="area" formControlName="liveCity"
+                (selectedChange)="onChangeLiveCity(liveCity.selected)">
+                <nb-option *ngFor="let city of baseCities" [value]="city.id">
+                  {{ city.title }}
+                </nb-option>
+              </nb-select>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+
+      <nb-card>
+        <nb-card-header>موقعیت جغرافیایی محل سکونت</nb-card-header>
+        <nb-card-body>
+          <div id="map" style="height: 420px"></div>
+          <input type="hidden" formControlName="hasMarker" />
+
+          <div class="mt-1" *ngFor="let validation of INPUT_VALIDATION_MESSAGES.hasMarker">
+            <span class="text-danger" *ngIf="cgmForm.get('hasMarker').value === false">{{ validation.message }}</span>
+          </div>
+          <div class="col-sm-12 mt-4 p-0">
+            <label>
+              <!-- <span class="text-danger font-weight-bold ml-1">*</span> -->
+
+              آدرس منزل
+              <span class="font-weight-bold text-primary"> (لطفاً در صورت تغییر آدرس محل سکونت، آدرس جدید را به صورت
+                دقیق وارد نمایید) </span>
+            </label>
+            <textarea formControlName="homeAddress" fullWidth id="fullPath" nbInput rows="3"></textarea>
+
+            <div *ngFor="
+              let validation of INPUT_VALIDATION_MESSAGES.homeAddress
+            " class="mb-3">
+              <span class="text-danger" *ngIf="
+                cgmForm
+                  .get('homeAddress')
+                  .hasError(validation.type) &&
+                (cgmForm.get('homeAddress').dirty ||
+                  cgmForm.get('homeAddress').touched)
+              ">{{ validation.message }}</span>
+            </div>
+
+          </div>
+          <div class="col-sm-4 p-0">
+            <label for="kp"> کد پستی</label>
+            <input formControlName="postalCode" fullWidth id="kp" nbInput />
+
+            <div *ngFor="
+              let validation of INPUT_VALIDATION_MESSAGES.postalCode
+            " class="mb-3">
+              <span class="text-danger" *ngIf="
+                cgmForm
+                  .get('postalCode')
+                  .hasError(validation.type) &&
+                (cgmForm.get('postalCode').dirty ||
+                  cgmForm.get('postalCode').touched)
+              ">{{ validation.message }}</span>
+            </div>
+
+          </div>
+        </nb-card-body>
+      </nb-card>
+
+      <nb-card>
+        <nb-card-header>
+          <label> محل کار: </label>
+        </nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-sm-offset-2 col-sm-4 col-md-offset-2 col-md-4 col-lg-offset-2 col-lg-4 col-xs-12 mb-3">
+              <label for="shiraz"> استان:</label>
+              <nb-select filled hero status="primary" style="box-shadow: 0 0 3px" #workProvience fullWidth
+                placeholder="انتخاب استان" id="shiraz" formControlName="workProvience"
+                (selectedChange)="getCityWork(workProvience.selected)">
+                <nb-option *ngFor="let pr of baseProviences" [value]="pr.id">
+                  {{ pr.title }}
+                </nb-option>
+              </nb-select>
+            </div>
+
+            <div class="col-sm-offset-2 col-sm-4 col-md-offset-2 col-md-4 col-lg-offset-2 col-lg-4 col-xs-12 mb-3">
+              <label for="area">شهرستان:</label>
+              <!-- <nb-select
+                filled
+                status="info"
+                hero
+                style="box-shadow: 0 0 3px"
+                #workCity
+                fullWidth
+                placeholder="انتخاب شهرستان"
+                id="area"
+                formControlName="workCity"
+                [(selected)]="cgmForm.get('workCity').value"
+              > -->
+              <nb-select filled status="info" hero style="box-shadow: 0 0 3px" #workCity fullWidth
+                placeholder="انتخاب شهرستان" id="area" formControlName="workCity">
+                <nb-option *ngFor="let city of workCities" [value]="city.id">
+                  {{ city.title }}
+                </nb-option>
+              </nb-select>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+
+      <div>
+        <label class="pull-right ml-4 pt-4">متقاضی فعالیت در شیراز: </label>
+        <!-- <div class="pull-right ml-4">
+          <a
+            style="text-decoration: none"
+            href="../../../assets/images/Area/1.png"
+            target="_blank"
+          >
+            <img
+              class="d-block"
+              style="
+                margin-bottom: 5px;
+                width: 100px;
+                box-shadow: 0 0 4px;
+                border-radius: 4px;
+              "
+              src="../../../assets/images/Area/1.png"
+            />
+            <strong class="text-primary"> مناطق سابق شیراز (98)</strong>
+          </a>
+        </div> -->
+
+        <div class="pull-right">
+          <a style="text-decoration: none" href="../../../assets/images/Area/1002.png" target="_blank">
+            <img class="d-block" style="
+                margin-bottom: 5px;
+                width: 100px;
+                box-shadow: 0 0 4px;
+                border-radius: 4px;
+              " src="../../../assets/images/Area/1002.png" />
+            <strong class="text-primary"> مناطق شیراز </strong>
+          </a>
+        </div>
+        <div class="clearfix"></div>
+
+        <nb-radio-group class="form-inline radio-x-inline" formControlName="showShiraz" id="showShiraz"
+          #showShirazSelect name="showShiraz">
+          >
+          <nb-radio (valueChange)="showShiraz(true)" [value]="true">
+            بلی
+          </nb-radio>
+          <nb-radio (valueChange)="showShiraz(false)" [value]="false">
+            خیر
+          </nb-radio>
+        </nb-radio-group>
+      </div>
+      <nb-card *ngIf="IsShowShiraz">
+        <nb-card-header>
+          منطقه درخواستی شیراز برای همکاری به ترتیب اولویت:(حداقل 6 اولویت
+          انتخاب شود)
+        </nb-card-header>
+        <nb-card-body style="direction: ltr">
+          <dual-list [source]="shirazAreaRes" [format]="format" display="title" key="id"
+            (destinationChange)="checkShirazAreaSelect($event)" [(destination)]="shirazAreaSelect"></dual-list>
+          <label style="color: red" *ngIf="
+              shzAreaCounter < 6 && shzAreaCounter != 0 && shzAreaCounter <= 9
+            "><b>تعداد انتخاب ها کمتر از 6 میباشد</b></label>
+          <label style="color: red" *ngIf="shzAreaCounter > 9"><b>تعداد انتخاب ها بیشتر از 9 میباشد</b></label>
+        </nb-card-body>
+      </nb-card>
+
+      <div class="mt-4">
+        <label class="pull-right ml-4 pt-3">متقاضی فعالیت در شهرستان:</label>
+        <div class="pull-right">
+          <a style="text-decoration: none" href="../../../assets/images/Area/Towns.png" target="_blank">
+            <img class="d-block" style="
+                margin-bottom: 5px;
+                width: 80px;
+                height: 50px;
+                box-shadow: 0 0 4px;
+                border-radius: 4px;
+              " src="../../../assets/images/Area/Towns.png" />
+            <strong class="text-primary"> نواحی شهرستان</strong>
+          </a>
+        </div>
+        <div class="clearfix"></div>
+        <nb-radio-group class="form-inline radio-x-inline" formControlName="showTown" id="showTown" name="showTown">
+          >
+          <nb-radio (valueChange)="showTown(true)" [value]="true">
+            بلی
+          </nb-radio>
+          <nb-radio (valueChange)="showTown(false)" [value]="false">
+            خیر
+          </nb-radio>
+        </nb-radio-group>
+      </div>
+
+      <nb-card *ngIf="IsShowTown">
+        <nb-card-header>
+          منطقه درخواستی شهرستان برای همکاری به ترتیب اولویت:
+        </nb-card-header>
+        <nb-card-body style="direction: ltr">
+          <dual-list [source]="areaExceptForShirazRes" [format]="format" status="success" display="title" key="id"
+            (destinationChange)="checkTownAreaSelect($event)" [(destination)]="exceptShirazAreaSelect"></dual-list>
+          <label style="color: red" *ngIf="checkTownAreaConter < 6 && checkTownAreaConter != 0"><b>تعداد انتخاب ها کمتر
+              از 6 میباشد</b></label>
+          <label style="color: red" *ngIf="checkTownAreaConter > 9"><b>تعداد انتخاب ها بیشتر از 9 میباشد</b></label>
+        </nb-card-body>
+      </nb-card>
+      <nb-card>
+        <nb-card-header>مناطق همکاری پیشین:</nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-sm-offset-2 col-sm-4 col-md-offset-2 col-md-4 col-lg-offset-2 col-lg-4 col-xs-12 mb-3">
+              <label for="shiraz"> مناطق همکاری سال گذشته در شیراز:</label>
+              <nb-select filled status="primary" hero style="box-shadow: 0 0 3px" #neighborhoodSelect fullWidth
+                placeholder="انتخاب ناحیه" id="shiraz" formControlName="lastYearShirazWorkingArea">
+                <nb-option *ngFor="let shzArea of shirazAreaResWithOld" [value]="shzArea.id">
+                  {{ shzArea.title }}
+                </nb-option>
+              </nb-select>
+            </div>
+
+            <div class="col-sm-offset-2 col-sm-4 col-md-offset-2 col-md-4 col-lg-offset-2 col-lg-4 col-xs-12 mb-3">
+              <label for="area">مناطق همکاری سال گذشته در شهرستان:</label>
+              <nb-select filled status="info" hero style="box-shadow: 0 0 3px" #neighborhoodSelect fullWidth
+                placeholder="انتخاب ناحیه" id="area" formControlName="lastYearWorkingArea">
+                <nb-option *ngFor="let area of areaExceptForShirazRes" [value]="area.id">
+                  {{ area.title }}
+                </nb-option>
+              </nb-select>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <nb-card>
+        <!-- <nb-card-header class="mb-3">ساعات و روز های کاری:</nb-card-header> -->
+        <div class="row mt-4">
+          <div class="col-sm-6 col-md-6 col-lg-6 table-responsive" *ngIf="IsShowShiraz">
+            <label class="mr-3"><b>ساعات بازرسی در شیراز: </b></label>
+            <table formArrayName="workTimeSelect" class="mt-3 table">
+              <thead>
+                <tr>
+                  <th>روز های هفته</th>
+                  <th>اولویت</th>
+                  <th>8-10 صبح</th>
+                  <th>10-12 صبح</th>
+                  <th>14-17 بعد از ظهر</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr [formGroupName]="i" *ngFor="let day of dayOfTheWeeks; let i = index">
+                  <td>
+                    <nb-checkbox id="ck" formControlName="DayCodeCheked" (valueChange)="requiredValidator(i, $event)">
+                      {{ day.dayTitle }}
+                    </nb-checkbox>
+                  </td>
+                  <td>
+                    <!-- <input
+
+      status="primary"
+      shape="round"
+      formControlName="DayPriority"
+      nbInput
+      min="1"
+      max="6"
+      type="number"
+    /> -->
+
+                    <nb-select fullWidth placeholder="اولویت" class="pageSizeSelect mb-1 ml-1" id="area"
+                      formControlName="DayPriority" status="primary" [disabled]="true">
+                      <!-- (selectedChange)="dayPriorityValidator($event, i)" -->
+
+                      <nb-option *ngFor="let priority of dayPriority" [value]="priority">
+                        {{ priority }}
+                      </nb-option>
+                    </nb-select>
+                  </td>
+                  <td>
+                    <nb-checkbox id="ck" formControlName="FirstShift" (valueChange)="firstCheckValidator($event, i)">
+                      <!-- {{ day.dayTitle }} -->
+                    </nb-checkbox>
+                  </td>
+                  <td>
+                    <nb-checkbox id="ck" formControlName="SecondShift" (valueChange)="secondCheckValidator($event, i)">
+                      <!-- {{ day.dayTitle }} -->
+                    </nb-checkbox>
+                  </td>
+                  <td>
+                    <nb-checkbox id="ck" formControlName="ThirdShift" (valueChange)="thirdCheckValidator($event, i)">
+                      <!-- {{ day.dayTitle }} -->
+                    </nb-checkbox>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <label style="color: red" class="mt-2" *ngIf="counterShzWorkTime < 3 && counterShzWorkTime != 0"><b>حداقل 3
+                روز باید انتخاب شود</b></label>
+          </div>
+          <div class="col-sm-6 col-md-6 col-lg-6 record-picker-section" style="direction: ltr" *ngIf="IsShowTown">
+            <label class="mb-4"><b>(حداقل 3 اولویت انتخاب شود):اولویت روز حضور در شهرستان</b></label>
+            <dual-list [source]="dayOfTheWeeks" key="id" display="dayTitle" [format]="format"
+              (destinationChange)="checkTownWorkTime($event)" [(destination)]="dayOfWeekSelect"></dual-list>
+            <div *ngIf="cgmForm.controls.showTown.value">
+              <label class="mt-2" style="color: red"
+                *ngIf="counterTownWorkTime < 3 && counterTownWorkTime != 0"><b>تعداد انتخاب ها کمتر از 3
+                  میباشد</b></label>
+              <label class="mt-2" style="color: red" *ngIf="counterTownWorkTime > 3"><b>تعداد انتخاب ها بیشنر از 4
+                  میباشد</b></label>
+            </div>
+          </div>
+        </div>
+      </nb-card>
+
+      <!-- *ngIf="collaborationId == null || collaborationId == 0" -->
+      <button [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" type="submit" nbButton id="submit"
+      *ngIf="collaborationId == null || collaborationId == 0"
+        [disabled]="
+          !cgmForm.valid ||
+          invalidShrz ||
+          invalidTown ||
+          cgmForm.get('hasMarker').value === false ||
+          loading
+        " status="success" class="btn btn-success btn-block">
+        ثبت
+      </button>
+
+      <button [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" type="submit" nbButton id="submit"
+        [disabled]="
+          cgmForm.invalid ||
+          invalidShrz ||
+          invalidTown ||
+          cgmForm.get('hasMarker').value === false ||
+          loading
+        " status="warning" *ngIf="collaborationId != null && collaborationId != 0" class="btn btn-warning btn-block">
+        ویرایش
+      </button>
+    </form>
+  </nb-card-body>
+</nb-card>
+
+<!--
+counterTownWorkTime < 3 ||
+counterTownWorkTime > 4 ||
+counterShzWorkTime < 3 -->
+
+
+
+<!-- {{cgmForm.value | json}}
+{{cgmForm.status }} -->
+
+
+
+<ng-template #dialogPoint let-data let-ref="dialogPointRef">
+  <nb-card status="primary" style="position: relative; top: -150px; right: -150px">
+    <nb-card-header>
+      <h6 style="color: linen">ثبت/ویرایش موقعیت جغرافیایی</h6>
+    </nb-card-header>
+    <nb-card-body>
+      <div class="form-group mb-1">
+        <p class="mt-2 mb-2">آیا از محل نشانه گذاری شده جدید اطمینان دارید؟</p>
+      </div>
+    </nb-card-body>
+    <nb-card-footer>
+      <div class="row">
+        <div class="col-sm-6 pl-1">
+          <button [nbSpinner]="pointBtnLoading" [disabled]="pointBtnLoading" nbSpinnerStatus="info"
+            nbSpinnerSize="large" fullWidth nbButton hero status="success" (click)="pointRegistrationConfirm(data)">
+            بلی
+          </button>
+        </div>
+        <div class="col-sm-6 pr-1">
+          <button [disabled]="pointBtnLoading" fullWidth nbButton hero status="danger" (click)="removePoint()">
+            خیر
+          </button>
+        </div>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

@@ -1,0 +1,57 @@
+<form [formGroup]="cgmForm" (ngSubmit)="manage(cgmForm.value)">
+  <nb-card>
+    <nb-card-header>اطلاعات مهندسان</nb-card-header>
+    <nb-card-body>
+      <nb-card>
+        <nb-card-body>
+          <div class="col-lg-12 col-md-12 col-sm-12 m-0 p-0">
+            <div *ngFor="let a of inputCount; let i = index">
+              <div class="mb-2">
+                <label for="file">{{ a.title }} </label>
+                <strong
+                  class="mb-2"
+                  style="
+                    color: rgb(0, 68, 255);
+                    display: block;
+                    font-size: 11px;
+                  "
+                >
+                  حداکثر حجم {{ sizeTitles[i] }} - فرمت ها ({{ a.extentions }})
+                </strong>
+                <app-uploader
+                  *ngIf="filePathRes.length > 0"
+                  [formControlName]="a.formControlName"
+                  [fileExtentions]="a.extentions"
+                  [fileSize]="a.size"
+                  [filePath]="
+                  filePathRes[i].fileName === a.formControlName
+                    ? filePathRes[i].path
+                    : null
+                "
+                >
+                </app-uploader>
+                <app-uploader
+                *ngIf="filePathRes.length == 0"
+                [formControlName]="a.formControlName"
+                [fileExtentions]="a.extentions"
+                [fileSize]="a.size"
+
+              >
+              </app-uploader>
+              </div>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <button
+        type="submit"
+        nbButton
+        status="success"
+        class="btn btn-success btn-block"
+        [disabled]="!cgmForm.valid"
+      >
+        ثبت
+      </button>
+    </nb-card-body>
+  </nb-card>
+</form>

@@ -1,0 +1,116 @@
+<nb-card>
+  <nb-card-body>
+    <!-- <label >تعداد کل املاک :{{info.length}}</label> -->
+    <div class="row mb-3" *ngFor="let data of info; let i = index">
+
+
+      <div class="col-sm-1 col-md-1 col-lg-1">
+        <label>
+          ردیف
+        </label>
+        <input class="pl-2 pr-2"
+        style="text-align: center" readonly="true" fullWidth id="kn" nbInput value="{{ i + 1 }}" />
+      </div>
+      <div class="col-sm-2 col-md-2 col-lg-2">
+        <label>پرونده</label>
+        <input
+          readonly="true"
+          fullWidth
+          id="kn"
+          nbInput
+          value="{{ data.fileNumber }}"
+        />
+      </div>
+      <div class="col-sm-2 col-md-2 col-lg-2">
+        <label>نام مالک</label>
+        <input
+          readonly="true"
+          fullWidth
+          id="kn"
+          nbInput
+          value="  {{ data.ownerFullName }}"
+        />
+      </div>
+      <div class="col-md-1 col-lg-1">
+        <label>واحد ها</label>
+        <input
+        class="pl-2 pr-2"
+        style="text-align: center"
+          readonly="true"
+          fullWidth
+          id="kn"
+          nbInput
+          value="{{ data.unitCount }}"
+        />
+
+      </div>
+
+      <div class="col-sm-1 col-md-1 col-lg-1">
+        <label>کنتور</label>
+        <input
+        class="pl-2 pr-2"
+        style="text-align: center"
+          readonly="true"
+          fullWidth
+          id="kn"
+          nbInput
+          value=" {{ data.meterCount }}"
+        />
+      </div>
+    <div class="col-md-5 col-sm-5 col-lg-5 pt-5">
+      <button
+      class="btn btn-link"
+      style="text-decoration: none;position: relative;
+      margin-top: -6px;"
+      (click)="onShowDetailUnits()"
+    >
+      <nb-icon
+        [options]="{ animation: { type: 'pulse' } }"
+        class="icon-button"
+        icon="eye-outline"
+      >
+      </nb-icon>
+      مشاهده جزئیات واحد ها
+    </button>
+
+      <!--
+        <a
+        class="ml-2"
+          [href]="path"
+          download
+          *ngFor="let path of info[i].filePath"
+          target="_blank"
+        >
+          <img
+            style="border: 1px solid black;  padding: 3px;  box-shadow: 0 0 10px;  position: relative;  top: 0; cursor: pointer; "
+            [src]="path"
+            width="60"
+            height="60"
+            class="mb-2"
+          />
+        </a> -->
+
+      </div>
+    </div>
+    <!-- <div class="row">
+        <button
+        class="btn btn-link"
+        style="text-decoration: none;position: relative;
+        margin-top: -6px;"
+        (click)="onShowDetailUnits()"
+      >
+        <nb-icon
+          [options]="{ animation: { type: 'pulse' } }"
+          class="icon-button"
+          icon="eye-outline"
+        >
+        </nb-icon>
+        مشاهده جزئیات واحد ها
+      </button>
+
+    </div> -->
+  </nb-card-body>
+</nb-card>
+<ng-template #contentDetailTemplate let-data>
+    <app-CollectiveUnitsDetailForm *ngFor="let id of info"  [id]="id.id"> </app-CollectiveUnitsDetailForm>
+  </ng-template>

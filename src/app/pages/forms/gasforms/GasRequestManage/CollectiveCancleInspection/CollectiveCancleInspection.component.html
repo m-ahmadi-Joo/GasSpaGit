@@ -1,0 +1,72 @@
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <nb-card>
+      <nb-card-header>
+          انصراف جمعی
+      </nb-card-header>
+      <nb-card-body>
+        <div
+          style="max-height: 400px"
+          class="col-lg-12 col-md-12 col-sm-12 overflow-auto"
+        >
+          <app-CollectiveUnitsDetailForm> </app-CollectiveUnitsDetailForm>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <!-- <div>
+            <nb-card>
+              <nb-card-body> -->
+
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                  <label for="reason">
+                    <span class="text-danger font-weight-bold ml-1">*</span>
+
+                    توضیحات</label
+                  >
+                  <textarea
+                    formControlName="reason"
+                    fullWidth
+                    id="reason"
+                    nbInput
+                    placeholder="توضیحات"
+                    rows="5"
+                  ></textarea>
+
+                  <div
+                    *ngFor="let validation of INPUT_VALIDATION_MESSAGES.reason"
+                  >
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        isSubmitted &&
+                        form.get('reason').hasError(validation.type) &&
+                        (form.get('reason').dirty ||
+                          form.get('reason').touched ||
+                          isSubmitted)
+                      "
+                      >{{ validation.message }}</span
+                    >
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                  <button
+                    type="submit"
+                    class="btn"
+                    nbButton
+                    status="success"
+                    style="width: 100%;"
+                    type="submit"
+                  >
+                    انصراف
+                  </button>
+                </div>
+
+              <!-- </nb-card-body>
+            </nb-card>
+          </div> -->
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

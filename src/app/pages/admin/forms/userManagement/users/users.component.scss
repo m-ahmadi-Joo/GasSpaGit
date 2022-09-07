@@ -1,0 +1,21 @@
+nb-list-item {
+  font-family: IRANSansWeb;
+  cursor: pointer;
+}
+
+nb-list {
+  font-family: IRANSansWeb;
+}
+
+h5 {
+  font-family: IRANSansWeb;
+}
+
+nb-card {
+  //flex: 1 1 45%;
+  //margin: 0 2.5%;
+
+  &.own-scroll {
+    height: 30rem;
+  }
+}

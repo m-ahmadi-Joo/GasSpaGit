@@ -1,0 +1,407 @@
+<app-gasRequestDetailBox [gasRequestId]="gasReqId"></app-gasRequestDetailBox>
+
+<form [formGroup]="cgmForm" (ngSubmit)="manage()">
+  <div class="row">
+    <div class="col-md-12">
+      <nb-card class="inline-form-card">
+        <nb-card-header>جمع آوری علمک</nb-card-header>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-md-12">
+              <nb-card>
+                <nb-card-body>
+                  <div
+                    class="col-lg-12 col-md-12 col-sm-12 form-inline form-hanging"
+                  >
+                    <label class="ml-1" for="isRequired"
+                      >نیاز به جمع آوری علمک</label
+                    >
+                    <nb-radio-group
+                      (valueChange)="changeIsRequired($event)"
+                      class="form-inline radio-x-inline"
+                      formControlName="isRequired"
+                      id="isRequired"
+                      name="isRequired"
+                      style="margin-top: 1.75rem;"
+                    >
+                      <nb-radio value="true">
+                        بلی
+                      </nb-radio>
+                      <nb-radio value="false">
+                        خیر
+                      </nb-radio>
+                    </nb-radio-group>
+
+                    <div *ngIf="isSubmited">
+                      <div
+                        *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.isRequired
+                        "
+                      >
+                        <span
+                          class="text-danger"
+                          *ngIf="
+                            cgmForm
+                              .get('isRequired')
+                              .hasError(validation.type) &&
+                            (cgmForm.get('isRequired').dirty ||
+                              cgmForm.get('isRequired').touched)
+                          "
+                        >
+                          {{ validation.message }}</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            </div>
+            <nb-card>
+              <nb-card-body>
+                <div class="row">
+                  <div class="col-md-6">
+                      <div class="form-group">
+                          <label class="ml-1" for="cd">تاریخ نامه</label>
+
+                          <!-- <input
+                            name="cd"
+                            fullWidth
+                            id="cd"
+                            nbInput
+                            dir="rtl"
+                            mode="day"
+                            theme="dp-material"
+                            formControlName="forDate"
+                            (blur)="changeDatePicker($event)"
+                          /> -->
+
+                          <!-- <dp-date-picker
+                          #dp="ngbDatepicker"
+                          name="date"
+                          fullWidth
+                          id="date"
+                          nbInput
+
+                          dir="rtl"
+                          mode="day"
+                          placeholder="تاریخ جمع آوری علمک"
+                          theme="dp-material"
+                          formControlName="date"
+                          ></dp-date-picker> -->
+
+                          <dp-date-picker
+                            #dp
+                            name="date"
+                            fullWidth
+                            id="date"
+                            nbInput
+                            (onChange)="changeDate($event)"
+                            dir="rtl"
+                            mode="day"
+                            theme="dp-material"
+                            formControlName="date"
+                          ></dp-date-picker>
+
+                          <div
+                            *ngFor="
+                              let validation of INPUT_VALIDATION_MESSAGES.forDate
+                            "
+                          >
+                            <span
+                              class="text-danger"
+                              *ngIf="
+                                cgmForm.get('date').hasError(validation.type) &&
+                                (cgmForm.get('date').dirty ||
+                                  cgmForm.get('date').touched)
+                              "
+                            >
+                              {{ validation.message }}</span
+                            >
+                          </div>
+                        </div>
+                  </div>
+                  <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="cn">شماره پروانه</label>
+                        <input
+                          fullWidth
+                          type="text"
+                          nbInput
+                          id="cn"
+                          formControlName="certificateNumber"
+                        />
+
+                        <div
+                        *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.certificateNumber
+                        "
+                      >
+                        <span
+                          class="text-danger"
+                          *ngIf="
+                            cgmForm
+                              .get('certificateNumber')
+                              .hasError(validation.type)
+                          "
+                          >{{ validation.message }}</span
+                        >
+                      </div>
+
+                        <!-- <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.meterSerial">
+                            <span class="text-danger" *ngIf="pointAt(i).invalid && (pointAt(i).touched || pointAt(i).dirty)">{{ validation.message }}</span>
+                          </div> -->
+                      </div>
+                    </div>
+                </div>
+                </nb-card-body>
+              </nb-card>
+          </div>
+
+          <!-- <div class="row"> -->
+          <!-- <div class="col-md-12"> -->
+          <nb-card class="inline-form-card">
+            <nb-card-header>
+              <label for="">اضافه کردن کنتور: &nbsp;&nbsp;</label>
+              <button
+                id="btnAddInputFields"
+                [disabled]="cgmForm.controls['isRequired'].value === 'false'"
+                type="button"
+                (click)="addInputFields()"
+                nbButton
+                status="info"
+                size="tiny"
+                class="btn"
+              >
+                <nb-icon
+                  [options]="{ animation: { type: 'pulse' } }"
+                  class="icon-button"
+                  icon="plus"
+                >
+                </nb-icon>
+              </button>
+            </nb-card-header>
+            <nb-card-body>
+              <div formArrayName="gasMeterCollectionDtos">
+                <!-- <div  [formGroupName]="i"
+                          *ngFor="let item of cgmForm.controls.gasMeterCollectionDtos.controls; let i = index"> -->
+                <div
+                  [formGroupName]="i"
+                  *ngFor="
+                    let item of cgmForm.get('gasMeterCollectionDtos')[
+                      'controls'
+                    ];
+                    let i = index
+                  "
+                >
+                  <div class="row">
+                    <div class="form-group col-md-5">
+                      <label for="kn">شماره کنتور</label>
+                      <input
+                        fullWidth
+                        type="number"
+                        nbInput
+                        id="kn"
+                        formControlName="meterSerial"
+                        min="0"
+                      />
+
+                      <div
+                        *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.meterSerial
+                        "
+                      >
+                        <span
+                          class="text-danger"
+                          *ngIf="
+                            item.controls.meterSerial.hasError(
+                              validation.type
+                            ) &&
+                            (item.controls.meterSerial.touched ||
+                              item.controls.meterSerial.dirty)
+                          "
+                          >{{ validation.message }}</span
+                        >
+                      </div>
+
+                      <!-- <div *ngFor="
+                                  let validation of INPUT_VALIDATION_MESSAGES.meterSerial">
+                                    <span class="text-danger" *ngIf="pointAt(i).invalid && (pointAt(i).touched || pointAt(i).dirty)">{{ validation.message }}</span>
+                                  </div> -->
+                    </div>
+
+                    <div class="form-group col-md-5">
+                      <label for="cnt">شماره انداز</label>
+                      <input
+                        fullWidth
+                        type="number"
+                        nbInput
+                        id="cnt"
+                        formControlName="counter"
+                        min="0"
+                      />
+
+                      <div
+                        *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.counter
+                        "
+                      >
+                        <span
+                          class="text-danger"
+                          *ngIf="
+                            item.controls.counter.hasError(validation.type) &&
+                            (item.controls.counter.touched ||
+                              item.controls.counter.dirty)
+                          "
+                          >{{ validation.message }}</span
+                        >
+                      </div>
+
+                      <!-- <div *ngFor="
+                                  let validation of INPUT_VALIDATION_MESSAGES.counter">
+                                    <span class="text-danger" *ngIf="pointAt(i).invalid && pointAt(i).touched">{{ validation.message }}</span>
+                                  </div> -->
+                    </div>
+
+                    <!-- <div
+                      class="form-group col-md-2 mt-5 h-100"
+                      *ngIf="
+                        cgmForm.controls['gasMeterCollectionDtos'].length > 1
+                      "
+                    > -->
+                    <div
+                      class="form-group col-md-2 mt-5 h-100"
+                      *ngIf="
+                        gasMeterCollectionDtos.length > 1
+                      "
+                    >
+                      <button
+                        type="button"
+                        (click)="removeInputFields(i)"
+                        nbButton
+                        status="danger"
+                        size="tiny"
+                        class="btn h-75"
+                      >
+                        <nb-icon
+                          [options]="{ animation: { type: 'pulse' } }"
+                          class="icon-button"
+                          icon="close"
+                        >
+                        </nb-icon>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+          <!-- </div> -->
+          <!-- </div> -->
+
+          <!-- <div class="row">
+            <div class="col-md-12">
+              <nb-card class="inline-form-card">
+                <nb-card-body>
+                  <div class="form-group">
+                    <button
+                      (click)="AddToGrid()"
+                      nbButton
+                      status="success"
+                      size="tiny"
+                      class="btn"
+                    >
+                      +
+                    </button>
+                  </div>
+
+                  <div class="form-group" formArrayName="meter_Serials">
+                      <div *ngFor="let item of meterSerials.controls; let meterIndex = index" [formGroupName]="meterIndex" >
+                          <label for="kn">شماره کنتور</label>
+                          <input
+                            fullWidth
+                            type="number"
+                            nbInput
+                            id="kn"
+                            formControlName="gasMeterSerial"
+                          />
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="cnt">شماره انداز</label>
+                    <input
+                      fullWidth
+                      type="number"
+                      nbInput
+                      id="cnt"
+                      formControlName="gasMeterCounter"
+                    />
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            </div>
+          </div> -->
+        </nb-card-body>
+      </nb-card>
+
+      <!-- <table class="table">
+        <tr *ngFor="let item of meterCollection">
+          <td>{{item.meterSerial}}</td>
+          <td>{{item.counter}}</td>
+        </tr>
+      </table> -->
+
+      <!-- <nb-card class="inline-form-card">
+        <button
+          type="submit"
+          nbButton
+          status="success"
+          style="width: 100%;"
+          class="btn"
+          [disabled]="!cgmForm.valid"
+        >
+        ثبت
+        </button>
+      </nb-card> -->
+
+      <nb-card>
+        <nb-card-body>
+          <div class="row col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <button
+                type="submit"
+                hero
+                nbButton
+                fullWidth
+                status="success"
+                class="btn"
+                [nbSpinner]="loading"
+                nbSpinnerStatus="info"
+                nbSpinnerSize="large"
+                [disabled]="loading || !cgmForm.valid"
+              >
+                ثبت
+              </button>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <button
+                [routerLink]="['/pages/forms/GasReqList']"
+                [disabled]="loading"
+                type="button"
+                nbButton
+                hero
+                fullWidth
+                status="primary"
+                class="btn"
+              >
+                بازگشت به لیست درخواست ها
+              </button>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</form>

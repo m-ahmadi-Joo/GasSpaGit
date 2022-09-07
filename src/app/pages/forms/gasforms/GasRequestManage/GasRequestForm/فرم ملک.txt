@@ -1,0 +1,34 @@
+melkForm: FormGroup;
+
+
+نوع ساخت { احداث بنا ، توسعه بنا ، تجدید بنا } بررسی شود ایا مشتترک در حال حاضر کنتر دارد :
+نوع کاربری : { مسکونی ، تجاری ، مجموعه مسکونی ، اداری ، صنعتی و کشاورزی } $$ شرط { اگر نوع مجموعه مسکونی هست انشعاب برای محوطه هست یا مجتمع ها } :
+کد نوسازی :
+پلاک ثبتی :
+کد پستی :
+زیربنای کل :
+تعداد بلوک :
+تعداد طبقات :
+تعداد واحد :
+میزان تقریبی کل مصرف در ماه :
+میزان مصرف در ساعت ، اگر نوع مجموعه مجتمع های مسکونی بود ، این میزان برای هر مجتمع است ، اگر نه میزان برای نوع صنعتی و کشاورزی محاسبه میشود :
+اگر نوع مجموعه مجتمع های مسکونی بود مقدار زیر بنای هر مجتمع باید ثبت شود :
+عداد کنتر های درخواستی :
+نوع فشار گاز درخواستی :
+	this.melkForm = this.fb.group({
+		mkType-ctrl: ['', Validators.required],
+		mkGasUsageType-ctrl: ['', Validators.required],
+		mkRenewerCode-ctrl: [''], // اگر نوع نوسازی بود
+		mkSubmitedPelakCode-ctrl: ['', Validators.required],
+		mkPostalCode-ctrl: ['', Validators.required],
+		mkFoundationTotal-ctrl: ['', Validators.required],
+		mkBlocCount-ctrl: [''], // اگر نوع مجتمع مسکونی بود
+		mkFloorCount-ctrl: [''], // اگر نوع مجتمع مسکونی بود
+		mkApartmentCount-ctrl: [''], // اگر نوع مجتمع مسکونی بود
+		mkGasUsageCloseTotal-ctrl: ['', Validators.required],
+		mkGasUsagePerHour-ctrl: [''], //  { 100m^3 <x< 100m^3 }
+		mkFoundationEachBuilding-ctrl: [''], // { 3000m^2 <x< 3000m^2 }
+		mkRequestCounter-ctrl: ['', Validators.required],
+		mkGasPresureType: ['', Validators.required], // { 1/4psi &| 2-60 Pound }
+	});
+	

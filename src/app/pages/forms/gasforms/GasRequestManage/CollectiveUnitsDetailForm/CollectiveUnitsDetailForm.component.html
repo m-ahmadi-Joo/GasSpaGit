@@ -1,0 +1,129 @@
+<nb-card>
+  <nb-card-body>
+
+   
+    <label>تعداد کل واحدها :{{ info.length }}</label>
+    <div class="row mb-2" *ngFor="let data of info; let i = index">
+      <div class="col-sm-2 col-md-1 col-lg-1">
+        <label> ردیف </label>
+        <input
+          class="pl-2 pr-2"
+          style="text-align: center"
+          readonly="true"
+          fullWidth
+          id="kn"
+          nbInput
+          value="{{ i + 1 }}"
+        />
+      </div>
+      <div class="col-sm-2 col-md-2 col-lg-2">
+        <label>شماره پرونده</label>
+        <input
+          readonly="true"
+          fullWidth
+          id="kn"
+          nbInput
+          value="{{ data.fileNumber }}"
+        />
+      </div>
+      <div class="col-sm-1 col-md-1 col-lg-1">
+        <label>زیربنا</label>
+        <input
+          class="pl-2 pr-2"
+          style="text-align: center"
+          readonly="true"
+          fullWidth
+          id="kn"
+          nbInput
+          value="  {{ data.foundation }}"
+        />
+      </div>
+      <div class="col-sm-1 col-md-1 col-lg-1">
+        <label>مصرف</label>
+        <input
+          class="pl-2 pr-2"
+          style="text-align: center"
+          readonly="true"
+          fullWidth
+          id="kn"
+          nbInput
+          value="  {{ data.utilization }}"
+        />
+      </div>
+      <div class="col-sm-2 col-md-2 col-lg-2">
+        <label>نوع لوله کشی</label>
+        <input
+          readonly="true"
+          fullWidth
+          id="kn"
+          nbInput
+          value="  {{ data.pipingKind }}"
+        />
+      </div>
+
+      <div class="col-md-1 col-lg-1">
+        <label>کنتور</label>
+        <input
+          class="pl-2 pr-2"
+          style="text-align: center"
+          readonly="true"
+          fullWidth
+          id="kn"
+          nbInput
+          value="{{ data.meterType }}"
+        />
+        <!-- <label class="d-block lable">
+          {{data.meterType}}
+        </label> -->
+      </div>
+
+      <div class="col-sm-1 col-md-1 col-lg-1">
+        <label>طبقه</label>
+        <input
+          class="pl-2 pr-2"
+          style="text-align: center"
+          readonly="true"
+          fullWidth
+          id="kn"
+          nbInput
+          value=" {{ data.floorNumber }}"
+        />
+      </div>
+      <div class="col-md-2">
+        <a class="ml-2" (click)="download(imagePath[i])" target="_blank">
+          <img
+            style="
+              border: 1px solid black;
+              padding: 3px;
+              box-shadow: 0 0 10px;
+              position: relative;
+              top: 0;
+              cursor: pointer;
+            "
+            [src]="imagePath[i]"
+            width="75"
+            height="75"
+            class="mb-2"
+          />
+        </a>
+      </div>
+      <div class="col-sm-1 col-md-1 col-lg-1">
+                <button type="button" nbTooltip="مشاهده جزئیات" nbTooltipPlacement="top" size="tiny" 
+                   class="mb-2 mr-1" nbButton status="info" (click)="onShowDetailUnit(data.contractId,data.requestUnitId)">
+                <nb-icon [options]="{ animation: { type: 'zoom' } }" class="alert-circle-outline" icon="eye-outline">
+                </nb-icon>
+                 </button>
+      </div>
+    </div>
+
+
+    <ng-template #contentUnitDetailTemplate let-data>
+     
+      <app-recordMapInformationDetail
+      
+        [rowContractId]="contractId" [requestUnitId]="reqUnitId"
+      ></app-recordMapInformationDetail>
+    </ng-template>
+
+  </nb-card-body>
+</nb-card>

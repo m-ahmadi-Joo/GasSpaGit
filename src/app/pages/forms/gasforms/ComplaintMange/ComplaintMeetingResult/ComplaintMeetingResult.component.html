@@ -1,0 +1,178 @@
+
+<ngx-ComplaintDetailForm></ngx-ComplaintDetailForm>
+
+<form (ngSubmit)="onSubmit()" [formGroup]="formComplaintMeetingResult">
+    <nb-card style="height: 100%">
+        <nb-card-body id="complaintCard">
+            <div class="col-lg-12 col-md-12 col-sm-12 form-inline form-hanging mb-1">
+              <label>
+                <span class="text-danger font-weight-bold ml-1">*</span>
+                مشکل فنی دارد؟
+              </label>
+                <nb-radio-group
+                  class="form-inline radio-x-inline mr-1"
+                  formControlName="hasTechnicalProblem"
+                  id="hasTechnicalProblem"
+                  name="hasTechnicalProblem"
+                >
+                  <nb-radio value="1"
+                  >
+                      بلی
+                  </nb-radio>
+
+                  <nb-radio value="0"
+                  >
+                      خیر
+                  </nb-radio>
+                </nb-radio-group>
+
+            <div *ngIf="isSubmitted">
+              <div
+                *ngFor="
+                  let validation of INPUT_VALIDATION_MESSAGES.hasTechnicalProblem
+                "
+              >
+                <span
+                  class="text-danger"
+                  *ngIf="formComplaintMeetingResult.controls.hasTechnicalProblem.value === ''"
+                  >{{ validation.message }}</span
+                >
+              </div>
+            </div>
+
+            </div>
+
+            <div class="col-lg-12 col-md-12 col-sm-12 form-inline form-hanging mb-1">
+              <label>
+                <span class="text-danger font-weight-bold ml-1">*</span>
+                نیاز به نظر نظارت عالی دارد؟
+              </label>
+                <nb-radio-group
+                  class="form-inline radio-x-inline mr-1"
+                  formControlName="shouldCheckSupervision"
+                  id="shouldCheckSupervision"
+                  name="shouldCheckSupervision"
+                >
+                  <nb-radio value="1"
+                  >
+                      بلی
+                  </nb-radio>
+
+                  <nb-radio value="0"
+                  >
+                      خیر
+                  </nb-radio>
+                </nb-radio-group>
+
+            <div *ngIf="isSubmitted">
+              <div
+                *ngFor="
+                  let validation of INPUT_VALIDATION_MESSAGES.shouldCheckSupervision
+                "
+              >
+                <span
+                  class="text-danger"
+                  *ngIf="formComplaintMeetingResult.controls.shouldCheckSupervision.value === ''"
+                  >{{ validation.message }}</span
+                >
+              </div>
+            </div>
+
+            </div>
+
+            <div class="col-lg-12 col-md-12 col-sm-12 form-inline form-hanging mb-1">
+                <label>
+                  <span class="text-danger font-weight-bold ml-1">*</span>
+                  نیاز به هماهنگی با اتحادیه دارد؟
+                </label>
+                  <nb-radio-group
+                    class="form-inline radio-x-inline mr-1"
+                    formControlName="shouldCoordinateWithAssociation"
+                    id="shouldCoordinateWithAssociation"
+                    name="shouldCoordinateWithAssociation"
+                  >
+                    <nb-radio value="1"
+                    >
+                        بلی
+                    </nb-radio>
+
+                    <nb-radio value="0"
+                    >
+                        خیر
+                    </nb-radio>
+                  </nb-radio-group>
+
+              <div *ngIf="isSubmitted">
+                <div
+                  *ngFor="
+                    let validation of INPUT_VALIDATION_MESSAGES.shouldCoordinateWithAssociation
+                  "
+                >
+                  <span
+                    class="text-danger"
+                    *ngIf="formComplaintMeetingResult.controls.shouldCoordinateWithAssociation.value === ''"
+                    >{{ validation.message }}</span
+                  >
+                </div>
+              </div>
+
+            </div>
+
+          <div class="col-lg-12 col-md-12 col-sm-12">
+              <label for="comment">
+                <span class="text-danger font-weight-bold ml-1">*</span>
+                توضیحات</label>
+              <textarea
+                formControlName="comment"
+                fullWidth
+                id="comment"
+                nbInput
+                placeholder="توضیحات"
+                rows="5"
+              ></textarea>
+          </div>
+
+          <nb-card>
+            <nb-card-body>
+              <div class="row">
+                  <div class="col-lg-6 col-md-6 col-sm-6">
+                      <button
+                      type="submit"
+                      nbButton
+                      fullWidth
+                      [nbSpinner]="loading"
+                          nbSpinnerStatus="info"
+                          nbSpinnerSize="large"
+                      [disabled]="
+                      loading ||
+                      !formComplaintMeetingResult.valid ||
+                      formComplaintMeetingResult.get('hasTechnicalProblem').value === '' ||
+                      formComplaintMeetingResult.get('shouldCheckSupervision').value === '' ||
+                      formComplaintMeetingResult.get('shouldCoordinateWithAssociation').value === ''"
+                      hero
+                      status="success"
+                    >
+                        ثبت
+                    </button>
+                  </div>
+
+                  <div class="col-lg-6 col-md-6 col-sm-6">
+                      <button
+                      [disabled]="loading"
+                        nbButton
+                        hero
+                        status="warning"
+                        fullWidth
+                        type="button"
+                        [routerLink]="['/pages/forms/ComplaintList']"
+                      >
+                        بازگشت به لیست
+                      </button>
+                  </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+
+        </nb-card-body>
+      </nb-card>
+</form>

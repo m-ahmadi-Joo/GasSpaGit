@@ -1,0 +1,184 @@
+<form [formGroup]="cgmForm" (ngSubmit)="manage(cgmForm.value)">
+  <nb-card>
+    <nb-card-header>اطلاعات مهندسان</nb-card-header>
+    <nb-card-body>
+      <nb-card>
+        <nb-card-body>
+          <div class="row mb-5">
+            <div class="col-sm-6 col-md-3">
+              <label>نام</label>
+              <input
+                readonly
+                fullWidth
+                id="fn"
+                nbInput
+                type="text"
+                value="{{ detail?.firstName }}"
+              />
+            </div>
+            <div class="col-sm-6 col-md-3">
+              <label>نام خانوادگی</label>
+              <input
+                readonly
+                fullWidth
+                id="fn"
+                nbInput
+                type="text"
+                value="{{ detail?.lastName }}"
+              />
+            </div>
+            <div class="col-sm-3 col-md-3">
+              <label>شماره موبایل</label>
+              <input
+                readonly
+                fullWidth
+                id="fn"
+                nbInput
+                type="text"
+                value="{{ detail?.phoneNumber }}"
+              />
+            </div>
+
+            <div class="col-sm-6 col-md-3">
+              <label>کد دفتر گاز</label>
+              <input
+                readonly
+                fullWidth
+                id="fn"
+                nbInput
+                type="text"
+                value="{{ detail?.engineerOrganizationCode }}"
+              />
+            </div>
+          </div>
+          <div class="row mb-5">
+            <div class="col-sm-6 col-md-3">
+              <label>پایه طراحی</label>
+              <input
+                readonly
+                fullWidth
+                id="fn"
+                nbInput
+                type="text"
+                value="{{ detail?.designerGrade }}"
+              />
+            </div>
+            <div class="col-sm-6 col-md-3">
+              <label>پایه نظارت</label>
+              <input
+                readonly
+                fullWidth
+                id="fn"
+                nbInput
+                type="text"
+                value="{{ detail?.observerGrade }}"
+              />
+            </div>
+            <div class="col-sm-6 col-md-3">
+              <label>شماره پروانه</label>
+              <input
+                readonly
+                fullWidth
+                id="fn"
+                nbInput
+                type="text"
+                value="{{ detail?.licenseNumber }}"
+              />
+            </div>
+            <div class="col-sm-6 col-md-3">
+              <label>تاریخ شروع به کار</label>
+              <input
+                readonly
+                fullWidth
+                id="fn"
+                nbInput
+                type="text"
+                value="{{ detail?.startWorkTime }}"
+              />
+            </div>
+          </div>
+          <div class="row mb-5">
+            <div class="col-sm-6 col-md-3">
+              <label>تاریخ اعتبار پروانه</label>
+              <input
+                readonly
+                fullWidth
+                id="fn"
+                nbInput
+                type="text"
+                value="{{ detail?.licenseExpireDate }}"
+              />
+            </div>
+            <div class="col-sm-6 col-md-3">
+              <label>امتیاز سال جاری</label>
+              <input
+                readonly
+                fullWidth
+                id="fn"
+                nbInput
+                type="text"
+                [value]="roundNumber2Decimal(detail?.totalRank)"
+              />
+            </div>
+            <div class="col-sm-6 col-md-3">
+              <label>وضعیت</label>
+              <input
+                readonly
+                fullWidth
+                id="fn"
+                nbInput
+                type="text"
+                [value]="detail?.status === true ? 'فعال' : 'غیر فعال'"
+              />
+            </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 m-0 p-0">
+            <div *ngFor="let a of inputCount; let i = index">
+              <div class="mb-2">
+                <label for="file">{{ a.title }} </label>
+                <strong
+                  class="mb-2"
+                  style="
+                    color: rgb(0, 68, 255);
+                    display: block;
+                    font-size: 11px;
+                  "
+                >
+                  حداکثر حجم {{ sizeTitles[i] }} - فرمت ها ({{ a.extentions }})
+                </strong>
+                <app-uploader
+                  *ngIf="filePathRes.length > 0"
+                  [formControlName]="a.formControlName"
+                  [fileExtentions]="a.extentions"
+                  [fileSize]="a.size"
+                  [filePath]="
+                    filePathRes[i].fileName === a.formControlName
+                      ? filePathRes[i].path
+                      : null
+                  "
+                >
+                </app-uploader>
+                <app-uploader
+                  *ngIf="filePathRes.length == 0"
+                  [formControlName]="a.formControlName"
+                  [fileExtentions]="a.extentions"
+                  [fileSize]="a.size"
+                >
+                </app-uploader>
+              </div>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <button
+        type="submit"
+        nbButton
+        status="success"
+        class="btn btn-success btn-block"
+        [disabled]="!cgmForm.valid"
+      >
+        ثبت
+      </button>
+    </nb-card-body>
+  </nb-card>
+</form>

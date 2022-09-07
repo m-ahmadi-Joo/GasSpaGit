@@ -1,0 +1,184 @@
+<nb-card id="serachCard" style="box-shadow: 0 0 4px;" class="pb-0">
+  <nb-card-body>
+    <!-- <div class="container"> -->
+    <form class="form-inline" (ngSubmit)="onSerach()" [formGroup]="form">
+      <div class="row">
+        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+          <label for="engineerName">
+            نام :
+          </label>
+          <input formControlName="firstName" fullWidth nbInput />
+        </div>
+        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+          <label for="membershipNumber">
+            نام خانوادگی :
+          </label>
+
+          <input formControlName="lastName" size="small" fullWidth id="lastName" nbInput />
+        </div>
+        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+          <label for="nationalCode">
+            کد ملی:
+          </label>
+
+          <input formControlName="nationalCode" size="small" fullWidth id="nationalCode" nbInput type="number" />
+        </div>
+      </div>
+      <div class="row mb-0">
+        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+          <label>انتخاب شهر محل کار:</label>
+          <!-- style="box-shadow: 0 0 3px" -->
+          <nb-select multiple  placeholder="انتخاب شهر" fullWidth
+            id="neighborhood" formControlName="workTown">
+            <nb-option *ngFor="let town of lstTowns" [value]="town.townId">
+              {{ town.townName }}
+            </nb-option>
+          </nb-select>
+        </div>
+        <!-- <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+          <label for="fromDateStart">
+            تاریخ شروع پروانه:
+          </label>
+
+          <dp-date-picker
+            name="ds"
+            id="ds"
+            nbInput
+            dir="rtl"
+            mode="day"
+            theme="dp-material"
+            formControlName="licenseStartDate"
+            [config]="datePickerConfig"
+            (open)="openFromStartDayPicker()"
+            (close)="closeFromStartDayPicker()"
+          ></dp-date-picker>
+        </div>
+        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+          <label for="fromDateStart">
+            تاریخ پایان پروانه:
+          </label>
+
+          <dp-date-picker
+            name="de"
+            id="de"
+            nbInput
+            dir="rtl"
+            mode="day"
+            theme="dp-material"
+            formControlName="licenseExpireDate"
+            [config]="datePickerConfig"
+            (open)="openFromEndtDayPicker()"
+            (close)="closeFromEndtDayPicker()"
+          ></dp-date-picker>
+        </div> -->
+        <div class="form-group col-lg-3 col-md-3 col-sm-4 col-xs-12 "
+          style="margin-bottom: -40px; margin-top: -31px; margin-right: 64px !important;">
+          <button nbTooltip="جستجو" nbTooltipPlacement="top" nbButton hero size="tiny" status="info" type="submit"
+            class="ml-1" style="margin-top: 15px;">
+            <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="search-outline">
+            </nb-icon>
+          </button>
+
+          <button nbTooltip="بازسازی" nbTooltipPlacement="top" size="tiny" nbButton hero status="primary" type="button"
+            (click)="resetFilters()" style="margin-top: 15px;">
+            <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="refresh-outline">
+            </nb-icon>
+          </button>
+        </div>
+      </div>
+
+
+    </form>
+    <br />
+
+    <!-- </div> -->
+  </nb-card-body>
+</nb-card>
+
+<nb-card class="table-x-mine" style="box-shadow: 0 0 4px;">
+  <nb-card-header class="pt-4" style="border-bottom: 0;"><span class="ml-1"> ورودی</span>
+    <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="arrow-ios-back-outline">
+    </nb-icon>
+
+    <span class="mr-1" style="color: #3366ff;">مجریان</span>
+
+    <div class="pull-left">
+      <button class="ml-1" nbButton status="primary" hero *appHasRole="['GasEmployee','Admin']"
+        [routerLink]="['/pages/forms/CreateExecuter']">
+        <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="people-outline">
+        </nb-icon>
+        ثبت مجری
+      </button>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <div class="table-wrapper">
+      <ng2-smart-table [settings]="settings" [source]="source | paginate: pagingConfig" (custom)="onCustom($event)"
+        style="direction: ltr;"></ng2-smart-table>
+    </div>
+
+    <span *ngFor="let item of collection | paginate: pagingConfig"></span>
+
+    <nb-card>
+      <nb-card-body>
+        <div class="row">
+          <div class="input-group">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 form-inline pull-left">
+              <label for="pageSize" style="margin-left: 0.45rem;">
+                تعداد رکورد:
+              </label>
+              <nb-select [selected]="pagination.itemsPerPage" status="info" #pageSizeSelect class="pageSizeSelect"
+                (selectedChange)="changePageSize(pageSizeSelect.selected)" id="pageSize" placeholder="انتخاب ...">
+                <nb-option *ngFor="let p of pageSizes" [value]="p.id">
+                  {{ p.display }}
+                </nb-option>
+              </nb-select>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              <div class="d-flex justify-content-center">
+                <pagination-controls class="pagination" (pageChange)="pageChanged($event)" previousLabel=""
+                  nextLabel="">
+                </pagination-controls>
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 form-inline pull-right">
+              <label for="pageNumber" style="margin-left: 0.45rem;">
+                شماره صفحه:
+              </label>
+              <input [value]="pagination.currentPage" style="width: 30%;" #pageNumber size="tiny" id="pageNumber"
+                nbInput type="number" min="1" max="pagination.totalPages"
+                (keydown.enter)="pageChanged(pageNumber.value)" />
+            </div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+</nb-card>
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card status="danger" accent="danger">
+    <nb-card-header>
+      <h4 style="color: linen">هشدار</h4>
+    </nb-card-header>
+    <nb-card-body>
+      <h6>آیا از حذف مورد اطمینان دارید؟</h6>
+    </nb-card-body>
+    <nb-card-footer>
+      <div class="row">
+        <div class="col-sm-6">
+          <button fullWidth nbButton hero status="danger" (click)="confirmDelete(data)">
+            بلی
+          </button>
+        </div>
+        <div class="col-sm-6">
+          <button fullWidth nbButton hero status="primary" (click)="dialogRef.close()">
+            انصراف
+          </button>
+        </div>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

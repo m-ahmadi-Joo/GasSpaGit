@@ -1,0 +1,92 @@
+<nb-card class="card-inside-tab">
+  <nb-card-body>
+    <div class="col-md-4">
+      <nb-card>
+        <nb-card-header>نقش های تعریف شده</nb-card-header>
+        <nb-card-body>
+          <nb-list class="inline-list">
+            <nb-list-item
+              *ngFor="let role of loadedRoles"
+              class="col-md-12">
+              <div>
+                <p><strong>{{role.persianName}}</strong></p>
+              </div>
+              <div class="stay-left p-2">
+                <!-- <nb-icon
+                  [options]="{ animation: { type: 'shake' } }"
+                  (click)="onDelete(role.id)"
+                  class="icon-button"
+                  icon="close-circle-outline"></nb-icon> -->
+                <nb-icon
+                  nbTooltip="ویرایش"
+                  nbTooltipPlacement="top"
+                  [options]="{ animation: { type: 'pulse' } }"
+                  (click)="onEdit(role.id)"
+                  class="icon-button"
+                  icon="edit-outline"></nb-icon>
+              </div>
+            </nb-list-item>
+          </nb-list>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col-md-8">
+      <nb-card>
+        <nb-card-header>
+          <div>
+            <button
+              (click)="onNewRole()"
+              [disabled]="newMode || editMode"
+              nbButton
+              status="success">
+              تعریف نقش جدید
+            </button>
+          </div>
+          <div *ngIf="(newMode || editMode)" class="stay-left">
+            <button
+              (click)="onCancel()"
+              nbButton
+              status="danger">
+              انصراف
+            </button>
+            <button
+              (click)="onSave(roleName.value,persianName.value)"
+              nbButton
+              status="info">
+              ذخیره
+            </button>
+          </div>
+        </nb-card-header>
+        <nb-card-body>
+          <label *ngIf="!editMode" for="rName">
+            نقش مورد نظر را نام گذاری کنید
+          </label>
+          <label *ngIf="editMode" for="prName">
+            اختصاص نام جدید برای نقش انتخابی
+          </label>
+          <input
+            #persianName
+            [disabled]="(!newMode && !editMode)"
+            [(ngModel)]="role.persianName"
+            fullWidth
+            id="prName"
+            nbInput
+            placeholder="نام نقش به فارسی"
+            type="text">
+
+            <input
+            class="mt-2"
+            #roleName
+            [disabled]="(!newMode || editMode)"
+            [(ngModel)]="role.name"
+            fullWidth
+            id="rName"
+            nbInput
+            placeholder="نام نقش به انگلیسی"
+            type="text">
+
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </nb-card-body>
+</nb-card>

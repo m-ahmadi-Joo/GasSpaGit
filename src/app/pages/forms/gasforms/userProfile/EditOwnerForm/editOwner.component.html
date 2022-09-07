@@ -1,0 +1,614 @@
+<style>
+  .dp-picker-input {
+    width: 145px !important;
+  }
+
+  nb-select.bDate /deep/ .select-button {
+    min-width: 8.2rem !important;
+  }
+
+  .form-control {
+    background: #f7f9fc !important;
+    border-color: #edf1f7 !important;
+    color: #1a2138 !important;
+    font-size: 0.9375rem !important;
+    text-align: center;
+  }
+
+  .owner-btn[disabled] {
+    background: #bdc1cc !important;
+    border-color: #c6c9ce !important;
+    color: #838890 !important;
+    cursor: not-allowed;
+  }
+</style>
+
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <nb-card>
+      <nb-card-header> اطلاعات مالک </nb-card-header>
+      <nb-card-body>
+        <form (ngSubmit)="onSubmit()" [formGroup]="userOwnerDto">
+          <div class="row">
+            <div
+              class="input-group full-name-input col-lg-12 col-md-12 col-sm-12"
+            >
+              <div class="ccol-lg-3 col-md-3 col-sm-3 input-item">
+                <label for="fn">
+                  <span class="text-danger font-weight-bold ml-1">*</span>
+                  نام مالک :</label
+                >
+                <input
+                  [status]="
+                    userOwnerDto.get('firstName').touched ||
+                    userOwnerDto.get('firstName').dirty
+                      ? userOwnerDto.get('firstName').invalid
+                        ? 'danger'
+                        : 'success'
+                      : ''
+                  "
+                  formControlName="firstName"
+                  fullWidth
+                  id="fn"
+                  nbInput
+                  type="text"
+                />
+                <div
+                  *ngFor="let validation of INPUT_VALIDATION_MESSAGES.firstName"
+                >
+                  <span
+                    *ngIf="
+                      userOwnerDto.get('firstName').hasError(validation.type) &&
+                      (userOwnerDto.get('firstName').dirty ||
+                        userOwnerDto.get('firstName').touched)
+                    "
+                    class="text-danger"
+                  >
+                    {{ validation.message }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-3 input-item">
+                <label for="ln">
+                  <span class="text-danger font-weight-bold ml-1">*</span>
+                  نام خانوادگی :</label
+                >
+                <input
+                  [status]="
+                    userOwnerDto.get('lastName').touched ||
+                    userOwnerDto.get('lastName').dirty
+                      ? userOwnerDto.get('lastName').invalid
+                        ? 'danger'
+                        : 'success'
+                      : ''
+                  "
+                  formControlName="lastName"
+                  fullWidth
+                  id="ln"
+                  nbInput
+                  type="text"
+                />
+                <div
+                  *ngFor="let validation of INPUT_VALIDATION_MESSAGES.lastName"
+                >
+                  <span
+                    *ngIf="
+                      userOwnerDto.get('lastName').hasError(validation.type) &&
+                      (userOwnerDto.get('lastName').dirty ||
+                        userOwnerDto.get('lastName').touched)
+                    "
+                    class="text-danger"
+                  >
+                    {{ validation.message }}
+                  </span>
+                </div>
+              </div>
+              <div class="ccol-lg-3 col-md-3 col-sm-3 input-item">
+                <label for="fn">
+                  <span class="text-danger font-weight-bold ml-1">*</span>
+                  شماره شناسنامه :</label
+                >
+                <input
+                  [status]="
+                    userOwnerDto.get('birthCertificateNumber').touched ||
+                    userOwnerDto.get('birthCertificateNumber').dirty
+                      ? userOwnerDto.get('birthCertificateNumber').invalid
+                        ? 'danger'
+                        : 'success'
+                      : ''
+                  "
+                  formControlName="birthCertificateNumber"
+                  fullWidth
+                  id="birthCertificateNumber"
+                  min="1"
+                  nbInput
+                  type="number"
+                />
+                <div
+                  *ngFor="
+                    let validation of INPUT_VALIDATION_MESSAGES.birthCertificateNumber
+                  "
+                >
+                  <span
+                    *ngIf="
+                      userOwnerDto
+                        .get('birthCertificateNumber')
+                        .hasError(validation.type) &&
+                      userOwnerDto.get('birthCertificateNumber').invalid &&
+                      (userOwnerDto.get('birthCertificateNumber').dirty ||
+                        userOwnerDto.get('birthCertificateNumber').touched)
+                    "
+                    class="text-danger"
+                  >
+                    {{ validation.message }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-3">
+                <label class="d-block mt-1" for="ot">
+                  <span class="text-danger font-weight-bold ml-1">*</span>
+                  شخص :</label
+                >
+                <nb-radio-group
+                  formControlName="ownerKind"
+                  id="ot"
+                  name="ot"
+                  (valueChange)="validator()"
+                >
+                  <nb-radio class="d-inline-block" value="0">حقیقی</nb-radio>
+                  <nb-radio class="d-inline-block" value="1">حقوقی</nb-radio>
+                </nb-radio-group>
+                <div
+                  *ngFor="let validation of INPUT_VALIDATION_MESSAGES.ownerKind"
+                >
+                  <span
+                    *ngIf="
+                      userOwnerDto.get('ownerKind').hasError(validation.type) &&
+                      (userOwnerDto.get('ownerKind').dirty ||
+                        userOwnerDto.get('ownerKind').touched)
+                    "
+                    class="text-danger"
+                  >
+                    {{ validation.message }}
+                  </span>
+                </div>
+              </div>
+              <div
+                *ngIf="userOwnerDto.get('ownerKind').value === '1'"
+                class="col-lg-3 col-md-3 col-sm-3 input-item mt-3"
+                id="ecode"
+              >
+                <label for="ei">کد اقتصادی :</label>
+                <input
+                  [status]="
+                    userOwnerDto.get('economicCode').touched ||
+                    userOwnerDto.get('economicCode').dirty
+                      ? userOwnerDto.get('economicCode').invalid
+                        ? 'danger'
+                        : 'success'
+                      : ''
+                  "
+                  formControlName="economicCode"
+                  fullWidth
+                  id="ei"
+                  nbInput
+                  type="number"
+                />
+                <div *ngIf="userOwnerDto.get('ownerKind').value === '1'">
+                  <div
+                    *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.economicCode
+                    "
+                  >
+                    <span
+                      *ngIf="
+                        userOwnerDto
+                          .get('economicCode')
+                          .hasError(validation.type) &&
+                        (userOwnerDto.get('economicCode').dirty ||
+                          userOwnerDto.get('economicCode').touched)
+                      "
+                      class="text-danger"
+                    >
+                      {{ validation.message }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div
+              class="input-group full-name-input col-lg-12 col-md-12 col-sm-12"
+            >
+              <div class="col-lg-3 col-md-3 col-sm-3 input-item">
+                <label for="ddn">
+                  <span class="text-danger font-weight-bold ml-1">*</span>
+                  نام پدر :</label
+                >
+                <input
+                  [status]="
+                    userOwnerDto.get('fatherName').touched ||
+                    userOwnerDto.get('fatherName').dirty
+                      ? userOwnerDto.get('fatherName').invalid
+                        ? 'danger'
+                        : 'success'
+                      : ''
+                  "
+                  formControlName="fatherName"
+                  fullWidth
+                  id="ddn"
+                  nbInput
+                  type="text"
+                />
+                <div
+                  *ngFor="
+                    let validation of INPUT_VALIDATION_MESSAGES.fatherName
+                  "
+                >
+                  <span
+                    *ngIf="
+                      userOwnerDto
+                        .get('fatherName')
+                        .hasError(validation.type) &&
+                      (userOwnerDto.get('fatherName').dirty ||
+                        userOwnerDto.get('fatherName').touched)
+                    "
+                    class="text-danger"
+                  >
+                    {{ validation.message }}
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3 col-sm-3 input-item">
+                <label for="pn">
+                  <!-- <span class="text-danger font-weight-bold ml-1">*</span> -->
+                  شماره ثابت :</label
+                >
+                <input
+                  [status]="
+                    userOwnerDto.get('tel').touched ||
+                    userOwnerDto.get('tel').dirty
+                      ? userOwnerDto.get('tel').invalid
+                        ? 'danger'
+                        : 'success'
+                      : ''
+                  "
+                  formControlName="tel"
+                  fullWidth
+                  id="pn"
+                  nbInput
+                  placeholder="شماره تلفن به همراه کد مثال: 07131111111"
+                />
+                <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.tel">
+                  <span
+                    *ngIf="
+                      userOwnerDto.get('tel').hasError(validation.type) &&
+                      (userOwnerDto.get('tel').dirty ||
+                        userOwnerDto.get('tel').touched)
+                    "
+                    class="text-danger"
+                  >
+                    {{ validation.message }}
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3 col-sm-3 input-item">
+                <label for="placeOfIssue"> محل صدور :</label>
+                <input
+                  id="placeOfIssue"
+                  [status]="
+                    userOwnerDto.get('placeOfIssue').dirty
+                      ? userOwnerDto.get('placeOfIssue').invalid
+                        ? 'danger'
+                        : 'success'
+                      : ''
+                  "
+                  formControlName="placeOfIssue"
+                  fullWidth
+                  nbInput
+                />
+                <div
+                  *ngFor="
+                    let validation of INPUT_VALIDATION_MESSAGES.placeOfIssue
+                  "
+                >
+                  <span
+                    *ngIf="
+                      userOwnerDto
+                        .get('placeOfIssue')
+                        .hasError(validation.type) &&
+                      (userOwnerDto.get('placeOfIssue').dirty ||
+                        userOwnerDto.get('placeOfIssue').touched)
+                    "
+                    class="text-danger"
+                  >
+                    {{ validation.message }}
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-lg-3 col-md-3 col-sm-3">
+                <label class="d-block mt-2" for="gender">
+                  <span class="text-danger font-weight-bold ml-1">*</span>
+                  جنسیت
+                </label>
+                <nb-radio-group
+                  formControlName="gender"
+                  id="gender"
+                  name="gender"
+                >
+                  <nb-radio class="d-inline-block" value="0">آقا</nb-radio>
+                  <nb-radio class="d-inline-block" value="1">خانم</nb-radio>
+                </nb-radio-group>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <div
+              class="input-group full-name-input col-lg-12 col-md-12 col-sm-12"
+            >
+              <div class="col-lg-6 col-md-6 col-sm-6 input-item">
+                <label class="d-block" for="birthDate">
+                  <span class="text-danger font-weight-bold ml-1">*</span>
+                  تاریخ تولد :
+                </label>
+
+                <div class="col-sm-12">
+                  <div class="col-sm-3 d-inline-block p-0">
+                    <label style="color: #3571f2" class="d-block mb-1 p-0"
+                      >روز :</label
+                    >
+                    <input
+                      formControlName="bDay"
+                      [typeahead]="days"
+                      typeaheadOptionField="searchItem"
+                      (blur)="onChangeDay($event)"
+                      [typeaheadOptionsLimit]="31"
+                      [typeaheadMinLength]="0"
+                      class="form-control"
+                      style="width: 98%"
+                      placeholder="روز تولد را وارد کنید"
+                    />
+                    <span class="mt-2 text-danger d-block" *ngIf="InvalidDay"
+                      >روز وارد شده صحیح نمی باشد</span
+                    >
+
+                    <div
+                      *ngFor="let validation of INPUT_VALIDATION_MESSAGES.bDay"
+                    >
+                      <span
+                        *ngIf="
+                          userOwnerDto.get('bDay').hasError(validation.type) &&
+                          (userOwnerDto.get('bDay').dirty ||
+                            userOwnerDto.get('bDay').touched)
+                        "
+                        class="text-danger"
+                      >
+                        {{ validation.message }}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-1 d-inline-block p-0 text-center">
+                    <strong style="color: #3571f2"> / </strong>
+                  </div>
+                  <div class="col-sm-3 d-inline-block p-0">
+                    <label style="color: #3571f2" class="d-block mb-1 p-0"
+                      >ماه :</label
+                    >
+                    <input
+                      formControlName="bMonth"
+                      [typeahead]="months"
+                      typeaheadOptionField="searchItem"
+                      (blur)="onChangeMonth($event)"
+                      [typeaheadOptionsLimit]="12"
+                      [typeaheadMinLength]="0"
+                      class="form-control d-inline-block"
+                      style="width: 98%"
+                      placeholder="ماه تولد را وارد کنید"
+                    />
+
+                    <span class="mt-2 text-danger d-block" *ngIf="InvalidMonth"
+                      >ماه وارد شده صحیح نمی باشد</span
+                    >
+
+                    <div
+                      *ngFor="
+                        let validation of INPUT_VALIDATION_MESSAGES.bMonth
+                      "
+                    >
+                      <span
+                        *ngIf="
+                          userOwnerDto
+                            .get('bMonth')
+                            .hasError(validation.type) &&
+                          (userOwnerDto.get('bMonth').dirty ||
+                            userOwnerDto.get('bMonth').touched)
+                        "
+                        class="text-danger"
+                      >
+                        {{ validation.message }}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-1 d-inline-block p-0 text-center">
+                    <strong style="color: #3571f2"> / </strong>
+                  </div>
+                  <div class="col-sm-3 d-inline-block p-0">
+                    <label style="color: #3571f2" class="d-block mb-1 p-0"
+                      >سال :</label
+                    >
+
+                    <input
+                      formControlName="bYear"
+                      [typeahead]="years"
+                      typeaheadOptionField="searchItem"
+                      (blur)="onChangeYear($event)"
+                      [typeaheadOptionsLimit]="10"
+                      [typeaheadMinLength]="0"
+                      class="form-control"
+                      style="width: 98%"
+                      placeholder="سال تولد را وارد کنید"
+                    />
+                    <span class="mt-2 text-danger d-block" *ngIf="InvalidYear"
+                      >سال وارد شده صحیح نمی باشد</span
+                    >
+                    <div
+                      *ngFor="let validation of INPUT_VALIDATION_MESSAGES.bYear"
+                    >
+                      <span
+                        *ngIf="
+                          userOwnerDto.get('bYear').hasError(validation.type) &&
+                          (userOwnerDto.get('bYear').dirty ||
+                            userOwnerDto.get('bYear').touched)
+                        "
+                        class="text-danger"
+                      >
+                        {{ validation.message }}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-1 d-inline-block p-0 text-center"></div>
+                </div>
+
+                <!-- <dp-date-picker
+            fullWidth
+            nbInput
+            name="birthDate"
+            id="birthDate"
+            dir="rtl"
+            mode="day"
+            [config]="dateConfig"
+            theme="dp-material"
+            formControlName="birthdate"
+            >
+          </dp-date-picker> -->
+                <!-- <div
+                    *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.birthdate
+                    "
+                  >
+                    <span
+                      *ngIf="
+                        userOwnerDto
+                          .get('birthdate')
+                          .hasError(validation.type) &&
+                        (userOwnerDto.get('birthdate').dirty ||
+                          userOwnerDto.get('birthdate').touched)
+                      "
+                      class="text-danger"
+                    >
+                      {{ validation.message }}
+                    </span>
+                  </div> -->
+              </div>
+
+              <div class="col-lg-3 col-md-3 col-sm-3 input-item">
+                <label class="mt-4" for="nagent"
+                  >نام نماینده (در صورت وجود) :</label
+                >
+                <input
+                  id="nagent"
+                  [status]="
+                    userOwnerDto.get('agentName').dirty
+                      ? userOwnerDto.get('agentName').invalid
+                        ? 'danger'
+                        : 'success'
+                      : ''
+                  "
+                  formControlName="agentName"
+                  fullWidth
+                  nbInput
+                />
+                <div
+                  *ngFor="let validation of INPUT_VALIDATION_MESSAGES.agentName"
+                >
+                  <span
+                    *ngIf="
+                      userOwnerDto.get('agentName').hasError(validation.type) &&
+                      (userOwnerDto.get('agentName').dirty ||
+                        userOwnerDto.get('agentName').touched)
+                    "
+                    class="text-danger"
+                  >
+                    {{ validation.message }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="input-group col-lg-12 col-md-12 col-sm-12 mt-4">
+            <label for="address">
+              <span class="text-danger font-weight-bold ml-1">*</span>
+
+              آدرس :
+            </label>
+            <textarea
+              formControlName="address"
+              fullWidth
+              id="address"
+              nbInput
+              rows="4"
+            ></textarea>
+
+            <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.address">
+              <span
+                *ngIf="
+                  userOwnerDto.get('address').hasError(validation.type) &&
+                  (userOwnerDto.get('address').dirty ||
+                    userOwnerDto.get('address').touched)
+                "
+                class="text-danger"
+              >
+                {{ validation.message }}
+              </span>
+            </div>
+          </div>
+          <!-- <div class=" col-lg-12 col-md-12 col-sm-12">
+            <div class=" col-lg-3 col-md-3 col-sm-3 pull-left mt-3 mb-3 pl-0">
+              <button
+                nbButton
+                status="warning"
+                style="width: 100%;"
+                type="button"
+              >
+                ویرایش شماره موبایل
+              </button>
+            </div>
+          </div> -->
+
+          <div class="btn-group col-lg-12 col-md-12 col-sm-12 mt-2">
+            <button
+              nbButton
+              [nbSpinner]="loading"
+              nbSpinnerStatus="info"
+              nbSpinnerSize="large"
+              [disabled]="
+                loading ||
+                InvalidYear ||
+                InvalidMonth ||
+                InvalidDay ||
+                userOwnerDto.invalid ||
+                (userOwnerDto.get('ownerKind').value === '1' &&
+                  userOwnerDto.get('economicCode').value === '')
+              "
+              status="primary"
+              class="owner-btn btn"
+              style="width: 100%"
+              type="submit"
+            >
+              ویرایش اطلاعات
+            </button>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+<!-- Latest -->

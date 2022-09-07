@@ -1,0 +1,741 @@
+<nb-card class="table-x-mine" style="box-shadow: 0 0 4px;">
+  <nb-card-header class="pt-4" style="border-bottom: 0"><span class="ml-1">کارتابل ورودی</span>
+    <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="arrow-ios-back-outline">
+    </nb-icon>
+
+    <span class="mr-1" style="color:#3366ff">تاریخچه امتیازدهی و منطقه بندی مهندس : {{engineerInfo}}</span>
+  </nb-card-header>
+  <nb-card-body>
+    <ng2-smart-table [settings]="settings" [source]="source | paginate: pagingConfig" (custom)="onCustom($event)"
+      style="direction:ltr"></ng2-smart-table>
+
+    <span *ngFor="let item of collection | paginate: pagingConfig"></span>
+
+    <nb-card>
+      <nb-card-body>
+        <div class="row">
+          <div class="input-group">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 form-inline pull-right">
+              <label for="pageSize" style="margin-left: 0;">
+                رکورد صفحه:
+              </label>
+              <nb-select status="info" #pageSizeSelect class="pageSizeSelect" [selected]="pagination.itemsPerPage"
+                (selectedChange)="changePageSize(pageSizeSelect.selected)" id="pageSize" placeholder="انتخاب ...">
+                <nb-option *ngFor="let p of pageSizes" [value]="p.id">
+                  {{ p.display }}
+                </nb-option>
+              </nb-select>
+            </div>
+
+            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 mt-2 ">
+              <div class="d-flex justify-content-center">
+                <pagination-controls class="pagination" (pageChange)="pageChanged($event)" previousLabel=""
+                  nextLabel="">
+                </pagination-controls>
+              </div>
+            </div>
+
+            <div style="padding-right: 7% !important;"
+              class="col-lg-4 col-md-4 col-sm-6 col-xs-6 form-inline pull-left">
+              <label for="pageNumber" style="margin-left: 0.45rem;">
+                صفحه:
+              </label>
+              <input [value]="pagination.currentPage" style="width: 30%;" #pageNumber size="tiny" id="pageNumber"
+                nbInput type="number" min="1" max="pagination.totalPages"
+                (keydown.enter)="pageChanged(pageNumber.value)" />
+              <span> از {{ pagination.totalItems }} نتیجه</span>
+            </div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+</nb-card>
+
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card status="info" accent="info" style="overflow-y:scroll; max-height: 500px;">
+    <nb-card-header>
+      <h6 class="pull-right text-light">
+        تاریخچه شماره «{{ data.idx }}» - زمان ثبت {{ data.rDateTime}}
+      </h6>
+      <!-- <h6 class="pull-right text-light" *ngIf="data.engineer?.engineerOrganizationCode">
+        تاریخچه شماره «{{ data.idx }}» - کد مهندس: {{ data.engineer?.engineerOrganizationCode}}
+      </h6> -->
+      <span title="بستن" style="position:left;float: left;cursor: pointer" class="pull-left text-light"
+        (click)="dialogRef.close()">
+        &times;
+      </span>
+    </nb-card-header>
+
+
+    <nb-card-body>
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+
+          <nb-card *ngIf="data.engineer">
+            <nb-card-body>
+              <p class="lead text-info">
+                {{ data.engineer.title + " " + engineerInfo}}:
+              </p>
+
+              <div class="bg-light p-3 mx-auto" style="border: 1px solid cornflowerblue;">
+                <div class="row mt-2" *ngIf= "data.engineer.hasChangedGrade === true">
+                  <div class="col-md-4">
+                    <label for="hasChangedGrade">
+                     تغییر پایه: <strong [ngClass]='{"text-success": data.engineer.hasChangedGrade === true,
+                     "text-info": data.engineer.hasChangedGrade === false }' 
+                     [innerHTML]='data.engineer?.hasChangedGrade === true ? "بلی": "خیر"'></strong>
+                    </label>
+                  </div>
+  
+                  <div class="col-md-4">
+                    <label for="changeGradeTime">
+                     زمان تغییر پایه: <strong [innerHTML]='data.engineer.changeGradeTime'></strong>
+                    </label>
+                  </div>
+  
+                  <div class="col-md-4">
+                    <label for="rankAfterChangeGrade">
+                      امتیاز تغییر پایه: <strong [innerHTML]='data.engineer?.rankAfterChangeGrade'></strong>
+                    </label>
+                  </div>
+                </div>
+  
+                <div class="row mt-2">
+                  <div class="col-md-4">
+                    <label  for="statusMemGas">
+                     عضویت:
+                     <strong class="text-success" *ngIf="data.engineer.statusMember === 'Active'">فعال</strong>
+                     <strong class="text-danger" *ngIf="data.engineer.statusMember === 'Inactive'">غیر فعال</strong>
+                    </label>
+
+                    <!-- <label for="statusMemGas">
+                      عضویت: <strong [ngClass]='{"text-success": data.engineer.statusMember === "Active",
+                      "text-danger": data.engineer.statusMember === "Inactive"}' 
+                      [innerHTML]='data.engineer?.statusMemGas'></strong>
+                     </label> -->
+
+                  </div>
+  
+                  <div class="col-md-4">
+                    <label for="licenseNumber">
+                     شماره پروانه: <strong [innerHTML]='data.engineer.licenseNumber'></strong>
+                    </label>
+                  </div>
+  
+                  <div class="col-md-4">
+                    <label for="licenseExpireDate">
+                      تاریخ انقضای پروانه: <strong [innerHTML]='data.engineer?.licenseExpireDate'></strong>
+                    </label>
+                  </div>
+                </div>
+  
+                <div class="row mt-2">
+                  <div class="col-md-4">
+                    <label for="engineerNationalCode">
+                     کد ملی: <strong [innerHTML]='data.engineerNationalCode'></strong>
+                    </label>
+                  </div>
+  
+                  <div class="col-md-4">
+                    <label for="birthDate">
+                      تاریخ تولد: <strong [innerHTML]='data.engineer?.birthDate'></strong>
+                    </label>
+                  </div>
+                 
+                  <div class="col-md-4">
+                    <label for="birthCertificateId">
+                     شماره شناسنامه: <strong [innerHTML]='data.engineer?.birthCertificateId'></strong>
+                    </label>
+                  </div>
+                </div>
+  
+                <div class="row mt-2">
+                  <div class="col-md-4">
+                    <label for="fatherName">
+                      نام پدر: <strong [innerHTML]='data.engineer?.fatherName'></strong>
+                    </label>
+                  </div>
+  
+                  <div class="col-md-4">
+                    <label for="accountNumber">
+                     شماره حساب: <strong [innerHTML]='data.engineer?.accountNumber'></strong>
+                    </label>
+                  </div>
+  
+                  <div class="col-md-4">
+                    <label for="address">
+                     شماره تماس: <strong [innerHTML]='data.engineerPhoneNumber'></strong>
+                    </label>
+                  </div>
+                </div>
+  
+                <div class="row mt-2">
+                  <div class="col-md-3">
+                    <label for="baseObserverGrade">
+                      پایه نظارت: <strong [innerHTML]='data.engineer?.baseObserverGrade'></strong>
+                    </label>
+                  </div>
+  
+                  <div class="col-md-3">
+                    <label for="baseDesignerGrade">
+                      پایه طراحی: <strong [innerHTML]='data.engineer?.baseDesignerGrade'></strong>
+                    </label>
+                  </div>
+  
+                  <div class="col-md-6">
+                    <label for="docMajorParentName">
+                     مدرک تحصیلی: <strong [innerHTML]='data.engineer?.docMajorParentName'></strong>
+                    </label>
+                  </div>
+                </div>
+  
+                <div class="row mt-2">
+                  <div class="col-md-3">
+                    <label for="membershipNumber">
+                      کد عضویت: <strong [innerHTML]='data.engineer?.membershipNumber'></strong>
+                    </label>
+                  </div> 
+  
+                  <div class="col-md-3">
+                    <label for="agentCode">
+                      کد نمایندگی: <strong [innerHTML]='data.engineer?.agentCode'></strong>
+                    </label>
+                  </div>
+                 
+                  <div class="col-md-6">
+                    <label for="agentName">
+                     نام نمایندگی: <strong [innerHTML]='data.engineer?.agentName'></strong>
+                    </label>
+                  </div>
+                </div>
+  
+                <div class="row mt-2">
+                  <div class="col-md-12">
+                    <label for="address">
+                      آدرس: <strong [innerHTML]='data.engineer?.address'></strong>
+                    </label>
+                  </div>
+                </div>
+  
+              </div>
+            </nb-card-body>
+          </nb-card>
+
+          <nb-card *ngIf="!data.rating">
+            <nb-card-body>
+              <p class="lead text-danger">
+                در این تاریخچه، امتیاز ثبت نشده است.
+              </p>
+            </nb-card-body>
+          </nb-card>
+
+          <nb-card *ngIf="data.rating">
+            <nb-card-body>
+              <table class="table table-responsive table-borderless" style="margin-top: -20px;">
+                <tr>
+                  <td>
+                    ماه های عدم فعالیت در سال های پیشین:
+                  </td>
+                  <td>
+                    <label><strong [innerHTML]='data.rating?.inactivityMonthCount'></strong></label>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    ماه های همکاری در سایر استان ها:
+                  </td>
+                  <td>
+                    <label><strong [innerHTML]='data.rating?.otherProvincesActivityMonthCount'></strong></label>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label for="hasShirazRank">
+                      <span class="text-success" *ngIf="data.rating?.hasShirazRank === 'فعال'">
+                        <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button"
+                          icon="checkmark-square-2-outline">
+                        </nb-icon>
+                      </span>
+
+                      <span class="text-danger" *ngIf="data.rating?.hasShirazRank !== 'فعال'">
+                        <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button"
+                          icon="slash-outline">
+                        </nb-icon>
+                      </span>
+
+                      <strong [ngClass]="{'text-success': data.rating?.hasShirazRank === 'فعال'}"
+                        [ngClass]="{'text-danger': data.rating?.hasShirazRank !== 'فعال'}">
+                        {{ data.rating?.hasShirazRank }}
+                      </strong>
+                    </label>
+                  </td>
+
+                  <td colspan="2">
+                    <label for="years">
+                      سال اعمال امتیاز: <strong [innerHTML]='data.rating?.basePersianYear'></strong>
+                    </label>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label for="baseObserverGrade">
+                      پایه نظارت:
+                    </label>
+                  </td>
+                  <td>
+                    <label for="" class="control-label mx-2">
+                      <strong>
+                        <span class="text-info" *ngIf="data.rating?.hasEquivalentRank === true">
+                          معادل
+                        </span>
+                        {{ data.engineer?.baseObserverGrade }}
+                      </strong>
+
+                    </label>
+                  </td>
+                  <td>
+                    <label for="" class="control-label mx-2">
+                      <strong>
+                        {{ roundNumber2Decimal(data.rating?.baseRank) }}
+                      </strong>
+                    </label>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label for="startWorkTime">
+                      تاریخ شروع به کار:
+                    </label>
+                  </td>
+                  <td>
+                    {{ data.engineer?.persianStartWorkTime}}
+                  </td>
+                  <td>
+                    <label for="" class="control-label mx-2">
+                      <strong [innerHtml]="data.rating?.monitoringHistoryRank">
+                      </strong>
+                    </label>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label for="hPRank">
+                      صلاحیت 2 تا 60 پوند:
+                    </label>
+                  </td>
+                  <td>
+                    <span class="text-success" *ngIf="data.rating?.canHP === true">
+                      <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button"
+                        icon="checkmark-square-outline">
+                      </nb-icon>
+                    </span>
+
+                    <span class="text-danger" *ngIf="!data.rating?.canHP">
+                      <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button"
+                        icon="slash-outline">
+                      </nb-icon>
+                    </span>
+                  </td>
+
+                  <td>
+                    <label for="" class="control-label mx-2">
+                      <strong>
+                        {{ roundNumber2Decimal(data.rating?.hpRank) }}
+                      </strong>
+                    </label>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label for="goodPerformanceFactor">
+                      حسن انجام کار:
+                    </label>
+                  </td>
+                  <td>
+                    {{ roundNumber2Decimal(data.rating?.goodPerformanceFactor) }}
+                  </td>
+                  <td>
+                    <label for="" class="control-label mx-2">
+                      <strong>
+                        {{ roundNumber2Decimal(data.rating?.goodPerformanceRank) }}
+                      </strong>
+                    </label>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label for="goodPerformanceDeductionFactor">
+                      کسورات حسن انجام کار:
+                    </label>
+                  </td>
+                  <td>
+                    {{ roundNumber2Decimal(data.rating?.goodPerformanceDeductionFactor) }}
+                  </td>
+                  <td>
+                    <label for="" class="control-label mx-2" style="direction: ltr;">
+                      <strong>
+                        {{ roundNumber2Decimal(data.rating?.goodPerformanceDeductionRank) }}
+                      </strong>
+                    </label>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label for="f1">
+                      فیلد آزاد 1:
+                    </label>
+                  </td>
+                  <td>
+                    {{ data.rating?.freeField1 }}
+                  </td>
+                  <td>
+                    <label for="" class="control-label mx-2">
+                      <strong>
+                        {{ data.rating?.freeField1 }}
+                      </strong>
+                    </label>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label for="f2">
+                      فیلد آزاد 2:
+                    </label>
+                  </td>
+                  <td>
+                    {{ data.rating?.freeField2 }}
+                  </td>
+                  <td>
+                    <label for="" class="control-label mx-2">
+                      <strong>
+                        {{ data.rating?.freeField2 }}
+                      </strong>
+                    </label>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label for="f3">
+                      فیلد آزاد 3:
+                    </label>
+                  </td>
+                  <td>
+                    {{ data.rating?.freeField3 }}
+                  </td>
+                  <td>
+                    <label for="" class="control-label mx-2">
+                      <strong>
+                        {{ data.rating?.freeField3 }}
+                      </strong>
+                    </label>
+                  </td>
+                </tr>
+
+                <!-- <tr>
+                <td colspan="2"></td>
+                <td colspan="1">
+                  <label for="totalRank" class="form-control">
+                    <span class="text-info"> مجموع:</span>&nbsp;
+                    <span>
+                      <strong [innerHtml]="
+                      roundNumber2Decimal(
+                        info.baseRank +
+                          calcHPRank +
+                            (form.controls.goodPerformanceFactor.value / 100) * info.baseRank  +
+                            (form.controls.goodPerformanceDeductionFactor.value / 100) *  +
+                            info.baseRank +
+                            info.monitoringHistoryRank +
+                            form.controls.freeField1.value +
+                            form.controls.freeField2.value +
+                            form.controls.freeField3.value
+                      )
+                    "></strong>
+                    </span>
+                  </label>
+                </td>
+              </tr> -->
+
+                <tr>
+                  <td>
+                    <label for="vacationTotalDay">
+                      تعداد روزهای مرخصی در سال:
+                    </label>
+                  </td>
+                  <td>
+                    <label for="" class="control-label mx-2 text-danger">
+                      <strong>
+                        {{  data.rating?.vacationTotalDay }}
+                      </strong>
+                    </label>
+                  </td>
+
+                  <td>
+                    <label for="finalRank" class="form-control text-success">
+                      <span class="text-info">امتیاز با مرخصی:</span>&nbsp;
+                      <span>
+                        <strong [innerHtml]="roundNumber2Decimal(data.rating?.totalRank)"></strong>
+                      </span>
+                    </label>
+                  </td>
+                </tr>
+
+                <!-- <tr>
+                <td>
+                  <label for="engineerOrganizationCode">
+                    <span class="text-danger font-weight-bold ml-1">*</span>
+                    کد دفتر گاز:
+                  </label>
+                </td>
+
+                <td>
+                  <input id="engineerOrganizationCode" formControlName="engineerOrganizationCode" nbInput />
+                </td>
+              </tr> -->
+
+                <tr>
+                  <td>
+                    <label for="canBazrasiMabhase22">
+                      مشارکت در بازرسی مبحث 22:
+                    </label>
+                  </td>
+                  <td>
+                    <span class="text-success" *ngIf="data.rating?.canBazrasiMabhase22 === true">
+                      <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button"
+                        icon="checkmark-square-outline">
+                      </nb-icon>
+                    </span>
+
+                    <span class="text-success" *ngIf="!data.rating?.canBazrasiMabhase22">
+                      <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button"
+                        icon="slash-outline">
+                      </nb-icon>
+                    </span>
+                  </td>
+
+                  <td>
+                    <label for="hourlyContract">
+                      قرارداد ساعتی:
+                    </label>
+                  </td>
+
+                  <td>
+                    <span class="text-success" *ngIf="data.rating?.hourlyContract === true">
+                      <nb-icon x [options]="{ animation: { type: 'pulse' } }" class="icon-button"
+                        icon="checkmark-square-outline">
+                      </nb-icon>
+                    </span>
+
+                    <span class="text-danger" *ngIf="!data.rating?.hourlyContract">
+                      <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button"
+                        icon="slash-outline">
+                      </nb-icon>
+                    </span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label for="canSupervise">
+                      نظارت عالی ( فشار ضعیف)
+                    </label>
+                  </td>
+
+                  <td>
+                    <span class="text-success" *ngIf="data.rating?.canSupervise === true">
+                      <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button"
+                        icon="checkmark-square-outline">
+                      </nb-icon>
+                    </span>
+
+                    <span class="text-danger" *ngIf="!data.rating?.canSupervise">
+                      <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button"
+                        icon="slash-outline">
+                      </nb-icon>
+                    </span>
+                  </td>
+
+                  <td>
+                    <label for="canSuperviseHP">
+                      نظارت عالی ( فشار قوی)
+                    </label>
+                  </td>
+
+                  <td>
+                    <span class="text-success" *ngIf="data.rating?.canSuperviseHP === true">
+                      <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button"
+                        icon="checkmark-square-outline">
+                      </nb-icon>
+                    </span>
+
+                    <span class="text-danger" *ngIf="!data.rating?.canSuperviseHP">
+                      <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button"
+                        icon="slash-outline">
+                      </nb-icon>
+                    </span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label for="canTechnicalInspection">
+                      بازرسی فنی
+                    </label>
+                  </td>
+
+                  <td>
+                    <span class="text-success" *ngIf="data.rating?.canTechnicalInspection === true">
+                      <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button"
+                        icon="checkmark-square-outline">
+                      </nb-icon>
+                    </span>
+
+                    <span class="text-danger" *ngIf="!data.rating?.canTechnicalInspection">
+                      <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button"
+                        icon="slash-outline">
+                      </nb-icon>
+                    </span>
+                  </td>
+
+                </tr>
+                <!-- style="border:solid #999 1px;padding: 2px; margin: 10px;" -->
+                <!-- border-collapse:collapse; -->
+                <tbody class="border border-info d-block mt-5 text-center">
+                  <tr>
+                    <td colspan="2">
+                      <p class="font-weight-bold text-primary">
+                        توجه نمایید فعالیت مهندس تنها در یکی از حوزه های زیر مجاز است.
+                      </p>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <label for="canGasRule" class="ml-2">
+                        ضوابط گازرسانی:
+                      </label>
+
+                      <span class="text-success" *ngIf="data.rating?.canGasRule === true">
+                        <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button"
+                          icon="checkmark-square-outline">
+                        </nb-icon>
+                      </span>
+
+                      <span class="text-danger" *ngIf="!data.rating?.canGasRule">
+                        <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button"
+                          icon="slash-outline">
+                        </nb-icon>
+                      </span>
+                    </td>
+
+                    <td>
+                      <label for="canAlamakDesignation" class="ml-2">
+                        تعیین علمک:
+                      </label>
+
+                      <span *ngIf="data.rating?.canAlamakDesignation === true">
+                        <nb-icon class="text-success" [options]="{ animation: { type: 'pulse' } }"
+                          class="icon-button" icon="checkmark-square-outline">
+                        </nb-icon>
+                      </span>
+
+                      <span class="text-danger" *ngIf="!data.rating?.canAlamakDesignation">
+                        <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button"
+                          icon="slash-outline">
+                        </nb-icon>
+                      </span>
+                    </td>
+
+                    <td>
+                      <label for="canDoubleControl" class="ml-2">
+                        کنترل مضاعف:
+                      </label>
+                      <span class="text-success" *ngIf="data.rating?.canDoubleControl === true">
+                        <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button"
+                          icon="checkmark-square-outline">
+                        </nb-icon>
+                      </span>
+
+                      <span class="text-danger" *ngIf="!data.rating?.canDoubleControl">
+                        <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button"
+                          icon="slash-outline">
+                        </nb-icon>
+                      </span>
+                    </td>
+
+                  </tr>
+
+                  <!-- <tr>
+                    <td>
+                      <label for="canDoubleControl">
+                        کنترل مضاعف:
+                      </label>
+                    </td>
+
+                    <td>
+                      <span class="text-success" *ngIf="data.rating?.canDoubleControl === true">
+                        <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button"
+                          icon="checkmark-square-outline">
+                        </nb-icon>
+                      </span>
+
+                      <span class="text-danger" *ngIf="!data.rating?.canDoubleControl">
+                        <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button"
+                          icon="slash-outline">
+                        </nb-icon>
+                      </span>
+                    </td>
+                  </tr> -->
+
+                </tbody>
+
+              </table>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 mt-2">
+                <label for="engineerAreas">
+                  وضعیت: <strong [innerHTML]='data.rating?.workIn'></strong>
+                </label>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 mt-2">
+                <label for="engineerAreas">
+                  مناطق مجاز مهندس: <strong [innerHTML]='data.areaTitles'></strong>
+                </label>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 mt-2">
+                <div class="input-group">
+                  <label for="inactivityMonthCount">
+                    شهر محل سکونت: <strong [innerHTML]='data.rating?.liveTownTitle'></strong>
+                  </label>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 mt-2">
+                <div class="input-group">
+                  <label for="description">
+                    توضیحات: <strong [innerHTML]='data.rating?.description'></strong>
+                  </label>
+                </div>
+              </div>
+
+            </nb-card-body>
+          </nb-card>
+
+        </div>
+      </div>
+
+    </nb-card-body>
+
+  </nb-card>
+</ng-template>

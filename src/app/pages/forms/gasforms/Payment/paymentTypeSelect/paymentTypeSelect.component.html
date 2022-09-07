@@ -1,0 +1,414 @@
+<style>
+  .table td {
+    padding: 0 4px !important;
+    vertical-align: middle !important;
+    text-align: center;
+  }
+
+  .table td label {
+    margin-top: 5px !important;
+  }
+</style>
+
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <nb-card style="box-shadow: 0 0 4px;">
+      <nb-card-header class="text-primary">
+        صورت حساب پرداخت
+      </nb-card-header>
+      <nb-card-body>
+        <!-- formGroup]="paymentTypeFormg" -->
+        <form (ngSubmit)="onSubmit()">
+          
+            <nb-card>
+              <nb-card-body>
+                <div class="container col-lg-12 col-md-12 col-sm-12">
+                  <table class="table table-hover table-bordered" style="vertical-align: center">
+                    <thead class="bg-info text-light">
+                      <tr style="text-align: center">
+                        <th colspan="3">بابت</th>
+                        <th colspan="3">شرح</th>
+                        <th colspan="2">مبلغ اصلی</th>
+                        <th colspan="2">درصد تخفیف</th>
+                        <th colspan="2">مبلغ با تخفیف</th>
+                        <th colspan="2">مالیات</th>
+                        <th colspan="2">عوارض</th>
+                        <th colspan="2">مبلغ نهایی</th>
+                      </tr>
+                    </thead>
+                    <tr *ngFor="let item of payReason">
+                      <td colspan="3">
+                        <label style="display: inline-block;" for="">
+                          {{ item.service }}
+                        </label>
+                      </td>
+                      <td colspan="3">
+                        <label style="display: inline-block;" for="">
+                          <strong>شماره درخواست: </strong>{{ item.fileNumber }}
+
+                          <span>،&nbsp;</span><strong>نام مالک: </strong>{{ item.ownerName }}
+
+                          <span *ngIf="item.mapNumber && item.floorNumber">
+                            ،&nbsp;
+                            <br />
+                            <strong>شماره پرونده: </strong><bdi>{{ item.mapNumber }}</bdi>
+                            <span>،&nbsp;</span>
+                            <strong>طبقه / واحد: </strong>{{ item.floorNumber }}
+                          </span>
+                        </label>
+                      </td>
+
+                      <td colspan="2">
+                        <label style="display: inline-block;" for="">
+                          {{ item.pureRealPrice }}
+                        </label>
+                      </td>
+
+                      <td colspan="2">
+                        <label style="display: inline-block;" for="">
+                          {{ item.discountPercent }}
+                        </label>
+                      </td>
+
+                      <td colspan="2">
+                        <label style="display: inline-block;" for="">
+                          {{ item.purePrice }}
+                        </label>
+                      </td>
+
+                      <td colspan="2">
+                        <label style="display: inline-block;" for="">
+                          {{ item.taxesPrice }}
+                        </label>
+                      </td>
+                      <td colspan="2">
+                        <label style="display: inline-block;" for="">
+                          {{ item.complicationsPrice }}
+                        </label>
+                      </td>
+
+                      <td colspan="2">
+                        <label style="display: inline-block;" for="">
+                          {{ item.price }}
+                        </label>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <div class="clearfix">
+                    <div class="float-left">
+                      <label style="display: inline-block;" for="">
+                        جمع مبلغ قابل پرداخت:
+                      </label>
+                      &nbsp;
+                      <label style="display: inline-block;" class="text-success" for="">
+                        <strong> {{ amount }}</strong></label>
+                    </div>
+                  </div>
+                </div>
+              </nb-card-body>
+            </nb-card>
+
+            <!-- <nb-card>
+             <nb-card-body>
+              <div class="col-lg-12 col-md-12 col-sm-12 input-group">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                  <label for="dk" style="display: inline-block;">
+                    <li>نوع پرداخت</li>
+                  </label>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                  <nb-radio-group class="form-inline" formControlName="paymentType" id="conf" name="conf">
+                    <nb-radio value="BalancePay">
+                      <label class="radio-label">
+                        کسر از موجودی
+                      </label>
+                    </nb-radio>
+                    <nb-radio value="onlinePay">
+                      <label class="radio-label">
+                         پرداخت اینترنتی
+                      </label>
+                    </nb-radio>
+                  </nb-radio-group>
+                  <div *ngIf="isSubmitted">
+                      <div *ngFor="
+                          let validation of validationMessages.paymentType">
+                        <span class="text-danger" *ngIf="
+                              paymentTypeFormg
+                              .get('paymentType')
+                              .hasError(validation.type)
+                          ">{{ validation.message }}</span>
+                      </div>
+                  </div>
+                </div>
+              </div>
+             </nb-card-body>
+           </nb-card>
+
+           <nb-card>
+            <nb-card-header>انتخاب درگاه</nb-card-header>
+            <nb-card-body>
+              <div *ngIf="paymentTypeFormg.controls.paymentType.value === 'onlinePay'"
+              class="input-group col-md-6">
+              <label for="bankId"  style="margin-left: 0.45rem;">درگاه بانک</label>
+              <nb-select
+                placeholder="انتخاب نوع درگاه"
+                fullWidth
+                id="bankId"
+                formControlName="bankId">
+
+                <nb-option
+                  *ngFor="let ba of bankNames"
+                  [value]="ba.id">
+                  {{ba.name}}
+                </nb-option>
+              </nb-select>
+              <div *ngIf="isSubmitted">
+                  <div *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.bankId">
+                    <span class="text-danger" *ngIf="
+                        paymentTypeFormg.controls.bankId.value === ''
+                      ">{{ validation.message }}</span>
+                  </div>
+                </div>
+            </div>
+
+            </nb-card-body>
+          </nb-card>
+
+           <nb-card>
+             <nb-card-body>
+               <div class="col-lg-12 col-md-12 col-sm-12">
+                 <button
+                   [disabled]="!paymentTypeFormg.valid"
+                   class="btn"
+                   nbButton
+                   status="success"
+                   style="width: 100%;"
+                   type="submit">ادامه
+                 </button>
+               </div>
+             </nb-card-body>
+           </nb-card> -->
+
+            <!-- status="default" -->
+
+            <nb-card *ngIf="hasProblem" status="danger" class="mx-auto w-50">
+              <nb-card-header class="text-center">
+                کاربر گرامی، متاسفانه در حال حاضر امکان پرداخت وجود ندارد. لطفا در صورت استمرار مشاهده این پیغام، با
+                دفتر گاز تماس حاصل فرمایید.
+              </nb-card-header>
+            </nb-card>
+
+            <nb-card *ngIf="disableOnlineTejaratPay && !hasProblem" status="danger" class="mx-auto w-50">
+              <nb-card-header class="text-center">
+                کاربر گرامی، در حال حاضر امکان پرداخت آنلاین وجود ندارد.
+              </nb-card-header>
+            </nb-card>
+
+            <nb-card *ngIf="!disableOnlineTejaratPay && !hasProblem && !isFree">
+              <nb-card-body
+                *appHasRole="['Admin', 'Owner', 'Executor','GasEmployee','GasEmployeeHP', 'GasRuleEmployeeHP']">
+                <div class="col-lg-12 col-md-12 col-sm-12" style="text-align: center">
+                  <button class="btn" nbButton type="submit" status="default" [nbSpinner]="loadingTejaratPay"
+                    nbSpinnerStatus="info" nbSpinnerSize="large"
+                    [disabled]="loadingPayBankReciept || loadingPayShematic || loadingTejaratPay || perviousReqRunnig">
+                    <div>
+                      <img style="border: 1px dashed #2e4287;" src="../../../../../../assets/images/BankTejarat.png"
+                        width="250px" max-width="250px" height="100px" max-height="100px"
+                        alt="پرداخت از درگاه بانک تجارت" class="img-responsive d-block" title="پرداخت از درگاه بانک تجارت" />
+                    </div>
+                  </button>
+                </div>
+              </nb-card-body>
+            </nb-card>
+
+            <div *appHasRole="['Admin']">
+              <nb-card *ngIf="!hasProblem">
+                <nb-card-body>
+                  <div class="col-lg-12 col-md-12 col-sm-12" style="text-align: center"
+                    *ngIf="!disableOnlineTejaratPay">
+                    <button size="large" class="btn" fullWidth nbButton type="button"
+                      (click)="onPayWithTejaratShematic('ShematicPay')" status="warning" [nbSpinner]="loadingPayShematic"
+                      nbSpinnerStatus="info" nbSpinnerSize="large"
+                      [disabled]="loadingPayBankReciept || loadingPayShematic || loadingTejaratPay || perviousReqRunnig">
+                      پرداخت شماتیک
+                    </button>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            </div>
+
+           <!-- <div *appHasNoRole="['Admin']">
+              <nb-card *ngIf="enablePayWithTejaratShematic">
+                <nb-card-body>
+                  <div class="col-lg-12 col-md-12 col-sm-12" style="text-align: center" *ngIf="!disableOnlineTejaratPay">
+                    <button size="large" class="btn" fullWidth nbButton type="button" (click)="onPayWithTejaratShematic('ShematicPay')"
+                      status="warning" [nbSpinner]="loadingPayShematic" nbSpinnerStatus="info" nbSpinnerSize="large"
+                      [disabled]="loadingPayBankReciept || loadingPayShematic || loadingTejaratPay">
+                      پرداخت شماتیک
+                    </button>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            </div> -->
+         
+        </form>
+
+        <nb-card *ngIf="!hasProblem">
+          <nb-card-body *appHasRole="['Admin']">
+            <div class="row" >
+              <div class="col-lg-4 col-md-4 col-sm-4">
+                <button class="btn" nbButton fullWidth status="info" type="button" (click)="onShowBankAccountInfo()"
+                  [disabled]="loadingPayBankReciept || loadingPayShematic || loadingTejaratPay">
+                  اطلاعات حساب بانکی
+                </button>
+              </div>
+
+              <div class="col-lg-4 col-md-4 col-sm-4">
+                <button title="پرداخت" fullWidth class="btn" nbButton status="success" (click)="onPayWithBankReciept()"
+                  [nbSpinner]="loadingPayBankReciept" nbSpinnerStatus="info" nbSpinnerSize="large" 
+                  type="button"
+                  [disabled]="loadingPayBankReciept || loadingPayShematic || loadingTejaratPay || perviousReqRunnig">
+                  پرداخت با فیش بانکی
+                </button>
+              </div>
+
+              <div class="col-lg-4 col-md-4 col-sm-4">
+                <button class="btn" nbButton fullWidth status="danger" type="button" [routerLink]="[returnPath]"
+                  [disabled]="loadingPayBankReciept || loadingPayShematic || loadingTejaratPay">
+                  انصراف
+                </button>
+              </div>
+            </div>
+          </nb-card-body>
+
+          <nb-card-body *appHasNoRole="['Admin']">
+            
+            <div class="row" *appHasRole="['Owner', 'Executor']">
+              <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="!isFree">
+                <button class="btn" nbButton fullWidth status="info" type="button" (click)="onShowBankAccountInfo()"
+                  [disabled]="loadingPayBankReciept || loadingPayShematic || loadingTejaratPay">
+                  اطلاعات حساب بانکی
+                </button>
+              </div>
+
+              <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="isFree === true">
+                <button  size="large" class="btn" fullWidth nbButton type="button" (click)="onPayWithTejaratShematic('FreePay')"
+                  status="warning" [nbSpinner]="loadingPayShematic" nbSpinnerStatus="info" nbSpinnerSize="large"
+                  [disabled]="loadingPayBankReciept || loadingPayShematic || loadingTejaratPay || perviousReqRunnig">
+                  پرداخت رایگان
+                </button>
+              </div>
+
+              <!-- [routerLink]="['/pages/forms/GasReqList']" -->
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <button [routerLink]="[returnPath]" class="btn" nbButton fullWidth status="danger" type="button"
+                  [disabled]="loadingPayBankReciept || loadingPayShematic || loadingTejaratPay ">
+                  انصراف
+                </button>
+              </div>
+            </div>
+
+            <div class="row" *appHasRole="['GasEmployee']">
+              <div class="col-lg-4 col-md-4 col-sm-4">
+                <button class="btn" nbButton fullWidth status="info" type="button" (click)="onShowBankAccountInfo()"
+                  [disabled]="loadingPayBankReciept || loadingPayShematic || loadingTejaratPay">
+                  اطلاعات حساب بانکی
+                </button>
+              </div>
+
+              <div class="col-lg-4 col-md-4 col-sm-4" >
+                <button title="پرداخت" fullWidth class="btn" nbButton status="success" (click)="onPayWithBankReciept()"
+                  [nbSpinner]="loadingPayBankReciept" nbSpinnerStatus="info" nbSpinnerSize="large"
+                  [disabled]="loadingPayBankReciept || loadingPayShematic || loadingTejaratPay|| perviousReqRunnig">
+                  پرداخت با فیش بانکی
+                </button>
+              </div>
+
+              <!-- [routerLink]="['/pages/forms/GasReqList']" -->
+              <div class="col-lg-4 col-md-4 col-sm-4">
+                <button [routerLink]="[returnPath]" class="btn" nbButton fullWidth status="danger" type="button"
+                  [disabled]="loadingPayBankReciept || loadingPayShematic || loadingTejaratPay">
+                  انصراف
+                </button>
+              </div>
+            </div>
+            
+          </nb-card-body>
+        </nb-card>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+<ng-template #accountInfoDialog>
+  <nb-card status="default">
+    <nb-card-header>اطلاعات حساب ها</nb-card-header>
+    <nb-card-body>
+      <!-- <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"> -->
+      <div class="row">
+        <nb-card *ngFor="let item of banksInfo" class="my-0 col-lg-6 col-md-6 col-sm-12 col-xs-12"
+          style="border: dashed 1px rgb(32, 116, 117) ;">
+          <nb-card-header class="font-weight-bold text-info">
+            بانک {{ item.bankName }}
+          </nb-card-header>
+          <nb-card-body class="p-0">
+            <div class="table-responsive">
+              <table class="table table-borderless">
+                <tr>
+                  <td><label class="control-label">شماره حساب:</label></td>
+                  <td class="text-right">
+                    <label class="control-label">{{ item.accountNo }}</label>
+                  </td>
+                </tr>
+                <tr>
+                  <td><label class="control-label">شماره کارت:</label></td>
+                  <td class="text-right">
+                    <label class="control-label">{{ item.cardNo }}</label>
+                  </td>
+                </tr>
+                <tr>
+                  <td><label class="control-label">شماره شبا:</label></td>
+                  <td class="text-right">
+                    <label class="control-label">{{ item.shabaNo }}</label>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+
+      <!-- <nb-card *ngFor="let item of banksInfo" class="my-0 col-sm-6 col-xs-12">
+
+              <nb-card-header>
+                بانک {{item.bankName}}
+              </nb-card-header>
+              <nb-card-body class="p-0">
+                  <div class="table-responsive">
+                    <table class="table table-borderless">
+                      <tr>
+                        <td><label class="control-label">شماره حساب:</label></td>
+                        <td class="text-right"><label class="control-label">{{item.accountNo}}</label></td>
+                      </tr>
+                      <tr>
+                          <td><label class="control-label">شماره کارت:</label></td>
+                          <td class="text-right"><label class="control-label">{{item.cardNo}}</label></td>
+                      </tr>
+                      <tr>
+                          <td><label class="control-label">شماره شبا:</label></td>
+                          <td class="text-right"><label class="control-label">{{item.shabaNo}}</label></td>
+                      </tr>
+                    </table>
+                  </div>
+              </nb-card-body>
+
+            </nb-card> -->
+
+      <!-- </div>
+        </div> -->
+    </nb-card-body>
+  </nb-card>
+</ng-template>

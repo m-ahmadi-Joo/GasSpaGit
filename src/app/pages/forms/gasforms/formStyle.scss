@@ -1,0 +1,246 @@
+@import "../../../@theme/styles/themes";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~@nebular/theme/styles/global/breakpoints";
+// @import "~leaflet/dist/leaflet.css";
+// @import 'node_modules/leaflet-geosearch/dist/geosearch.css';
+
+@include nb-install-component() {
+  .radio-label {
+    margin-left: 0.9rem;
+  }
+
+  .full-width {
+    flex: 1;
+    min-width: 220px;
+  }
+  .form-hanging {
+    vertical-align: hanging;
+  }
+  .radio-x-inline {
+    display: flex;
+    flex-direction: row;
+  }
+  /deep/ .leaflet-top,
+  /deep/ .leaflet-bottom {
+    z-index: 997;
+  }
+
+  /deep/ .leaflet-container {
+    width: 100%;
+    height: nb-theme(card-height-large);
+    max-height: 320px;
+    //height: nb-theme(card-height-large);
+  }
+  .form-inline > * {
+    @include nb-ltr(margin, 0 1.5rem 1.5rem 0);
+    @include nb-rtl(margin, 0 0 1.5rem 1.5rem);
+  }
+
+  nb-card.inline-form-card nb-card-body {
+    padding-bottom: 0;
+  }
+
+  nb-card {
+    // margin: 0 !important;
+    // padding: 5px !important;
+  }
+  nb-card-body {
+    overflow: visible;
+    // margin: 0 !important;
+    // padding: 5px !important;
+  }
+
+  nb-card-body.pad-one {
+    padding-left: 1px;
+    // margin: 0 !important;
+    // padding: 5px !important;
+  }
+
+  nb-card-header {
+    font-family: IRANSansWeb;
+  }
+
+  nb-select {
+    display: block;
+    // width: 15rem;
+    font-family: IRANSansWeb;
+    max-height: 30rem;
+    padding: 0 4px;
+  }
+
+  .select-group {
+    nb-select {
+      margin-right: 0.75rem;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .input-group {
+    margin-bottom: 1rem;
+  }
+
+  .input-item {
+    margin: 1rem;
+  }
+
+  .input-group-item {
+    margin: 1rem;
+  }
+
+  .filled {
+    color: nb-theme(color-fg);
+  }
+  .dropdown {
+    min-width: 7rem;
+  }
+
+  .dropdown-menu {
+    width: auto;
+  }
+
+  .form-group label {
+    padding: 0 0 0.75rem;
+  }
+  button {
+    font-family: IRANSansWeb;
+  }
+  @include media-breakpoint-down(xs) {
+    button:not(.btn-icon) {
+      padding: 0.75rem 1rem;
+      font-size: 0.75rem;
+    }
+  }
+  .demo-radio {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+}
+
+:host /deep/ nb-layout .options-list {
+  // border: 1px solid #efefef !important;
+  border: 1px solid #333 !important;
+  margin: 0 4px 0 4px !important;
+}
+
+/* Grid styles */
+
+:host /deep/ ng2-st-tbody-edit-delete {
+  display: flex !important;
+  height: 0 !important;
+}
+
+// :host /deep/ .ng2-smart-titles {
+//   // background:#13a093 !important;
+//   background-image: linear-gradient(to right, #598bff, #3366ff);
+
+// }
+
+:host /deep/ .ng2-smart-th {
+  // background:#13a093 !important;
+  background-image: linear-gradient(to right, #598bff, #3366ff);
+}
+
+
+:host /deep/ .ng2-smart-titles .ng2-smart-sort-link {
+  color: #fff !important;
+}
+
+:host
+  /deep/
+  ng2-st-tbody-custom
+  a.ng2-smart-action.ng2-smart-action-custom-custom {
+  display: block !important;
+  margin: 4px 3px;
+  text-align: center;
+  font-size: 0.9em !important;
+  background: #343a40;
+  color: #fff;
+  padding: 2px;
+  border-radius: 4px;
+  width: 89px;
+}
+:host
+  /deep/
+  ng2-st-tbody-custom
+  a.ng2-smart-action.ng2-smart-action-custom-custom:hover {
+  color: #fff !important;
+}
+
+:host /deep/ tr td,
+:host /deep/ tr th {
+  padding: 8px 2px !important;
+  text-align: center !important;
+}
+:host /deep/ tr td .label {
+  padding: 0 !important;
+  padding-left: 7px !important;
+}
+
+// .table-wrapper { height: 600px; overflow-y: auto; border-top: 1px solid #dee2e6; }
+// .table-wrapper { height: 600px; overflow-y: auto; border-top: 1px solid #dee2e6; }
+.table-wrapper { max-height: 700px; height: auto; overflow-y: auto; border-top: 1px solid #dee2e6; }
+:host ::ng-deep table tr:first-child th { position : sticky; top: -1px; z-index: 100; border: 1px solid #dee2e6; height: 58px; }
+
+:host
+  /deep/
+  ng2-st-tbody-custom
+  a.ng2-smart-action.ng2-smart-action-custom-custom:hover {
+  color: #5dcfe3;
+}
+.form-control {
+  direction: rtl;
+}
+
+:host /deep/ table tr:first-child th {
+  height:auto !important;
+}
+
+.pagination /deep/ .ngx-pagination .current {
+  /* background: lightseagreen; */
+  // background:#13a093 !important;
+  background-image: linear-gradient(to right, #598bff, #3366ff) !important;
+}
+
+.pagination /deep/ pagination-template {
+  width: 100% !important;
+}
+.pagination {
+  text-align: center !important;
+}
+
+dp-date-picker /deep/ .dp-input-container .dp-picker-input {
+  width: 220px !important;
+}
+
+nb-select.pageSizeSelect {
+  width: 8rem !important;
+}
+
+nb-select.pageSizeSelect /deep/ .select-button {
+  min-width: 8rem !important;
+}
+
+nb-select.workStatus /deep/ .select-button {
+  width: 100%;
+  min-width: 19rem !important;
+  max-width: 22rem !important;
+}
+
+nb-option {
+  padding: 2px 4px !important;
+}
+
+ > button {
+  white-space: normal !important;
+}
+
+ul.options-list {
+  border: 1px solid #333 !important;
+  margin: 0 4px 0 4px !important;
+}
+span.outer-circle.inner-circle.text{
+      /* right: 0 !important; */
+  cursor: pointer !important;
+ }
+//#13a093!important

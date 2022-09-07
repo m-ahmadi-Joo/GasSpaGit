@@ -1,0 +1,586 @@
+<form [formGroup]="cgmForm" (ngSubmit)="submit()">
+  <nb-card>
+    <nb-card-header>
+      درخواست بازرسی ایمنی
+    </nb-card-header>
+    <nb-card-body>
+      <nb-card>
+        <nb-card-body>
+          <nb-card class="m-0 p-0">
+            <nb-card-header>
+              اطلاعات متقاضی
+            </nb-card-header>
+            <nb-card-body>
+              <div class="row">
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                  <label for="cmt"> نام متقاضی </label>
+                  <input
+                    fullWidth
+                    nbInput
+                    id="kn"
+                    readonly
+                    formControlName="applicantFirstName"
+                  />
+                  <div
+                    *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.applicantFirstName
+                    "
+                  >
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        cgmForm
+                          .get('applicantFirstName')
+                          .hasError(validation.type) &&
+                        (cgmForm.get('applicantFirstName').dirty ||
+                          cgmForm.get('applicantFirstName').touched)
+                      "
+                      >{{ validation.message }}</span
+                    >
+                  </div>
+                </div>
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                  <label for="cmt"> نام خانوادگی متقاضی </label>
+                  <input
+                    fullWidth
+                    nbInput
+                    readonly
+                    id="kn"
+                    formControlName="applicantLastName"
+                  />
+                  <div
+                    *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.applicantLastName
+                    "
+                  >
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        cgmForm
+                          .get('applicantLastName')
+                          .hasError(validation.type) &&
+                        (cgmForm.get('applicantLastName').dirty ||
+                          cgmForm.get('applicantLastName').touched)
+                      "
+                      >{{ validation.message }}</span
+                    >
+                  </div>
+                </div>
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                  <label for="cmt">کد ملی متقاضی</label>
+                  <input
+                    fullWidth
+                    nbInput
+                    readonly
+                    id="kn"
+                    formControlName="applicantNationalCode"
+                  />
+                  <div
+                    *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.applicantNationalCode
+                    "
+                  >
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        cgmForm
+                          .get('applicantNationalCode')
+                          .hasError(validation.type) &&
+                        (cgmForm.get('applicantNationalCode').dirty ||
+                          cgmForm.get('applicantNationalCode').touched)
+                      "
+                      >{{ validation.message }}</span
+                    >
+                  </div>
+                </div>
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                  <label for="cmt">شماره موبایل متقاضی </label>
+                  <input
+                    fullWidth
+                    nbInput
+                    readonly
+                    id="kn"
+                    formControlName="applicantPhoneNumber"
+                  />
+                  <div
+                    *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.applicantPhoneNumber
+                    "
+                  >
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        cgmForm
+                          .get('applicantPhoneNumber')
+                          .hasError(validation.type) &&
+                        (cgmForm.get('applicantPhoneNumber').dirty ||
+                          cgmForm.get('applicantPhoneNumber').touched)
+                      "
+                      >{{ validation.message }}</span
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-5 mb-0 d-flex justify-content-end m-0 p-0">
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                  <nb-checkbox disabled formControlName="applicantIsOwner">
+                    مالک نیز می باشم
+                  </nb-checkbox>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+          <nb-card *ngIf="!showOwner">
+            <nb-card-header>
+              اطلاعات مالک
+            </nb-card-header>
+            <nb-card-body>
+              <div class="row">
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                  <label for="cmt"> نام مالک </label>
+                  <input
+                    fullWidth
+                    nbInput
+                    readonly
+                    id="kn"
+                    formControlName="ownerFirstName"
+                  />
+                  <div
+                    *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.ownerFirstName
+                    "
+                  >
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        cgmForm
+                          .get('ownerFirstName')
+                          .hasError(validation.type) &&
+                        (cgmForm.get('ownerFirstName').dirty ||
+                          cgmForm.get('ownerFirstName').touched)
+                      "
+                      >{{ validation.message }}</span
+                    >
+                  </div>
+                </div>
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                  <label for="cmt"> نام خانوادگی ملک </label>
+                  <input
+                    fullWidth
+                    nbInput
+                    readonly
+                    id="kn"
+                    formControlName="ownerLastName"
+                  />
+                  <div
+                    *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.ownerLastName
+                    "
+                  >
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        cgmForm
+                          .get('ownerLastName')
+                          .hasError(validation.type) &&
+                        (cgmForm.get('ownerLastName').dirty ||
+                          cgmForm.get('ownerLastName').touched)
+                      "
+                      >{{ validation.message }}</span
+                    >
+                  </div>
+                </div>
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                  <label for="cmt">کد ملی مالک</label>
+                  <input
+                    fullWidth
+                    readonly
+                    nbInput
+                    id="kn"
+                    formControlName="ownerNationalCode"
+                  />
+                  <div
+                    *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.ownerNationalCode
+                    "
+                  >
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        cgmForm
+                          .get('ownerNationalCode')
+                          .hasError(validation.type) &&
+                        (cgmForm.get('ownerNationalCode').dirty ||
+                          cgmForm.get('ownerNationalCode').touched)
+                      "
+                      >{{ validation.message }}</span
+                    >
+                  </div>
+                </div>
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                  <label for="cmt">شماره موبایل مالک </label>
+                  <input
+                    fullWidth
+                    readonly
+                    nbInput
+                    id="kn"
+                    formControlName="ownerPhoneNumber"
+                  />
+                  <div
+                    *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.ownerPhoneNumber
+                    "
+                  >
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        cgmForm
+                          .get('ownerPhoneNumber')
+                          .hasError(validation.type) &&
+                        (cgmForm.get('ownerPhoneNumber').dirty ||
+                          cgmForm.get('ownerPhoneNumber').touched)
+                      "
+                      >{{ validation.message }}</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+          <nb-card>
+            <nb-card-header>اطلاعات ملک</nb-card-header>
+            <nb-card-body>
+              <div class="row mt-4">
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                  <label for="cmt">تعداد واحد</label>
+                  <input
+                    fullWidth
+                    nbInput
+                    id="kn"
+                    readonly
+                    type="number"
+                    formControlName="unitCount"
+                  />
+                  <div
+                    *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.unitCount
+                    "
+                  >
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        cgmForm.get('unitCount').hasError(validation.type) &&
+                        (cgmForm.get('unitCount').dirty ||
+                          cgmForm.get('unitCount').touched)
+                      "
+                      >{{ validation.message }}</span
+                    >
+                  </div>
+                </div>
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                  <label for="cmt">کد پستی</label>
+                  <input
+                    fullWidth
+                    readonly
+                    nbInput
+                    id="kn"
+                    formControlName="postalCode"
+                  />
+                  <div
+                    *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.postalCode
+                    "
+                  >
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        cgmForm.get('postalCode').hasError(validation.type) &&
+                        (cgmForm.get('postalCode').dirty ||
+                          cgmForm.get('postalCode').touched)
+                      "
+                      >{{ validation.message }}</span
+                    >
+                  </div>
+                </div>
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                  <label for="cmt">زیربنای کل</label>
+                  <input
+                    fullWidth
+                    nbInput
+                    readonly
+                    id="kn"
+                    type="number"
+                    formControlName="foundation"
+                    min="0"
+                  />
+                  <div
+                    *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.foundation
+                    "
+                  >
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        cgmForm.get('foundation').hasError(validation.type) &&
+                        (cgmForm.get('foundation').dirty ||
+                          cgmForm.get('foundation').touched)
+                      "
+                      >{{ validation.message }}</span
+                    >
+                  </div>
+                </div>
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                  <label for="cmt">تعداد طبقات</label>
+                  <input
+                    fullWidth
+                    nbInput
+                    readonly
+                    id="kn"
+                    type="number"
+                    formControlName="floorCount"
+                    min="0"
+                  />
+                  <div
+                    *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.floorCount
+                    "
+                  >
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        cgmForm.get('floorCount').hasError(validation.type) &&
+                        (cgmForm.get('floorCount').dirty ||
+                          cgmForm.get('floorCount').touched)
+                      "
+                      >{{ validation.message }}</span
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-4">
+                <div class="col-sm-3 col-md-3">
+                  <label for="city">
+                    شهرستان
+                  </label>
+                  <input
+                    fullWidth
+                    nbInput
+                    readonly
+                    id="kn"
+                    type="text"
+                    formControlName="mkCity"
+                  />
+                </div>
+                <div class="col-sm-3 col-md-3">
+                  <label for="village"> شهر/روستا</label>
+                  <input
+                    fullWidth
+                    nbInput
+                    readonly
+                    id="kn"
+                    type="text"
+                    formControlName="mkVillage"
+                  />
+                </div>
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                  <label for="cmt">تاریخ ساخت ملک</label>
+                  <dp-date-picker
+                    name="cd"
+                    fullWidth
+                    id="cd"
+                    nbInput
+                    readonly
+                    dir="rtl"
+                    mode="day"
+                    theme="dp-material"
+                    formControlName="propertyDate"
+                    class="col-sm-9"
+                  ></dp-date-picker>
+                </div>
+              </div>
+              <nb-card>
+                <nb-card-body>
+                  <div class="row mb-4 mt-3">
+                    <label for="cmt">آدرس ملک</label>
+                    <textarea
+                      name="cmt"
+                      id="cmt"
+                      rows="7"
+                      nbInput
+                      readonly
+                      fullWidth
+                      formControlName="address"
+                    ></textarea>
+                    <div
+                      *ngFor="
+                        let validation of INPUT_VALIDATION_MESSAGES.address
+                      "
+                    >
+                      <span
+                        class="text-danger"
+                        *ngIf="
+                          cgmForm.get('address').hasError(validation.type) &&
+                          (cgmForm.get('address').dirty ||
+                            cgmForm.get('address').touched)
+                        "
+                        >{{ validation.message }}</span
+                      >
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label for="cmt">توضیحات</label>
+                    <textarea
+                      name="cmt"
+                      id="cmt"
+                      rows="7"
+                      nbInput
+                      readonly
+                      fullWidth
+                      formControlName="desc"
+                    ></textarea>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+
+              <div class="m-0 p-0">
+                <div class="col-sm-3 col-md-3">
+                  <label for="requestType">انتخاب نوع درخواست:</label>
+                  <!-- <nb-select
+                        #requestType
+                        placeholder="انتخاب"
+                        id="requestType"
+                        fullWidth
+                        formControlName="requestType"
+                      >
+                        <nb-option [value]="0">
+                          نظارت عالی
+                        </nb-option>
+                        <nb-option [value]="1">
+                         کنترل مضاعف
+                        </nb-option>
+                        <nb-option [value]="2">
+                         بازرسی ایمنی
+                         </nb-option>
+                      </nb-select> -->
+
+                  <input
+                    fullWidth
+                    nbInput
+                    readonly
+                    id="requestType"
+                    type="text"
+                    formControlName="requestType"
+                  />
+                </div>
+              </div>
+              <nb-card>
+                <nb-card-body>
+                  <div class="row mt-4">
+                    <div class="col-sm-3 col-md-3 col-lg-3">
+                      <label for="requestType"
+                        >انتخاب نوع درخواست مورد نیاز:</label
+                      >
+                      <nb-select
+                        #requestType
+                        placeholder="انتخاب"
+                        id="requestType"
+                        fullWidth
+                        formControlName="requestTypeNeed"
+                        (selectedChange)="onSelectType(requestType.selected)"
+                      >
+                        <nb-option [value]="0">
+                          نظارت عالی
+                        </nb-option>
+                        <nb-option [value]="1">
+                          کنترل مضاعف
+                        </nb-option>
+                        <nb-option [value]="2">
+                          بازرسی ایمنی
+                        </nb-option>
+                      </nb-select>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-3" >
+                      <label>نتیجه:</label>
+                      <nb-radio-group
+                        class="form-inline pr-3"
+                        formControlName="result"
+                        id="res"
+                        name="res"
+                      >
+                        <nb-radio class="m-0" value="true">
+                          تایید
+                        </nb-radio>
+                        <nb-radio>
+                          عدم تایید
+                        </nb-radio>
+                      </nb-radio-group>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-3" *ngIf="safety">
+                      <label>عمر ملک بیشتر از 25 سال است؟</label>
+                      <nb-radio-group
+                        class="form-inline pr-3"
+                        formControlName="olderThan25"
+                        id="olderThan25"
+                        name="olderThan25"
+                      >
+                        <nb-radio class="m-0" value="true">
+                          تایید
+                        </nb-radio>
+                        <nb-radio value="false">
+                          عدم تایید
+                        </nb-radio >
+                      </nb-radio-group>
+                      </div>
+                      <div class="col-sm-3 col-md-3 col-lg-3" *ngIf="safety">
+                        <label>امکان اصلاح وجود دارد؟</label>
+                        <nb-radio-group
+                          class="form-inline pr-3"
+                          formControlName="canModify"
+                          id="canModify"
+                          name="canModify"
+                        >
+                          <nb-radio class="m-0" value="true">
+                            تایید
+                          </nb-radio>
+                          <nb-radio value="false">
+                            عدم تایید
+                          </nb-radio>
+                        </nb-radio-group>
+                        </div>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+              <nb-card>
+                <nb-card-body>
+                  <label for="cmt">توضیحات</label>
+                  <textarea
+                    formControlName="description"
+                    fullWidth
+                    id="cmt"
+                    name="cmt"
+                    nbInput
+                    rows="8"
+                  ></textarea>
+                </nb-card-body>
+              </nb-card>
+            </nb-card-body>
+          </nb-card>
+
+          <div class="row">
+            <button
+              nbSpinnerStatus="info"
+              nbSpinnerSize="large"
+              type="submit"
+              nbButton
+              [disabled]="cgmForm.invalid"
+              status="success"
+              class="btn btn-success btn-block"
+            >
+              ثبت
+            </button>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </nb-card-body>
+  </nb-card>
+</form>

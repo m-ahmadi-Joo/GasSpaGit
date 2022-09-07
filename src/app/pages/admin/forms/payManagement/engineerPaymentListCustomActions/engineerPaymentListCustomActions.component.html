@@ -1,0 +1,113 @@
+<!-- *appHasRole="['Admin']" -->
+ <!-- <button
+  title="چاپ"
+  size="tiny"
+  class="mb-2 mr-1"
+  nbButton
+  status="secondary"
+
+  (click)="onPrint(rData.id)"
+>
+  <nb-icon
+    [options]="{ animation: { type: 'zoom' } }"
+    class="icon-button"
+    icon="printer-outline"
+  >
+  </nb-icon>
+</button> -->
+
+ <button
+  title="حذف"
+  size="tiny"
+  class="mb-2 mr-1"
+  nbButton
+  status="danger"
+  (click)="onDelete(rData)"
+  [disabled]= "rData.isPaidTo === true"
+>
+  <nb-icon
+    [options]="{ animation: { type: 'zoom' } }"
+    class="icon-button"
+    icon="close-outline"
+  >
+  </nb-icon>
+</button>
+
+<!--
+<button
+  title="مشاهده جزئیات"
+  size="tiny"
+  class="mb-2 mr-1"
+  nbButton
+  status="info"
+  *appHasRole="['GasEmployee','Executor','Engineer','Owner','Admin']"
+  (click)="onDetail(rData.id)"
+>
+  <nb-icon
+    [options]="{ animation: { type: 'zoom' } }"
+    class="alert-circle-outline"
+    icon="eye-outline"
+  >
+  </nb-icon>
+</button> -->
+
+ <nb-select placeholder="انتخاب عملیات">
+    <nb-option *ngIf="rData.isPaidTo === false">
+        <button
+          fullWidth
+          nbButton
+          status="success"
+          (click)="onConfirmPayment(rData.id)"
+        >
+            تأیید پرداخت به مهندسان
+        </button>
+    </nb-option>
+
+    <nb-option *ngIf="rData.projectKind === 'فشار ضعیف' || rData.projectKind === 'فشار ضعیف و فشار قوی'">
+      <button
+        fullWidth
+        nbButton
+        status="info"
+        (click)="onPrint(rData.id,'low')"
+      >
+          گزارش فشار ضعیف
+      </button>
+  </nb-option>
+
+  <nb-option *ngIf="rData.hasHp">
+    <button
+      fullWidth
+      nbButton
+      status="warning"
+      (click)="onPrint(rData.id,'high')"
+    >
+        گزارش فشار قوی
+    </button>
+</nb-option>
+
+<nb-option *ngIf="rData.projectKind === 'فشار ضعیف' || rData.projectKind === 'فشار ضعیف و فشار قوی'">
+  <button
+    fullWidth
+    nbButton
+    status="info"
+    (click)="onExcelExport(rData.id,'low')"
+  >
+      خروجی اکسل فشار ضعیف
+  </button>
+</nb-option>
+
+<nb-option *ngIf="rData.hasHp">
+  <button
+    fullWidth
+    nbButton
+    status="warning"
+    (click)="onExcelExport(rData.id,'high')"
+  >
+      خروجی اکسل فشار قوی
+  </button>
+</nb-option>
+
+</nb-select>
+
+
+

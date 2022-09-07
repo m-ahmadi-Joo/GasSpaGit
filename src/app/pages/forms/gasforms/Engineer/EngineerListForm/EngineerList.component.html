@@ -1,0 +1,246 @@
+<!-- <nb-card class="table-x-mine">
+        <nb-card-body>
+          <div style="margin-bottom: 15px;float: left;">
+
+              <a class="btn btn-primary btn-lg" style="color:#fff" [routerLink]="[ '/pages/forms/GasRequest' ]">
+                <nb-icon
+                  [options]="{ animation: { type: 'pulse' } }"
+                  class="icon-button"
+                  icon="home-outline">
+                </nb-icon>
+                ثبت درخواست گاز</a>
+          </div>
+          <div style="clear: both"></div>
+          <ng2-smart-table
+          [settings]="settings"
+           [source]="source"
+           (custom)="onCustom($event)"
+           (onDeleteConfirm)="onDeleteGasRequest($event)"
+           style="direction:ltr"></ng2-smart-table>
+        </nb-card-body>
+      </nb-card> -->
+
+<nb-card id="serachCard" style="box-shadow: 0 0 4px">
+  <nb-card-body>
+    <!-- <div class="container"> -->
+    <form class="form-inline" (ngSubmit)="onSerach()" [formGroup]="form">
+      <div class="row">
+        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+          <label for="engineerOrganizationCode">
+            کد دفتر گاز:
+          </label>
+          <input formControlName="engineerOrganizationCode" size="small" fullWidth id="engineerOrganizationCode" nbInput
+            type="text" />
+          <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.engineerOrganizationCode">
+            <span class="text-danger" *ngIf="
+                form.get('engineerOrganizationCode').hasError(validation.type) &&
+                (form.get('engineerOrganizationCode').dirty ||
+                  form.get('engineerOrganizationCode').touched)
+              ">{{ validation.message }}</span>
+          </div>
+        </div>
+        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+          <label for="engineerName">
+            نام مهندس:
+          </label>
+          <input formControlName="engineerName" size="small" fullWidth id="engineerName" nbInput type="text" />
+        </div>
+
+        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+          <label for="nationalCode">
+            کد ملی:
+          </label>
+
+          <input formControlName="nationalCode" size="small" fullWidth id="nationalCode" nbInput type="text" />
+
+          <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.nationalCode">
+            <span class="text-danger" *ngIf="
+              form.get('nationalCode').hasError(validation.type) &&
+              (form.get('nationalCode').dirty ||
+                form.get('nationalCode').touched)
+            ">{{ validation.message }}</span>
+          </div>
+        </div>
+
+        <div class="form-group col-lg-3 col-md-3 col-sm-4 col-xs-12 mt-3">
+          <label for="baseObserverGrade">
+            پایه نظارت:
+          </label>
+          <nb-select multiple formControlName="baseObserverGrade" id="baseObserverGrade" placeholder="انتخاب ...">
+            <nb-option [value]="null">هیچ کدام</nb-option>
+            <nb-option *ngFor="let obgrade of observerGrades" [value]="obgrade.id">
+              {{ obgrade.title }}
+            </nb-option>
+          </nb-select>
+        </div>
+
+        <div class="form-group col-lg-3 col-md-3 col-sm-4 col-xs-12 mt-3">
+          <label for="observerType">
+            نوع نظارت:
+          </label>
+          <nb-select multiple formControlName="observerType" id="observerType" placeholder="انتخاب ...">
+            <nb-option [value]="null">هیچ کدام</nb-option>
+            <nb-option value="1">
+              فشار ضعیف
+            </nb-option>
+
+            <nb-option value="2">
+              فشار قوی
+            </nb-option>
+          </nb-select>
+        </div>
+
+        <!-- <div class="form-group  col-lg-6 col-md-6 col-sm-6 col-xs-12 form-inline">
+                  <label for="fileNumber">
+                     نوع نظارت:
+                  </label>
+
+                  <nb-checkbox formControlName="isLp">
+                    فشار ضعیف
+                  </nb-checkbox>
+
+                  <nb-checkbox formControlName="isHp">
+                      فشار قوی
+                  </nb-checkbox>
+                </div> -->
+
+        <div class="form-group col-lg-3 col-md-3 col-sm-4 col-xs-12 float-left mt-3">
+          <button nbTooltip="جستجو" nbTooltipPlacement="top" nbButton hero size="tiny" status="info" type="submit"
+            class="ml-1" style="margin-top: 24px;height: 50%;">
+            <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="search-outline">
+            </nb-icon>
+          </button>
+
+          <button nbTooltip="بازسازی" nbTooltipPlacement="top" size="tiny" nbButton hero status="primary" type="button"
+            (click)="resetFilters()" style="margin-top: 24px;height: 50%;">
+            <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="refresh-outline">
+            </nb-icon>
+          </button>
+        </div>
+      </div>
+    </form>
+    <br />
+
+    <!-- </div> -->
+  </nb-card-body>
+</nb-card>
+
+<nb-card class="table-x-mine" style="box-shadow: 0 0 4px;">
+  <nb-card-header class="pt-4" style="border-bottom: 0"><span class="ml-1">کارتابل ورودی</span>
+    <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="arrow-ios-back-outline">
+    </nb-icon>
+
+    <span class="mr-1" style="color:#3366ff">مهندسان</span>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="table-wrapper">
+      <ng2-smart-table [settings]="settings" [source]="source | paginate: pagingConfig" (custom)="onCustom($event)"
+        style="direction:ltr"></ng2-smart-table>
+    </div>
+
+    <span *ngFor="let item of collection | paginate: pagingConfig"></span>
+
+    <nb-card>
+      <nb-card-body>
+        <div class="row">
+          <div class="input-group">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 form-inline pull-right">
+              <label for="pageSize" style="margin-left: 0;">
+                رکورد صفحه:
+              </label>
+              <nb-select status="info" #pageSizeSelect class="pageSizeSelect" [selected]="pagination.itemsPerPage"
+                (selectedChange)="changePageSize(pageSizeSelect.selected)" id="pageSize" placeholder="انتخاب ...">
+                <nb-option *ngFor="let p of pageSizes" [value]="p.id">
+                  {{ p.display }}
+                </nb-option>
+              </nb-select>
+            </div>
+
+            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 mt-2 ">
+              <div class="d-flex justify-content-center">
+                <pagination-controls class="pagination" (pageChange)="pageChanged($event)" previousLabel=""
+                  nextLabel="">
+                </pagination-controls>
+              </div>
+            </div>
+            <!-- <div
+              class="col-lg-2 col-md-2 col-sm-6 col-xs-6 form-inline pull-left"
+            >
+              <label for="pageSize" style="margin-left: 0.45rem;">
+                تعداد رکورد:{{ pagination.totalItems }}
+              </label>
+            </div> -->
+            <div style="padding-right: 7% !important;"
+              class="col-lg-4 col-md-4 col-sm-6 col-xs-6 form-inline pull-left">
+              <label for="pageNumber" style="margin-left: 0.45rem;">
+                صفحه:
+              </label>
+              <input [value]="pagination.currentPage" style="width: 30%;" #pageNumber size="tiny" id="pageNumber"
+                nbInput type="number" min="1" max="pagination.totalPages"
+                (keydown.enter)="pageChanged(pageNumber.value)" />
+              <span> از {{ pagination.totalItems }} نتیجه</span>
+            </div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card status="danger" accent="danger">
+    <nb-card-header>
+      <h4 style="color: linen">هشدار</h4>
+    </nb-card-header>
+    <nb-card-body>
+      <h6>آیا از حذف مورد اطمینان دارید؟</h6>
+    </nb-card-body>
+    <nb-card-footer>
+      <div class="row">
+        <div class="col-sm-6">
+          <button fullWidth nbButton hero status="danger" (click)="confirmDelete(data)">
+            بلی
+          </button>
+        </div>
+        <div class="col-sm-6">
+          <button fullWidth nbButton hero status="primary" (click)="dialogRef.close()">
+            انصراف
+          </button>
+        </div>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+<!-- <ng-template #dialogAreaRatingHistory let-data let-ref="dialogRefAreaRatingHistory">
+  <nb-card status="danger" accent="danger">
+    <nb-card-header><h4 style="color: linen">هشدار</h4></nb-card-header>
+    <nb-card-body><h6>آیا از حذف مورد اطمینان دارید؟</h6></nb-card-body>
+    <nb-card-footer>
+      <div class="row">
+        <div class="col-sm-6">
+          <button
+            fullWidth
+            nbButton
+            hero
+            status="danger"
+            (click)="confirmDelete(data)"
+          >
+            بلی
+          </button>
+        </div>
+        <div class="col-sm-6">
+          <button
+            fullWidth
+            nbButton
+            hero
+            status="primary"
+            (click)="dialogRef.close()"
+          >
+            انصراف
+          </button>
+        </div>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template> -->

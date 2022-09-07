@@ -1,0 +1,139 @@
+<style>
+  table td {
+    vertical-align: middle;
+    padding: 4px !important;
+  }
+</style>
+
+<nb-card>
+  <nb-card-header class="text-center">
+    <h4 class="mb-3">سوابق مشاوره</h4>
+  </nb-card-header>
+  <nb-card-body>
+   <div class="row">
+      <div class="col-sm-4 col-md-4 col-lg-4">
+        <label>نام و نام خانوادگی مالک</label>
+        <input
+          fullWidth
+          autocomplete="false"
+          id="fn"
+          nbInput
+          readonly="true"
+          [value]="info?.ownerName"
+          type="text"
+        />
+      </div>
+      <div class="col-sm-4 col-md-4 col-lg-4">
+        <label>کد ملی مالک</label>
+        <input
+          fullWidth
+          autocomplete="false"
+          id="fn"
+          nbInput
+          readonly="true"
+          [value]="info?.ownerNationalId"
+          type="text"
+        />
+      </div>
+    </div> 
+
+    <nb-card>
+      <nb-card-body>
+        <h5 class="mt-4" style="font-size: 14px;">
+          <label>عملیات بر روی مشاوره:</label>
+        </h5>
+
+        <div class="row">
+          <div class="col-sm-12 col-md-12 col-lg-12">
+            <table class="table table-striped" style="width: 100% !important;">
+              <thead>
+                <tr>
+                  <th>ردیف</th>
+                  <th>عنوان درخواست</th>
+                  <th class="text-center">زمان ثبت</th>
+                  <th class="text-center">اپراتور - نقش ها</th>
+                  <!-- <th class="text-center">هزینه مشاوره</th> -->
+                  <th class="text-center">توضیحات</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="
+                    let step of info?.history;
+                    let i = index
+                  "
+                >
+                  <td class="text-center" width="2%">{{ i + 1 }}</td>
+                  <td width="29%" *ngIf = "step?.requestStateTypeClassName !== 'PayRequestConsult'">
+                    {{ step?.requestStateTypeTitle }}
+                  </td>
+                  <td width="29%" *ngIf = "step?.requestStateTypeClassName === 'PayRequestConsult'">
+                    {{ step?.requestStateTypeTitle }} - مبلغ: {{ step?.consultPrice}} ریال
+                  </td>
+                  <td class="text-center" width="18%">
+                    {{ step?.requestStateTime }}
+                  </td>
+                  <td class="text-center" width="21%">
+                    {{ step?.registrarInfo }}
+                    <span *ngIf="step?.registrarInfo == null">
+                      ثبت سیستم
+                    </span>
+                  </td>
+                  <!-- <td *ngIf= "step?.consultPrice">
+                    {{ step?.consultPrice }}
+                  </td>
+                  <td *ngIf= "!step?.consultPrice">
+                   پرداخت نشده
+                  </td> -->
+                  <td *ngIf="step?.observerName !== null" width="30%">
+                    <span class="ml-2 font-weight-bold">
+                      نام ناظر:
+                    </span>
+                    <span class="ml-2 font-weight-bold">
+                      {{ step?.observerName }}
+                    </span>
+                    <p class="text-justify mb-0">
+                      <span class="ml-2 font-weight-bold">
+                        <!-- کد ملی ناظر: -->
+                        شماره تماس ناظر:
+                      </span>
+                      <span class="ml-2 font-weight-bold">
+                        <!-- {{ step?.observerNationalCode }} -->
+                        {{ step?.observerPhoneNumber}}
+                      </span>
+                    </p>
+                  </td>
+                  <!-- <td *ngIf="step?.result !== null">
+                    <div *ngIf="step?.result === false">
+                      <span class="font-weight-bold"> نتیجه: </span>
+                      <span class="ml-4 font-weight-bold text-danger">
+                        عدم تایید</span
+                      >
+                    </div>
+                    <div *ngIf="step?.result === true">
+                      <span class="font-weight-bold"> نتیجه: </span>
+                      <span class="ml-4 font-weight-bold text-success">
+                        تایید</span
+                      >
+                    </div>
+                  </td> -->
+                
+                  <!-- <td *ngIf="step?.inspectionReqTime !== null" width="30%">
+                    <span class="ml-2 font-weight-bold">
+                      تاریخ بازرسی درخواستی:
+                    </span>
+                    <span class="ml-2 font-weight-bold">
+                      {{ step?.inspectionReqTime }}
+                    </span>
+                  </td> -->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+</nb-card>
+
+

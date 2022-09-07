@@ -1,0 +1,12 @@
+// جمع آوری علمک میتواند شامل چند کنتور باشد
+
+collectionOfGasMeterForm: FormGroup;
+
+تاریخ جمع آوری :
+سریال کنتر :
+شماره انداز :
+this.collectionOfGasMeterForm = this.fb.group({
+	cgmCollectionDate-ctrl: ['', Validators.required],
+	cgmGasMeterSerial-ctrl: ['', Validators.required],
+	cgmGasMeterNumber-ctrl: ['', Validators.required],
+});

@@ -1,0 +1,198 @@
+<nb-card>
+  <nb-card-header>
+    تعیین مهندسین ضوابط
+  </nb-card-header>
+  <nb-card-body>
+    <nb-card>
+      <nb-card-body>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-sm-4 col-md-4 col-lg-4 mt-1">
+              <label class="col-sm-3" for="cd">تاریخ:</label>
+              <dp-date-picker
+                name="cd"
+                fullWidth
+                id="cd"
+                nbInput
+                dir="rtl"
+                [config]="datePickerConfig"
+                (onChange)="changeDateAndType(true)"
+                mode="day"
+                theme="dp-material"
+                formControlName="date"
+                class="col-sm-9"
+              ></dp-date-picker>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4">
+              <label for="cd">نوع کار:</label>
+              <nb-select
+                formControlName="jobType"
+                id="years"
+                fullWidth
+                (selectedChange)="changeDateAndType(false)"
+                placeholder="انتخاب کنید ..."
+              >
+                <nb-option>
+                  انتخاب کنید...
+                </nb-option>
+                <nb-option [value]="'FirstGroupAproveArchitectualAlbum'">
+                  بازبین اول
+                </nb-option>
+                <nb-option [value]="'SecondGroupAproveArchitectualAlbum'">
+                  بازبین دوم
+                </nb-option>
+                <nb-option [value]="'AlamakDesignationRequest'">
+                  تعیین محل علمک
+                </nb-option>
+              </nb-select>
+            </div>
+            <div class="col-sm-4 col-md-4 col-lg-4">
+              <label for="cd">انتخاب مهندس:</label>
+              <input
+                formControlName="engineerSelect"
+                [readOnly]="engineersList == null"
+                [typeahead]="engineersList"
+                typeaheadOptionField="itemForSearch"
+                (typeaheadOnSelect)="onSelect($event)"
+                [typeaheadOptionsLimit]="7"
+                [typeaheadMinLength]="0"
+                class="form-control"
+              />
+            </div>
+          </div>
+          <div class="float-left mt-4 ">
+            <button
+              class="btn pr-4 pl-4"
+              nbButton
+              status="success"
+              style="width: 100%;"
+              type="submit"
+              nbSpinnerStatus="info"
+              nbSpinnerSize="large"
+            >
+              ثبت
+            </button>
+          </div>
+          <div class="clearfix"></div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+
+    <nb-card *ngIf="source !== null">
+      <nb-card-body>
+        <div class="table-wrapper">
+          <ng2-smart-table
+            [settings]="settings"
+            [source]="source | paginate: pagingConfig"
+            (custom)="onCustom($event)"
+            style="direction:ltr"
+          ></ng2-smart-table>
+        </div>  
+        <span *ngFor="let item of collection | paginate: pagingConfig"></span>
+
+        <nb-card>
+          <nb-card-body>
+            <div class="row">
+              <div class="input-group">
+                <div
+                  class="col-lg-4 col-md-4 col-sm-6 col-xs-6 form-inline pull-right"
+                >
+                  <label for="pageSize" style="margin-left: 0;">
+                    رکورد صفحه:
+                  </label>
+                  <nb-select
+                    status="info"
+
+                    #pageSizeSelect
+                    class="pageSizeSelect"
+                    [selected]="pagination.itemsPerPage"
+                    (selectedChange)="changePageSize(pageSizeSelect.selected)"
+                    id="pageSize"
+                    placeholder="انتخاب ..."
+                  >
+                    <nb-option *ngFor="let p of pageSizes" [value]="p.id">
+                      {{ p.display }}
+                    </nb-option>
+                  </nb-select>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 mt-2 ">
+                  <div class="d-flex justify-content-center">
+                    <pagination-controls
+                      class="pagination"
+                      (pageChange)="pageChanged($event)"
+                      previousLabel=""
+                      nextLabel=""
+                    >
+                    </pagination-controls>
+                  </div>
+                </div>
+                <!-- <div
+                  class="col-lg-2 col-md-2 col-sm-6 col-xs-6 form-inline pull-left"
+                >
+                  <label for="pageSize" style="margin-left: 0.45rem;">
+                    تعداد رکورد:{{ pagination.totalItems }}
+                  </label>
+                </div> -->
+                <div
+                style="padding-right: 7% !important;"
+                  class="col-lg-4 col-md-4 col-sm-6 col-xs-6 form-inline pull-left"
+                >
+                  <label for="pageNumber" style="margin-left: 0.45rem;">
+                    صفحه:
+                  </label>
+                  <input
+                    [value]="pagination.currentPage"
+                    style="width: 30%;"
+                    #pageNumber
+                    size="tiny"
+                    id="pageNumber"
+                    nbInput
+                    type="number"
+                    min="1"
+                    max="pagination.totalPages"
+                    (keydown.enter)="pageChanged(pageNumber.value)"
+                  />
+                  <span> از {{ pagination.totalItems }} نتیجه</span>
+                </div>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card status="danger" accent="danger">
+    <nb-card-header><h4 style="color: linen">هشدار</h4></nb-card-header>
+    <nb-card-body><h6>آیا از حذف مورد اطمینان دارید؟</h6></nb-card-body>
+    <nb-card-footer>
+      <div class="row">
+        <div class="col-sm-6">
+          <button
+            fullWidth
+            nbButton
+            hero
+            status="danger"
+            (click)="confirmDelete(data)"
+          >
+            بلی
+          </button>
+        </div>
+        <div class="col-sm-6">
+          <button
+            fullWidth
+            nbButton
+            hero
+            status="primary"
+            (click)="ref.close()"
+          >
+            انصراف
+          </button>
+        </div>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

@@ -1,0 +1,22 @@
+// ورودی ها آپلودی هستند
+
+documentryForm: FormGroup;
+
+کروکی ملک :
+کارت ملی :
+
+{ // اگر ضوابط گاز رسانی خواسته شود
+آلبوم معماری :
+	{// اگر بحث تجدید بنا یا نوسازی باشد
+قبض گاز :
+موافقت نامه اصلی :
+	}
+}
+
+this.documentryForm = this.fb.group({
+	dtyKoroi-ctrl: ['', Validators.required],
+	dtySocialCard-ctrl: ['', Validators.required],
+	dtyArchitectureAlbum-ctrl: ['', Validators.required],
+	dtyGasRecipe-ctrl: ['', Validators.required],
+	dtyOriginalAgreement-ctrl: ['', Validators.required],
+});

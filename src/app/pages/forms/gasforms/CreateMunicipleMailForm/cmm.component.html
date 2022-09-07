@@ -1,0 +1,180 @@
+<app-gasRequestDetailBox [gasRequestId]="id"></app-gasRequestDetailBox>
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <nb-card>
+      <div *ngFor="let val of met">
+        <nb-card-header>
+          تعریف نامه شهرداری
+        </nb-card-header>
+        <nb-card-body>
+          <form [formGroup]="cmmForm" (ngSubmit)="onSubmit()">
+            &nbsp;
+            <nb-card *ngIf="val?.letterAlamakRemoveRequestDto">
+              <nb-card-header>
+                اطلاعات جمع آوری علمک
+              </nb-card-header>
+              <nb-card-body>
+                <div *ngFor="let remove of val?.letterAlamakRemoveRequestDto">
+                  <div class="input-group full-name-inputs">
+                    <div class="col-lg-6 col-md-6 col-sm-6 input-item">
+                      <label for="kont">شماره کنتور:</label>
+
+                      <!-- <input
+                    type="text"
+                    id="kont"
+                    name="kont"
+                    nbInput
+                    fullWidth
+                         formControlName="cmfmGasMeterSerial"
+                         value="sfgsdfgsg"
+                        > -->
+                      &nbsp;
+                      <label>{{ remove.meterSerial }}</label>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm6 input-item">
+                      <label for="meter">شماره انداز:</label>
+                      &nbsp;
+                      <label>{{ remove.counter }}</label>
+                    </div>
+                  </div>
+                  <hr />
+                </div>
+              </nb-card-body>
+            </nb-card>
+
+            <nb-card *ngIf="!val?.letterAlamakRemoveRequestDto">
+                <nb-card-header>اطلاعات جمع آوری علمک</nb-card-header>
+                <nb-card-body>
+                  <div class="input-group">
+                    <label for="nloc">نیاز به جمع آوری علمک ندارد</label>
+                  </div>
+                </nb-card-body>
+            </nb-card>
+
+            <nb-card *ngIf="val?.alamakLocation">
+              <nb-card-header> تعیین محل علمک</nb-card-header>
+              <nb-card-body>
+                <div class="input-group">
+                  <label for="nloc">محل علمک جدید:</label>
+                  &nbsp; &nbsp;
+                  <label>{{ val?.alamakLocation }}</label>
+                </div>
+              </nb-card-body>
+            </nb-card>
+            <nb-card *ngIf="!val?.alamakLocation">
+              <nb-card-header> تعیین محل علمک</nb-card-header>
+              <nb-card-body>
+                <div class="input-group">
+                  <label for="nloc">نیاز به استعلام محل علمک ندارد</label>
+
+                </div>
+              </nb-card-body>
+            </nb-card>
+            <nb-card>
+              <nb-card-header>تایید آلبوم معماری</nb-card-header>
+              <nb-card-body>
+                <div class="input-group">
+                  <label for="fcm">توضیحات نهایی نتایج آلبوم معماری</label>
+
+                  <textarea
+                    name="fcm"
+                    id="fcm"
+                    rows="5"
+                    readonly="true"
+                    nbInput
+                    fullWidth
+                    >{{ val?.checkingArchitectualAlbumDesc }}</textarea
+                  >
+                </div>
+
+                <div class="input-group">
+                  <label for="rd">نوع فشار گاز مورد نیاز:</label>
+                  <!-- <nb-radio-group name="rd" id="rd" class="form-inline" formControlName="cmfmGasPressureType">
+                  <nb-radio value="1/4psi">
+                    <label class="radio-label">
+                    1/4 PSI
+                    </label>
+                  </nb-radio>
+                  <nb-radio value="2-60pound">
+                    <label class="radio-label">
+                    2-60 POUND
+                    </label>
+                  </nb-radio>
+                </nb-radio-group> -->
+                  &nbsp; &nbsp;
+                  <label>{{ val?.projectKind }}</label>
+                </div>
+              </nb-card-body>
+            </nb-card>
+            <!-- <nb-card>
+            <nb-card-body>
+              <label for="cmt">توضیحات و نظرات</label>
+              <textarea
+                name="cmt"
+                id="cmt"
+                rows="10"
+                        nbInput
+                fullWidth
+                        formControlName="cmfmComments"></textarea>
+            </nb-card-body>
+          </nb-card> -->
+
+            <div class="btn-group col-xs-12 col-lg-6 col-md-6 col-sm-6">
+              <button
+                nbButton
+                status="success"
+                type="submit"
+                class="btn"
+                style="width: 100%;"
+                [disabled]="loading"
+                [nbSpinner]="loading"
+                nbSpinnerStatus="info"
+                nbSpinnerSize="large"
+                [disabled]="loading"
+              >
+                ثبت
+              </button>
+            </div>
+
+            <div class="btn-group col-xs-12 col-lg-6 col-md-6 col-sm-6">
+              <button
+               [routerLink]="['/pages/forms/GasReqList']"
+                nbButton
+                status="info"
+                type="button"
+                class="btn"
+                style="width: 100%;"
+                [disabled]= "loading"
+              >
+                بازگشت به لیست درخواست ها
+              </button>
+            </div>
+
+            <!-- <div class="btn-group col-lg-3 col-md-3 col-sm-3">
+              <button
+                nbButton
+                status="danger"
+                type="button"
+                class="btn"
+                style="width: 100%;"
+              >
+                چاپ نامه شهرداری
+              </button>
+            </div>
+            <div class="btn-group col-lg-3 col-md-3 col-sm-3">
+              <button
+                nbButton
+                status="warning"
+                type="button"
+                class="btn"
+                style="width: 100%;"
+              >
+                اطلاع رسانی به مالک
+              </button>
+            </div> -->
+          </form>
+        </nb-card-body>
+      </div>
+    </nb-card>
+  </div>
+</div>

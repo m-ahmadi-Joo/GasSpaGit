@@ -1,0 +1,52 @@
+<nb-card>
+  <nb-card-body>
+    <nb-card>
+      <nb-card-body>
+        <label>نقشه لوله کشی:</label>
+        <div class="mt-3">
+          <!-- <div class="col-md-6"> -->
+          <a class="ml-3" (click)="showFillScreen(path)" *ngFor="let path of imagePath">
+            <img *ngIf="path.toString().indexOf('.pdf') === -1"
+              style="border: 1px solid black;  padding: 3px;  box-shadow: 0 0 10px;  position: relative;  top: 0; cursor: pointer; "
+              [src]="path" width="130" height="130" class="mb-2 d-block" />
+            <nb-icon *ngIf="path.toString().indexOf('.pdf') !== -1" style="
+              font-size: 60px;
+
+              position: relative;
+              top: -4px;
+              left: 20px;
+            " [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="file-outline">
+            </nb-icon>
+
+            <button class="btn btn-link" (click)="download(path)"> دانلود</button>
+          </a>
+        </div>
+        <!-- </div> -->
+        <!-- <a [href]="path" [download]="imageName">
+        دانلود
+    </a> -->
+        <div class="d-flex justify-content-center">
+          <a target="_blank" (click)="download(singleImagePath)"
+            *ngIf="singleImagePath != null && singleImagePath.toString().indexOf('.pdf') === -1">
+            <img *ngIf="singleImagePath != null"
+              style="border: 1px solid black;  padding: 3px;  box-shadow: 0 0 10px;  position: relative;  top: 0; cursor: pointer; "
+              [src]="singleImagePath" width="600" height="600" />
+
+          </a>
+
+          <a target="_blank" (click)="download(singleImagePath)"
+            *ngIf="singleImagePath != null && singleImagePath.toString().indexOf('.pdf') !== -1">
+            <nb-icon *ngIf="singleImagePath.toString().indexOf('.pdf') !== -1" style="
+              font-size: 60px;
+
+              position: relative;
+              top: -4px;
+              left: 20px;
+            " [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="file-outline">
+            </nb-icon>
+          </a>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+</nb-card>

@@ -1,0 +1,211 @@
+<!-- <div class="mb-5" style="text-align:center">
+  <a *appHasRole="['Admin']" (click)="hangfireDashboard()" id="hangfireDashboard"
+    href="{{hangfireUrl}}/admin/hangfire/gasjobs?access_token={{usertoken}}" target="_blank">داشبورد کارهای زمان بندی
+    شده</a>
+</div> -->
+
+<form [formGroup]="form" (submit)="onSubmit()">
+  <nb-card>
+    <nb-card-body>
+      <div class="row">
+        <div class="col-sm-4 col-md-4 col-lg-4">
+          <label for="jobName" style="margin-left: 0.45rem;">
+            <span class="text-danger font-weight-bold ml-1">*</span>
+            نام برنامه
+          </label>
+          <nb-select (selectedChange)="onChangeJobName()" id="jobName" placeholder="انتخاب نام برنامه..." fullWidth
+            #jobNameSelected formControlName="jobName">
+            <nb-option *ngFor="let jobName of jobNames | enumToArray" [value]="jobName.key">
+              {{ jobName.value }}
+            </nb-option>
+          </nb-select>
+
+          <div *ngFor="
+            let validation of INPUT_VALIDATION_MESSAGES.jobName">
+            <span class="text-danger" *ngIf="
+                  isSubmitted && 
+                  form
+                  .get('jobName')
+                  .hasError(validation.type)">
+              {{ validation.message }}</span>
+          </div>
+        </div>
+
+        <div class="col-sm-4 col-md-4 col-lg-4"
+          *ngIf="form.get('jobName').value === 'AnalyzeListBreakDownJob'|| form.get('jobName').value === 'AnalyzeListReferJob'">
+          <label for="area" style="margin-left: 0.45rem;">
+            <span class="text-danger font-weight-bold ml-1">*</span>
+            ناحیه
+          </label>
+          <nb-select #areasSelect (selectedChange)="getCities(areasSelect.selected)" placeholder="انتخاب ناحیه..." fullWidth id="area"
+            formControlName="areaId">
+            <nb-option *ngFor="let area of info.areas" [value]="area.id">
+              {{ area.title }}
+            </nb-option>
+          </nb-select>
+
+          <div *ngFor="
+            let validation of INPUT_VALIDATION_MESSAGES.areaId">
+            <span class="text-danger" *ngIf="
+                  isSubmitted && 
+                    form
+                    .get('areaId')
+                    .hasError(validation.type)"> {{ validation.message }}</span>
+          </div>
+        </div>
+
+        <div class="col-sm-4 col-md-4 col-lg-4" *ngIf="form.get('jobName').value === 'AnalyzeListReferJob' && form.get('areaId').value">
+          <label for="city" style="margin-left: 0.45rem;">
+            <span class="text-danger font-weight-bold ml-1">*</span>
+            دفتر شهرستان
+          </label>
+          <nb-select #citySelect placeholder="انتخاب دفتر شهرستان..." fullWidth id="city" formControlName="baseCityId">
+            <nb-option *ngFor="let city of cities" [value]="city.id">
+              {{ city.title }}
+            </nb-option>
+          </nb-select>
+
+          <div *ngFor="
+          let validation of INPUT_VALIDATION_MESSAGES.baseCityId">
+            <span class="text-danger" *ngIf="
+                isSubmitted && 
+                  form
+                  .get('baseCityId')
+                  .hasError(validation.type)"> {{ validation.message }}</span>
+          </div>
+        </div>
+
+      </div>
+
+      <nb-card id="card">
+        <nb-card-header>
+          زمان بندی
+        </nb-card-header>
+        <nb-card-body>
+          <div class="row">
+
+            <div class="col-sm-3 col-md-3 col-lg-3 mt-3">
+              <label for="type" style="margin-left: 0.45rem;">
+                <span class="text-danger font-weight-bold ml-1">*</span>
+                دوره اجرا
+              </label>
+              <nb-select [(selected)]="info.jobName" #typeSelect placeholder="انتخاب دوره اجرا..." fullWidth id="type"
+                formControlName="type" (selectedChange)="onChangeType()">
+                <nb-option *ngFor="let type of jobTypes | enumToArray" [value]="type.key">
+                  {{ type.value }}
+                </nb-option>
+              </nb-select>
+
+              <div *ngFor="
+                let validation of INPUT_VALIDATION_MESSAGES.type">
+                <span class="text-danger" *ngIf="
+                      isSubmitted && 
+                        form
+                        .get('type')
+                        .hasError(validation.type) &&
+                        (form.get('type').dirty ||
+                         form.get('type').touched)">
+                  {{ validation.message }}</span>
+              </div>
+
+            </div>
+
+            <div class="col-sm-3 col-md-3 col-lg-3 mt-3" *ngIf="form.get('type').value === 'Weekly'">
+              <label for="dayOfWeek" style="margin-left: 0.45rem;">
+                <span class="text-danger font-weight-bold ml-1">*</span>
+                روز
+              </label>
+              <nb-select placeholder="انتخاب روز ..." fullWidth id="dayOfWeek" formControlName="dayOfWeek">
+                <nb-option *ngFor="let dayOfWeek of dayOfWeeks | enumToArray" [value]="dayOfWeek.key">
+                  {{ dayOfWeek.value }}
+                </nb-option>
+              </nb-select>
+
+              <div *ngFor="
+                let validation of INPUT_VALIDATION_MESSAGES.dayOfWeek">
+                <span class="text-danger" *ngIf="
+                      isSubmitted &&
+                      form
+                        .get('dayOfWeek')
+                        .hasError(validation.type) &&
+                        (form.get('dayOfWeek').dirty ||
+                        form.get('dayOfWeek').touched)
+                    ">
+                  {{ validation.message }}</span>
+              </div>
+
+            </div>
+
+            <div class="col-md-4 col-sm-4 col-lg-4 mt-3"
+              *ngIf="form.get('type').value === 'Yearly' || form.get('type').value === 'Monthly'">
+              <label for="date" style="margin-left: 0.45rem;">
+                <span class="text-danger font-weight-bold ml-1">*</span>
+                تاریخ
+              </label>
+              <dp-date-picker name="date" fullWidth id="date" nbInput dir="rtl" mode="day" theme="dp-material"
+                formControlName="date" class="col-sm-9" [config]="dateConfig"></dp-date-picker>
+
+              <div *ngFor="
+                  let validation of INPUT_VALIDATION_MESSAGES.date">
+                <span class="text-danger" *ngIf="
+                        isSubmitted &&
+                        form
+                        .get('date')
+                        .hasError(validation.type)">
+                  {{ validation.message }}</span>
+              </div>
+            </div>
+
+            <div class="col-md-2 col-sm-2 col-lg-2 mt-3" *ngIf="
+                form.get('type').value === 'Yearly' || form.get('type').value === 'Monthly' ||
+                form.get('type').value === 'Weekly' || form.get('type').value === 'Daily' || 
+                form.get('type').value === 'Hourly'">
+
+              <!-- <label for="time" class="mx-2">
+                <span class="text-danger font-weight-bold m+l-1">*</span>
+                ساعت
+              </label> -->
+              <ngb-timepicker (change)="changeTime()" id="time" size="small" style="direction:ltr;float: left;"
+                formControlName="time">
+              </ngb-timepicker>
+
+              <div *ngFor="
+                let validation of INPUT_VALIDATION_MESSAGES.time">
+                <span class="text-danger" *ngIf="
+                      isSubmitted && 
+                        form
+                        .get('time')
+                        .hasError(validation.type) ">
+                  {{ validation.message }}</span>
+              </div>
+
+            </div>
+
+          </div>
+          <nb-card class="mt-5">
+            <nb-card-body>
+              <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                  <button type="submit" nbButton fullWidth [nbSpinner]="loading" nbSpinnerStatus="info"
+                    nbSpinnerSize="large" [disabled]="
+                      loading" hero [status]='editMode ? "warning" : "success"'>
+                    {{ editMode ? 'ویرایش' : 'ثبت' }}
+                  </button>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                  <button [disabled]='loading' nbButton hero status="primary" fullWidth type="button"
+                    [routerLink]="['/pages/admin/ScheduleConfigList']">
+                    بازگشت به لیست
+                  </button>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </nb-card-body>
+      </nb-card>
+
+
+    </nb-card-body>
+  </nb-card>
+</form>

@@ -1,0 +1,144 @@
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <nb-card style="box-shadow: 0 0 4px;">
+      <nb-card-header>
+        رسید پرداخت
+      </nb-card-header>
+      <nb-card-body>
+        <div>
+          <nb-card>
+            <nb-card-header>
+              <p class="text-success">
+                پرداخت با موفقیت انجام شد.
+              </p>
+            </nb-card-header>
+            <nb-card-body>
+              <div class="col-lg-12 col-md-12 col-sm-12 input-group">
+                <div class="col-lg-2 col-md-2 col-sm-2 p-0">
+                  <label for="dk" style="display: inline-block;">
+                    مبلغ تراکنش:
+                  </label>
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-10">
+                  <label
+                    style="display: inline-block;"
+                    class="form-control"
+                    for=""
+                  >
+                    <strong> {{ amount }}</strong></label
+                  >
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 input-group">
+                <div class="col-lg-2 col-md-2 col-sm-2 p-0">
+                  <label for="dk" style="display: inline-block;">
+                    تاریخ و ساعت تراکنش:
+                  </label>
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-10">
+                  <label
+                    style="display: inline-block;"
+                    class="form-control"
+                    for=""
+                  >
+                    <strong> {{ verifyDate }} - {{ verifyTime }}</strong></label
+                  >
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 input-group">
+                <div class="col-lg-2 col-md-2 col-sm-2 p-0">
+                  <label for="dk" style="display: inline-block;">
+                    <!-- شماره پیگیری: -->
+                    شماره ارجاع:
+                  </label>
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-10">
+                  <label
+                    style="display: inline-block;"
+                    class="form-control"
+                    for=""
+                  >
+                    <strong> {{ bankRef }}</strong></label
+                  >
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 input-group">
+                <div class="col-lg-2 col-md-2 col-sm-2 p-0">
+                  <label for="dk" style="display: inline-block;">
+                    شماره پیگیری:
+                  </label>
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-10">
+                  <label
+                    style="display: inline-block;"
+                    class="form-control"
+                    for=""
+                  >
+                    <strong> {{ bankToken }}</strong></label
+                  >
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 input-group">
+                <div class="col-lg-2 col-md-2 col-sm-2">
+                  <label for="dk" style="display: inline-block;">
+                    شناسه پرداخت:
+                  </label>
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-10">
+                  <label
+                    style="display: inline-block;"
+                    class="form-control"
+                    for=""
+                  >
+                    <strong> {{ trackNumber }}</strong></label
+                  >
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+
+          <nb-card class="table-x-mine">
+            <nb-card-body>
+              <div style="margin-bottom: 15px;float: left;">
+                <a
+                  class="btn btn-info btn-lg"
+                  style="color:#fff;cursor: pointer"
+                  (click)="onPrint()"
+                >
+                  <nb-icon
+                    [options]="{ animation: { type: 'pulse' } }"
+                    class="icon-button"
+                    icon="home-outline"
+                  >
+                  </nb-icon>
+                  چاپ</a
+                >
+              </div>
+
+              <div class="ml-3" style="margin-bottom: 15px;float: left;">
+                <a
+                  class="btn btn-primary btn-lg"
+                  style="color:#fff"
+                  [routerLink]="[goToList()]"
+                >
+                  <nb-icon
+                    [options]="{ animation: { type: 'pulse' } }"
+                    class="icon-button"
+                    icon="home-outline"
+                  >
+                  </nb-icon>
+                  بازگشت به لیست</a
+                >
+              </div>
+              <div style="clear: both"></div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

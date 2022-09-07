@@ -1,0 +1,95 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <div class="col-md-12">
+      <nb-card class="inline-form-card">
+        <nb-card-header>
+          تعیین مجری بازدید دوره ای
+        </nb-card-header>
+        <nb-card-body>
+          <nb-card class="inline-form-card">
+            <nb-card-body>
+              <div class="row">
+                <div class="form-group col-md-5">
+                  <label>
+                    نام مجری:
+                  </label>
+                  <input formControlName="executerSelect" [typeahead]="executors" typeaheadOptionField="searchItem"
+                    (typeaheadOnSelect)="onSelect($event)" [typeaheadOptionsLimit]="7" [typeaheadMinLength]="0"
+                    class="form-control" style="width: 98%" />
+                </div>
+                <div class="col-md-1"></div>
+                <div *ngFor="
+                    let validation of INPUT_VALIDATION_MESSAGES.executerSelect
+                      | keyvalue
+                  ">
+                  <span class="text-danger" *ngIf="
+                      form.get('executerSelect').hasError(validation.type) &&
+                      (form.get('executerSelect').dirty ||
+                        form.get('executerSelect').touched)
+                    ">
+                    {{ validation.message }}</span>
+                </div>
+                <div class="col-md-5" style="padding-left: 7px;padding-right: 28px;"
+                  *ngIf="form.get('executerSelect').value !== ''">
+                  <div *ngFor="let a of selectedOption">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>نام و نام خانوادگی</th>
+                          <th>نام پدر</th>
+                          <th>کد ملی</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{{ a?.fullName }}</td>
+                          <td>{{ a?.fatherName }}</td>
+                          <td>{{ a?.nathinalCode }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <nb-card>
+                <nb-card-body>
+                  <div class="row">
+                    <label for="cmt"> شرح: </label>
+                    <textarea name="cmt" id="cmt" rows="7" nbInput fullWidth formControlName="comment"></textarea>
+                  </div>
+
+                </nb-card-body>
+              </nb-card>
+
+            </nb-card-body>
+          </nb-card>
+        </nb-card-body>
+      </nb-card>
+      <nb-card class="inline-form-card">
+        <nb-card-body>
+          <div class="row">
+            <div class="col-md-6">
+              <button [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" type="submit" nbButton
+                status="success" class="btn btn-success btn-block" [disabled]=" loading || !form.valid">
+                ثبت
+              </button>
+            </div>
+            <div class="col-md-6" >
+              <button *ngIf="className==='SelectSafetyExecuter'" type="button" nbButton status="warning" class="btn btn-block"
+                [routerLink]="['/pages/forms/PeriodicVisitsList']"
+                [disabled]="loading">
+                بازگشت به لیست
+              </button>
+              <button *ngIf="className!=='SelectSafetyExecuter'" type="button" nbButton status="warning" class="btn btn-block"
+              [routerLink]="['/pages/forms/GasReqList']"
+              [disabled]="loading">
+              بازگشت به لیست
+            </button>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</form>

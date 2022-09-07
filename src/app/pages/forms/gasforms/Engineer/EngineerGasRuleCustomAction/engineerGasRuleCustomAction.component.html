@@ -1,0 +1,41 @@
+<!-- <button
+  nbTooltip="چاپ"
+  nbTooltipPlacement="top"
+  size="tiny"
+  class="mb-2 mr-1"
+  nbButton
+  status="secondary"
+>
+
+  <nb-icon
+    [options]="{ animation: { type: 'zoom' } }"
+    class="icon-button"
+    icon="printer-outline"
+  >
+  </nb-icon>
+</button> -->
+
+<button
+
+  nbTooltip="حذف"
+  nbTooltipPlacement="top"
+  size="tiny"
+  class="mb-2 mr-1"
+  nbButton
+  status="danger"
+  (click)="onDeleteGasRequest(rData)"
+>
+  <nb-icon
+    [options]="{ animation: { type: 'zoom' } }"
+    class="icon-button"
+    icon="close-outline"
+  >
+  </nb-icon>
+</button>
+
+
+
+<ng-template #contentDetailTemplate let-data>
+  <ngx-engineerVacationDetail [id]="rData.id"></ngx-engineerVacationDetail>
+  <!-- <p>Here is the text provided via config: "{{ data.text }}"</p> -->
+</ng-template>

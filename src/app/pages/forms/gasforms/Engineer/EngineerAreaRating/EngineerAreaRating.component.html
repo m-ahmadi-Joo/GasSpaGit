@@ -1,0 +1,957 @@
+<style>
+  input {
+    text-align: center;
+    direction: ltr;
+    width: 40%;
+  }
+
+  nb-checkbox /deep/ input:disabled+span.custom-checkbox.checked {
+    background-color: #888686 !important;
+    cursor: not-allowed;
+  }
+</style>
+
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+      <nb-card>
+        <nb-card-header>
+          <strong> مشخصات مهندس «{{ info.engineerFullname }}» </strong>
+        </nb-card-header>
+        <nb-card-body>
+          <nb-card>
+            <nb-card-body>
+
+              <div class="row w-100">
+                <div class="col-sm-5">
+                  <label for="inactivityMon thCount">
+                    <span class="text-danger font-weight-bold ml-1">*</span>
+                    ماه های عدم فعالیت در سال های پیشین:
+                  </label>
+
+                  <input type="number" id="inactivityMonthCount" formControlName="inactivityMonthCount" nbInput min="0"
+                    max="1200" style="width: 100px;margin-right: 10px;" />
+
+                  <div *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.inactivityMonthCount
+                    ">
+                    <span class="text-danger" *ngIf="
+                        form.get('inactivityMonthCount').hasError(validation.type) &&
+                        (form.get('inactivityMonthCount').dirty ||
+                          form.get('inactivityMonthCount').touched)
+                      ">{{ validation.message }}</span>
+                  </div>
+                </div>
+
+                <div class="col-sm-5">
+                  <label for="otherProvincesActivityMonthCount">
+                    <span class="text-danger font-weight-bold ml-1">*</span>
+                    ماه های همکاری در سایر استان ها:
+                  </label>
+
+                  <input type="number" id="otherProvincesActivityMonthCount"
+                    formControlName="otherProvincesActivityMonthCount" nbInput min="0" max="1200"
+                    style="width: 100px;margin-right: 10px;" />
+                  <div *ngFor="
+                        let validation of INPUT_VALIDATION_MESSAGES.otherProvincesActivityMonthCount
+                      ">
+                    <span class="text-danger" *ngIf="
+                          form.get('otherProvincesActivityMonthCount').hasError(validation.type) &&
+                          (form.get('otherProvincesActivityMonthCount').dirty ||
+                            form.get('otherProvincesActivityMonthCount').touched)
+                        ">{{ validation.message }}</span>
+                  </div>
+
+                </div>
+
+                <div class="col-sm-2">
+                  <button hero nbButton status="primary" type="button" [nbSpinner]="loadingCalculateMonitoringHistory"
+                  nbSpinnerStatus="info" nbSpinnerSize="large"
+                  [disabled]= "!canCalculateMonitoringHistory && loadingCalculateMonitoringHistory" 
+                    (click)= "calculateMonitoringHistory()">اعمال</button>
+                </div>
+              </div>
+              
+              <div class="row" *ngIf="!form.get('startWorkTime').value && isSubmitedCalculateMonitoringHistory">
+                <span class="text-danger" >
+                  جهت مشاهده امتیاز سابقه نظارت، تاریخ شروع به کار مهندس الزامی است.
+               </span>
+              </div>
+
+              <table class="table table-responsive table-borderless">
+                <tr>
+                  <td>
+                    <nb-checkbox formControlName="hasShirazRank" (change)="changeShirazRank($event)">
+                      فعال
+                    </nb-checkbox>
+                  </td>
+
+                  <td colspan="2">
+                    <label for="years">
+                      <span class="text-danger font-weight-bold ml-1">*</span>
+                      انتخاب سال اعمال امتیازها:
+                    </label>
+                    <nb-select #yearSelect (selectedChange)="getEngineerInfo(yearSelect.selected)"
+                      formControlName="baseYearId" id="years" placeholder="انتخاب ...">
+                      <nb-option *ngFor="let t of baseYears" [value]="t.id">
+                        {{ t.persianYear }}
+                      </nb-option>
+                    </nb-select>
+
+                    <div *ngIf="isSubmitted">
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.baseYearId
+                        ">
+                        <span class="text-danger" *ngIf="
+                            form.get('baseYearId').hasError(validation.type) &&
+                            (form.get('baseYearId').dirty ||
+                              form.get('baseYearId').touched)
+                          ">{{ validation.message }}</span>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label for="baseObserverGrade">
+                      پایه نظارت:
+                    </label>
+                  </td>
+                  <td>
+                    <label for="" class="control-label mx-2">
+                      <strong>
+                        <span class="text-info" *ngIf="info.hasEquivalentRank === true">
+                          معادل
+                        </span>
+                        {{ info.observerGradeTitle }}
+                      </strong>
+
+                    </label>
+                  </td>
+                  <td>
+                    <label for="" class="control-label mx-2">
+                      <strong>
+                        {{ roundNumber2Decimal(info.baseRank) }}
+                      </strong>
+                    </label>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label for="startWorkTime">
+                      <span class="text-danger font-weight-bold ml-1">*</span>
+                      تاریخ شروع به کار:
+                    </label>
+                  </td>
+                  <td>
+                    <dp-date-picker #dpstartWork id="dpstartWork" (onChange)="changeStartWorkTime($event)" name="cd"
+                      fullWidth nbInput dir="rtl" mode="day" [config]="dateConfig" theme="dp-material"
+                      formControlName="startWorkTime">
+                    </dp-date-picker>
+
+                    <div *ngIf="isSubmitted">
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.startWorkTime
+                        ">
+                        <span class="text-danger" *ngIf="
+                            form.get('startWorkTime').hasError(validation.type)
+                          ">{{ validation.message }}</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <label for="" class="control-label mx-2">
+                      <strong [innerHtml]="info.monitoringHistoryRank">
+                      </strong>
+                    </label>
+                  </td>
+                </tr>
+
+
+
+                <tr>
+                  <td>
+                    <label for="hPRank">
+                      <span class="text-danger font-weight-bold ml-1">*</span>
+                      صلاحیت 2 تا 60 پوند:
+                    </label>
+                  </td>
+                  <td>
+                    <nb-radio-group #rdbcanhp (valueChange)="onChangeCanHP($event)" class="form-inline radio-x-inline"
+                      formControlName="canHP" id="hPRank" name="hPRank" style="margin-top:-0.5rem;">
+                      <nb-radio value="0">
+                        دارد
+                      </nb-radio>
+
+                      <nb-radio value="1">
+                        ندارد
+                      </nb-radio>
+                    </nb-radio-group>
+                    <div *ngIf="isSubmitted">
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.canHP
+                        ">
+                        <span class="text-danger"
+                          *ngIf="form.get('canHP').hasError(validation.type)">{{ validation.message }}</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <label for="" class="control-label mx-2">
+                      <strong>
+                        {{ roundNumber2Decimal(calcHPRank) }}
+                      </strong>
+                      <!-- [innerHtml]= "form.controls.canHP.value === '0' ? info.hpRank * info.baseRank : 0"> -->
+
+                      <!-- <strong
+                        *ngIf="form.controls.canHP.value === '1'"
+                        [innerHtml]= "0">
+                        </strong> -->
+                    </label>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label for="goodPerformanceFactor">
+                      <span class="text-danger font-weight-bold ml-1">*</span>
+                      حسن انجام کار:
+                    </label>
+                  </td>
+                  <td>
+                    <input type="number" id="goodPerformanceFactor" formControlName="goodPerformanceFactor" nbInput
+                      min="0" [max]="calcMaxGoodPerformanceFactor" />
+
+                    <div *ngFor="
+                        let validation of INPUT_VALIDATION_MESSAGES.goodPerformanceFactor
+                      ">
+                      <span class="text-danger" *ngIf="
+                          form
+                            .get('goodPerformanceFactor')
+                            .hasError(validation.type) &&
+                          (form.get('goodPerformanceFactor').dirty ||
+                            form.get('goodPerformanceFactor').touched)
+                        ">{{ validation.message }}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <label for="" class="control-label mx-2">
+                      <strong>
+                        {{
+                          roundNumber2Decimal(
+                            (form.controls.goodPerformanceFactor.value / 100) *
+                              info.baseRank
+                          )
+                        }}
+                      </strong>
+                    </label>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label for="goodPerformanceDeductionFactor">
+                      <span class="text-danger font-weight-bold ml-1">*</span>
+                      کسورات حسن انجام کار:
+                    </label>
+                  </td>
+                  <td>
+                    <input type="number" id="goodPerformanceDeductionFactor"
+                      formControlName="goodPerformanceDeductionFactor" nbInput [min]="calcMaxGoodPerformanceFactor * -1"
+                      max="0" />
+
+                    <div *ngFor="
+                        let validation of INPUT_VALIDATION_MESSAGES.goodPerformanceDeductionFactor
+                      ">
+                      <span class="text-danger" *ngIf="
+                          form
+                            .get('goodPerformanceDeductionFactor')
+                            .hasError(validation.type) &&
+                          (form.get('goodPerformanceDeductionFactor').dirty ||
+                            form.get('goodPerformanceDeductionFactor').touched)
+                        ">{{ validation.message }}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <label for="" class="control-label mx-2" style="direction: ltr;">
+                      <strong>
+                        {{
+                          roundNumber2Decimal(
+                            (form.controls.goodPerformanceDeductionFactor.value / 100) *
+                              info.baseRank
+                          )
+                        }}
+                      </strong>
+                    </label>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label for="f1">
+                      فیلد آزاد 1:
+                    </label>
+                  </td>
+                  <td>
+                    <input type="number" id="f1" formControlName="freeField1" nbInput min="0" max="15" />
+
+                    <div *ngFor="
+                        let validation of INPUT_VALIDATION_MESSAGES.freeField1
+                      ">
+                      <span class="text-danger" *ngIf="
+                          form.get('freeField1').hasError(validation.type) &&
+                          (form.get('freeField1').dirty ||
+                            form.get('freeField1').touched)
+                        ">{{ validation.message }}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <label for="" class="control-label mx-2">
+                      <strong>
+                        {{ form.controls.freeField1.value }}
+                      </strong>
+                    </label>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label for="f2">
+                      فیلد آزاد 2:
+                    </label>
+                  </td>
+                  <td>
+                    <input type="number" id="f2" formControlName="freeField2" nbInput min="0" max="15" />
+
+                    <div *ngFor="
+                        let validation of INPUT_VALIDATION_MESSAGES.freeField2
+                      ">
+                      <span class="text-danger" *ngIf="
+                          form.get('freeField2').hasError(validation.type) &&
+                          (form.get('freeField2').dirty ||
+                            form.get('freeField2').touched)
+                        ">{{ validation.message }}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <label for="" class="control-label mx-2">
+                      <strong>
+                        {{ form.controls.freeField2.value }}
+                      </strong>
+                    </label>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label for="f3">
+                      فیلد آزاد 3:
+                    </label>
+                  </td>
+                  <td>
+                    <input type="number" id="f3" formControlName="freeField3" nbInput min="0" max="15" />
+
+                    <div *ngFor="
+                        let validation of INPUT_VALIDATION_MESSAGES.freeField3
+                      ">
+                      <span class="text-danger" *ngIf="
+                          form.get('freeField3').hasError(validation.type) &&
+                          (form.get('freeField3').dirty ||
+                            form.get('freeField3').touched)
+                        ">{{ validation.message }}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <label for="" class="control-label mx-2">
+                      <strong>
+                        {{ form.controls.freeField3.value }}
+                      </strong>
+                    </label>
+                  </td>
+                </tr>
+
+
+                <tr>
+                  <td colspan="2"></td>
+                  <td colspan="1">
+                    <label for="totalRank" class="form-control">
+                      <span class="text-info"> مجموع:</span>&nbsp;
+                      <span>
+                        <strong [innerHtml]="
+                            roundNumber2Decimal(
+                              info.baseRank +
+                                calcHPRank +
+                                  (form.controls.goodPerformanceFactor.value / 100) * info.baseRank  +
+                                  (form.controls.goodPerformanceDeductionFactor.value / 100) *  +
+                                  info.baseRank +
+                                  info.monitoringHistoryRank +
+                                  form.controls.freeField1.value +
+                                  form.controls.freeField2.value +
+                                  form.controls.freeField3.value
+                            )
+                          "></strong>
+                      </span>
+                    </label>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label for="vacationTotalDay">
+                      تعداد روزهای مرخصی در سال:
+                    </label>
+                  </td>
+                  <td>
+                    <label for="" class="control-label mx-2 text-danger">
+                      <strong>
+                        {{ info.vacationTotalDay }}
+                      </strong>
+                    </label>
+                  </td>
+
+                  <td>
+                    <label for="finalRank" class="form-control text-success">
+                      <span class="text-info">امتیاز با مرخصی:</span>&nbsp;
+                      <span>
+                        <strong [innerHtml]="
+                          roundNumber2Decimal(
+                            info.vacationFactor *
+                            (info.baseRank +
+                                calcHPRank +
+                                (form.controls.goodPerformanceFactor.value / 100) * info.baseRank +
+                                (form.controls.goodPerformanceDeductionFactor.value / 100) * info.baseRank +
+                                info.monitoringHistoryRank +
+                                form.controls.freeField1.value +
+                                form.controls.freeField2.value +
+                                form.controls.freeField3.value)
+                            )
+                          "></strong>
+                      </span>
+                    </label>
+                  </td>
+
+
+                </tr>
+
+                <tr>
+                  <td>
+                    <label for="engineerOrganizationCode">
+                      <span class="text-danger font-weight-bold ml-1">*</span>
+                      کد دفتر گاز:
+                    </label>
+                  </td>
+
+                  <td>
+                    <input id="engineerOrganizationCode" formControlName="engineerOrganizationCode" nbInput />
+
+                    <div>
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.engineerOrganizationCode
+                        ">
+                        <span class="text-danger" *ngIf="
+                            form.get('engineerOrganizationCode').hasError(validation.type) &&
+                            ( isSubmitted ||
+                              form.get('engineerOrganizationCode').dirty ||
+                              form.get('engineerOrganizationCode').touched)
+                          ">{{ validation.message }}</span>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label for="canBazrasiMabhase22">
+                      <span class="text-danger font-weight-bold ml-1">*</span>
+                      مشارکت در بازرسی مبحث 22:
+                    </label>
+                  </td>
+                  <td>
+                    <nb-radio-group #rdbcanBazrasiMabhase22 class="form-inline radio-x-inline"
+                      formControlName="canBazrasiMabhase22" id="canBazrasiMabhase22" name="canBazrasiMabhase22"
+                      style="margin-top:-0.5rem;">
+                      <nb-radio value="0">
+                        بلی
+                      </nb-radio>
+
+                      <nb-radio value="1">
+                        خیر
+                      </nb-radio>
+                    </nb-radio-group>
+
+                    <div *ngIf="isSubmitted">
+                      <div *ngFor="
+                              let validation of INPUT_VALIDATION_MESSAGES.canBazrasiMabhase22
+                            ">
+                        <span class="text-danger" *ngIf="
+                                form
+                                  .get('canBazrasiMabhase22')
+                                  .hasError(validation.type)
+                              ">{{ validation.message }}</span>
+                      </div>
+                    </div>
+                  </td>
+
+                  <td>
+                    <label for="hourlyContract">
+                      <span class="text-danger font-weight-bold ml-1">*</span>
+                      قرارداد ساعتی:
+                    </label>
+                  </td>
+
+                  <td>
+                    <!-- [disabled]="
+                    form.get('canGasRule').value === '0' ||
+                    form.get('canAlamakDesignation').value === '0' ||
+                    form.get('canSupervise').value === '0' ||
+                    form.get('canSuperviseHP').value === '0' ||
+                    form.get('canTechnicalInspection').value === '0' ||
+                    form.get('canDoubleControl').value === '0'" -->
+                    <!-- (valueChange)="onchangeHourlyContract($event)" -->
+                    <nb-radio-group #rdbhourlyContract class="form-inline radio-x-inline"
+                      formControlName="hourlyContract" id="hourlyContract" name="hourlyContract"
+                      style="margin-top:-0.5rem;">
+                      <nb-radio value="0">
+                        بلی
+                      </nb-radio>
+
+                      <nb-radio value="1">
+                        خیر
+                      </nb-radio>
+                    </nb-radio-group>
+
+                    <div *ngIf="isSubmitted">
+                      <div *ngFor="
+                            let validation of INPUT_VALIDATION_MESSAGES.hourlyContract
+                          ">
+                        <span class="text-danger" *ngIf="
+                              form
+                                .get('hourlyContract')
+                                .hasError(validation.type)
+                            ">{{ validation.message }}</span>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label for="canSupervise">
+                      <span class="text-danger font-weight-bold ml-1">*</span>
+                      نظارت عالی ( فشار ضعیف)
+                    </label>
+                  </td>
+
+                  <td>
+                    <nb-radio-group #rdbcanSupervise formControlName="canSupervise" id="canSupervise"
+                      name="canSupervise" class="d-block w-100" style="margin-top:-0.5rem;">
+                      <nb-radio value="0" style="display: inline;">
+                        بلی
+                      </nb-radio>
+
+                      <nb-radio value="1" style="display: inline;">
+                        خیر
+                      </nb-radio>
+                    </nb-radio-group>
+
+                    <div *ngIf="isSubmitted">
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.canSupervise
+                        ">
+                        <span class="text-danger" *ngIf="
+                            form.get('canSupervise').hasError(validation.type)
+                          ">{{ validation.message }}</span>
+                      </div>
+                    </div>
+                  </td>
+
+                  <td>
+                    <label for="canSuperviseHP">
+                      <span class="text-danger font-weight-bold ml-1">*</span>
+                      نظارت عالی ( فشار قوی)
+                    </label>
+                  </td>
+
+                  <td>
+                    <nb-radio-group #rdbCanSuperviseHP class="form-inline radio-x-inline"
+                      formControlName="canSuperviseHP" id="canSuperviseHP" name="canSuperviseHP"
+                      style="margin-top:-0.5rem;">
+                      <nb-radio value="0">
+                        بلی
+                      </nb-radio>
+
+                      <nb-radio value="1">
+                        خیر
+                      </nb-radio>
+                    </nb-radio-group>
+
+                    <div *ngIf="isSubmitted">
+                      <div *ngFor="
+                            let validation of INPUT_VALIDATION_MESSAGES.canSuperviseHP
+                          ">
+                        <span class="text-danger" *ngIf="
+                              form
+                                .get('canSuperviseHP')
+                                .hasError(validation.type)
+                            ">{{ validation.message }}</span>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <label for="canTechnicalInspection">
+                      <span class="text-danger font-weight-bold ml-1">*</span>
+                      بازرسی فنی
+                    </label>
+                  </td>
+
+                  <td>
+                    <nb-radio-group #rdbcanTechnicalInspection class="form-inline radio-x-inline"
+                      formControlName="canTechnicalInspection" id="canTechnicalInspection" name="canTechnicalInspection"
+                      style="margin-top:-0.5rem;">
+                      <nb-radio value="0">
+                        بلی
+                      </nb-radio>
+
+                      <nb-radio value="1">
+                        خیر
+                      </nb-radio>
+                    </nb-radio-group>
+
+                    <div *ngIf="isSubmitted">
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.canTechnicalInspection
+                        ">
+                        <span class="text-danger" *ngIf="
+                            form.get('canTechnicalInspection').hasError(validation.type)
+                          ">{{ validation.message }}</span>
+                      </div>
+                    </div>
+                  </td>
+
+
+                </tr>
+                <!-- style="border:solid #999 1px;padding: 2px; margin: 10px;" -->
+                <!-- border-collapse:collapse; -->
+                <tbody class="border border-info d-block mt-5">
+                  <tr>
+                    <td colspan="2">
+                      <p class="font-weight-bold text-primary">
+                        <span class="text-info font-weight-bold ml-1">*</span>
+                        توجه نمایید فعالیت مهندس تنها در یکی از حوزه های زیر مجاز است.
+                      </p>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <label for="canGasRule">
+                        <span class="text-danger font-weight-bold ml-1">*</span>
+                        ضوابط گازرسانی:
+                      </label>
+                    </td>
+                    <td>
+                      <nb-radio-group (valueChange)="onChangeCanGasRule($event)" #rdbcanGasRule [disabled]="
+                      form.get('canAlamakDesignation').value === '0' ||
+                      form.get('canDoubleControl').value === '0'" class="form-inline radio-x-inline"
+                        formControlName="canGasRule" id="canGasRule" name="canGasRule" style="margin-top:-0.5rem;">
+                        <nb-radio value="0">
+                          بلی
+                        </nb-radio>
+
+                        <nb-radio value="1">
+                          خیر
+                        </nb-radio>
+                      </nb-radio-group>
+
+                      <div *ngIf="isSubmitted">
+                        <div *ngFor="
+                              let validation of INPUT_VALIDATION_MESSAGES.canGasRule
+                            ">
+                          <span class="text-danger" *ngIf="
+                                form
+                                  .get('canGasRule')
+                                  .hasError(validation.type)
+                              ">{{ validation.message }}</span>
+                        </div>
+                      </div>
+                    </td>
+
+                    <td>
+                      <label for="canAlamakDesignation">
+                        <span class="text-danger font-weight-bold ml-1">*</span>
+                        تعیین علمک:
+                      </label>
+                    </td>
+
+                    <td>
+                      <nb-radio-group (valueChange)="onchangeAlamakDesignation($event)" #rdbcanAlamakDesignation
+                        [disabled]="
+                          form.get('canGasRule').value === '0' ||
+                          form.get('canDoubleControl').value === '0'" class="form-inline radio-x-inline"
+                        formControlName="canAlamakDesignation" id="canAlamakDesignation" name="canAlamakDesignation"
+                        style="margin-top:-0.5rem;">
+                        <nb-radio value="0">
+                          بلی
+                        </nb-radio>
+
+                        <nb-radio value="1">
+                          خیر
+                        </nb-radio>
+                      </nb-radio-group>
+
+                      <div *ngIf="isSubmitted">
+                        <div *ngFor="
+                            let validation of INPUT_VALIDATION_MESSAGES.canAlamakDesignation
+                          ">
+                          <span class="text-danger" *ngIf="
+                              form
+                                .get('canAlamakDesignation')
+                                .hasError(validation.type)
+                            ">{{ validation.message }}</span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <label for="canDoubleControl">
+                        <span class="text-danger font-weight-bold ml-1">*</span>
+                        کنترل مضاعف:
+                      </label>
+                    </td>
+
+                    <td>
+                      <nb-radio-group (valueChange)="onchangeCanDoubleControl($event)" #rdbcanDoubleControl [disabled]="
+                          form.get('canAlamakDesignation').value === '0' ||
+                          form.get('canGasRule').value === '0'" class="form-inline radio-x-inline"
+                        formControlName="canDoubleControl" id="canDoubleControl" name="canDoubleControl"
+                        style="margin-top:-0.5rem;">
+                        <nb-radio value="0">
+                          بلی
+                        </nb-radio>
+
+                        <nb-radio value="1">
+                          خیر
+                        </nb-radio>
+                      </nb-radio-group>
+
+                      <div *ngIf="isSubmitted">
+                        <div *ngFor="
+                              let validation of INPUT_VALIDATION_MESSAGES.canDoubleControl
+                            ">
+                          <span class="text-danger" *ngIf="
+                                form
+                                  .get('canDoubleControl')
+                                  .hasError(validation.type)
+                              ">{{ validation.message }}</span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                </tbody>
+
+              </table>
+
+              <nb-card>
+                <nb-card-header>
+                  <span class="text-danger font-weight-bold ml-1">*</span>
+                  وضعیت
+                </nb-card-header>
+                <nb-card-body>
+                  <div class="col-lg-12 col-md-12 col-sm-12 form-inline form-hanging">
+                    <nb-radio-group (valueChange)="onchangeWorkIn($event)" #rdbworkIn class="form-inline radio-x-inline"
+                      formControlName="workIn" id="workIn" name="workIn" style="margin-top: 1.75rem;">
+                      <nb-radio value="0">
+                        فقط شیراز
+                      </nb-radio>
+                      <nb-radio value="1">
+                        فقط شهرستان
+                      </nb-radio>
+                      <nb-radio value="2">
+                        شیراز و شهرستان
+                      </nb-radio>
+                    </nb-radio-group>
+
+                    <div *ngIf="isSubmitted">
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.workIn
+                        ">
+                        <span class="text-danger" *ngIf="form.get('workIn').hasError(validation.type)">
+                          {{ validation.message }}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div *ngIf="form.controls.workIn.value !== ''"
+                    class="col-lg-12 col-md-12 col-sm-12 form-inline form-hanging">
+                    <label for="engineerAreas">
+                      <span class="text-danger font-weight-bold ml-1">*</span>
+                      مناطق مجاز مهندس
+                    </label>
+
+                    <nb-select multiple class="mx-2 my-2" #selectArea formControlName="engineerAreas" id="engineerAreas"
+                      placeholder="انتخاب مناطق مجاز مهندس">
+                      <nb-option *ngFor="let t of areas" [value]="t.id">
+                        {{ t.title }}
+                      </nb-option>
+                    </nb-select>
+
+                    <div *ngIf="isSubmitted">
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.engineerAreas
+                        ">
+                        <span class="text-danger" *ngIf="
+                            form.get('engineerAreas').hasError(validation.type)
+                          ">
+                          {{ validation.message }}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12 col-md-12 col-sm-12 form-inline form-hanging">
+                    <div class="input-group">
+                      <nb-checkbox (change)="changeLiveShahrestan($event)" formControlName="liveShahrestan" value="0">
+                        بومی شهرستان
+                      </nb-checkbox>
+
+                      <nb-select [selected]="selectedTown" *ngIf="form.controls.liveShahrestan.value === true"
+                        class="mx-2" #selectAreaTown (selectedChange)="getAreaTitle(selectAreaTown.selected)"
+                        formControlName="baseTownId" id="towns" placeholder="انتخاب شهر / روستا">
+                        <nb-option *ngFor="let t of areaTowns" [value]="t.baseTownId">
+                          {{ t.name }}
+                        </nb-option>
+                      </nb-select>
+
+                      <label *ngIf="form.controls.liveShahrestan.value === true" for="" style="color: #4a5882"
+                        class="control-label mx-1">
+                        <strong>
+                          {{ selectedAreaTitle }}
+                        </strong>
+                      </label>
+
+                      <div *ngIf="
+                          isSubmitted &&
+                          form.controls.liveShahrestan.value === true
+                        ">
+                        <div *ngFor="
+                            let validation of INPUT_VALIDATION_MESSAGES.baseTownId
+                          ">
+                          <span class="text-danger" *ngIf="
+                              form
+                                .get('baseTownId')
+                                .hasError(validation.type) &&
+                              (form.get('baseTownId').dirty ||
+                                form.get('baseTownId').touched)
+                            ">
+                            {{ validation.message }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+
+              <nb-card>
+                <nb-card-body>
+                  <div class="input-group col-lg-12 col-md-12 col-sm-12">
+                    <label for="description">
+                      <!-- <span class="text-danger font-weight-bold ml-1">*</span> -->
+                      توضیحات</label>
+                    <textarea formControlName="description" fullWidth id="description" nbInput placeholder="توضیحات"
+                      rows="2"></textarea>
+
+                    <div *ngFor="
+                            let validation of INPUT_VALIDATION_MESSAGES.description">
+                      <span class="text-danger" *ngIf="
+                              form.get('description').hasError(validation.type) &&
+                              (form.get('description').dirty ||
+                                form.get('description').touched ||
+                                isSubmitted)
+                            ">{{ validation.message }}</span>
+                    </div>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            </nb-card-body>
+          </nb-card>
+
+          <!-- <nb-card>
+            <nb-card-body>
+              <table class="table table-responsive table-borderless">
+                <tr>
+                  <td>
+                    <label for="shirazFactor">
+                      ضریب انتقال شیراز:
+                    </label>
+                  </td>
+
+                  <td>
+                    <input readonly type="number" id="shirazFactor" nbInput [value]="info.shirazFactor" />
+                  </td>
+
+                  <td>
+                    <label for="shahrestanBinding">
+                      ضریب انتقال شهرستان:
+                    </label>
+                  </td>
+                  <td>
+                    <input readonly type="number" id="shahrestanBinding" nbInput [value]="shahrestanBinding" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="hpFactor">
+                      ضریب انتقال فشار قوی:
+                    </label>
+                  </td>
+
+                  <td>
+                    <input readonly type="number" id="hpFactor" nbInput [value]="info.hpFactor" />
+                  </td>
+
+                  <td>
+                    <label for="doubleControlFactor">
+                      ضریب انتقال کنترل مضاعف:
+                    </label>
+                  </td>
+                  <td>
+                    <input readonly type="number" id="doubleControlFactor" nbInput [value]="info.doubleControlFactor" />
+                  </td>
+                </tr>
+
+
+
+              </table>
+            </nb-card-body>
+          </nb-card> -->
+
+          <div class="btn-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <button class="btn" nbButton status="success" style="width: 100%;" type="submit" [nbSpinner]="loading"
+              nbSpinnerStatus="info" nbSpinnerSize="large" [disabled]="loading || beforeCurrentYear">
+              ثبت
+            </button>
+          </div>
+
+          <div class="btn-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <button type="button" [disabled]="loading" [routerLink]="['/pages/forms/EngineerList']" class="btn" nbButton
+              status="info" fullWidth>
+              بازگشت به لیست مهندسان
+            </button>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </form>
+  </div>
+</div>
+
+<!-- {{form.get('canAlamakDesignation').value}} -->
+<!-- {{form.value | json}}
+
+{{form.status | json}} -->

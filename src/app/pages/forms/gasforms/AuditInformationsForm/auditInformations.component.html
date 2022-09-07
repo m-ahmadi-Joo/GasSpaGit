@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <nb-card>
+      <nb-card-header>
+        بازرسی و کنترل اطلاعات
+      </nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="auditInfoForm">
+          <div class="row full-name-inputs">
+            <div class="col-sm-6 col-lg-6 col-md-6 input-group">
+              <input type="text" nbInput fullWidth
+                     placeholder="شماره طبقه" formControlName="icgFloorNumber">
+            </div>
+            <div class="col-sm-6 col-lg-6 col-md-6 input-group">
+              <input type="text" nbInput fullWidth
+                     placeholder="جهت" formControlName="icgDirection">
+            </div>
+            <div class="col-sm-6 col-lg-6 col-md-6 input-group">
+              <input type="text" nbInput fullWidth
+                     placeholder="ميزان مصرف" formControlName="icgUsage">
+            </div>
+            <div class="col-sm-6 col-lg-6 col-md-6 input-group">
+              <input type="text" nbInput fullWidth
+                     placeholder="زير بنا" formControlName="icgFundation">
+            </div>
+            <div class="col-sm-6 col-lg-6 col-md-6 input-group">
+              <input type="text" nbInput fullWidth
+                     placeholder="نوع لوله کشي" formControlName="icgPipeType">
+            </div>
+            <div class="col-sm-6 col-lg-6 col-md-6 input-group">
+              <input type="text" nbInput fullWidth
+                     placeholder="تعداد وسايل گازسوز" formControlName="icgGasBurnerTools">
+            </div>
+            <div class="col-sm-6 col-lg-6 col-md-6 input-group">
+              <input type="text" nbInput fullWidth
+                     placeholder="نوع کنتر" formControlName="icgGasMeterType">
+            </div>
+            <div class="col-sm-6 col-lg-6 col-md-6 input-group">
+              <input type="text" nbInput fullWidth
+                     placeholder="هزينه اي که مجري متقبل ميشود" formControlName="icgExecuterCost">
+            </div>
+            <div class="col-sm-6 col-lg-6 col-md-6 input-group">
+              <input type="text" nbInput fullWidth
+                     placeholder="شماره نقشه" formControlName="icgMapInfoNumber">
+            </div>
+            <div class="col-sm-12 col-lg-12 col-md-12 input-group">
+              <textarea row="5" nbInput fullWidth shape="round"
+                        placeholder="توضيحات" formControlName="icgDescripion"></textarea>
+            </div>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

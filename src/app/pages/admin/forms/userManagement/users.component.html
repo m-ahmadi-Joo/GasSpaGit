@@ -1,0 +1,26 @@
+
+<nb-card class="card-inside-tab">
+  <nb-card-body>
+    <div class="col-md-4">
+      <nb-card class="own-scroll">
+        <nb-card-header>
+          <span>
+            لیست کاربران
+          </span>
+        </nb-card-header>
+        <nb-card-body>
+          <nb-list
+            nbInfiniteList
+            [threshold]="500">
+            <nb-list-item *ngFor="let user of usersian" (click)="onSelectUser(user.id)">
+              <span>{{user.firstName}} {{user.lastName}}</span>
+            </nb-list-item>
+          </nb-list>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col-md-8" *ngIf="user">
+      <app-userDetail [selectedUser]="user"></app-userDetail>
+    </div>
+  </nb-card-body>
+</nb-card>

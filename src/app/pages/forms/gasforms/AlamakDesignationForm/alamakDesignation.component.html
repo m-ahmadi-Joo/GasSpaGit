@@ -1,0 +1,245 @@
+<app-gasRequestDetailBox [gasRequestId]="gasReqId"></app-gasRequestDetailBox>
+<form [formGroup]="alamakDesignForm" (ngSubmit)="onSubmit()">
+  <!-- <div class="row">
+    <div class="col-md-12"> -->
+  <nb-card>
+    <nb-card-header>محل علمک</nb-card-header>
+
+    <nb-card-body>
+      <!-- <div class="col-lg-12 col-md-12 col-sm-12"> -->
+      <nb-card>
+        <nb-card-body>
+          <div class="row col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-4 col-md-4 col-sm-4 form-group">
+              <label for="cd">تاریخ تعیین علمک</label>
+              <dp-date-picker
+                name="cd"
+                fullWidth
+                id="cd"
+                nbInput
+                dir="rtl"
+                mode="day"
+                [config]="datePickerConfig"
+                placeholder="تاریخ تعیین علمک"
+                theme="dp-material"
+                formControlName="date"
+                (onChange)="changeDate($event)"
+              ></dp-date-picker>
+
+              <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.forDate">
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    alamakDesignForm.get('date').hasError(validation.type) &&
+                    (alamakDesignForm.get('date').dirty ||
+                      alamakDesignForm.get('date').touched)
+                  "
+                >
+                  {{ validation.message }}</span
+                >
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-4 form-group">
+              <label for="street">کوچه / خیابان</label>
+              <input fullWidth nbInput id="street" formControlName="street" />
+              <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.street">
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    alamakDesignForm.get('street').hasError(validation.type) &&
+                    (alamakDesignForm.get('street').dirty ||
+                      alamakDesignForm.get('street').touched)
+                  "
+                >
+                  {{ validation.message }}</span
+                >
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-4 form-group"></div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <!-- </div> -->
+
+      <div class="row">
+        <div class="col-md-12">
+          <nb-card>
+            <nb-card-body>
+              <div class="form-inline">
+                <label for="rb">محل جدید علمک</label>
+                <nb-radio-group
+                  #rdbNewLocation
+                  id="rb"
+                  name="rb"
+                  class="form-inline radio-x-inline"
+                  formControlName="newLocation"
+                  style="margin-top: 1.61rem;"
+                >
+                  <nb-radio value="0">
+                    منتهی الیه سمت راست
+                  </nb-radio>
+                  <nb-radio value="1">
+                    منتهی الیه سمت چپ
+                  </nb-radio>
+                  <nb-radio value="2">
+                    زیر خروجی
+                  </nb-radio>
+                </nb-radio-group>
+
+                <div *ngIf="isSubmited">
+                  <div
+                    *ngFor="
+                      let validation of INPUT_VALIDATION_MESSAGES.newLocation
+                    "
+                  >
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        alamakDesignForm
+                          .get('newLocation')
+                          .hasError(validation.type)
+                      "
+                      >{{ validation.message }}</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+          <nb-card>
+            <nb-card-header>کروکی ملک آپلود شده:</nb-card-header>
+            <nb-card-body>
+              <div class="col-lg-12 col-md-12">
+                <div>
+                  <div class="col-md-6">
+                    <span
+                      class="ml-2"
+                      (click)="download(path)"
+
+                      *ngFor="let path of imagePath"
+
+
+                    >
+                      <img
+                        style="border: 1px solid black;  padding: 3px;  box-shadow: 0 0 10px;  position: relative;  top: 0; cursor: pointer; "
+                        [src]="path"
+                        width="100"
+                        height="100"
+                        class="mb-2"
+                      />
+                    </span>
+                  </div>
+                </div>
+                <!-- <a [href]="path" [download]="imageName">
+          دانلود
+      </a> -->
+              </div>
+            </nb-card-body>
+          </nb-card>
+          <nb-card>
+            <nb-card-body>
+              <div class="col-lg-12 col-md-12 col-sm-12 m-0 p-0">
+                <label for="file">نقشه ایساپ</label>
+                <div *ngFor="let a of inputCount; let i = index">
+                  <strong class="mb-2" style="color: rgb(0, 68, 255); display:block; font-size: 11px;"> حداکثر حجم {{sizeTitles[i]}} - فرمت ها ({{a.extentions}}) </strong>
+                  <app-uploader
+                    [formControlName]="a.formControlName"
+                    [className]=" "
+                    [filePath]="imagePathEdit"
+                    [fileExtentions]="a.extentions"
+                    [fileSize]="a.size"
+                  >
+                  </app-uploader>
+                </div>
+              </div>
+              <!-- <div class="col-lg-12 col-md-12 col-sm-12 ">
+                <label for="file">نقشه ایساپ</label>
+                <div *ngFor="let a of inputCount;let i=index">
+                    <strong class="mb-2" style="color: red; display:block; font-size: 11px;">حداکثر حجم قابل بارگذاری {{sizeTitles[i]}}</strong>
+                  <app-uploader
+                    [formControlName]="a.formControlName"
+                    [progress]="progress"
+                    [filePath]="imagePathEdit"
+                  >
+                  </app-uploader>
+                </div>
+              </div> -->
+            </nb-card-body>
+          </nb-card>
+
+          <nb-card>
+            <nb-card-body>
+              <div class="col-lg-12 col-md-12 col-sm-12 input-group">
+                <textarea
+                  formControlName="comment"
+                  fullWidth
+                  nbInput
+                  placeholder="توضیحات و نظرات"
+                  rows="5"
+                  shape="round"
+                ></textarea>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+    </nb-card-body>
+  </nb-card>
+
+  <nb-card>
+    <nb-card-body>
+      <div class="row col-lg-12 col-md-12 col-sm-12">
+        <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="!isEdit">
+          <button
+            type="submit"
+            hero
+            nbButton
+            fullWidth
+            status="success"
+            class="btn"
+            [disabled]="!alamakDesignForm.valid || loading"
+            [nbSpinner]="loading"
+            nbSpinnerStatus="info"
+            nbSpinnerSize="large"
+          >
+            ثبت
+          </button>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="isEdit">
+          <button
+            type="submit"
+            hero
+            nbButton
+            fullWidth
+            status="success"
+            class="btn"
+            [disabled]="!alamakDesignForm.valid || loading"
+            [nbSpinner]="loading"
+            nbSpinnerStatus="info"
+            nbSpinnerSize="large"
+          >
+            ویرایش
+          </button>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-6">
+          <button
+            [disabled]="loading"
+            [routerLink]="['/pages/forms/GasReqList']"
+            type="button"
+            nbButton
+            hero
+            fullWidth
+            status="primary"
+            class="btn"
+          >
+            بازگشت به لیست درخواست ها
+          </button>
+        </div>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</form>

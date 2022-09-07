@@ -1,0 +1,194 @@
+<ngx-analyzeListDetail [id]="analyzeListId"></ngx-analyzeListDetail>
+<nb-card class="table-x-mine" style="box-shadow: 0 0 4px;">
+
+  <nb-card-header class="pt-4 pb-0" style="border-bottom: 0;">
+    <div class="pull-right pt-2">
+      <span class="ml-1"> ورودی</span>
+
+      <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="arrow-ios-back-outline">
+      </nb-icon>
+
+      <span class="mr-1" style="color: #3366ff;">ارجاعات</span>
+      <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="arrow-ios-back-outline">
+      </nb-icon>
+      <span class="mr-1" style="color: #3366ff;">درخواست های ارجاعات</span>
+    </div>
+
+
+    <div class="pull-left">
+      <button nbTooltip="بازسازی" nbTooltipPlacement="top" size="tiny" nbButton hero status="primary" type="button"
+        style="margin-top: 3px;" (click)="resetFilters()">
+        <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="refresh-outline">
+        </nb-icon>
+      </button>
+    </div>
+    <div class="pull-left">
+      <!-- style="box-shadow: 0 0 3px" -->
+      <nb-select placeholder="انتخاب بازرسی" fullWidth (selectedChange)="onInspectionResult($event)">
+        <!-- <nb-option [value]=" ">هیچ کدام</nb-option> -->
+        <nb-option *ngFor="let inspection of inspections" [value]="inspection.className">
+          {{ inspection.title }}
+        </nb-option>
+      </nb-select>
+    </div>
+
+    <div class="pull-left alert alert-info" role="alert">
+      ابتدا می بایست نوع نتیجه بازرسی را طبق درخواست های لیست انتخاب نمایید
+      <nb-icon [options]="{ animation: { type: 'shake' } }" class="icon-button" icon="arrow-back-outline">
+      </nb-icon>
+    </div>
+
+    <div class="row w-100 addToList-wrapper">
+      <div class="w-100 text-left ml-0">
+        <button *appHasRole="['Admin', 'GasEmployee']" (click)="oncreateAnalyzeItem()" class="btn btn-info"
+          style="color: #fff;">
+          <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="plus-circle-outline">
+          </nb-icon>
+          افزودن به لیست
+        </button>
+      </div>
+    </div>
+
+  </nb-card-header>
+
+
+
+  <nb-card-body class="pt-0">
+    <div class="row mb-2 mr-0">
+      <div class="pull-left">
+        <!-- <div *ngFor="let item of collection"> -->
+        <div class="alert alert-warning mb-0" *ngIf="finalsCantShow!=null&&finalsCantShow.length>0">نتیجه بازرسی نهایی پرونده
+          شماره {{finalsCantShow}} به علت ثبت نشدن/عدم تایید نتیجه
+          بازرسی ایمنی قابل ثبت نمی باشد</div>
+        <!-- </div> -->
+      </div>
+    </div>
+
+
+    <div class="table-wrapper">
+      <ng2-smart-table [settings]="settings" [source]="source | paginate: pagingConfig" (custom)="onCustom($event)"
+        style="direction: ltr;"></ng2-smart-table>
+    </div>
+
+    <span *ngFor="let item of collection | paginate: pagingConfig"></span>
+
+    <nb-card>
+      <nb-card-body>
+        <div class="row">
+          <div class="input-group">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 form-inline pull-right">
+              <label for="pageSize" style="margin-left: 0;">
+                رکورد صفحه:
+              </label>
+              <nb-select status="info" #pageSizeSelect class="pageSizeSelect" [selected]="pagination.itemsPerPage"
+                (selectedChange)="changePageSize(pageSizeSelect.selected)" id="pageSize" placeholder="انتخاب ...">
+                <nb-option *ngFor="let p of pageSizes" [value]="p.id">
+                  {{ p.display }}
+                </nb-option>
+              </nb-select>
+            </div>
+
+            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 mt-2 ">
+              <div class="d-flex justify-content-center">
+                <pagination-controls class="pagination" (pageChange)="pageChanged($event)" previousLabel=""
+                  nextLabel="">
+                </pagination-controls>
+              </div>
+            </div>
+            <!-- <div
+              class="col-lg-2 col-md-2 col-sm-6 col-xs-6 form-inline pull-left"
+            >
+              <label for="pageSize" style="margin-left: 0.45rem;">
+                تعداد رکورد:{{ pagination.totalItems }}
+              </label>
+            </div> -->
+            <div style="padding-right: 7% !important;"
+              class="col-lg-4 col-md-4 col-sm-6 col-xs-6 form-inline pull-left">
+              <label for="pageNumber" style="margin-left: 0.45rem;">
+                صفحه:
+              </label>
+              <input [value]="pagination.currentPage" style="width: 30%;" #pageNumber size="tiny" id="pageNumber"
+                nbInput type="number" min="1" max="pagination.totalPages"
+                (keydown.enter)="pageChanged(pageNumber.value)" />
+              <span> از {{ pagination.totalItems }} نتیجه</span>
+            </div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card status="danger" accent="danger">
+    <nb-card-header>
+      <h4 style="color: linen;">هشدار</h4>
+    </nb-card-header>
+    <nb-card-body>
+      <h6>آیا از حذف مورد اطمینان دارید؟</h6>
+    </nb-card-body>
+    <nb-card-footer>
+      <div class="row">
+        <div class="col-sm-6">
+          <button fullWidth nbButton hero status="danger" (click)="confirmDelete(data)">
+            بلی
+          </button>
+        </div>
+        <div class="col-sm-6">
+          <button fullWidth nbButton hero status="primary" (click)="dialogRef.close()">
+            انصراف
+          </button>
+        </div>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+
+
+
+<ng-template #blockdialog let-data let-ref="dialogBlockRef">
+  <nb-card status="danger" accent="danger">
+    <nb-card-header>
+      <h4 style="color: linen;">هشدار</h4>
+    </nb-card-header>
+    <nb-card-body>
+      <h6>آیا از بلاک کردن بازرسی اطمینان دارید؟</h6>
+    </nb-card-body>
+    <nb-card-footer>
+      <div class="row">
+        <div class="col-sm-6">
+          <button fullWidth nbButton hero status="danger" (click)="confirmBlock(data)">
+            بلی
+          </button>
+        </div>
+        <div class="col-sm-6">
+          <button fullWidth nbButton hero status="primary" (click)="dialogBlockRef.close()">
+            انصراف
+          </button>
+        </div>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+<ng-template #createAnalyzeListItem let-data>
+  <ngx-createAnalyzeListItem></ngx-createAnalyzeListItem>
+</ng-template>
+<!-- <div *ngIf="setInspectionResult">
+<form [formGroup]="recordMapInfoFormg">
+  <div formArrayName="recordMapArray">
+    <div *ngFor="let recMap of recordMapArray.controls; let i = index"><br>
+      <div class="div" *ngFor="let item of recMap.controls; let d = index">
+        <label [attr.for]="'baseMeterTypeId' + d">{{ d + 1 }} - {{ item }} </label>
+
+      </div>
+      <label [attr.for]="'baseMeterTypeId' + i">{{ i + 1 }} - {{ recMap.value }} </label>
+      <input [formControlName]="i"
+      value="{{recMap.value}}"><br>
+    </div>
+  </div>
+</form> 
+</div>-->
+<router-outlet *ngIf="setInspectionResult"></router-outlet>
+

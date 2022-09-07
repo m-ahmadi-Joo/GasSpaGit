@@ -1,0 +1,45 @@
+<div class="container h-100">
+  <div class="row h-100 justify-content-center align-items-center mt-5">
+
+    <div class="col-sm-6 center" style="padding: 30px;">
+      <nb-card class="single-card">
+        <nb-card-body>
+          <form
+            name="Submit-Ver-Code"
+            (ngSubmit)="onSubmit()"
+            [formGroup]="codeForm"
+          >
+            <div name="input">
+              <label for="code-inpt">
+                موبایل را وارد کنید
+              </label>
+              <input
+                formControlName="phoneNumber"
+                fullWidth
+                id="code-inpt"
+                nbInput
+                type="text"
+              />
+            </div>
+
+            <div name="Buttons" class="mt-2">
+              <button
+                [nbSpinner]="loading"
+                nbSpinnerStatus="info"
+                nbSpinnerSize="large"
+                [disabled]="loading"
+                class="btn half-width-btn"
+                nbButton
+                fullWidth
+                status="primary"
+                type="submit"
+              >
+                ویرایش
+              </button>
+            </div>
+          </form>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</div>

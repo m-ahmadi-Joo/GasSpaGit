@@ -50,9 +50,9 @@ export * from './FileUploaderManage/fileUploadCustomAction/fileUploadCustomActio
 export * from './systemSettingManage/systemSettingList/systemSettingList.component';
 export * from './systemSettingManage/systemSettingCustomAction/systemSettingCustomAction.component';
 export * from './systemSettingManage/createSystemSetting/createSystemSetting.component';
-export * from './payManagement/transactionManagement/payTransactionList.CustomActions/payTransactionList.CustomActions.component';
+export * from './payManagement/transactionManagement/payTransactionListCustomActions/payTransactionListCustomActions.component';
 export * from './payManagement/transactionManagement/pay-withdrawal-list/pay-withdrawal-list.component';
-export * from './payManagement/transactionManagement/pay-withdrawal-list-custom-actions/pay-withdrawal-list-custom-actions.component';
+export * from './payManagement/transactionManagement/payWithdrawalListCustomActions/payWithdrawalListCustomActions.component';
 export * from './analyzeListManagement/freeAnalyzeListItemList/freeAnalyzeListItemList.component';
 export * from './analyzeListManagement/freeAnalyzeListItemListCustomAction/freeAnalyzeListItemListCustomAction.component';
 export * from './admin-panel/admin-panel.component';

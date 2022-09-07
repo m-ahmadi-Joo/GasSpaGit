@@ -1,0 +1,118 @@
+<nb-card>
+  <nb-card-body>
+    <form (ngSubmit)="onSubmit()" [formGroup]="cgmForm">
+      <ngx-RequestConsultDetail [id]="requestConsultId"></ngx-RequestConsultDetail>
+      <nb-card>
+        <nb-card-header>
+          پاسخ مشاوره
+        </nb-card-header>
+        <nb-card-body>
+          <div class="row ">
+            <div class="col-sm-1 col-md-1 col-lg-1"></div>
+            <div class="col-sm-5 col-md-5 col-lg-5">
+              <label>مصرف تقریبی کل:</label>
+              <input formControlName="approximateUtilizition" id="ps" nbInput type="text"
+                [readOnly]="requestStateType == 'DisplayConsultResult'"
+                [value]="consultResult?.approximateUtilizition" />
+              <div *ngIf="!isEdit">
+                <div *ngFor="
+                    let validation of INPUT_VALIDATION_MESSAGES.approximateUtilizition
+                  ">
+                  <span class="text-danger" *ngIf="
+                      cgmForm
+                        .get('approximateUtilizition')
+                        .hasError(validation.type) &&
+                      (cgmForm.get('approximateUtilizition').dirty ||
+                        cgmForm.get('approximateUtilizition').touched)
+                    ">{{ validation.message }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-5 col-md-5 col-lg-5">
+              <label>زیر بنای کل:</label>
+              <input formControlName="totalFoundation" id="ps" nbInput type="text"
+                [readOnly]="requestStateType == 'DisplayConsultResult'" [value]="consultResult?.totalFoundation" />
+              <div *ngIf="!isEdit">
+                <div *ngFor="
+                    let validation of INPUT_VALIDATION_MESSAGES.totalFoundation
+                  ">
+                  <span class="text-danger" *ngIf="
+                      cgmForm
+                        .get('totalFoundation')
+                        .hasError(validation.type) &&
+                      (cgmForm.get('totalFoundation').dirty ||
+                        cgmForm.get('totalFoundation').touched)
+                    ">{{ validation.message }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-1 col-md-1 col-lg-1 "></div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <nb-card>
+        <nb-card-body>
+          <div class="row">
+            <label>پاسخ مشاوره:</label>
+            <textarea formControlName="answer" fullWidth id="cmt" name="cmt" nbInput rows="7"
+              [readOnly]="requestStateType == 'DisplayConsultResult'" [value]="consultResult?.answer"></textarea>
+            <div *ngIf="!isEdit">
+              <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.answer">
+                <span class="text-danger" *ngIf="
+                    cgmForm.get('answer').hasError(validation.type) &&
+                    (cgmForm.get('answer').dirty ||
+                      cgmForm.get('answer').touched)
+                  ">{{ validation.message }}</span>
+              </div>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <nb-card>
+        <nb-card-body>
+          <!-- style="text-align: left; direction: ltr;" -->
+          <div class="row">
+            <div class="col-sm-6 col-md-6 col-lg-6" *appHasNoRole="['ConsultManager']">
+              <button *ngIf="requestStateType !== 'DisplayConsultResult'" class="btn" nbButton status="success"
+                style="width: 100%;" type="submit" [disabled]="cgmForm.invalid || loading" [nbSpinner]="loading"
+                nbSpinnerStatus="info" nbSpinnerSize="large">
+                تایید
+              </button>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6" *appHasRole="['ConsultManager']"></div>
+            <div class="col-sm-6 col-md-6 col-lg-6">
+              <!-- *ngIf="requestStateType === 'DisplayConsultResult'" -->
+              <button class="btn" nbButton status="primary"
+                style="width: 100%;" (click)="routeBack()" type="button" [disabled]="loading">
+                بازگشت به لیست
+              </button>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+
+
+      <!-- <nb-card>
+        <nb-card-body>
+          <div class="row" style="text-align: left; direction: ltr;">
+            <div class="col-sm-2 col-md-2 col-lg-2 p-1">
+              <button class="btn" nbButton status="warning" style="width: 100%;" type="button" [disabled]="loading"
+                [routerLink]="['/pages/forms/GasReqList']">
+                بازگشت به لیست
+              </button>
+            </div>
+            <div class="col-sm-2 col-md-2 col-lg-2 p-1">
+              <button [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" class="btn" nbButton
+                status="success" style="width: 100%;" type="submit" [disabled]="!form.valid || loading">
+                ثبت
+              </button>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card> -->
+
+
+    </form>
+  </nb-card-body>
+</nb-card>

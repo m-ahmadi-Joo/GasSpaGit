@@ -1,0 +1,430 @@
+<!-- <nb-card class="table-x-mine">
+        <nb-card-body>
+          <div style="margin-bottom: 15px;float: left;">
+
+              <a class="btn btn-primary btn-lg" style="color:#fff" [routerLink]="[ '/pages/forms/GasRequest' ]">
+                <nb-icon
+                  [options]="{ animation: { type: 'pulse' } }"
+                  class="icon-button"
+                  icon="home-outline">
+                </nb-icon>
+                ثبت درخواست گاز</a>
+          </div>
+          <div style="clear: both"></div>
+          <ng2-smart-table
+          [settings]="settings"
+           [source]="source"
+           (custom)="onCustom($event)"
+           (onDeleteConfirm)="onDeleteGasRequest($event)"
+           style="direction:ltr"></ng2-smart-table>
+        </nb-card-body>
+      </nb-card> -->
+
+<!-- <nb-card class="table-x-mine">
+        <nb-card-body>
+          <div style="margin-bottom: 15px;float: left;">
+              <a class="btn btn-primary btn-lg" style="color:#fff"
+               [routerLink]="[ '/pages/forms/Contract' ]"
+               *appHasRole="['Admin','Association']">
+                <nb-icon
+                  [options]="{ animation: { type: 'pulse' } }"
+                  class="icon-button"
+                  icon="file-text-outline">
+                </nb-icon>
+                ثبت قراردادها</a>
+          </div>
+          <div style="clear: both"></div>
+          <ng2-smart-table
+           [settings]="settings"
+           [source]="source"
+           (custom)="onCustom($event)"
+           style="direction:ltr"></ng2-smart-table>
+        </nb-card-body>
+      </nb-card> -->
+
+<nb-card id="serachCard" style="box-shadow: 0 0 4px;">
+  <nb-card-body>
+    <div class="container">
+      <form class="form-inline" (ngSubmit)="onSerach()" [formGroup]="form">
+        <ul>
+          <li class="text-danger" *ngIf="
+              form.get('fromDateStart').value > form.get('fromDateEnd').value &&
+              form.get('fromDateEnd').value !== ''
+            ">
+            <span class="text-danger">بازه تاریخ انتخابی شروع قراداد نامعتبر است.</span>
+          </li>
+
+          <li class="text-danger" *ngIf="
+              form.get('toDateStart').value > form.get('toDateEnd').value &&
+              form.get('toDateEnd').value !== ''
+            ">
+            <span class="text-danger">بازه تاریخ انتخابی پایان قراداد نامعتبر است.</span>
+          </li>
+
+          <li class="text-danger" *ngIf="
+              form.get('fromDateStart').value > form.get('toDateStart').value &&
+              form.get('toDateStart').value !== ''
+            ">
+            <span class="text-danger">تاریخ انتخابی شروع قرارداد می بایست کوچکتر از تاریخ انتخابی پایان
+              قرارداد باشد.</span>
+          </li>
+
+          <li class="text-danger" *ngIf="
+              form.get('fromDateEnd').value > form.get('toDateStart').value &&
+              form.get('toDateStart').value !== ''
+            ">
+            <span class="text-danger">تاریخ انتخابی شروع قرارداد می بایست کوچکتر از تاریخ انتخابی پایان
+              قرارداد باشد.</span>
+          </li>
+        </ul>
+
+        <div class="row">
+          <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <label for="fromDateStart">
+              زمان انعقاد قرارداد از:
+            </label>
+
+            <dp-date-picker name="ds" id="ds" nbInput dir="rtl" mode="day" theme="dp-material"
+              formControlName="fromDateStart" [config]="datePickerConfig" (open)="openFromStartDayPicker()"
+              (close)="closeFromStartDayPicker()" nbInput></dp-date-picker>
+          </div>
+
+          <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <label for="fromDateEnd">
+              زمان انعقاد قرارداد تا:
+            </label>
+
+            <dp-date-picker name="de" id="de" nbInput dir="rtl" mode="day" theme="dp-material"
+              formControlName="fromDateEnd" [config]="datePickerConfig" (open)="openFromEndDayPicker()"
+              (close)="closeFromEndDayPicker()" nbInput></dp-date-picker>
+          </div>
+
+          <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <label for="toDateStart">
+              زمان پایان قرارداد از:
+            </label>
+
+            <dp-date-picker name="ds" id="ds" nbInput dir="rtl" mode="day" theme="dp-material"
+              formControlName="toDateStart" [config]="datePickerConfig" (open)="openToStartDayPicker()"
+              (close)="closeToStartDayPicker()" nbInput></dp-date-picker>
+          </div>
+
+          <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <label for="toDateEnd">
+              زمان پایان قرارداد تا:
+            </label>
+
+            <dp-date-picker name="de" id="de" nbInput dir="rtl" mode="day" theme="dp-material"
+              formControlName="toDateEnd" [config]="datePickerConfig" (open)="openToEndDayPicker()"
+              (close)="closeToEndDayPicker()" nbInput></dp-date-picker>
+          </div>
+        </div>
+
+        <div class="row">
+          <div *appHasNoRole="['Owner']" class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12 mt-3">
+            <label for="ownerName">
+              نام مالک:
+            </label>
+
+            <input formControlName="ownerName" size="small" fullWidth id="ownerName" nbInput type="text" />
+          </div>
+
+          <div *appHasNoRole="['Executor']" class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12 mt-3">
+            <label for="executorName">
+              نام مجری:
+            </label>
+            <input formControlName="executorName" size="small" fullWidth id="executorName" nbInput type="text" />
+          </div>
+          <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12 mt-3">
+            <label for="executorName">
+              شماره پرونده:
+            </label>
+            <input formControlName="gasReqFileNumber" size="small" fullWidth id="gasReqFileNumber" nbInput
+              type="text" />
+          </div>
+          <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12 mt-3">
+            <label for="fileNumber">
+              شماره قرارداد:
+            </label>
+
+            <input formControlName="fileNumber" size="small" fullWidth id="fileNumber" nbInput type="number"
+              min="1000" />
+          </div>
+
+          <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12 float-right  pr-0 mr-3">
+            <button nbTooltip="جستجو" nbTooltipPlacement="top" nbButton hero size="tiny" status="info" type="submit"
+              class="ml-1" style="margin-top: 28px;">
+              <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="search-outline">
+              </nb-icon>
+            </button>
+
+            <button nbTooltip="بازسازی" nbTooltipPlacement="top" size="tiny" nbButton hero status="primary"
+              type="button" (click)="resetFilters()" style="margin-top: 28px;">
+              <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="refresh-outline">
+              </nb-icon>
+            </button>
+          </div>
+        </div>
+      </form>
+      <br />
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<nb-card class="table-x-mine" style="box-shadow: 0 0 4px;">
+  <nb-card-header class="pt-4" style="border-bottom: 0;">
+    <div class="pull-right pt-2">
+      <span class="ml-1">کارتابل ورودی</span>
+      <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="arrow-ios-back-outline">
+      </nb-icon>
+      <span class="mr-1" style="color: #3366ff;">قراردادها</span>
+    </div>
+    <div class="pull-left">
+      <a class="btn btn-info btn-lg" style="color: #fff;" [routerLink]="['/pages/forms/Contract']"
+        *appHasRole="['Association']">
+        <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="file-text-outline">
+        </nb-icon>
+        قرارداد جدید
+      </a>
+    </div>
+    <div class="clearfix"></div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <div style="clear: both;"></div>
+    <div class="table-wrapper">
+      <ng2-smart-table noDataMessage="داده یافت نشد." [settings]="settings" [source]="source | paginate: pagingConfig"
+        (custom)="onCustom($event)" style="direction: ltr;"></ng2-smart-table>
+    </div>
+
+    <span *ngFor="let item of collection | paginate: pagingConfig"></span>
+
+    <nb-card>
+      <nb-card-body>
+        <div class="row">
+          <div class="input-group">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 form-inline pull-right">
+              <label for="pageSize" style="margin-left: 0;">
+                رکورد صفحه:
+              </label>
+              <nb-select status="info" #pageSizeSelect class="pageSizeSelect" [selected]="pagination.itemsPerPage"
+                (selectedChange)="changePageSize(pageSizeSelect.selected)" id="pageSize" placeholder="انتخاب ...">
+                <nb-option *ngFor="let p of pageSizes" [value]="p.id">
+                  {{ p.display }}
+                </nb-option>
+              </nb-select>
+            </div>
+
+            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 mt-2 ">
+              <div class="d-flex justify-content-center">
+                <pagination-controls class="pagination" (pageChange)="pageChanged($event)" previousLabel=""
+                  nextLabel="">
+                </pagination-controls>
+              </div>
+            </div>
+            <!-- <div
+              class="col-lg-2 col-md-2 col-sm-6 col-xs-6 form-inline pull-left"
+            >
+              <label for="pageSize" style="margin-left: 0.45rem;">
+                تعداد رکورد:{{ pagination.totalItems }}
+              </label>
+            </div> -->
+            <div style="padding-right: 7% !important;"
+              class="col-lg-4 col-md-4 col-sm-6 col-xs-6 form-inline pull-left">
+              <label for="pageNumber" style="margin-left: 0.45rem;">
+                صفحه:
+              </label>
+              <input [value]="pagination.currentPage" style="width: 30%;" #pageNumber size="tiny" id="pageNumber"
+                nbInput type="number" min="1" max="pagination.totalPages"
+                (keydown.enter)="pageChanged(pageNumber.value)" />
+              <span> از {{ pagination.totalItems }} نتیجه</span>
+            </div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card status="danger" accent="danger">
+    <nb-card-header>
+      <h4 style="color: linen;">هشدار</h4>
+    </nb-card-header>
+    <nb-card-body>
+      <h6>آیا از حذف مورد اطمینان دارید؟</h6>
+    </nb-card-body>
+    <nb-card-footer>
+      <div class="row">
+        <div class="col-sm-6">
+          <button fullWidth nbButton hero status="danger" (click)="confirmDelete(data)">
+            بلی
+          </button>
+        </div>
+        <div class="col-sm-6">
+          <button fullWidth nbButton hero status="primary" (click)="dialogRef.close()">
+            انصراف
+          </button>
+        </div>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+<ng-template #endOrBlockRequest let-data let-ref="dialogEndOrBlockRef">
+  <nb-card size="medium" status="danger" accent="danger">
+    <nb-card-header>
+      <h6 style="color: linen">
+        غیر فعال سازی پرونده شماره {{ data.fileNumber }}
+      </h6>
+    </nb-card-header>
+    <nb-card-body>
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <form [formGroup]="formEndOrBlockRequest" (ngSubmit)="endOrBlockRequestConfirm(data.entityId)">
+            <nb-card>
+              <nb-card-body>
+                <div class="row">
+                  <div class="col-sm-4 mt-2">
+                    <span style="display: inline-block">
+                      <span class="text-danger font-weight-bold">*</span>
+                      نوع:
+                    </span>
+                  </div>
+
+                  <div class="col-sm-8">
+                    <nb-radio-group class="form-inline radio-x-inline" formControlName="closingType" id="closingType"
+                      name="closingType">
+                      >
+                      <nb-radio value="1"> انسداد </nb-radio>
+                      <nb-radio value="2"> اختتام </nb-radio>
+                    </nb-radio-group>
+
+                    <div *ngIf="isSubmitedEndOrBlockRequest">
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES_EndOrBlockRequest.closingType
+                        ">
+                        <span class="text-danger" *ngIf="
+                            formEndOrBlockRequest
+                              .get('closingType')
+                              .hasError(validation.type)
+                          ">{{ validation.message }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mt-2 mb-3 mb-0">
+                  <div class="col-sm-4 mt-2">
+                    <span style="display: inline-block">
+                      <span class="text-danger font-weight-bold">*</span>
+                      توضیحات:
+                    </span>
+                  </div>
+
+                  <div class="col-sm-8">
+                    <textarea formControlName="comment" fullWidth id="comment" nbInput placeholder="توضیحات"
+                      rows="5"></textarea>
+
+                    <div *ngFor="
+                        let validation of INPUT_VALIDATION_MESSAGES_EndOrBlockRequest.comment
+                      ">
+                      <span class="text-danger" *ngIf="
+                          formEndOrBlockRequest
+                            .get('comment')
+                            .hasError(validation.type) &&
+                          (formEndOrBlockRequest.get('comment').dirty ||
+                            formEndOrBlockRequest.get('comment').touched ||
+                            isSubmitedEndOrBlockRequest)
+                        ">{{ validation.message }}</span>
+                    </div>
+                  </div>
+                </div>
+              </nb-card-body>
+            </nb-card>
+            <nb-card-footer>
+              <div class="row">
+                <div class="col-sm-6 pl-1">
+                  <button [nbSpinner]="endOrBlockRequestLoading" [disabled]="endOrBlockRequestLoading"
+                    nbSpinnerStatus="info" nbSpinnerSize="large" fullWidth nbButton hero status="success" type="submit">
+                    غیر فعال سازی
+                  </button>
+                </div>
+                <div class="col-sm-6 pr-1">
+                  <button [disabled]="endOrBlockRequestLoading" fullWidth nbButton hero status="danger"
+                    (click)="dialogEndOrBlockRef.close()">
+                    انصراف
+                  </button>
+                </div>
+              </div>
+            </nb-card-footer>
+          </form>
+        </div>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</ng-template>
+<ng-template #stopEndOrBlockRequest let-data let-ref="dialogStopEndOrBlockRef">
+  <nb-card size="medium" status="success" accent="success">
+    <nb-card-header>
+      <h6 style="color: linen">فعال سازی پرونده شماره {{ data.fileNumber }}</h6>
+    </nb-card-header>
+    <nb-card-body>
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <form [formGroup]="formStopEndOrBlockRequest"
+            (ngSubmit)="stopEndOrBlockRequestConfirm(data.endOrBlockRequestId)">
+            <nb-card>
+              <nb-card-body>
+                <div class="row mt-2 mb-3 mb-0">
+                  <div class="col-sm-4 mt-2">
+                    <span style="display: inline-block">
+                      <span class="text-danger font-weight-bold">*</span>
+                      توضیحات:
+                    </span>
+                  </div>
+
+                  <div class="col-sm-8">
+                    <textarea formControlName="unCloseComment" fullWidth id="unCloseComment" nbInput
+                      placeholder="توضیحات" rows="5"></textarea>
+
+                    <div *ngFor="
+                        let validation of INPUT_VALIDATION_MESSAGES_StopEndOrBlockRequest.unCloseComment
+                      ">
+                      <span class="text-danger" *ngIf="
+                          formStopEndOrBlockRequest
+                            .get('unCloseComment')
+                            .hasError(validation.type) &&
+                          (formStopEndOrBlockRequest.get('unCloseComment')
+                            .dirty ||
+                            formStopEndOrBlockRequest.get('unCloseComment')
+                              .touched ||
+                            isSubmitedStopEndOrBlockRequest)
+                        ">{{ validation.message }}</span>
+                    </div>
+                  </div>
+                </div>
+              </nb-card-body>
+            </nb-card>
+
+            <nb-card-footer>
+              <div class="row">
+                <div class="col-sm-6 pl-1">
+                  <button [nbSpinner]="stopEndOrBlockRequestLoading" [disabled]="stopEndOrBlockRequestLoading"
+                    nbSpinnerStatus="info" nbSpinnerSize="large" fullWidth nbButton hero status="success" type="submit">
+                    فعال سازی
+                  </button>
+                </div>
+                <div class="col-sm-6 pr-1">
+                  <button [disabled]="stopEndOrBlockRequestLoading" fullWidth nbButton hero status="danger"
+                    (click)="dialogStopEndOrBlockRef.close()">
+                    انصراف
+                  </button>
+                </div>
+              </div>
+            </nb-card-footer>
+          </form>
+        </div>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</ng-template>

@@ -1,0 +1,62 @@
+<!-- <nb-card>
+  <nb-card-body> -->
+    <form [formGroup]="createAnalyze" (ngSubmit)="ngSubmit()">
+      <div class="row">
+        <div class="col-sm-4 col-md-4 col-lg-4 pt-4">
+          <nb-select
+
+            #areasSelect
+            placeholder="انتخاب ناحیه"
+            fullWidth
+            id="neighborhood"
+            formControlName="areas"
+            (selectedChange)="areaSelect(areasSelect.selected)"
+          >
+            <nb-option *ngFor="let area of areas" [value]="area.id">
+              {{ area.title }}
+            </nb-option>
+          </nb-select>
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2"></div>
+        <!-- <div class="col-sm-4 col-md-4 col-lg-4">
+          <label for="cd">تاریخ ارجاع:</label>
+          <dp-date-picker
+            name="cd"
+            fullWidth
+            id="cd"
+            nbInput
+            dir="rtl"
+            mode="day"
+            theme="dp-material"
+            formControlName="date"
+          ></dp-date-picker>
+        </div> -->
+        <div class="col-lg-6 col-md-6 col-sm-6">
+          <nb-select
+            #selectComponent
+            class="select-inside-tab pt-4 w-100"
+            fullWidth
+            style="max-width: 250px;"
+            placeholder="درخواست ها"
+            multiple
+            formControlName="requests"
+          >
+            <nb-option value="{{ type.id }}" *ngFor="let type of freeRequests">
+              {{ type.selectItem }}
+            </nb-option>
+          </nb-select>
+        </div>
+      </div>
+
+  <!-- </nb-card-body>
+</nb-card> -->
+<nb-card>
+  <nb-card-body>
+    <div class="col-sm-3 col-md-3 col-lg-3 mt-4">
+      <button class="btn mr-3" nbButton status="success" type="submit">
+        ثبت
+      </button>
+    </div>
+  </nb-card-body>
+</nb-card>
+</form>

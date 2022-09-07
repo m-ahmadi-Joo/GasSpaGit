@@ -1,0 +1,23 @@
+<!-- <button nbTooltip="چاپ" nbTooltipPlacement="top" size="tiny" class="mb-2 mr-1" nbButton status="secondary" (click)="onPrint(rData.id)">
+    <nb-icon [options]="{ animation: { type: 'zoom' } }" class="icon-button" icon="printer-outline">
+    </nb-icon>
+  </button>
+
+  <button nbTooltip="حذف" nbTooltipPlacement="top" size="tiny" class="mb-2 mr-1" nbButton status="danger" (click)="onDelete(rData)">
+    <nb-icon [options]="{ animation: { type: 'zoom' } }" class="icon-button" icon="close-outline">
+    </nb-icon>
+  </button>
+
+  <button nbTooltip="ویرایش" nbTooltipPlacement="top" size="tiny" class="mb-2 mr-1" nbButton status="warning" (click)="onEdit(rData.id)">
+    <nb-icon [options]="{ animation: { type: 'zoom' } }" class="icon-button" icon="edit-2-outline">
+    </nb-icon>
+  </button>
+   -->
+  <button *appHasRole="['Admin', 'Engineer', 'GasRuleCheckerGroupOne', 'GasRuleCheckerGroupTwo']" nbTooltip="مشاهده جزئیات" nbTooltipPlacement="top" size="tiny" class="mb-2 mr-1" nbButton status="info" (click)="onShowDetail()">
+    <nb-icon [options]="{ animation: { type: 'zoom' } }" class="alert-circle-outline" icon="eye-outline">
+    </nb-icon>
+  </button>
+
+  <ng-template #contentDetailTemplate let-data>
+      <app-ArchitecturalAlbumApproveDetailForm [id]="rData.id"></app-ArchitecturalAlbumApproveDetailForm>
+  </ng-template>

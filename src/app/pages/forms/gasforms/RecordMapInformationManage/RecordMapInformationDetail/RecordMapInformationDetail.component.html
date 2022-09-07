@@ -1,0 +1,227 @@
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <form>
+        <nb-card>
+          <nb-card-body>
+              <h6 class="text-center mb-4">مشاهده جزئیات واحد انشعاب</h6>
+              <nb-card>
+                  <nb-card-body>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 form-hanging">
+                      <div class="input-group">
+
+                          <div class="col-lg-4 col-md-4 col-sm-4 ">
+                              <label>نوع کنتور</label>
+                              <input
+                              fullWidth
+                               readonly
+                               id="meterKind"
+                               nbInput
+                               [value]= "info?.baseMeterTypeTitle"
+                             />
+                            </div>
+
+                          <div class="col-lg-4 col-md-4 col-sm-4 ">
+                          <label for="floorNumber">شماره طبقه</label>
+                          <input
+                          [value]= "info?.floorNumber"
+                           readonly
+                            fullWidth
+                            id="floorNumber"
+                            nbInput
+                            min="0"
+                          />
+
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-sm-4 ">
+                            <label for="unitNumber">شماره واحد</label>
+                            <input
+                            [value]= "info?.unitNumber"
+                             readonly
+                              fullWidth
+                              id="unitNumber"
+                              nbInput
+                              min="0"
+                            />
+
+                          </div>
+
+                       
+
+
+                      </div>
+                    </div>
+                  </nb-card-body>
+                </nb-card>
+
+                <nb-card>
+                  <nb-card-body>
+                      <div class="col-lg-12 col-md-12 col-sm-12 form-hanging">
+                          <div class="input-group">
+
+                              <div class="col-lg-4 col-md-4 col-sm-4 ">
+                                  <label for="direction">جهت</label>
+                                  <input
+                                    readonly
+                                    [value]= "info?.direction"
+                                    fullWidth
+                                    id="direction"
+                                    nbInput
+                                  />
+                                </div>
+
+                            <div class="col-lg-4 col-md-4 col-sm-4 ">
+                                  <label for="fondation">زیربنا</label>
+                                  <input
+                                  readonly
+                                  [value]= "info?.fondation"
+                                    fullWidth
+                                    id="fondation"
+                                    nbInput
+                                    type="number"
+                                  />
+                               </div>
+
+                            <div class="col-lg-4 col-md-4 col-sm-4 ">
+                              <label for="utilization">مصرف</label>
+                              <input
+                               readonly
+                                [value]="info?.utilization"
+                                fullWidth
+                                id="utilization"
+                                nbInput
+                                type="number"
+                              />
+
+                            </div>
+
+                           
+
+                          </div>
+                        </div>
+                  </nb-card-body>
+                </nb-card>
+
+                <nb-card>
+                  <nb-card-body>
+                    <div class="col-lg-12 col-md-12 col-sm-12 form-hanging">
+                      <div class="input-group">
+                          <div class="col-lg-4 col-md-4 col-sm-4 ">
+                              <label for="pipingKind">نوع لوله کشی</label>
+                              <input
+                              readonly
+                                [value]="info?.pipingKind"
+                                fullWidth
+                                id="pipingKind"
+                                nbInput
+                              />
+                            </div>
+
+                            <div class="col-lg-4 col-md-4 col-sm-4 ">
+                              <label for="applianceCount">تعداد وسیله گازسوز</label>
+                              <input
+                               readonly
+                                [value]="info?.applianceCount"
+                                fullWidth
+                                id="applianceCount"
+                                nbInput
+                                type="number"
+                              />
+                            </div>
+
+                            <!-- <div class="col-lg-4 col-md-4 col-sm-4 ">
+                                <label for="collectorCount">تعداد کلکتور</label>
+                                <input
+                                 readonly
+                                  [value]="info?.collectorCount"
+                                  fullWidth
+                                  id="collectorCount"
+                                  nbInput
+                                  type="number"
+                                />
+                              </div> -->
+                              <div class="col-lg-4 col-md-4 col-sm-4 " *ngIf="info?.baseSubscriptionTypeId">
+                                <label for="baseSubscriptionTypeId"> نوع کاربری </label>
+                                <input
+                                 readonly
+                                  [value]="info?.baseSubscriptionTypeId"
+                                  fullWidth
+                                  id="baseSubscriptionTypeId"
+                                  nbInput
+                                  type="text"
+                                />
+                              </div>
+
+                              
+                      </div>
+                    </div>
+
+                  </nb-card-body>
+                </nb-card>
+
+                <nb-card>
+                  <nb-card-body>
+                    <div class="col-lg-12 col-md-12 col-sm-12 form-hanging">
+                    <div class="input-group">
+                        
+                       
+
+                        <div class="col-lg-4 col-md-4 col-sm-4" *ngIf="info?.buildingKind">
+                          <label for="buildingKind">نوع اشتراک</label>
+                          <input
+                           readonly
+                            [value]="info?.buildingKind"
+                            fullWidth
+                            id="buildingKind"
+                            nbInput
+                            type="text"
+                          />
+                        </div>
+
+
+                        <div class="col-lg-4 col-md-4 col-sm-4 " *ngIf="info?.useTitle">
+                          <label for="useTitle">عنوان کاربری</label>
+                          <input
+                           readonly
+                            [value]="info?.useTitle"
+                            fullWidth
+                            id="useTitle"
+                            nbInput
+                            type="text"
+                          />
+                        </div>
+                        </div>
+
+                      </div>
+
+                    </nb-card-body>
+               </nb-card>
+
+                <nb-card>
+                    <nb-card-body>
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-hanging" *ngIf="info?.description">
+                            <div class="input-group">
+                                <div class="col-lg-12 col-md-12 col-sm-12 ">
+                                <label for="description">توضیحات و نظرات</label>
+                                  <textarea
+                                  readonly
+                                   [value]="info?.description"
+                                   fullWidth
+                                   nbInput
+                                   placeholder="توضیحات و نظرات"
+                                   rows="5"
+                                   shape="round"
+                                 ></textarea>
+                                </div>
+                              </div>
+                          </div>
+                      </nb-card-body>
+                 </nb-card>
+
+          </nb-card-body>
+        </nb-card>
+      </form>
+    </div>
+  </div>
+

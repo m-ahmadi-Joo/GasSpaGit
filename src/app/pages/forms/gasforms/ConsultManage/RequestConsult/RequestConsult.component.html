@@ -1,0 +1,266 @@
+<style>
+ nb-select.selectConsultTypeIds /deep/ .select-button {
+    width:70%;
+    /* min-width: 18rem !important;
+    max-width: 20rem !important; */
+  }
+
+  nb-select.selectFileNumber /deep/ .select-button {
+    width:60%;
+    /* min-width: 15rem !important;
+    max-width: 18rem !important; */
+  }
+</style>
+
+<form
+  #formRequestConsult="ngForm"
+  [formGroup]="requestConsultDto"
+  (ngSubmit)="submit()"
+>
+  <div class="row">
+    <div class="col-md-12">
+      <nb-card class="inline-form-card">
+        <nb-card-header>فرم درخواست مشاوره</nb-card-header>
+        <nb-card-body>
+          <div class="col-md-12">
+            <!-- <div class="col-md-offset-2 col-md-8 col-md-offset-2 loginform "> -->
+              <nb-card>
+                <nb-card-body>
+                  <div class="row">
+                    <div class="col-sm-7 col-md-7 col-lg-7">
+                      <div class="form-group">
+                        <label class="ml-1" for="consultType"><span class="text-danger font-weight-bold ml-1">*</span>نوع مشاوره</label>
+                        <nb-select
+                          formControlName="consultTypeIds"
+                          multiple
+                          placeholder="انتخاب نوع مشاوره"
+                          class="selectConsultTypeIds"
+                        >
+                          <nb-option
+                            *ngFor="let item of consultTypes"
+                            [value]="item.id"
+                          >
+                            &nbsp; {{ item.type }}</nb-option
+                          >
+                        </nb-select>
+                        <div *ngIf="isSubmited">
+                          <div
+                            *ngIf="
+                              requestConsultDto.get('consultTypeIds').value
+                                .length === 0
+                            "
+                          >
+                            <div
+                              *ngFor="
+                                let validation of RequestConsult_validation_messages.consultTypeIds
+                              "
+                            >
+                              <span class="text-danger">{{
+                                validation.message
+                              }}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+                    </div>
+
+                    <div class="col-sm-5 col-md-5 col-lg-5">
+                      <div class="form-group">
+                        <label class="ml-1" for="fileNumber">   <span class="text-danger font-weight-bold ml-1">*</span>
+                         شماره درخواست:
+                        </label>
+                        <nb-select #selectedGasRequest
+                            formControlName="gasRequestId" id="fileNumber" placeholder="انتخاب پرونده" class="selectFileNumber">
+                            <nb-option *ngFor="let item of gasRequest"
+                            [value]="item.gasRequestId"> {{ item.fileNumber }}
+                              </nb-option>
+                        </nb-select>
+
+                        <div *ngIf="isSubmited">
+                            <div
+                              *ngIf="
+                                requestConsultDto.get('gasRequestId').value
+                                  .length === 0
+                              "
+                            >
+                              <div
+                                *ngFor="
+                                  let validation of RequestConsult_validation_messages.gasRequestId
+                                "
+                              >
+                                <span class="text-danger">{{
+                                  validation.message
+                                }}</span>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row" *ngIf="userRole === 'Executor' || userRole === 'Admin'">
+                      <div class="col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group">
+                            <label for="totalFondation"><span class="text-danger font-weight-bold ml-1">*</span>زیربنا</label>
+                            <input
+                              formControlName="totalFondation"
+                              fullWidth
+                              id="tz"
+                              nbInput
+                              type="number"
+                              min="0"
+                            />
+                          <div
+                            *ngFor="
+                              let validation of RequestConsult_validation_messages.totalFondation
+                            "
+                          >
+                            <span
+                              class="text-danger"
+                              *ngIf="
+                                requestConsultDto
+                                  .get('totalFondation')
+                                  .hasError(validation.type) &&
+                                (requestConsultDto.get('totalFondation').dirty ||
+                                  requestConsultDto.get('totalFondation').touched)
+                              "
+                              >{{ validation.message }}</span
+                            >
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-6 col-md-6 col-lg-6">
+                        <div class="form-group">
+                          <label for="ms">   <span class="text-danger font-weight-bold ml-1">*</span>
+                            میزان مصرف</label>
+                            <input
+                            formControlName="totalConsumption"
+                            fullWidth
+                            id="ms"
+                            nbInput
+                            type="number">
+                            <div *ngFor="
+                            let validation of RequestConsult_validation_messages.totalConsumption
+                            ">
+                            <span class="text-danger" *ngIf="
+                            requestConsultDto
+                            .get('totalConsumption')
+                                  .hasError(validation.type) &&
+                                  (requestConsultDto.get('totalConsumption').dirty ||
+                                  requestConsultDto.get('totalConsumption').touched)
+                              ">{{ validation.message }}</span>
+                            </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="question">
+                            <span class="text-danger font-weight-bold ml-1">*</span>
+                          سوال</label>
+                        <textarea
+                          id="question"
+                          rows="5"
+                          nbInput
+                          fullWidth
+                          formControlName="question"
+                          [status]="
+                            requestConsultDto.get('question').dirty
+                              ? requestConsultDto.get('question').invalid
+                                ? 'danger'
+                                : 'success'
+                              : ''
+                          "
+                        ></textarea>
+                      </div>
+                      <div
+                        *ngFor="
+                          let validation of RequestConsult_validation_messages.question
+                        "
+                      >
+                        <span
+                          class="text-danger"
+                          *ngIf="
+                            requestConsultDto
+                              .get('question')
+                              .hasError(validation.type) &&
+                            (requestConsultDto.get('question').dirty ||
+                              requestConsultDto.get('question').touched)
+                          "
+                          >{{ validation.message }}</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="!isEdit">
+                        <button
+                        type="submit"
+                        nbButton
+                        fullWidth
+                        [disabled]="
+                        loading ||
+                        !requestConsultDto.valid ||
+                        requestConsultDto.get('consultTypeIds').value.length === 0 ||
+                        requestConsultDto.get('gasRequestId').value.length === 0"
+                        hero
+                        status="success"
+                        [nbSpinner]="loading"
+                          nbSpinnerStatus="info"
+                          nbSpinnerSize="large"
+                      >
+                        ثبت و پرداخت
+                      </button>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6" *ngIf="isEdit">
+                        <button
+                        type="submit"
+                        nbButton
+                        fullWidth
+                        [nbSpinner]="loading"
+                          nbSpinnerStatus="info"
+                          nbSpinnerSize="large"
+                        [disabled]="
+                        loading ||
+                          !requestConsultDto.valid ||
+                          requestConsultDto.get('consultTypeIds').value.length === 0 ||
+                          requestConsultDto.get('gasRequestId').value.length === 0
+                        "
+                        hero
+                        status="primary"
+                      >
+                      ویرایش
+                      </button>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <button
+                        [disabled]="loading"
+                          nbButton
+                          hero
+                          status="warning"
+                          fullWidth
+                          type="button"
+                          [routerLink]="['/pages/forms/ConsultList']"
+                        >
+                          بازگشت به لیست
+                        </button>
+                    </div>
+                  </div>
+
+                </nb-card-body>
+              </nb-card>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</form>

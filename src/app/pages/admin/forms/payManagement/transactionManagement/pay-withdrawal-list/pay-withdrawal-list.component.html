@@ -1,0 +1,207 @@
+<style>
+  label {
+    font-size: 1rem !important;
+  }
+  label strong {
+    margin-left: 10px;
+  }
+</style>
+
+<nb-card class="table-x-mine" style="box-shadow: 0 0 4px">
+  <nb-card-header class="pt-4" style="border-bottom: 0">
+    <div class="pull-right pt-2">
+      <span>کارتابل مدیریت</span>
+      <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="arrow-ios-back-outline">
+      </nb-icon>
+      <span class="mr-1" style="color:#3366ff">امور مالی</span>
+      <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="arrow-ios-back-outline">
+      </nb-icon>
+      <span class="mr-1" style="color:#3366ff">تراکنش ها</span>
+      <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="arrow-ios-back-outline">
+      </nb-icon>
+      <span style="color:#3366ff">درخواست ها</span>
+    </div>
+    <div class="pull-left">
+      <button [routerLink] = "['/pages/admin/PayTransactionList']" class="ml-1" nbButton status="primary" hero>
+        <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="credit-card-outline">
+        </nb-icon>
+         بازگشت به لیست تراکنش ها
+      </button>
+    </div>
+    <div class="clearfix"></div>
+
+  </nb-card-header>
+  <!-- (userRowSelect)="pooriya($event)" -->
+  <nb-card-body>
+
+
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <nb-card style="box-shadow: 0 0 4px">
+          <!-- <nb-card-header > مدیریت انشعاب های گاز </nb-card-header> -->
+          <nb-card-body class="mt-2">
+            <!-- <nb-card>
+              <nb-card-body> -->
+            <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
+              <div class="input-group mb-0">
+
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                  <label><strong>نوع پرداخت:</strong></label>
+                  <label>{{ info?.paymentTypeTitle }}</label>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                  <label><strong>نام پرداخت کننده:</strong></label>
+                  <label>{{ info?.payerName }}</label>
+                </div>
+    
+                <div class="col-lg-3 col-md-3 col-sm-3 ">
+                  <label><strong>کد ملی پرداخت کننده:</strong></label>
+                  <label>{{ info?.payerNationalCode }}</label>
+                </div>
+    
+                <div class="col-lg-3 col-md-3 col-sm-3 ">
+                  <label><strong>وضعیت پرداخت:</strong></label>
+                  <label>{{ info?.status }}</label>
+                </div>
+
+              </div>
+            </div>
+            
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <div class="input-group" style="margin-bottom: 0 !important;">
+
+                <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="info?.paymentTypeClassName === 'ShematicPay'">
+                  <label><strong>زمان ثبت:</strong></label>
+                  <label>{{ info?.rDateTime }}</label>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="info?.paymentTypeClassName === 'BankReciept'">
+                  <label><strong>کاربر ثبت کننده فیش دستی:</strong></label>
+                  <label>{{ info?.recieptName }}</label>
+                </div>
+    
+                <div class="col-lg-3 col-md-3 col-sm-3 " *ngIf="info?.paymentTypeClassName === 'BankReciept'">
+                  <label><strong>شماره فیش دستی:</strong></label>
+                  <label *ngIf="!info?.recieptNumber"> ---------------- </label>
+                  <label *ngIf="info?.recieptNumber">{{ info?.recieptNumber }}</label>
+                </div>
+
+
+                <div class="col-lg-3 col-md-3 col-sm-3 " *ngIf="info?.paymentTypeClassName === 'OnlinePay'">
+                  <label><strong>توکن بانک:</strong></label>
+                  <label *ngIf="!info?.bankToken"> ---------------- </label>
+                  <label *ngIf="info?.bankToken">{{ info?.bankToken }}</label>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 " *ngIf="info?.paymentTypeClassName === 'OnlinePay'">
+                  <label><strong>کد رهگیری بانک:</strong></label>
+                  <label *ngIf="!info?.bankRefrence"> ---------------- </label>
+                  <label *ngIf="info?.bankRefrence">{{ info?.bankRefrence }}</label>
+                </div>
+            
+                <div class="col-lg-3 col-md-3 col-sm-3 ">
+                  <label><strong>کل مبلغ پرداخت شده:</strong></label>
+                  <label>{{ info?.amount }}</label>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 ">
+                  <label><strong>شناسه پرداخت جمعی:</strong></label>
+                  <label>{{ info?.trackNumBankAdditionalData }}</label>
+                </div>
+              </div>
+    
+            </div>
+    
+            <!-- </nb-card-body>
+            </nb-card> -->
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+    
+    <div style="clear: both;"></div>
+    <ng2-smart-table [settings]="settings" [source]="source | paginate: pagingConfig" style="direction: ltr;">
+    </ng2-smart-table>
+
+    <span *ngFor="let item of collection | paginate: pagingConfig"></span>
+
+    <nb-card>
+      <nb-card-body>
+        <div class="row">
+          <div class="input-group">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 form-inline pull-right">
+              <label for="pageSize" style="margin-left: 0;">
+                رکورد صفحه:
+              </label>
+              <nb-select status="info" #pageSizeSelect class="pageSizeSelect" [selected]="pagination.itemsPerPage"
+                (selectedChange)="changePageSize(pageSizeSelect.selected)" id="pageSize" placeholder="انتخاب ...">
+                <nb-option *ngFor="let p of pageSizes" [value]="p.id">
+                  {{ p.display }}
+                </nb-option>
+              </nb-select>
+            </div>
+
+            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 mt-2 ">
+              <div class="d-flex justify-content-center">
+                <pagination-controls class="pagination" (pageChange)="pageChanged($event)" previousLabel=""
+                  nextLabel="">
+                </pagination-controls>
+              </div>
+            </div>
+            <!-- <div
+              class="col-lg-2 col-md-2 col-sm-6 col-xs-6 form-inline pull-left"
+            >
+              <label for="pageSize" style="margin-left: 0.45rem;">
+                تعداد رکورد:{{ pagination.totalItems }}
+              </label>
+            </div> -->
+            <div style="padding-right: 7% !important;"
+              class="col-lg-4 col-md-4 col-sm-6 col-xs-6 form-inline pull-left">
+              <label for="pageNumber" style="margin-left: 0.45rem;">
+                صفحه:
+              </label>
+              <input [value]="pagination.currentPage" style="width: 30%;" #pageNumber size="tiny" id="pageNumber"
+                nbInput type="number" min="1" max="pagination.totalPages"
+                (keydown.enter)="pageChanged(pageNumber.value)" />
+              <span> از {{ pagination.totalItems }} نتیجه</span>
+            </div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card status="danger" accent="danger">
+    <nb-card-header><h4 style="color: linen">هشدار</h4></nb-card-header>
+    <nb-card-body><h6>آیا از حذف مورد اطمینان دارید؟</h6></nb-card-body>
+    <nb-card-footer>
+      <div class="row">
+        <div class="col-sm-6">
+          <button
+            fullWidth
+            nbButton
+            hero
+            status="danger"
+            (click)="confirmDelete(data)"
+          >
+            بلی
+          </button>
+        </div>
+        <div class="col-sm-6">
+          <button
+            fullWidth
+            nbButton
+            hero
+            status="primary"
+            (click)="dialogRef.close()"
+          >
+            انصراف
+          </button>
+        </div>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

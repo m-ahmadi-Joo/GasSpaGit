@@ -1,0 +1,124 @@
+<nb-card>
+  <nb-card-header>ثبت اسناد</nb-card-header>
+  <nb-card-body>
+    <nb-card *ngIf="
+        requestStateType === 'EngineersMap' || requestStateType === '1/2500Map'
+      ">
+      <nb-card-body>
+        <app-gasRequestDetailBox [gasRequestId]="gasReqId"></app-gasRequestDetailBox>
+      </nb-card-body>
+    </nb-card>
+    <form (ngSubmit)="submit()" [formGroup]="docForm">
+      <div class="row">
+        <div class="col-md-12">
+          <nb-card class="inline-form-card">
+            <nb-card-body>
+              <div class="row">
+                <div class="col-md-12">
+                  <nb-card>
+                    <nb-card-body>
+                      <div *ngFor="let a of inputCount; let i = index">
+                        <div class="form-group" style="
+                            margin: 12px;
+                            padding: 13px;
+                            box-shadow: 0 0 3px;
+                          ">
+                          <label class="mb-0"> {{ a?.title }}</label>
+
+                          <strong class="mb-2" style="
+                              color: rgb(0, 68, 255);
+                              display: block;
+                              font-size: 11px;
+                            ">
+                            حداکثر حجم {{ sizeTitles[i] }} - فرمت ها ({{
+                            a.extentions
+                            }})
+                          </strong>
+                          <!-- <strong class="mb-2" style="color: red; display:block; font-size: 11px;">تایپ ها قابل بارگذاری</strong> -->
+
+
+                          <!-- <app-uploader *ngIf=" 
+                              this.requestStateType === 'EditUploadDocuments'|| this.requestStateType === 'ReuploadEngineerDesignationMap'
+                            " [formControlName]="a.formControlName" [progress]="progress" [filePath]="
+                              filePathRes[i].fileName === a.formControlName
+                                ? filePathRes[i].path
+                                : null
+                            " [fileExtentions]="a.extentions" [fileSize]="a.size"> 
+                          </app-uploader>
+                           -->
+                          <!-- <app-uploader  [formControlName]="a.formControlName" [progress]="progress" [className]="this.requestStateType" [filePath]="
+                          
+                           a.filePaths.length>0
+                             ? a.filePaths
+                             : null
+                         " [fileExtentions]="a.extentions" [fileSize]="a.size">
+                          </app-uploader> -->
+
+
+
+                          <app-uploader *ngIf="
+                              this.requestStateType !== 'AdminAddDocuments'
+                            " [formControlName]="a.formControlName" [progress]="progress"
+                            [fileExtentions]="a.extentions" [className]="this.requestStateType" [fileSize]="a.size">
+                          </app-uploader>
+
+                          <!-- <span *ngIf="docForm.get(a.formControlName).errors.requiredFileType">
+                       پسوند فایل نامناسب است
+                      </span> -->
+                        </div>
+                      </div>
+                    </nb-card-body>
+                  </nb-card>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+          <!-- <nb-card
+            *ngIf="
+              requestStateType === 'EngineersMap' ||
+              requestStateType === '1/2500Map'
+            "
+          >
+            <nb-card-body>
+              <textarea
+                formControlName="controlDescription"
+                fullWidth
+                nbInput
+                placeholder="توضیحات و نظرات"
+                rows="5"
+                shape="round"
+              ></textarea>
+            </nb-card-body>
+          </nb-card> -->
+          <nb-card>
+            <nb-card-body>
+              <div class="row">
+                <div class="btn-group col-xs-12 col-lg-6 col-md-6 col-sm-6">
+                  <button
+                    *ngIf="this.requestStateType !== 'EditUploadDocuments'&&this.requestStateType!== 'ReUploadArchitectualAlbum'"
+                    nbButton [disabled]="docForm?.invalid || loading" status="success" type="submit" class="btn"
+                    style="width: 100%" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large">
+                    ثبت
+                  </button>
+                  <button nbButton
+                    *ngIf="this.requestStateType === 'EditUploadDocuments'||this.requestStateType === 'ReUploadArchitectualAlbum'"
+                    [disabled]="docForm?.invalid || loading" status="primary" type="submit" class="btn"
+                    style="width: 100%" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large">
+                    ویرایش
+                  </button>
+                </div>
+
+                <div class="btn-group col-xs-12 col-lg-6 col-md-6 col-sm-6">
+                  <button [disabled]="loading" [routerLink]="['/pages/forms/GasReqList']" nbButton status="info"
+                    type="button" class="btn" style="width: 100%">
+                    بازگشت به لیست درخواست ها
+                  </button>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

@@ -1,0 +1,64 @@
+<form [formGroup]="cgmForm" (ngSubmit)="submit()">
+  <nb-card>
+    <nb-card-header>درخواست بازرسی</nb-card-header>
+    <nb-card-body>
+      <div class="row mr-3">
+        <label class="mt-2" for="cd">تاریخ آمادگی : </label>
+        <dp-date-picker
+          name="cd"
+          fullWidth
+          id="cd"
+          nbInput
+          dir="rtl"
+          mode="day"
+          theme="dp-material"
+          formControlName="requestDate"
+        ></dp-date-picker>
+        <div
+        *ngFor="
+          let validation of INPUT_VALIDATION_MESSAGES.requestDate
+        "
+      >
+        <span
+          class="text-danger"
+          *ngIf="
+            cgmForm
+              .get('requestDate')
+              .hasError(validation.type) &&
+            (cgmForm.get('requestDate').dirty ||
+              cgmForm.get('requestDate').touched)
+          "
+        >
+          {{ validation.message }}</span
+        >
+      </div>
+      </div>
+      <nb-card>
+        <nb-card-body>
+          <label for="cmt"> شرح: </label>
+          <textarea
+            name="cmt"
+            id="cmt"
+            rows="7"
+            nbInput
+            fullWidth
+            formControlName="desc"
+          ></textarea>
+        </nb-card-body>
+      </nb-card>
+      <nb-card>
+        <nb-card-body>
+          <button
+            type="submit"
+            nbButton
+            status="success"
+            class="btn btn-success btn-block"
+            [disabled]="cgmForm.invalid"
+          >
+            ثبت
+          </button>
+        </nb-card-body>
+      </nb-card>
+    </nb-card-body>
+  </nb-card>
+</form>

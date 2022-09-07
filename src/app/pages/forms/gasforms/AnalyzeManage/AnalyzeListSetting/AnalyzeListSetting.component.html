@@ -1,0 +1,51 @@
+<nb-card>
+  <nb-card-header>
+    <ngx-analyzeListDetail [id]="id"> </ngx-analyzeListDetail>
+  </nb-card-header>
+  <nb-card-body>
+    <form [formGroup]="setting" (ngSubmit)="ngSubmit()">
+      <div class="row">
+        <div class="col-sm-3 col-md-3 col-lg-3 mt-4">
+          <nb-checkbox
+            formControlName="notBreakList"
+            name="noExecutablePermission"
+            type="checkbox"
+          ></nb-checkbox>
+          <strong>تفکیک شود</strong>
+        </div>
+        <div class="col-sm-3 col-md-3 col-lg-3 mt-4">
+          <nb-checkbox
+            formControlName="dontAnalyze"
+            name="noExecutablePermission"
+            type="checkbox"
+          ></nb-checkbox>
+          <strong>ارجاع شود</strong>
+        </div>
+
+        <div class="col-sm-6 col-md-6 col-lg-6">
+          <label>نحوه ارجاع</label>
+          <nb-radio-group
+            class="form-inline radio-x-inline"
+            formControlName="referralMethod"
+            id="referralMethod"
+            name="referralMethod"
+          >
+            <nb-radio [value]="1">
+              ارجاع اتوماتیک
+            </nb-radio>
+            <nb-radio [value]="0">
+              ارجاع دستی
+            </nb-radio>
+          </nb-radio-group>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3 col-md-3 col-lg-3 mt-4">
+          <button class="btn mr-3" nbButton status="success" type="submit">
+            ثبت
+          </button>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>

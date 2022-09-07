@@ -1,0 +1,121 @@
+<nb-card>
+  <nb-card-header>
+    تعریف دوره آموزشی
+  </nb-card-header>
+  <nb-card-body>
+    <nb-card>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-sm-4 col-md-4">
+            <strong>نام دوره</strong>
+            <input
+              fullWidth
+              nbInput
+              id="cnt"
+              formControlName="courseName"
+            />
+          </div>
+          <div class="col-sm-4 col-md-4">
+            <strong>شهریه</strong>
+            <input
+              type="number"
+              fullWidth
+              nbInput
+              id="cnt"
+              formControlName="tuition"
+            />
+          </div>
+          <div class="col-sm-4 col-md-4">
+            <strong>نام محل برگزاری</strong>
+            <input
+              fullWidth
+              nbInput
+              id="cnt"
+              formControlName="venueName"
+            />
+          </div>
+        </div>
+        <div class="row mt-5">
+          <div class="col-sm-4 col-md-4">
+            <strong>حداکثر افراد شرکت کننده</strong>
+            <input
+              fullWidth
+              nbInput
+              id="cnt"
+              type="number"
+              formControlName="participantCount"
+            />
+          </div>
+
+          <div class="col-sm-4 col-md-4">
+            <strong>تاریخ شروع دوره</strong>
+            <dp-date-picker
+              name="cd"
+              fullWidth
+              id="cd"
+              nbInput
+              dir="rtl"
+              mode="day"
+              theme="dp-material"
+              formControlName="courseStartDate"
+              class="col-sm-9"
+            ></dp-date-picker>
+          </div>
+          <div class="col-sm-4 col-md-4">
+            <strong>تاریخ پایان دوره</strong>
+            <dp-date-picker
+              name="cd"
+              fullWidth
+              id="cd"
+              nbInput
+              dir="rtl"
+              mode="day"
+              theme="dp-material"
+              formControlName="courseEndDate"
+              class="col-sm-9"
+            ></dp-date-picker>
+          </div>
+        </div>
+        <nb-card>
+          <nb-card-body>
+            <div class="row mt-2">
+              <strong>آدرس محل برگزاری</strong>
+              <textarea
+                formControlName="venueLocation"
+                fullWidth
+                nbInput
+                rows="3"
+                shape="round"
+              ></textarea>
+            </div>
+            <div class="row mt-4">
+              <strong>شرح</strong>
+              <textarea
+                formControlName="desc"
+                fullWidth
+                nbInput
+                rows="4"
+                shape="round"
+              ></textarea>
+            </div>
+          </nb-card-body>
+        </nb-card>
+        <nb-card>
+          <nb-card-body>
+            <button
+              nbSpinnerStatus="info"
+              nbSpinnerSize="large"
+              type="submit"
+              nbButton
+              (click)="submit()"
+              status="success"
+              class="btn btn-success btn-block"
+            >
+              ثبت
+            </button>
+          </nb-card-body>
+        </nb-card>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+</nb-card>

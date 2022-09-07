@@ -1,0 +1,312 @@
+<nb-card>
+  <nb-card-header> افزودن جوشکار </nb-card-header>
+  <nb-card-body>
+    <form (ngSubmit)="onSubmit()" [formGroup]="sendForm">
+      <nb-card>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-sm-3 col-md-3 col-lg-3">
+              <label>نام</label>
+              <input formControlName="firstName" fullWidth nbInput />
+              <div
+                *ngFor="let validation of INPUT_VALIDATION_MESSAGES.firstName"
+              >
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    sendForm.get('firstName').hasError(validation.type) &&
+                    (sendForm.get('firstName').dirty ||
+                      sendForm.get('firstName').touched)
+                  "
+                  >{{ validation.message }}</span
+                >
+              </div>
+            </div>
+            <div class="col-sm-3 col-md-3 col-lg-3">
+              <label> نام خانوادگی</label>
+              <input formControlName="lastName" fullWidth nbInput />
+              <div
+                *ngFor="let validation of INPUT_VALIDATION_MESSAGES.lastName"
+              >
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    sendForm.get('lastName').hasError(validation.type) &&
+                    (sendForm.get('lastName').dirty ||
+                      sendForm.get('lastName').touched)
+                  "
+                  >{{ validation.message }}</span
+                >
+              </div>
+            </div>
+            <div class="col-sm-3 col-md-3 col-lg-3">
+              <label> کد ملی</label>
+              <input formControlName="nationalID" fullWidth nbInput />
+              <div
+                *ngFor="let validation of INPUT_VALIDATION_MESSAGES.nationalID"
+              >
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    sendForm.get('nationalID').hasError(validation.type) &&
+                    (sendForm.get('nationalID').dirty ||
+                      sendForm.get('nationalID').touched)
+                  "
+                  >{{ validation.message }}</span
+                >
+              </div>
+            </div>
+
+            <div class="col-sm-3 col-md-3 col-lg-3">
+              <label>شماره موبایل</label>
+              <input formControlName="phoneNumber" fullWidth nbInput />
+              <div
+                *ngFor="let validation of INPUT_VALIDATION_MESSAGES.phoneNumber"
+              >
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    sendForm.get('phoneNumber').hasError(validation.type) &&
+                    (sendForm.get('phoneNumber').dirty ||
+                      sendForm.get('phoneNumber').touched)
+                  "
+                  >{{ validation.message }}</span
+                >
+              </div>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+
+      <div class="row mt-5 mr-2">
+        <div class="col-sm-3 col-md-3 col-lg-3">
+          <label> کد </label>
+          <input formControlName="code" fullWidth nbInput />
+          <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.code">
+            <span
+              class="text-danger"
+              *ngIf="
+                sendForm.get('code').hasError(validation.type) &&
+                (sendForm.get('code').dirty || sendForm.get('code').touched)
+              "
+              >{{ validation.message }}</span
+            >
+          </div>
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2">
+          <label> نام پدر</label>
+          <input formControlName="fatherName" fullWidth nbInput />
+          <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.fatherName">
+            <span
+              class="text-danger"
+              *ngIf="
+                sendForm.get('fatherName').hasError(validation.type) &&
+                (sendForm.get('fatherName').dirty ||
+                  sendForm.get('fatherName').touched)
+              "
+              >{{ validation.message }}</span
+            >
+          </div>
+        </div>
+
+        <div class="col-sm-2 col-md-2 col-lg-2">
+          <label>شماره شناسنامه</label>
+          <input
+            formControlName="birthCertificateId"
+            fullWidth
+            nbInput
+            type="text"
+          />
+          <div
+            *ngFor="
+              let validation of INPUT_VALIDATION_MESSAGES.birthCertificateId
+            "
+          >
+            <span
+              class="text-danger"
+              *ngIf="
+                sendForm.get('birthCertificateId').hasError(validation.type) &&
+                (sendForm.get('birthCertificateId').dirty ||
+                  sendForm.get('birthCertificateId').touched)
+              "
+              >{{ validation.message }}</span
+            >
+          </div>
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4">
+          <label>تاریخ اعتبار گواهینامه</label>
+          <dp-date-picker
+            name="cd"
+            fullWidth
+            id="cd"
+            nbInput
+            dir="rtl"
+            mode="day"
+            theme="dp-material"
+            formControlName="certificateValidityDate"
+            class="col-sm-9"
+          ></dp-date-picker>
+          <div
+            *ngFor="
+              let validation of INPUT_VALIDATION_MESSAGES.certificateValidityDate
+            "
+          >
+            <span
+              class="text-danger"
+              *ngIf="
+                sendForm
+                  .get('certificateValidityDate')
+                  .hasError(validation.type) &&
+                (sendForm.get('certificateValidityDate').dirty ||
+                  sendForm.get('certificateValidityDate').touched)
+              "
+              >{{ validation.message }}</span
+            >
+          </div>
+        </div>
+        <!-- <div class="col-sm-4 col-md-4 col-lg-4">
+          <label>تاریخ انقضا پروانه:</label>
+          <dp-date-picker
+            name="cd"
+            fullWidth
+            id="cd"
+            nbInput
+            dir="rtl"
+            mode="day"
+            theme="dp-material"
+            formControlName="certificateExpireDate"
+            class="col-sm-9"
+          ></dp-date-picker>
+          <div
+            *ngFor="
+              let validation of INPUT_VALIDATION_MESSAGES.certificateExpireDate
+            "
+          >
+            <span
+              class="text-danger"
+              *ngIf="
+                sendForm
+                  .get('certificateExpireDate')
+                  .hasError(validation.type) &&
+                (sendForm.get('certificateExpireDate').dirty ||
+                  sendForm.get('certificateExpireDate').touched)
+              "
+              >{{ validation.message }}</span
+            >
+          </div>
+        </div> -->
+      </div>
+      <nb-card>
+        <nb-card-body>
+          <div class="col-sm-4 col-md-4 col-lg-4">
+            <label>وضعیت</label>
+            <nb-radio-group
+              class="form-inline radio-x-inline"
+              formControlName="isDeleted"
+              id="isDeleted"
+              name="isDeleted"
+            >
+              <nb-radio value="0"> فعال </nb-radio>
+              <nb-radio value="1"> غیر فعال </nb-radio>
+            </nb-radio-group>
+          </div>
+        </nb-card-body>
+      </nb-card>
+
+      <nb-card>
+        <nb-card-body>
+          <label for="cmt"> آدرس </label>
+          <textarea
+            name="cmt"
+            id="cmt"
+            rows="4"
+            nbInput
+            fullWidth
+            formControlName="address"
+          ></textarea>
+          <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.address">
+            <span
+              class="text-danger"
+              *ngIf="
+                sendForm.get('address').hasError(validation.type) &&
+                (sendForm.get('address').dirty ||
+                  sendForm.get('address').touched)
+              "
+              >{{ validation.message }}</span
+            >
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <nb-card>
+        <nb-card-body>
+          <div class="row" style="text-align: left; direction: ltr">
+            <div class="col-sm-2 col-md-2 col-lg-2 p-1">
+              <button
+                class="btn"
+                nbButton
+                status="warning"
+                style="width: 100%"
+                type="button"
+                [routerLink]="['/pages/forms/WeldersList']"
+              >
+                بازگشت به لیست
+              </button>
+            </div>
+            <div class="col-sm-2 col-md-2 col-lg-2 p-1" *ngIf="!isEdit">
+              <button
+                class="btn"
+                nbButton
+                status="success"
+                style="width: 100%"
+                type="submit"
+                *ngIf="!isEdit"
+                [disabled]="sendForm.invalid"
+              >
+                ثبت
+              </button>
+            </div>
+            <div class="col-sm-2 col-md-2 col-lg-2 p-1" *ngIf="isEdit">
+              <button
+                class="btn"
+                nbButton
+                status="success"
+                style="width: 100%"
+                type="submit"
+                *ngIf="isEdit"
+                [disabled]="sendForm.invalid"
+              >
+                ویرایش
+              </button>
+            </div>
+            <div class="col-sm-2 col-md-2 col-lg-2 p-1" *ngIf="!isEdit">
+              <button
+                class="btn"
+                nbButton
+                *appHasRole="['Admin', 'GasEmployee', 'Association']"
+                status="primary"
+                style="width: 100%"
+                type="button"
+                (click)="sendForm.reset()"
+              >
+                جدید
+              </button>
+            </div>
+            <div class="col-sm-2 col-md-2 col-lg-2 p-1" *ngIf="isEdit">
+              <button
+                class="btn"
+                *appHasRole="['Admin', 'GasEmployee', 'Association']"
+                nbButton
+                status="primary"
+                style="width: 100%"
+                type="button"
+                [routerLink]="['/pages/forms/CreateWelder']"
+              >
+                جدید
+              </button>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </form>
+  </nb-card-body>
+</nb-card>

@@ -1,0 +1,179 @@
+<form [formGroup]="cgmForm" (ngSubmit)="submit()">
+  <nb-card>
+    <nb-card-body>
+      <nb-card class="inline-form-card">
+        <nb-card-body>
+          <nb-card>
+            <nb-card-header>اطلاعات جوشکار فلزی:</nb-card-header>
+            <nb-card-body>
+              <div class="row">
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                  <strong>نام:</strong>
+                  <input
+                    fullWidth
+                    nbInput
+                    id="cnt"
+                    value="{{ weldersInfomation?.metalFirstName }}"
+                    readonly
+                  />
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                  <strong>نام خانوادگی:</strong>
+                  <input
+                    fullWidth
+                    nbInput
+                    id="cnt"
+                    readonly
+                    value="{{ weldersInfomation?.metalLastName }}"
+                  />
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                  <strong>موبایل:</strong>
+                  <input
+                    fullWidth
+                    nbInput
+                    id="cnt"
+                    readonly
+                    value="{{ weldersInfomation?.metalPhoneNumber }}"
+                  />
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+
+          <nb-card>
+            <nb-card-header>اطلاعات جوشکار پلی اتیلن:</nb-card-header>
+            <nb-card-body>
+              <div class="row">
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                  <strong>نام:</strong>
+                  <input
+                    fullWidth
+                    readonly
+                    nbInput
+                    id="cnt"
+                    value="{{ weldersInfomation?.peFirstName }}"
+                  />
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                  <strong>نام خانوادگی:</strong>
+                  <input
+                    fullWidth
+                    readonly
+                    nbInput
+                    id="cnt"
+                    value="{{ weldersInfomation?.peLastName }}"
+                  />
+                </div>
+                <div class="col-sm-4 col-md-4 col-lg-4">
+                  <strong>موبایل:</strong>
+                  <input
+                    fullWidth
+                    nbInput
+                    id="cnt"
+                    readonly
+                    value="{{ weldersInfomation?.pePhoneNumber }}"
+                  />
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+          <nb-card>
+            <nb-card-header>اطلاعات تست کننده:</nb-card-header>
+            <nb-card-body>
+              <div class="row">
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                  <strong>نام:</strong>
+                  <input
+                    fullWidth
+                    readonly
+                    nbInput
+                    id="cnt"
+                    value="{{ weldersInfomation?.testerFirstName }}"
+                  />
+                </div>
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                  <strong>نام خانوادگی:</strong>
+                  <input
+                    fullWidth
+                    nbInput
+                    id="cnt"
+                    readonly
+                    value="{{ weldersInfomation?.testerLastName }}"
+                  />
+                </div>
+                <div class="col-sm-3 col-md-4 col-lg-3">
+                  <strong>موبایل:</strong>
+                  <input
+                    fullWidth
+                    nbInput
+                    readonly
+                    id="cnt"
+                    value="{{ weldersInfomation?.testerPhoneNumber }}"
+                  />
+                </div>
+                <div class="col-sm-3 col-md-4 col-lg-3">
+                  <strong>شماره X-Rayچادر:</strong>
+                  <input
+                    fullWidth
+                    nbInput
+                    id="cnt"
+                    readonly
+                    value="{{ weldersInfomation?.xRay }}"
+                  />
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+          <nb-card>
+            <nb-card-header>
+              گواهینامه کالیبراسیون دستگاه جوش پلی اتیلن:
+            </nb-card-header>
+            <nb-card-body>
+              <textarea
+                fullWidth
+                nbInput
+                readonly
+                value="{{ weldersInfomation?.certificationDeviceCalibration }}"
+                rows="5"
+                shape="round"
+              ></textarea>
+              <nb-card>
+                <nb-card-body class="mt-2">
+                  <strong>نتیجه:</strong>
+                  <nb-radio-group
+                    class="form-inline"
+                    id="conf"
+                    name="conf"
+                    formControlName="result"
+                  >
+                    <nb-radio value="true">
+                      تایید
+                    </nb-radio>
+                    <nb-radio value="false">
+                      عدم تایید
+                    </nb-radio>
+                  </nb-radio-group>
+                </nb-card-body>
+              </nb-card>
+            </nb-card-body>
+          </nb-card>
+          <nb-card>
+            <nb-card-body>
+              <button
+                nbSpinnerStatus="info"
+                nbSpinnerSize="large"
+                type="submit"
+                nbButton
+                status="success"
+                class="btn btn-success btn-block"
+              >
+                ثبت
+              </button>
+            </nb-card-body>
+          </nb-card>
+        </nb-card-body>
+      </nb-card>
+    </nb-card-body>
+  </nb-card>
+</form>

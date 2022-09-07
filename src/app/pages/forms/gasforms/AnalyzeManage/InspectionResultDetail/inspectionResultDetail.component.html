@@ -1,0 +1,35 @@
+<nb-card>
+  <nb-card-body>
+
+      <nb-card>
+        <nb-card-body style="margin-bottom: 0px;">
+          <div class="row">
+            <strong>نتیجه:</strong>
+            <label class="mr-2" *ngIf="result?.result == true" style="color: green;"
+              >تایید</label
+            >
+            <label class="mr-2" *ngIf="result?.result == false" style="color: red;"
+              >عدم تایید</label
+            >
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <nb-card>
+        <nb-card-body>
+          <div class="row">
+            <label for="cmt">توضیحات</label>
+            <textarea
+
+              fullWidth
+              id="cmt"
+              name="cmt"
+              nbInput
+              rows="8"
+              value="{{ result?.descp }}"
+            ></textarea>
+          </div>
+        </nb-card-body>
+      </nb-card>
+
+  </nb-card-body>
+</nb-card>

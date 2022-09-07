@@ -1,0 +1,454 @@
+
+
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <nb-card>
+      <nb-card-header>
+        <span *ngIf="requestStateType === 'DesignationMapControlHP'">
+          بررسی نقشه طراحی
+        </span>
+        <span *ngIf="requestStateType === 'DesignationMapReControlHP'">
+          بررسی مجدد نقشه طراحی
+        </span>
+      </nb-card-header>
+      <nb-card-body>
+        <nb-card>
+          <nb-card-body>
+            <div class="row">
+              <div
+                class="col-lg-12 col-md-12 col-sm-12 mb-4"
+                style="box-shadow: 0 0 4px;"
+              >
+                <h6 class="mb-2 mt-1">مشخصات پروژه :</h6>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
+                  <div class="input-group mb-0">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                      <label
+                        ><strong>نام طراح: </strong>
+                        {{ mapsControlHPDetail.designerName }}
+                      </label>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                      <label
+                        ><strong>تاریخ ارائه طرح به کمیسیون: </strong>
+                        {{ mapsControlHPDetail.designationCommissionSendDate }}
+                      </label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                      <label class="mr-5"
+                        ><strong>نام پروژه: </strong>
+                        {{ mapsControlHPDetail.projectName }}
+                      </label>
+                      <label></label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                  <div class="input-group" style="margin-bottom: 0 !important;">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                      <label
+                        ><strong>نام مالک: </strong>
+                        {{ mapsControlHPDetail.ownerName }}
+                      </label>
+                      <label> </label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8">
+                      <label
+                        ><strong>آدرس: </strong>
+                        {{ mapsControlHPDetail.address }}
+                      </label>
+                      <label></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div
+                class="col-lg-12 col-md-12 mb-4"
+                style="box-shadow: 0 0 4px;"
+              >
+                <h6 class="mt-2 mb-2">مستندات مورد نیاز :</h6>
+                <div *ngIf="mapsControlHPDetail.alamakId">
+                  <DocumentsUploaded
+                    class = "d-inline-block"
+                    [id]="mapsControlHPDetail?.alamakId.toString()"
+                    [type]="'AlamakDesignationHP'"
+                    [uploaderType]="'AlamakDesignationHP'"
+                  ></DocumentsUploaded>
+                  <DocumentsUploaded
+                    class = "d-inline-block"
+                    [id]="mapsControlHPDetail?.alamakId.toString()"
+                    [type]="'AlamakDesignationHP'"
+                    [uploaderType]="'SummaryOfTheSalesContractHP'"
+                  ></DocumentsUploaded>
+                  <DocumentsUploaded
+                    class = "d-inline-block"
+                    [id]="gasReqId"
+                    [type]="'GasRequest'"
+                  ></DocumentsUploaded>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div
+                class="col-lg-12 col-md-12 mb-4"
+                style="box-shadow: 0 0 4px;"
+              >
+                <h6 class="mt-2 mb-2">
+                  برآورد مصرف
+                  <span *ngIf="estimationOfConsumptionStatesHP.length > 0">
+                    محوطه مسکونی</span
+                  >
+                  <span
+                    *ngIf="estimationOfConsumptionIndustrialStatesHP.length > 0"
+                  >
+                    مجتمع صنعتی</span
+                  >
+                  :
+                </h6>
+
+                <div
+                  *ngIf="estimationOfConsumptionStatesHP.length > 0"
+                  style="box-shadow: 0 0 2px; margin-bottom: 20px;"
+                >
+                  <table class="table table-hover" style="width: 100%;">
+                    <thead>
+                      <tr>
+                        <th style="width: 17%;">نام و یا شماره بلوک/مغازه</th>
+                        <th style="width: 16%;">تعدادواحد/مغازه</th>
+                        <th style="width: 16%;">
+                          حدود مصرف هر واحد یا مغازه M^3/Hr
+                        </th>
+                        <th style="width: 16%;">
+                          مصرف کل هر بلوک/مغازه ها M^3/Hr
+                        </th>
+                        <th style="width: 16%;">
+                          تعداد/سایز علمک برای این بلوک
+                        </th>
+                        <th style="width: 16%;">
+                          ظرفیت و نوع رگولاتور مورد نیاز
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of estimationOfConsumptionStatesHP">
+                        <td class="font-weight-bold">
+                          <label>{{ item?.blockName }}</label>
+                        </td>
+
+                        <td>
+                          <label>{{ item?.unitCount }}</label>
+                        </td>
+
+                        <td>
+                          <label>{{ item?.consumptionPerUnit }}</label>
+                        </td>
+
+                        <td>
+                          <label>{{ item?.totalConsumptionBlock }}</label>
+                        </td>
+
+                        <td>
+                          <label>{{ item?.numberOfAlamakBlock }}</label>
+                        </td>
+
+                        <td>
+                          <label>{{ item?.regulatorCapacity }}</label>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div
+                  *ngIf="estimationOfConsumptionStatesHPStatic.length > 0"
+                  style="box-shadow: 0 0 2px;"
+                >
+                  <table class="table table-hover" style="width: 100%;">
+                    <thead>
+                      <tr>
+                        <th>نام و یا شماره بلوک/مغازه</th>
+                        <th>مصرف کل هر بلوک/مغازه ها M^3/Hr</th>
+                        <th>تعداد/سایز علمک برای این بلوک</th>
+                        <th>ظرفیت و نوع رگولاتور مورد نیاز</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="
+                          let item of estimationOfConsumptionStatesHPStatic
+                        "
+                      >
+                        <td class="font-weight-bold">
+                          <label>{{ item?.blockName }}</label>
+                        </td>
+
+                        <td>
+                          <label>{{ item?.totalConsumptionBlock }}</label>
+                        </td>
+
+                        <td>
+                          <label>{{ item?.numberOfAlamakBlock }}</label>
+                        </td>
+
+                        <td>
+                          <label>{{ item?.regulatorCapacity }}</label>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div
+                  *ngIf="estimationOfConsumptionIndustrialStatesHP.length > 0"
+                  style="box-shadow: 0 0 2px;"
+                >
+                  <table class="table table-hover" style="width: 100%;">
+                    <thead>
+                      <tr>
+                        <th style="width: 17%;">نام دستگاه</th>
+                        <th style="width: 16%;">
+                          ظرفیت حرارتی یا تناژ دیگ بخار
+                        </th>
+                        <th style="width: 16%;">psiفشار گاز مورد نیاز مشعل</th>
+                        <th style="width: 16%;">مصرف گاز M^3/Hr</th>
+                        <th style="width: 16%;">تعداد دستگاه</th>
+                        <th style="width: 16%;">M^3/Hrمصرف کل گاز</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="
+                          let item of estimationOfConsumptionIndustrialStatesHP
+                        "
+                      >
+                        <td>
+                          <label>{{ item?.deviceName }}</label>
+                        </td>
+                        <td>
+                          <label>{{ item?.thermalCpacity }}</label>
+                        </td>
+                        <td>
+                          <label>{{ item?.gasRequestRequiredTorch }}</label>
+                        </td>
+                        <td>
+                          <label>{{ item?.gasConsumption }}</label>
+                        </td>
+                        <td>
+                          <label>{{ item?.numberOfDevice }}</label>
+                        </td>
+                        <td>
+                          <label>{{ item?.totalGasConsumption }}</label>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <form
+              class="mt-4"
+              (ngSubmit)="onSubmit()"
+              [formGroup]="mapControlFormg"
+            >
+              <div class="row mb-2">
+                <div class="col-lg-12 col-md-12 col-sm-12 input-group pr-0">
+                  <button
+                    type="button"
+                    id="btnAddProblem"
+                    (click)="addProblem()"
+                    nbButton
+                    status="success"
+                  >
+                    <nb-icon
+                      [options]="{ animation: { type: 'pulse' } }"
+                      icon="plus-outline"
+                    >
+                    </nb-icon>
+                    اضافه کردن مشکل/توصیه
+                  </button>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 input-group">
+                  <div
+                    formArrayName="designationMapControlItemsHP"
+                    style="width: 100%;"
+                  >
+                    <div class="row">
+                      <table
+                        id="problem-table"
+                        class="table table-striped table-bordered"
+                        style="width: 100%;"
+                      >
+                        <thead>
+                          <tr>
+                            <th style="width: 7%;">ردیف</th>
+                            <th style="width: 88%;">
+                              اشکالات و توصیه ها
+                            </th>
+                            <th style="width: 5%;">عملیات</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            [formGroupName]="i"
+                            *ngFor="
+                              let item of mapControlFormg.get(
+                                'designationMapControlItemsHP'
+                              )['controls'];
+                              let i = index
+                            "
+                          >
+                            <td>
+                              <input
+                                fullWidth
+                                nbInput
+                                class="text-center"
+                                readonly
+                                value="{{ i + 1 }}"
+                                formControlName="rowNumber"
+                              />
+                            </td>
+                            <td class="problemElement">
+                              <input
+                                fullWidth
+                                type="text"
+                                nbInput
+                                formControlName="problem"
+                                #problemFocus
+                              />
+                            </td>
+
+                            <td>
+                              <button
+                                [disabled]="
+                                  mapControlFormg.get(
+                                    'designationMapControlItemsHP'
+                                  ).value.length === 1
+                                "
+                                type="button"
+                                (click)="removeProblem(i)"
+                                nbButton
+                                status="danger"
+                                size="tiny"
+                                class="btn h-75"
+                              >
+                                <nb-icon
+                                  [options]="{ animation: { type: 'pulse' } }"
+                                  class="icon-button"
+                                  icon="close"
+                                >
+                                </nb-icon>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-4 mt-4">
+                <div class="col-lg-12 col-md-12 col-sm-12 input-group">
+                  <strong class="mb-2" for="dk" style="display: inline-block;">
+                    نتیجه نهایی:
+                  </strong>
+
+                  <nb-radio-group
+                    class="form-inline"
+                    formControlName="mapsControlConfirmStatus"
+                    id="conf1"
+                    name="conf1"
+                  >
+                    <nb-radio value="0">
+                      کلیات طرح بررسی و با مسئولیت کامل طراح محترم مورد تایید
+                      قرار گرفت.
+                    </nb-radio>
+                    <nb-radio value="1">
+                      کلیات طرح بررسی و با مسئولیت کامل طراح محترم مورد تایید
+                      قرار گرفت ولی نیاز به رفع اشکالات فوق در نقشه نهایی می
+                      باشد.
+                    </nb-radio>
+                    <nb-radio value="2">
+                      کلیات طرح بررسی گردید و نیاز به رفع اشکالات فوق و ارائه
+                      مجدد به کمیسیون بررسی نقشه دارد.
+                    </nb-radio>
+                  </nb-radio-group>
+
+                  <div *ngIf="isSubmitted">
+                    <div
+                      *ngFor="
+                        let validation of validationMessages.mapsControlConfirmStatus
+                      "
+                    >
+                      <span
+                        class="text-danger"
+                        *ngIf="
+                          mapControlFormg
+                            .get('mapsControlConfirmStatus')
+                            .hasError(validation.type)
+                        "
+                        >{{ validation.message }}</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <div class="col-lg-12 col-md-12 col-sm-12 input-group">
+                  <nb-checkbox
+                    class="hasLP-checkbox"
+                    status="primary"
+                    (valueChange)="toggleCheckBox($event)"
+                    >دارای ساختمان اداری نیز می باشد.</nb-checkbox
+                  >
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <div class="col-lg-12 col-md-12 col-sm-12 input-group">
+                  <textarea
+                    formControlName="controlDescription"
+                    fullWidth
+                    nbInput
+                    placeholder="توضیحات و نظرات"
+                    rows="5"
+                    shape="round"
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                  <button
+                    [disabled]="!mapControlFormg.valid || loading"
+                    class="btn"
+                    nbButton
+                    status="success"
+                    style="width: 100%;"
+                    type="submit"
+                    [nbSpinner]="loading"
+                    nbSpinnerStatus="info"
+                    nbSpinnerSize="large"
+                  >
+                    ثبت
+                  </button>
+                </div>
+              </div>
+            </form>
+          </nb-card-body>
+        </nb-card>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
