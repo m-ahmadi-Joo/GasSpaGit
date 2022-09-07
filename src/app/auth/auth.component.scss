@@ -1,0 +1,61 @@
+@import '../@theme/styles/themes';
+
+@include nb-install-component() {
+
+  /deep/ router-outlet + * {
+    display: block;
+    animation: fade 1s;
+  
+
+    @keyframes fade {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.input-label {
+  margin-bottom: 0.5rem;
+}
+
+.center {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+
+.single-card {
+  margin-top: 10%;
+}
+
+.btn {
+  margin-top: 0.9rem;
+  font-family: IRANSansWeb;
+}
+
+nb-card-header {
+  font-family: IRANSansWeb;
+}
+
+.half-width-btn {
+  width: 45%;
+  margin-right: 0.25rem;
+}
+
+
+.inline-input {
+  margin-top: 0.9rem;
+}
+
+.btn-group-inline {
+  display: inline-block;
+}
+
+input[nbInput] {
+  font-family: IRANSansWeb;
+}

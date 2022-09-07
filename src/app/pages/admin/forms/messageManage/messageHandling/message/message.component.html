@@ -1,0 +1,209 @@
+<!-- <style>
+
+:host ::ng-deep .ck-editor__editable {
+  min-height: 200px;
+}
+
+</style> -->
+
+
+<nb-card>
+
+  <nb-card-header *ngIf = "!editMode">ارسال پیام</nb-card-header>
+  <nb-card-header *ngIf = "editMode">ویرایش پیام</nb-card-header>
+  <!-- <ng-container *ngIf = "editMode; then SendMsg; else EditMsg"></ng-container>
+  <ng-template #SendMsg>
+    <nb-card-header>ارسال پیام</nb-card-header>
+  </ng-template>
+  <ng-template #EditMsg>
+    <nb-card-header>ویرایش پیام</nb-card-header>
+  </ng-template> -->
+
+  <nb-card-body>
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+      <div class="row col-sm-12 mb-4">
+        <!-- <div class="col-sm-12 mb-4"> -->
+
+        <div class="col-sm-12" id="title">
+          <label>
+            <span class="text-danger font-weight-bold ml-1">*</span>
+            عنوان پیام
+          </label>
+          <input formControlName="title" fullWidth id="title" nbInput />
+          <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.title">
+            <span class="text-danger" *ngIf="
+              form.get('title').hasError(validation.type) &&
+              ( isSubmitted ||
+                form.get('title').dirty ||
+                form.get('title').touched)
+            ">{{ validation.message }}</span>
+          </div>
+        </div>
+
+        <!-- </div> -->
+      </div>
+
+      <div class="row col-sm-12 mb-4">
+
+      <div class="col-sm-5">
+        <label>
+          <span class="text-danger font-weight-bold ml-1">*</span>
+          نقش مرتبط
+        </label>
+        <nb-select [selected] = "messageInfo?.recieverRoles" formControlName= "recieverRoles" multiple fullWidth #selectedRole placeholder="--انتخاب کنید--">
+          <nb-option *ngFor="let role of roles" [value]="role.id">
+            {{ role.name }}
+          </nb-option>
+        </nb-select>
+
+        <div
+        *ngFor="
+          let validation of INPUT_VALIDATION_MESSAGES.recieverRoles
+        "
+      >
+        <span
+          class="text-danger"
+          *ngIf="
+            form.controls.recieverRoles.value === '' && isSubmitted
+          "
+          >{{ validation.message }}</span
+        >
+      </div> 
+
+      </div>
+
+      <div class="col-sm-4">
+        <label>
+          <span class="text-danger font-weight-bold ml-1">*</span>
+          نوع پیام
+        </label>
+          <nb-select [selected] = "messageInfo?.messageType" #messageType (selectedChange)= "onChangeMessageType(messageType.selected)" formControlName= "messageType" fullWidth #selectedRole placeholder="--انتخاب کنید--">
+            <nb-option *ngFor="let type of messageTypes | enumToArray" [value]="type.key">
+              {{ type.value }}
+            </nb-option>
+          </nb-select>
+ 
+          <div
+            *ngFor="
+              let validation of INPUT_VALIDATION_MESSAGES.messageType
+            "
+          >
+            <span
+              class="text-danger"
+              *ngIf="
+                form.controls.messageType.value === '' && isSubmitted
+              "
+              >{{ validation.message }}</span
+            >
+          </div>     
+      </div>
+
+      <div class="col-sm-3" *ngIf = "form.get('messageType').value === 'VersionChange'">
+        <label>
+          <span class="text-danger font-weight-bold ml-1">*</span>
+        نسخه
+        </label>
+        <input formControlName="version" 
+        [value] = "version" fullWidth id="version" nbInput type= "number"
+         min = "1.00" max= "999.99" step="0.01" />
+        <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.version">
+          <span class="text-danger" *ngIf="
+            form.get('version').hasError(validation.type) &&
+            (form.get('version').dirty ||
+              form.get('version').touched)
+          ">{{ validation.message }}</span>
+        </div>
+      </div>
+     </div>
+     <div class="row mb-4">
+        <div class="col-sm-12">
+          <label>
+            <span class="text-danger font-weight-bold ml-1">*</span>
+          شرح
+          </label>
+
+          <!-- <textarea
+          formControlName="description"
+          #description
+          fullWidth
+          id="editor"
+          nbInput
+          rows="5"
+        ></textarea>
+         -->
+          <!-- <div style="border-bottom: solid 1px darkgray;border-left: solid 1px darkgray;border-right: solid 1px darkgray;">
+            <ckeditor 
+            [editor]="Editor"
+            [config]="editorConfig"
+            #description formControlName="description" id = "editor"
+            (ready)="onReady($event)"></ckeditor> 
+          </div> -->
+          <!-- data="<p>Hello, world!</p>" -->
+          <!-- [inlineMode]='inlineMode' -->
+          <ejs-richtexteditor  formControlName="description" #toolsRTE id='alltoolRTE' [enableRtl]='true'
+          [toolbarSettings]='tools' ></ejs-richtexteditor >
+
+          <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.description">
+            <span class="text-danger" *ngIf="
+              form.get('description').hasError(validation.type) &&
+              (form.get('description').dirty ||
+                form.get('description').touched ||
+                isSubmitted)
+            ">{{ validation.message }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <ng-container *ngIf="!editMode; then btnRegister; else btnEdit">
+          </ng-container>
+          <ng-template #btnRegister>
+            <button
+              [nbSpinner]="loading"
+              nbSpinnerStatus="info"
+              nbSpinnerSize="large"
+              type="submit"
+              nbButton
+              status="success"
+              class="btn btn-success btn-block"
+              [disabled]=" loading"
+            >
+              ثبت
+            </button>
+          </ng-template>
+          <ng-template #btnEdit>
+            <button
+              type="submit"
+              nbButton
+              status="success"
+              class="btn btn-success btn-block"
+              [disabled]=" loading"
+              [nbSpinner]="loading"
+              nbSpinnerStatus="info"
+              nbSpinnerSize="large"
+            >
+              ویرایش
+            </button>
+          </ng-template>
+        </div>
+        <div class="col-md-6">
+          <button
+            type="button"
+            nbButton
+            status="warning"
+            class="btn btn-block"
+            [routerLink]="['/pages/admin/MessageHandlingList']"
+            [disabled]="loading"
+          >
+            بازگشت به لیست پیام ها
+          </button>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+
+</nb-card>
+
+
+<!-- {{ form.value | json}} -->

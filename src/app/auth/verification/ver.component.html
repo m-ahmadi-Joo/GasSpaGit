@@ -1,0 +1,126 @@
+<style>
+  .role-imgage {
+    width: 100px;
+    height: 100px;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .col-sm:hover a,
+  .col-sm:focus a {
+    transform: scale(1.06);
+  }
+  .col-sm a {
+    display: block;
+    cursor: pointer;
+    padding: 10px 15px;
+    box-shadow: 0 0 10px;
+    border-radius: 0.25rem;
+    transition: all ease-in 0.3s;
+  }
+
+  .col-sm a strong {
+    display: block;
+    margin-top: 10px;
+    text-align: center;
+  }
+</style>
+
+<div class="container mb-5">
+  <div class="row justify-content-center">
+    <div class="col-auto w-100 mb-n5 p-0">
+      <nb-card
+        accent="primary"
+        style="box-shadow: 0px 2px 4px; margin-bottom: 30px; margin-top: 30px;"
+      >
+        <nb-card-body>
+          <h3 class="text-center text-primary">
+            سیستم کنترل و بازرسی دفتر گاز نظام مهندسی استان فارس
+          </h3>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="container">
+    <div class="col-sm-12">
+      <div class="col-sm-3">
+        <span></span>
+      </div>
+      <div class="col-sm-6 center" style="padding: 30px;">
+        <nb-card class="single-card">
+          <nb-card-body>
+            <form
+              name="Submit-Ver-Code"
+              (ngSubmit)="onSubmit()"
+              [formGroup]="codeForm"
+            >
+              <div name="input">
+                <label for="code-inpt">
+                  کد تایید را وارد کنید
+                </label>
+                <input
+                  formControlName="codeControl"
+                  fullWidth
+                  id="code-inpt"
+                  nbInput
+                  autofocus
+                  type="text"
+                  [status]="
+                    codeForm.controls.codeControl.touched ||
+                    codeForm.controls.codeControl.dirty
+                      ? codeForm.controls.codeControl.invalid
+                        ? 'danger'
+                        : 'success'
+                      : ''
+                  "
+                />
+              </div>
+
+              <div
+                name="Validation-Output"
+                *ngFor="let validation of INPUT_VALIDATION_MESSAGES.Code"
+              >
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    codeForm.controls.codeControl.hasError(validation.type) &&
+                    (codeForm.controls.codeControl.dirty ||
+                      codeForm.controls.codeControl.touched)
+                  "
+                >
+                  {{ validation.message }}
+                </span>
+              </div>
+              <p class="text-danger mt-2">ثانیه باقی مانده : {{ timeLeft }}</p>
+              <div name="Buttons">
+                <button
+                  [nbSpinner]="loading"
+                  nbSpinnerStatus="info"
+                  nbSpinnerSize="large"
+                  [disabled]="loading"
+                  class="btn half-width-btn"
+                  nbButton
+                  status="success"
+                  type="submit"
+                >
+                  ثبت
+                </button>
+                <button
+                  class="btn half-width-btn"
+                  nbButton
+                  [routerLink]="['/auth/login']"
+                  status="primary"
+                  type="button"
+                >
+                  انصراف
+                </button>
+              </div>
+            </form>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+  </div>
+</div>

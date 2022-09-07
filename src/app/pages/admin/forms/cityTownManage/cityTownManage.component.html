@@ -1,0 +1,166 @@
+<nb-card>
+  <nb-card-header>
+    ثبت شهر/شهرستان
+  </nb-card-header>
+  <nb-card-body>
+    <form (ngSubmit)="onSubmit()" [formGroup]="sendForm">
+      <div class="row">
+        <div class="col-sm-4 col-md-4 col-lg-4">
+          <nb-select #citySelect placeholder="انتخاب شهرستان" fullWidth formControlName="citySelect" id="village">
+            <nb-option *ngFor="let tw of cities" [value]="tw.id">
+              {{ tw.title }}
+            </nb-option>
+          </nb-select> 
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4">
+          <nb-select #areaSelect placeholder="انتخاب ناحیه" fullWidth formControlName="areaSelect" id="village">
+            <nb-option *ngFor="let ar of areas" [value]="ar.id">
+              {{ ar.title }}
+            </nb-option>
+          </nb-select>
+        </div>
+        <!-- <div class="col-sm-2 col-md-2 col-lg-2">
+          <label>ثبت شهرستان</label>
+          <button id="btnAddInputFields" type="button" (click)="createCity()" nbButton status="info" size="tiny"
+            class="btn">
+            <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="plus">
+            </nb-icon>
+          </button>
+        </div> -->
+      </div>
+      <div class="row mt-4 mb-3">
+        <div class="col-sm-4 col-lg-4 col-md-4">
+          <label>نام شهر:(فارسی)</label>
+          <input fullWidth id="kn" nbInput formControlName="townName" />
+        </div>
+        <div class="col-sm-4 col-lg-4 col-md-4">
+          <label>نام شهر:(انگلیسی)</label>
+          <input fullWidth id="kn" nbInput formControlName="townNameEn" />
+        </div>
+      </div>
+      <div class="row mb-4">
+        <div class="col-sm-4 col-lg-4 col-md-4">
+          <label>طول جغرافیایی</label>
+          <input fullWidth id="kn" nbInput formControlName="long" />
+        </div>
+        <div class="col-sm-4 col-lg-4 col-md-4">
+          <label>عرض جغرافیایی</label>
+          <input fullWidth id="kn" nbInput formControlName="lat" />
+        </div>
+
+        <!-- <div class="col-sm-4 col-lg-4 col-md-4 mt-5">
+          <label>مشاهده لیست شهر ها</label>
+          <button id="btnAddInputFields" type="button" (click)="onTownsList()" nbButton status="info" size="tiny"
+            class="btn">
+            <nb-icon [options]="{ animation: { type: 'zoom' } }" class="alert-circle-outline" icon="eye-outline">
+            </nb-icon>
+          </button>
+        </div> -->
+      </div>
+      <div class="row mb-4">
+        <div class="col-sm-4 col-lg-4 col-md-4">
+          <label>کد حسابداری </label>
+          <input fullWidth id="accountingCode" nbInput formControlName="accountingCode" />
+        </div>
+        <div class="col-sm-4 col-lg-4 col-md-4">
+          <label>نوع </label>
+          <nb-radio-group #type class="form-inline radio-x-inline" formControlName="type" id="type" name="type"
+            >
+            <nb-radio value="0">شهر</nb-radio>
+            <nb-radio value="1">روستا</nb-radio>
+          </nb-radio-group>
+
+        </div>
+        <div class="col-sm-4 col-lg-4 col-md-4">
+          <label>کدنوسازی </label>
+          <nb-radio-group #hasRenewerCode class="form-inline radio-x-inline" formControlName="hasRenewerCode" id="hasRenewerCode" name="hasRenewerCode"
+            >
+            <nb-radio value="true">دارد</nb-radio>
+            <nb-radio value="false">ندارد</nb-radio>
+          </nb-radio-group>
+
+        </div>
+      </div>
+
+      <div style="height: 400px;" (leafletMapReady)="onMapReady($event)" [leafletLayersControl]="layersControl"
+        [leafletOptions]="options" (leafletClick)="onMapClick($event)" class="map" leaflet></div>
+      <nb-card>
+        <nb-card-body>
+          <div class="row" style="text-align: left; direction: ltr;">
+            <div class="col-sm-2 col-md-2 col-lg-2 p-1">
+              <button class="btn" *ngIf="isEdit===false" nbButton status="success" style="width: 100%;" type="submit"
+                [disabled]="sendForm.invalid">
+                ثبت
+              </button>
+              <button class="btn" *ngIf="isEdit===true" nbButton status="warning" style="width: 100%;" type="submit"
+                [disabled]="sendForm.invalid">
+                ویرایش
+              </button>
+            </div>
+            <div class="col-sm-2 col-md-2 col-lg-2 p-1">
+              <button class="btn" nbButton status="primary" style="width: 100%;" type="button"
+                (click)="sendForm.reset()">
+                جدید
+              </button>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </form>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card status="success" accent="success">
+    <nb-card-header>
+      <h6 style="color: linen;">ثبت شهرستان:</h6>
+    </nb-card-header>
+    <nb-card-body>
+      <div class="row pl-4 pr-4">
+        <label> نام شهرستان:(فارسی)</label>
+        <input fullWidth id="kn" nbInput id="city" [(ngModel)]="cityName" />
+      </div>
+      <div class="row pl-4 pr-4">
+        <label> نام شهرستان:(انگلیسی)</label>
+        <input fullWidth id="kn" nbInput id="city" [(ngModel)]="cityNameEn" />
+      </div>
+    </nb-card-body>
+    <nb-card-footer>
+      <div class="row">
+        <div class="col-sm-6 pl-1">
+          <button fullWidth nbButton hero status="success" (click)="createNewCityConfirm(data)">
+            ثبت
+          </button>
+        </div>
+        <div class="col-sm-6 pr-1">
+          <button fullWidth nbButton hero status="danger" (click)="dialogRef.close()">
+            انصراف
+          </button>
+        </div>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+<ng-template #townList let-data>
+  <nb-card style="height: 300px;">
+    <nb-card-body>
+      <!-- <div class=" "> -->
+      <table class="table table-wrapper-scroll-y">
+        <thead>
+          <tr>
+            <th scope="col">نام شهر</th>
+            <th scope="col">نام شهرستان</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of allTowns">
+            <td>{{ item.townName }}</td>
+            <td>{{ item.cityName }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- </div> -->
+    </nb-card-body>
+  </nb-card>
+</ng-template>

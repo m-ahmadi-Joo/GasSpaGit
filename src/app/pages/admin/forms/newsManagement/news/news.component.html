@@ -1,0 +1,195 @@
+<style>
+  :host ::ng-deep .dp-material .dp-picker-input {
+    border-radius: 0.25rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+    padding: 0.4375rem 1.125rem;
+    border-color: #598bff;
+    background-color: #f7f9fc;
+    border-color: #edf1f7;
+    border-style: solid;
+    border-width: 1px;
+    color: #1a2138;
+    font-family: IRANSansWeb;
+    -webkit-appearance: none;
+    transition-duration: 0.15s;
+    transition-property: border, background-color, color, box-shadow;
+    transition-timing-function: ease-in;
+    overflow: visible;
+    margin: 0;
+    height: 34.25px;
+  }
+
+  :host ::ng-deep .dp-material {
+    width: 100%;
+
+  }
+</style>
+<nb-card>
+
+  <nb-card-header *ngIf="!editMode">ارسال اخبار</nb-card-header>
+  <nb-card-header *ngIf="editMode">ویرایش اخبار</nb-card-header>
+  <!-- <ng-container *ngIf = "editMode; then SendMsg; else EditMsg"></ng-container>
+  <ng-template #SendMsg>
+    <nb-card-header>ارسال اخبار</nb-card-header>
+  </ng-template>
+  <ng-template #EditMsg>
+    <nb-card-header>ویرایش اخبار</nb-card-header>
+  </ng-template> -->
+
+  <nb-card-body>
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+      <div class="row col-sm-12 mb-4">
+        <!-- <div class="col-sm-12 mb-4"> -->
+
+        <div class="col-sm-6" id="subject">
+          <label>
+            <span class="text-danger font-weight-bold ml-1">*</span>
+            عنوان اخبار
+          </label>
+          <input formControlName="subject" fullWidth id="subject" nbInput />
+          <div *ngFor="let validation of INPUT_VALIDATION_newsS.subject">
+            <span class="text-danger" *ngIf="
+              form.get('subject').hasError(validation.type) &&
+              ( isSubmitted ||
+                form.get('subject').dirty ||
+                form.get('subject').touched)
+            ">{{ validation.news }}</span>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label>
+            <span class="text-danger font-weight-bold ml-1">*</span>
+            نقش مرتبط
+          </label>
+          <nb-select [selected]="newsInfo?.recieverRoles" formControlName="recieverRoles" multiple fullWidth
+            #selectedRole placeholder="--انتخاب کنید--">
+            <nb-option *ngFor="let role of roles" [value]="role.id">
+              {{ role.name }}
+            </nb-option>
+          </nb-select>
+
+          <div *ngFor="
+            let validation of INPUT_VALIDATION_newsS.recieverRoles
+          ">
+            <span class="text-danger" *ngIf="
+              form.controls.recieverRoles.value === '' && isSubmitted
+            ">{{ validation.news }}</span>
+          </div>
+
+        </div>
+
+
+
+        <!-- </div> -->
+      </div>
+
+      <div class="row col-sm-12 mb-4">
+
+        <div class="col-md-6">
+          <label for="cd">
+            <span class="text-danger font-weight-bold ml-1">*</span>
+            مدت اعتبار :
+          </label>
+          <dp-date-picker name="cd" fullWidth id="cd" nbInput dir="rtl" mode="day" theme="dp-material"
+            [config]="dateConfig"
+            formControlName="expireDate" class="appearance-outline full-width size-medium shape-rectangle">
+          </dp-date-picker>
+
+          <!-- [config]="dateConfig" -->
+          <div *ngFor="
+              let validation of INPUT_VALIDATION_newsS.expireDate
+            ">
+            <span class="text-danger" *ngIf="
+                form
+                  .get('expireDate')
+                  .hasError(validation.type) &&
+                (form.get('expireDate').dirty ||
+                form.get('expireDate').touched)
+              ">
+              {{ validation.news }}</span>
+          </div>
+        </div>
+
+        <div class="col-md-6 form-group">
+          <label for="name">کاربران</label>
+
+          <angular2-multiselect [data]="userList" 
+          [settings]="dropdownSettings" 
+          [loading] = "loadingDrpDwn"
+          (onSelect)="onItemSelect($event.idx)" 
+          (onDeSelect)="OnItemDeSelect($event.idx)"
+          (onSelectAll)="onSelectAll($event.idx)"
+          (onDeSelectAll)="onDeSelectAll($event.idx)"
+          (onScrollToEnd)="fetchMore($event)"
+          formControlName="recieverUsers"></angular2-multiselect>
+     
+    </div>
+
+       
+      </div>
+      <div class="row col-sm-12 mb-4">
+        <div class="col-md-12 mt-5 mb-5">
+          <label for="file">مستندات :</label>
+          <div class="col-lg-12 col-md-12 col-sm-12">
+            <div *ngFor="let a of inputCount; let i = index">
+              <strong class="mb-2" style="color: rgb(0, 68, 255); display:block; font-size: 11px;"> حداکثر حجم
+                {{sizeTitles[i]}} - فرمت ها ({{a.extentions}}) </strong>
+              <app-uploader [formControlName]="a.formControlName" [filePath]="imagePathEdit"
+                [fileExtentions]="a.extentions" [className]="imagePathEdit" [fileSize]="a.size">
+              </app-uploader>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="row mb-4">
+        <div class="col-sm-12">
+          <label>
+            <span class="text-danger font-weight-bold ml-1">*</span>
+            متن
+          </label>
+
+          <ejs-richtexteditor formControlName="text" #toolsRTE id='alltoolRTE' [enableRtl]='true'
+            [toolbarSettings]='tools'></ejs-richtexteditor>
+
+          <div *ngFor="let validation of INPUT_VALIDATION_newsS.text">
+            <span class="text-danger" *ngIf="
+              form.get('text').hasError(validation.type) &&
+              (form.get('text').dirty ||
+                form.get('text').touched ||
+                isSubmitted)
+            ">{{ validation.news }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <ng-container *ngIf="!editMode; then btnRegister; else btnEdit">
+          </ng-container>
+          <ng-template #btnRegister>
+            <button [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" type="submit" nbButton
+              status="success" class="btn btn-success btn-block" [disabled]=" loading">
+              ثبت
+            </button>
+          </ng-template>
+          <ng-template #btnEdit>
+            <button type="submit" nbButton status="success" class="btn btn-success btn-block" [disabled]=" loading"
+              [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large">
+              ویرایش
+            </button>
+          </ng-template>
+        </div>
+        <div class="col-md-6">
+          <button type="button" nbButton status="warning" class="btn btn-block" [routerLink]="['/pages/admin/NewsList']"
+            [disabled]="loading">
+            بازگشت به لیست اخبار ها
+          </button>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+
+</nb-card>

@@ -1,0 +1,186 @@
+<style>
+  .pagination /deep/ .ngx-pagination .current {
+    background: lightseagreen;
+  }
+
+  .pagination /deep/ pagination-template {
+    width: 100% !important;
+  }
+  .pagination {
+    text-align: center !important;
+  }
+  dp-date-picker /deep/ .dp-input-container .dp-picker-input {
+    width: 220px !important;
+  }
+
+  nb-select.pageSizeSelect /deep/ .select-button {
+    min-width: 8rem !important;
+  }
+
+  nb-select.workStatus /deep/ .select-button {
+    /* width:100%;
+          min-width: 19rem !important;
+          max-width: 22rem !important; */
+    padding: 0.3rem 1.125rem !important;
+  }
+
+  nb-accordion nb-accordion-item-body /deep/ .item-body {
+    padding: 0 !important;
+  }
+
+  nb-accordion nb-accordion-item-body /deep/ .map-position {
+    position: relative;
+    top: 0;
+    right: 0;
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px 0;
+  }
+
+  .col-lg-3.col-md-3.col-sm-6.col-xs-12,
+  .col-lg-2.col-md-2.col-sm-6.col-xs-12 {
+    padding: 7px;
+  }
+</style>
+
+<nb-card class="table-x-mine" style="box-shadow: 0 0 4px">
+  <nb-card-header class="pt-4" style="border-bottom: 0">
+    <div class="pull-right pt-2">
+      <span>کارتابل مدیریت</span>
+      <nb-icon
+        [options]="{ animation: { type: 'pulse' } }"
+        class="icon-button"
+        icon="arrow-ios-back-outline"
+      >
+      </nb-icon>
+
+      <span class="mr-1" style="color:#3366ff">مدیریت پیام ها</span>
+    </div>
+
+    <div class="pull-left">
+      <button
+        class="btn btn-info ml-2"
+        style="color:#fff"
+        [routerLink]="['/pages/admin/Message']"
+      >
+        <nb-icon
+          [options]="{ animation: { type: 'pulse' } }"
+          class="icon-button"
+          icon="home-outline"
+        >
+        </nb-icon>
+        تعریف پیام جدید
+      </button>
+
+    <div style="clear: both"></div>
+    </div>
+
+    <div class="clearfix"></div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <div class="table-wrapper">
+      <ng2-smart-table
+      [settings]="settings"
+      [source]="source | paginate: pagingConfig"
+      style="direction:ltr"
+    ></ng2-smart-table>
+    </div>
+  <!-- | paginate: pagingConfig -->
+  <span *ngFor="let item of collection | paginate: pagingConfig"></span>
+   
+    <nb-card>
+      <nb-card-body>
+        <div class="row">
+          <div class="input-group">
+            <div
+              class="col-lg-3 col-md-3 col-sm-6 col-xs-6 form-inline pull-left"
+            >
+              <label for="pageSize" style="margin-left: 0.45rem;">
+                تعداد رکورد:
+              </label>
+              <nb-select
+                [selected] = "pagination.itemsPerPage"
+                status="info"
+                #pageSizeSelect
+                class="pageSizeSelect"
+                (selectedChange)="changePageSize(pageSizeSelect.selected)"
+                id="pageSize"
+                placeholder="انتخاب ..."
+              >
+                <nb-option *ngFor="let p of pageSizes" [value]="p.id">
+                  {{ p.display }}
+                </nb-option>
+              </nb-select>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              <div class="d-flex justify-content-center">
+                <pagination-controls
+                  class="pagination"
+                  (pageChange)="pageChanged($event)"
+                  previousLabel=""
+                  nextLabel=""
+                >
+                </pagination-controls>
+              </div>
+            </div>
+
+            <div
+              class="col-lg-3 col-md-3 col-sm-6 col-xs-6 form-inline pull-right"
+            >
+              <label for="pageNumber" style="margin-left: 0.45rem;">
+                شماره صفحه:
+              </label>
+              <input
+                [value] = "pagination.currentPage"
+                style="width:30%"
+                #pageNumber
+                size="tiny"
+                id="pageNumber"
+                nbInput
+                type="number"
+                min="1"
+                max="pagination.totalPages"
+                (keydown.enter)="pageChanged(pageNumber.value)"
+              />
+            </div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+</nb-card>
+
+ <ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card status="danger" accent="danger">
+    <nb-card-header><h4 style="color: linen">هشدار</h4></nb-card-header>
+    <nb-card-body><h6>آیا از حذف مورد اطمینان دارید؟</h6></nb-card-body>
+    <nb-card-footer>
+      <div class="row">
+        <div class="col-sm-6">
+          <button
+            fullWidth
+            nbButton
+            hero
+            status="danger"
+            (click)="confirmDelete(data)"
+          >
+            بلی
+          </button>
+        </div>
+        <div class="col-sm-6">
+          <button
+            fullWidth
+            nbButton
+            hero
+            status="primary"
+            (click)="dialogRef.close()"
+          >
+            انصراف
+          </button>
+        </div>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+ </ng-template>

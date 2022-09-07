@@ -1,0 +1,439 @@
+<style>
+  dp-date-picker.dp-material .dp-picker-input {
+    width: 228px !important;
+  }
+</style>
+
+<nb-card id="serachCard" style="box-shadow: 0 0 4px">
+  <nb-card-header> پرداخت به مهندسان </nb-card-header>
+  <nb-card-body>
+    <div class="container">
+      <form (ngSubmit)="onSubmit()" [formGroup]="form">
+        <div class="row mb-3">
+          <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div>
+              <label class="mb-0" for="frompayDate"> از تاریخ: </label>
+            </div>
+
+            <div>
+              <dp-date-picker
+                name="ds"
+                id="ds"
+                nbInput
+                dir="rtl"
+                mode="day"
+                theme="dp-material"
+                formControlName="fromDate"
+                [config]="datePickerConfig"
+                (open)="openFromDayPicker()"
+                (close)="closeFromDayPicker()"
+                nbInput
+              ></dp-date-picker>
+
+              <div>
+                <span
+                  *ngIf="
+                    form.get('fromDate').value > form.get('toDate').value &&
+                    form.get('toDate').value !== ''
+                  "
+                  class="text-danger"
+                >
+                  بازه تاریخ انتخابی نامعتبر است.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div>
+              <label class="mb-0" for="topayDate"> تا تاریخ: </label>
+            </div>
+            <div>
+              <dp-date-picker
+                name="ds"
+                id="ds"
+                nbInput
+                dir="rtl"
+                mode="day"
+                theme="dp-material"
+                formControlName="toDate"
+                [config]="datePickerConfig"
+                (open)="openToDayPicker()"
+                (close)="closeToDayPicker()"
+                nbInput
+              ></dp-date-picker>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div>
+              <div>
+                <label class="mb-0" for="projectKind"> نوع فشار گاز: </label>
+              </div>
+              <div>
+                <nb-select
+                  class="w-100"
+                  formControlName="projectKind"
+                  id="projectKind"
+                  placeholder="انتخاب ..."
+                >
+                <nb-option [value]="null">هیچ کدام</nb-option>
+                  <nb-option *ngFor="let p of projectKinds" [value]="p.id">
+                    {{ p.descp }}
+                  </nb-option>
+                  <!-- <nb-option value="1">
+          فشار ضعیف
+        </nb-option>
+
+        <nb-option value="2">
+          فشار قوی
+        </nb-option> -->
+                </nb-select>
+              </div>
+              <!-- <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.trackNumber">
+        <span class="text-danger" *ngIf="
+          form.get('projectKinds').hasError(validation.type) &&
+          (form.get('projectKinds').dirty ||
+            form.get('projectKinds').touched)
+        ">{{ validation.message }}</span>
+      </div> -->
+            </div>
+          </div>
+
+          <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div>
+              <div>
+                <label class="mb-0" for="areas"> ناحیه گازی: </label>
+              </div>
+              <div>
+                <nb-select
+                  class="w-100"
+                  multiple
+                  formControlName="areas"
+                  id="areas"
+                  placeholder="انتخاب ..."
+                >
+                  <nb-option [value]="null">هیچ کدام</nb-option>
+                  <nb-option *ngFor="let a of areas" [value]="a.id">
+                    {{ a.title }}
+                  </nb-option>
+                  <!-- <nb-option value="1">
+فشار ضعیف
+</nb-option>
+
+<nb-option value="2">
+فشار قوی
+</nb-option> -->
+                </nb-select>
+              </div>
+              <!-- <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.trackNumber">
+<span class="text-danger" *ngIf="
+form.get('projectKinds').hasError(validation.type) &&
+(form.get('projectKinds').dirty ||
+form.get('projectKinds').touched)
+">{{ validation.message }}</span>
+</div> -->
+            </div>
+          </div>
+
+          <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <!-- [nbSpinner]="loadingSearch"
+nbSpinnerStatus="info"
+nbSpinnerSize="large"
+[disabled]="loadingSearch" -->
+
+            <button
+              nbTooltip="جستجو"
+              nbTooltipPlacement="top"
+              nbButton
+              hero
+              size="tiny"
+              status="info"
+              type="button"
+              style="position: relative;top: 31px;"
+              (click)="onSearch()"
+            >
+              <nb-icon
+                [options]="{ animation: { type: 'pulse' } }"
+                class="icon-button"
+                icon="search-outline"
+              >
+              </nb-icon>
+            </button>
+
+            <button
+              nbTooltip="بازسازی"
+              nbTooltipPlacement="top"
+              size="tiny"
+              nbButton
+              hero
+              style="position: relative;top: 31px;right:8px;"
+              status="primary"
+              type="button"
+              (click)="resetFilters()"
+            >
+              <nb-icon
+                [options]="{ animation: { type: 'pulse' } }"
+                class="icon-button"
+                icon="refresh-outline"
+              >
+              </nb-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <label class="mb-0" for="engineerCount"> تعداد مهندسان: </label>
+
+            <input
+              readonly
+              formControlName="engineerCount"
+              size="small"
+              fullWidth
+              id="engineerCount"
+              nbInput
+              type="text"
+            />
+          </div>
+
+          <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <label class="mb-0" for="payCount"> تعداد پرداخت ها: </label>
+
+            <input
+              readonly
+              formControlName="payCount"
+              size="small"
+              fullWidth
+              id="payCount"
+              nbInput
+              type="text"
+            />
+          </div>
+
+          <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <label class="mb-0" for="totalAmount"> مبلغ قابل پرداخت: </label>
+
+            <input
+              readonly
+              formControlName="totalAmount"
+              size="small"
+              fullWidth
+              id="totalAmount"
+              nbInput
+              type="text"
+            />
+          </div>
+
+          <div
+            class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12"
+          >
+            <button
+              [nbSpinner]="loading"
+              nbSpinnerStatus="info"
+              nbSpinnerSize="large"
+              [disabled]="loading"
+              nbButton
+              hero
+              status="success"
+              type="submit"
+              class="ml-1"
+              style="margin-top: 28px"
+            >
+              ثبت لیست پرداخت
+            </button>
+          </div>
+        </div>
+      </form>
+      <br />
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<nb-card class="table-x-mine" style="box-shadow: 0 0 4px">
+  <nb-card-header class="pt-4" style="border-bottom: 0">
+    <div class="pull-right pt-2">
+      <span>کارتابل مدیریت</span>
+      <nb-icon
+        [options]="{ animation: { type: 'pulse' } }"
+        class="icon-button"
+        icon="arrow-ios-back-outline"
+      >
+      </nb-icon>
+
+      <span class="mr-1" style="color: #3366ff">لیست پرداخت مهندسان</span>
+    </div>
+
+    <div class="clearfix"></div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <div style="clear: both"></div>
+    <div class="table-wrapper">
+      <ng2-smart-table
+        [settings]="settings"
+        [source]="source | paginate: pagingConfig"
+        style="direction: ltr"
+      ></ng2-smart-table>
+    </div>
+    <span *ngFor="let item of collection | paginate: pagingConfig"></span>
+
+    <nb-card>
+      <nb-card-body>
+        <div class="row">
+          <div class="input-group">
+            <div
+              class="col-lg-3 col-md-3 col-sm-6 col-xs-6 form-inline pull-left"
+            >
+              <label for="pageSize" style="margin-left: 0.45rem">
+                تعداد رکورد:
+              </label>
+              <nb-select
+                status="info"
+                #pageSizeSelect
+                class="pageSizeSelect"
+                (selectedChange)="changePageSize(pageSizeSelect.selected)"
+                id="pageSize"
+                placeholder="انتخاب ..."
+              >
+                <nb-option *ngFor="let p of pageSizes" [value]="p.id">
+                  {{ p.display }}
+                </nb-option>
+              </nb-select>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              <div class="d-flex justify-content-center">
+                <pagination-controls
+                  class="pagination"
+                  (pageChange)="pageChanged($event)"
+                  previousLabel=""
+                  nextLabel=""
+                >
+                </pagination-controls>
+              </div>
+            </div>
+
+            <div
+              class="col-lg-3 col-md-3 col-sm-6 col-xs-6 form-inline pull-right"
+            >
+              <label for="pageNumber" style="margin-left: 0.45rem">
+                شماره صفحه:
+              </label>
+              <input
+                style="width: 30%"
+                #pageNumber
+                size="tiny"
+                id="pageNumber"
+                nbInput
+                type="number"
+                min="1"
+                max="pagination.totalPages"
+                (keydown.enter)="pageChanged(pageNumber.value)"
+              />
+            </div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #dialogPayConfirm let-data let-ref="dialogPayConfirmRef">
+  <nb-card status="success" accent="success">
+    <nb-card-header><h4 style="color: linen">هشدار</h4></nb-card-header>
+    <nb-card-body>
+      <h6>آیا از تأیید پرداخت مهندسان اطمینان دارید؟</h6>
+    </nb-card-body>
+    <nb-card-footer>
+      <form
+        (submit)="onSubmitConfirmPayForm(data)"
+        [formGroup]="payConfirmForm"
+      >
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
+            <label class="col-sm-3" for="cd">تاریخ پرداخت: </label>
+            <dp-date-picker
+              name="cd"
+              fullWidth
+              id="cd"
+              nbInput
+              dir="rtl"
+              mode="day"
+              [config]="datePickerConfig"
+              theme="dp-material"
+              formControlName="payDate"
+              class="col-sm-9"
+            ></dp-date-picker>
+            <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.payDate">
+              <span
+                class="text-danger"
+                *ngIf="
+                  payConfirmForm.get('payDate').hasError(validation.type) &&
+                  (payConfirmForm.get('payDate').dirty ||
+                    payConfirmForm.get('payDate').touched)
+                "
+              >
+                {{ validation.message }}</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-sm-6">
+            <button fullWidth nbButton hero status="success" type="submit">
+              بلی
+            </button>
+          </div>
+          <div class="col-sm-6">
+            <button
+              fullWidth
+              nbButton
+              hero
+              status="primary"
+              (click)="dialogPayConfirmRef.close()"
+            >
+              انصراف
+            </button>
+          </div>
+        </div>
+      </form>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card status="danger" accent="danger">
+    <nb-card-header><h4 style="color: linen">هشدار</h4></nb-card-header>
+    <nb-card-body><h6>آیا از حذف مورد اطمینان دارید؟</h6></nb-card-body>
+    <nb-card-footer>
+      <div class="row">
+        <div class="col-sm-6">
+          <button
+            fullWidth
+            nbButton
+            hero
+            status="danger"
+            (click)="confirmDelete(data)"
+          >
+            بلی
+          </button>
+        </div>
+        <div class="col-sm-6">
+          <button
+            fullWidth
+            nbButton
+            hero
+            status="primary"
+            (click)="dialogRef.close()"
+          >
+            انصراف
+          </button>
+        </div>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

@@ -1,0 +1,195 @@
+<nb-card id="serachCard" style="box-shadow: 0 0 4px" *appHasNoRole="['Pishkhan']">
+  <nb-card-body>
+    <div class="container">
+      <form class="form-inline" (ngSubmit)="onSerach()" [formGroup]="form">
+
+
+        <div class="row">
+          <div class="form-group col-lg-4 col-md-4  mt-3">
+            <label for="city">نام شهرستان:</label>
+            <input size="small" formControlName="city" fullWidth id="city" nbInput type="text" />
+          </div>
+
+          <div class="form-group col-lg-4 col-md-4  mt-3">
+            <label for="town">
+              نام شهر:
+            </label>
+            <input formControlName="town" size="small" fullWidth id="town" nbInput type="text" />
+          </div>
+
+
+          <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12 float-right pr-0">
+            <button nbTooltip="جستجو" nbTooltipPlacement="top" nbButton hero size="tiny" status="info" type="submit"
+              class="ml-1" style="margin-top:42px">
+              <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="search-outline">
+              </nb-icon>
+            </button>
+
+            <button nbTooltip="بازسازی" nbTooltipPlacement="top" size="tiny" nbButton hero status="primary"
+              type="button" (click)="resetFilters()" style="margin-top:42px">
+              <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="refresh-outline">
+              </nb-icon>
+            </button>
+          </div>
+        </div>
+      </form>
+      <br />
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<nb-card class="table-x-mine" style="box-shadow: 0 0 4px">
+
+
+  <nb-card-header class="pt-4" style="border-bottom: 0">
+    <div class="pull-right pt-2">
+      <span class="pl-1">کارتابل مدیریت</span>
+      <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="arrow-ios-back-outline">
+      </nb-icon>
+      مدیریت شهرها
+      <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="arrow-ios-back-outline">
+      </nb-icon>
+      <span style="color:#3366ff">لیست شهرها</span>
+    </div>
+    <div class="pull-left">
+
+
+      <a class="btn btn-info btn-lg" style="color: #fff;" [routerLink]="['/pages/admin/CityTownManage']"
+        *appHasRole="['Admin']">
+        <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="file-text-outline">
+        </nb-icon>
+        ثبت شهر
+      </a>
+    </div>
+    <div class="clearfix"></div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="table-wrapper">
+      <ng2-smart-table [settings]="settings" [source]="source | paginate: pagingConfig" (custom)="onCustom($event)"
+        style="direction:ltr"></ng2-smart-table>
+    </div>
+
+    <span *ngFor="let item of collection | paginate: pagingConfig"></span>
+
+    <nb-card>
+      <nb-card-body>
+        <div class="row">
+          <div class="input-group">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 form-inline pull-right">
+              <label for="pageSize" style="margin-left: 0;">
+                رکورد صفحه:
+              </label>
+              <nb-select status="info" #pageSizeSelect class="pageSizeSelect" [selected]="pagination.itemsPerPage"
+                (selectedChange)="changePageSize(pageSizeSelect.selected)" id="pageSize" placeholder="انتخاب ...">
+                <nb-option *ngFor="let p of pageSizes" [value]="p.id">
+                  {{ p.display }}
+                </nb-option>
+              </nb-select>
+            </div>
+
+            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 mt-2 ">
+              <div class="d-flex justify-content-center">
+                <pagination-controls class="pagination" (pageChange)="pageChanged($event)" previousLabel=""
+                  nextLabel="">
+                </pagination-controls>
+              </div>
+            </div>
+            <!-- <div
+              class="col-lg-2 col-md-2 col-sm-6 col-xs-6 form-inline pull-left"
+            >
+              <label for="pageSize" style="margin-left: 0.45rem;">
+                تعداد رکورد:{{ pagination.totalItems }}
+              </label>
+            </div> -->
+            <div style="padding-right: 7% !important;"
+              class="col-lg-4 col-md-4 col-sm-6 col-xs-6 form-inline pull-left">
+              <label for="pageNumber" style="margin-left: 0.45rem;">
+                صفحه:
+              </label>
+              <input [value]="pagination.currentPage" style="width: 30%;" #pageNumber size="tiny" id="pageNumber"
+                nbInput type="number" min="1" max="pagination.totalPages"
+                (keydown.enter)="pageChanged(pageNumber.value)" />
+              <span> از {{ pagination.totalItems }} نتیجه</span>
+            </div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card status="danger" accent="danger">
+    <nb-card-header>
+      <h4 style="color: linen">هشدار</h4>
+    </nb-card-header>
+    <nb-card-body>
+      <h6>آیا از حذف مورد اطمینان دارید؟</h6>
+    </nb-card-body>
+    <nb-card-footer>
+      <div class="row">
+        <div class="col-sm-6">
+          <button fullWidth nbButton hero status="danger" (click)="confirmDelete(data)">
+            بلی
+          </button>
+        </div>
+        <div class="col-sm-6">
+          <button fullWidth nbButton hero status="primary" (click)="dialogRef.close()">
+            انصراف
+          </button>
+        </div>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+
+
+
+<!-- (userRowSelect)="onRowSelect($event)"
+      (rowSelect)="rowSelectedHandler($event)" -->
+
+<!-- <ng-template #contentDetailTemplate let-data>
+          <app-gasRequestDetail [id]="info?.id"></app-gasRequestDetail>
+      </ng-template> -->
+<ng-template #dialogCity let-data let-ref="dialogCityRef">
+  <nb-card status="success" accent="success">
+    <nb-card-header>
+      <h6 style="color: linen;">ثبت شهرستان:</h6>
+    </nb-card-header>
+    <nb-card-body>
+      <div class="row pl-4 pr-4">
+        <label> نام شهرستان:(فارسی)</label>
+        <input fullWidth id="kn" nbInput id="city" [(ngModel)]="cityName" />
+      </div>
+      <div class="row pl-4 pr-4">
+        <label> نام شهرستان:(انگلیسی)</label>
+        <input fullWidth id="kn" nbInput id="city" [(ngModel)]="cityNameEn" />
+      </div>
+      <div class="row pl-4 pr-4">
+        <label>استان</label>
+        <nb-select #provinceSelect id="city"  (selectedChange)="selectProvince(provinceSelect.selected)" id="province" [(ngModel)]="provinceId" fullWidth
+          placeholder="انتخاب شهرستان">
+          <nb-option class="op" *ngFor="let provienc of proviences" [value]="provienc.id">
+            {{ provienc.title }}
+          </nb-option>
+        </nb-select>
+
+      </div>
+    </nb-card-body>
+    <nb-card-footer>
+      <div class="row">
+        <div class="col-sm-6 pl-1">
+          <button fullWidth nbButton hero status="success" (click)="createNewCityConfirm(data)">
+            ثبت
+          </button>
+        </div>
+        <div class="col-sm-6 pr-1">
+          <button fullWidth nbButton hero status="danger" (click)="dialogCityRef.close()">
+            انصراف
+          </button>
+        </div>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

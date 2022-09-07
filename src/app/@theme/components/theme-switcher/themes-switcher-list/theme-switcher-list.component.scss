@@ -1,0 +1,40 @@
+@import '../../../styles/themes';
+@import '~@nebular/theme/styles/core/mixins';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/breakpoints';
+
+@include nb-install-component() {
+  /deep/ .themes-switcher-list {
+    padding: 1rem 2rem 1.25rem 0.5rem;
+    margin: 0;
+
+    @include nb-ltr(text-align, start);
+    @include nb-rtl(text-align, end);
+
+    .themes-switcher-item {
+      list-style: none;
+      cursor: pointer;
+
+      &:hover span {
+        opacity: 0.5;
+      }
+
+      i {
+        font-size: 2rem;
+      }
+
+      span {
+        font-weight: 300;
+        vertical-align: super;
+        padding-left: 1rem;
+        color: nb-theme(color-primary-400);
+      }
+    }
+  }
+
+  @include media-breakpoint-down(is) {
+    /deep/ .themes-switcher-list {
+      display: none;
+    }
+  }
+}

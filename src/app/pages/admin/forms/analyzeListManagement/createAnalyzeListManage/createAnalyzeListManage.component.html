@@ -1,0 +1,283 @@
+<nb-card>
+  <nb-card-header> ساخت تنظیمات </nb-card-header>
+  <nb-card-body>
+    <form (ngSubmit)="onSubmit()" [formGroup]="sendForm">
+      <nb-card>
+        <nb-card-body>
+          <div class="row mb-4">
+            <div class="col-sm-4 col-md-4">
+              <label>محدوده تعداد اول(بومی)</label>
+              <input
+                fullWidth
+                id="limitOne"
+                nbInput
+                type="number"
+                formControlName="limitOne"
+              />
+              <div
+                *ngFor="let validation of INPUT_VALIDATION_MESSAGES.limitOne"
+              >
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    sendForm.get('limitOne').hasError(validation.type) &&
+                    (sendForm.get('limitOne').dirty ||
+                      sendForm.get('limitOne').touched)
+                  "
+                  >{{ validation.message }}</span
+                >
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-4">
+              <label>محدوده تعداد دوم(غیر بومی)</label>
+              <input
+                fullWidth
+                id="limitTwo"
+                type="number"
+                nbInput
+                formControlName="limitTwo"
+              />
+              <div
+                *ngFor="let validation of INPUT_VALIDATION_MESSAGES.limitTwo"
+              >
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    sendForm.get('limitTwo').hasError(validation.type) &&
+                    (sendForm.get('limitTwo').dirty ||
+                      sendForm.get('limitTwo').touched)
+                  "
+                  >{{ validation.message }}</span
+                >
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-4">
+              <label>محدوده تعداد سوم</label>
+              <input
+                fullWidth
+                type="number"
+                id="limitThree"
+                nbInput
+                formControlName="limitThree"
+              />
+              <div
+                *ngFor="let validation of INPUT_VALIDATION_MESSAGES.limitThree"
+              >
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    sendForm.get('limitThree').hasError(validation.type) &&
+                    (sendForm.get('limitThree').dirty ||
+                      sendForm.get('limitThree').touched)
+                  "
+                  >{{ validation.message }}</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-sm-4 col-md-4">
+              <label>محدوده قیمت اول(بومی)</label>
+              <input
+                fullWidth
+                id="limitPriceOne"
+                nbInput
+                type="number"
+                formControlName="limitPriceOne"
+              />
+              <div
+                *ngFor="
+                  let validation of INPUT_VALIDATION_MESSAGES.limitPriceOne
+                "
+              >
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    sendForm.get('limitPriceOne').hasError(validation.type) &&
+                    (sendForm.get('limitPriceOne').dirty ||
+                      sendForm.get('limitPriceOne').touched)
+                  "
+                  >{{ validation.message }}</span
+                >
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-4">
+              <label>محدوده قیمت دوم(غیر بومی)</label>
+              <input
+                fullWidth
+                id="limitPriceTwo"
+                nbInput
+                type="number"
+                formControlName="limitPriceTwo"
+              />
+              <div
+                *ngFor="
+                  let validation of INPUT_VALIDATION_MESSAGES.limitPriceTwo
+                "
+              >
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    sendForm.get('limitPriceTwo').hasError(validation.type) &&
+                    (sendForm.get('limitPriceTwo').dirty ||
+                      sendForm.get('limitPriceTwo').touched)
+                  "
+                  >{{ validation.message }}</span
+                >
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-4">
+              <label>محدوده قیمت سوم</label>
+              <input
+                fullWidth
+                id="limitPriceThree"
+                nbInput
+                type="number"
+                formControlName="limitPriceThree"
+              />
+              <div
+                *ngFor="
+                  let validation of INPUT_VALIDATION_MESSAGES.limitPriceThree
+                "
+              >
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    sendForm.get('limitPriceThree').hasError(validation.type) &&
+                    (sendForm.get('limitPriceThree').dirty ||
+                      sendForm.get('limitPriceThree').touched)
+                  "
+                  >{{ validation.message }}</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="col-sm-4 col-md-4">
+              <label>حداکثر فاصله کیلومتری</label>
+              <input
+                fullWidth
+                id="maxDistance"
+                nbInput
+                type="number"
+                formControlName="maxDistance"
+              />
+              <div
+                *ngFor="let validation of INPUT_VALIDATION_MESSAGES.maxDistance"
+              >
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    sendForm.get('maxDistance').hasError(validation.type) &&
+                    (sendForm.get('maxDistance').dirty ||
+                      sendForm.get('maxDistance').touched)
+                  "
+                  >{{ validation.message }}</span
+                >
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-4">
+              <label>تلرانس عدد</label>
+              <input
+                fullWidth
+                id="toleranceCount"
+                nbInput
+                type="number"
+                formControlName="toleranceCount"
+              />
+              <div
+                *ngFor="
+                  let validation of INPUT_VALIDATION_MESSAGES.toleranceCount
+                "
+              >
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    sendForm.get('toleranceCount').hasError(validation.type) &&
+                    (sendForm.get('toleranceCount').dirty ||
+                      sendForm.get('toleranceCount').touched)
+                  "
+                  >{{ validation.message }}</span
+                >
+              </div>
+            </div>
+            <div class="col-sm-4 col-md-4">
+              <label>تلرانس قیمت</label>
+              <input
+                fullWidth
+                type="number"
+                id="tolerancePrice"
+                nbInput
+                formControlName="tolerancePrice"
+              />
+              <div
+                *ngFor="
+                  let validation of INPUT_VALIDATION_MESSAGES.tolerancePrice
+                "
+              >
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    sendForm.get('tolerancePrice').hasError(validation.type) &&
+                    (sendForm.get('tolerancePrice').dirty ||
+                      sendForm.get('tolerancePrice').touched)
+                  "
+                  >{{ validation.message }}</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <label>انتخاب ناحیه</label>
+              <nb-select
+                multiple
+                #areasSelect
+                placeholder="انتخاب ناحیه"
+                fullWidth
+                id="areaList"
+                formControlName="areaList"
+                (selectedChange)="onAreaChange(areasSelect.selected)"
+              >
+                <nb-option [value]="null">هیچ کدام</nb-option>
+                <nb-option *ngFor="let area of areas" [value]="area.id">
+                  {{ area.title }}
+                </nb-option>
+              </nb-select>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <nb-card>
+        <nb-card-body>
+          <button
+            *ngIf="isEdit === false"
+            fullWidth
+            [nbSpinner]="loading"
+            nbSpinnerStatus="info"
+            nbSpinnerSize="large"
+            nbButton
+            [disabled]="sendForm.invalid || loading"
+            hero
+            status="success"
+          >
+            ثبت
+          </button>
+          <button
+            *ngIf="isEdit === true"
+            fullWidth
+            [nbSpinner]="loading"
+            nbSpinnerStatus="info"
+            nbSpinnerSize="large"
+            nbButton
+            [disabled]="sendForm.invalid || loading"
+            hero
+            status="warning"
+          >
+            ویرایش
+          </button>
+        </nb-card-body>
+      </nb-card>
+    </form>
+  </nb-card-body>
+</nb-card>

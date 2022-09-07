@@ -1,0 +1,82 @@
+:host /deep/ ng2-st-tbody-edit-delete {display: flex !important;
+  height: 0 !important;
+}
+:host /deep/ .ng2-smart-titles {
+  // background:#13a093 !important;
+  background-image: linear-gradient(to right, #598bff, #3366ff);
+}
+:host /deep/ .ng2-smart-titles .ng2-smart-sort-link {
+  color: #fff !important;
+}
+:host /deep/ ng2-st-tbody-custom a.ng2-smart-action.ng2-smart-action-custom-custom {
+  display: block !important;
+  margin: 4px 3px;
+  text-align: center;
+  font-size: 0.9em !important;
+  background: #343a40;
+  color: #fff;
+  padding: 2px;
+  border-radius: 4px;
+  width: 89px;
+}
+  :host /deep/ ng2-st-tbody-custom a.ng2-smart-action.ng2-smart-action-custom-custom:hover {
+    color:#fff !important;
+  }
+
+  :host /deep/ tr td,
+  :host /deep/ tr th {
+    padding: 8px 2px !important;
+    text-align: center !important;
+  }
+  :host /deep/ tr td .label {
+    padding: 0 !important;
+    padding-left: 7px !important;
+  }
+
+
+
+:host /deep/ ng2-st-tbody-custom a.ng2-smart-action.ng2-smart-action-custom-custom:hover {
+  color: #5dcfe3;
+}
+.form-control {
+  direction:rtl;
+}
+
+.pagination /deep/ .ngx-pagination .current {
+  /* background: lightseagreen; */
+  // background:#13a093 !important;
+  background-image: linear-gradient(to right, #598bff, #3366ff) !important;
+}
+
+.pagination /deep/ pagination-template {
+  width: 100% !important;
+
+}
+.pagination {
+  text-align: center !important;
+}
+
+dp-date-picker /deep/ .dp-input-container .dp-picker-input{
+  width: 220px !important; }
+
+nb-select.pageSizeSelect  {
+width: 8rem !important;
+}
+
+nb-select.pageSizeSelect /deep/ .select-button {
+  min-width: 8rem !important;
+  }
+
+nb-select.workStatus /deep/ .select-button {
+width:100%;
+min-width: 19rem !important;
+max-width: 22rem !important;
+}
+
+nb-option {
+  padding: 2px 4px !important;
+}
+
+nb-option > button {
+  white-space: normal !important;
+}

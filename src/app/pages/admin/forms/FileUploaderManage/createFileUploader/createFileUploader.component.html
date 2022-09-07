@@ -1,0 +1,97 @@
+<nb-card>
+  <nb-card-header>
+    ساخت آپلودر
+  </nb-card-header>
+  <nb-card-body>
+    <form (ngSubmit)="onSubmit()" [formGroup]="sendForm">
+      <nb-card>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-sm-3">
+              <label>نام جدول</label>
+              <input fullWidth type="text" nbInput id="tableName" formControlName="tableName" min="0" />
+            </div>
+            <div class="col-sm-3">
+              <label>حداکثر سایز فایل</label>
+              <input fullWidth type="number" nbInput id="size" formControlName="size" min="0" />
+            </div>
+            <div class="col-sm-3">
+              <label>پسوند فایل</label>
+
+              <input fullWidth placeholder="jpg,jpeg,png" type="text" nbInput id="extentions"
+                formControlName="extentions" />
+            </div>
+            <div class="col-sm-3">
+              <label>نام کنترلر آن در صفحه</label>
+
+              <input fullWidth type="text" nbInput id="formControlName" formControlName="formControlName" min="0" />
+            </div>
+
+          </div>
+        </nb-card-body>
+      </nb-card>
+      <nb-card>
+        <nb-card-body>
+          <div class="row">
+            <div class="col-sm-3">
+              <label>عنوان</label>
+
+              <input fullWidth type="text" nbInput id="title" formControlName="title" />
+            </div>
+            <div class="col-sm-3">
+              <label>انتخاب نوع آپلودر</label>
+              <nb-select #uploaderType placeholder="انتخاب نوع کنتور" fullWidth id="meterType"
+                formControlName="uploaderType">
+                <nb-option [value]="null">هیچ کدام</nb-option>
+                <nb-option *ngFor="let uploaderType of uploaderTypes" [value]="uploaderType.id">
+                  {{ uploaderType.name }}
+                </nb-option>
+              </nb-select>
+            </div>
+
+            <div class="col-sm-3">
+              <label>انتخاب صفحه</label>
+              <nb-select #baseUploader placeholder="انتخاب صفحه" fullWidth id="baseUploader"
+                formControlName="baseUploader">
+                <nb-option [value]="null">هیچ کدام</nb-option>
+                <nb-option *ngFor="let baseUploader of baseUploaders" [value]="baseUploader.id">
+                  {{ baseUploader.title }}
+                </nb-option>
+              </nb-select>
+            </div>
+            <div class="col-sm-3">
+              <label>نوع آپلودر</label>
+              <nb-radio-group class="form-inline radio-x-inline" formControlName="isRequired" id="isRequired"
+                name="farmland">
+                <nb-radio value="true">
+                  اجباری
+                </nb-radio>
+                <nb-radio value="false">
+                  اختیاری
+                </nb-radio>
+              </nb-radio-group>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+
+      <nb-card>
+        <nb-card-body>
+          <div class="row" style="text-align: left; direction: ltr;">
+
+            <button class="btn" *ngIf="isEdit===false" nbButton status="success" style="width: 100%;" type="submit"
+              [disabled]="sendForm.invalid">
+              ثبت
+            </button>
+            <button class="btn" *ngIf="isEdit===true" nbButton status="warning" style="width: 100%;" type="submit"
+              [disabled]="sendForm.invalid">
+              ویرایش
+            </button>
+
+
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </form>
+  </nb-card-body>
+</nb-card>

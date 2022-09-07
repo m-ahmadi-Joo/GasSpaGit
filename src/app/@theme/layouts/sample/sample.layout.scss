@@ -1,0 +1,245 @@
+@import '../../styles/themes';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/breakpoints';
+
+@include nb-install-component() {
+  nb-layout-column.small {
+    flex: 0.15 !important;
+  }
+  nb-sidebar.menu-sidebar {
+    margin-top: nb-theme(sidebar-header-gap);
+    @include nb-for-theme(corporate) {
+      margin-top: 0;
+    }
+
+    // /deep/ .layout {
+    //   background-image: linear-gradient(135deg, #003073, #029797) !important;
+    // }
+
+    /deep/ .main-container {
+      height: calc(#{nb-theme(sidebar-height)} - #{nb-theme(header-height)} - #{nb-theme(sidebar-header-gap)}) !important;
+      @include nb-ltr(border-top-right-radius, nb-theme(radius));
+      @include nb-rtl(border-top-left-radius, nb-theme(radius));
+      @include nb-for-theme(corporate) {
+        border: 1px solid nb-theme(separator);
+        height: calc(#{nb-theme(sidebar-height)} - #{nb-theme(header-height)}) !important;
+      }
+    }
+
+    /deep/ .scrollable {
+      @include nb-for-theme(corporate) {
+        padding-top: 0;
+        .menu-item:first-child {
+          border-top: none;
+        }
+      }
+    }
+
+    /deep/ nb-sidebar-header {
+      padding-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    //background: transparent;
+    .main-btn {
+      padding: 0.75rem 2.5rem;
+      margin-top: -2rem;
+      font-weight: bold;
+      transition: padding 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.48);
+      @include nb-for-theme(corporate) {
+        border-radius: nb-theme(radius);
+      }
+
+      i {
+        font-size: 2rem;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+      }
+
+      span {
+        @include nb-ltr(padding-left, 0.25rem);
+        @include nb-rtl(padding-right, 0.25rem);
+      }
+
+      i,
+      span {
+        vertical-align: middle;
+      }
+    }
+
+    /deep/ nb-menu {
+      // & > .menu-items {
+      //   & > .menu-item:first-child {
+      //     .menu-title {
+      //       &::after {
+      //       }
+      //     }
+      //   }
+      // }
+
+      .nb-e-commerce {
+        font-size: 2rem;
+      }
+    }
+
+    &.compacted {
+      /deep/ nb-sidebar-header {
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      .main-btn {
+        width: 46px;
+        height: 44px;
+        padding: 0.375rem;
+        border-radius: 5px;
+        transition: none;
+
+        span {
+          display: none;
+        }
+      }
+    }
+  }
+  @include media-breakpoint-down(xs) {
+    .main-content {
+      padding: 0.75rem !important;
+    }
+  }
+  @include media-breakpoint-down(sm) {
+    nb-sidebar.menu-sidebar {
+      margin-top: 0;
+
+      /deep/ .main-container {
+        height: calc(#{nb-theme(sidebar-height)} - #{nb-theme(header-height)}) !important;
+        @include nb-ltr(border-top-right-radius, 0);
+        @include nb-rtl(border-top-left-radius, 0);
+
+        .scrollable {
+          padding-top: 0;
+        }
+      }
+    }
+    .main-btn {
+      display: none;
+    }
+  }
+}
+
+:host /deep/ [nbButton].appearance-filled.status-warning[disabled] {
+  cursor: not-allowed;
+}
+
+/*nb-sidebar /deep/ .main-container {
+   background: #052052;
+}*/
+
+:host /deep/ .themes-switcher-list {
+  padding:0 !important;
+}
+
+/* :host /deep/ nb-select {
+
+} */
+
+:host /deep/ .themes-switcher-list li {
+  background: #f3f3f6;
+  border-bottom: 1px solid #fefefe;
+}
+
+:host /deep/ .themes-switcher-list li span {
+  display: block;
+  padding: 10px 20px !important;
+}
+
+.nb-theme-banafsh :host /deep/ ng2-smart-table tr:nth-child(2n),
+.nb-theme-banafsh :host /deep/ ng2-smart-table tr.selected,
+.nb-theme-banafsh :host /deep/ ng2-smart-table tr:hover {
+  background-color: #41055a !important;
+}
+
+.nb-theme-siah :host /deep/ ng2-smart-table tr:nth-child(2n),
+.nb-theme-siah :host /deep/ ng2-smart-table tr.selected,
+.nb-theme-siah :host /deep/ ng2-smart-table tr:hover {
+  background-color: #030e29 !important;
+}
+
+.nb-theme-banafsh :host /deep/ nb-card.status-info nb-card-header {
+  background-color: transparent;
+  background-image: linear-gradient(
+    to right,
+    #b18aff,
+    #a16eff
+  ) !important;
+  border-bottom-width: 1px;
+  border-bottom-color: #1A1B36;
+  color: #f3f3f3;
+}
+
+.nb-theme-banafsh :host /deep/ nb-action nb-icon,
+.nb-theme-banafsh :host /deep/ nb-search button,
+.nb-theme-banafsh :host /deep/ .form-inline input,
+.nb-theme-banafsh :host /deep/ .form-inline textarea,
+.nb-theme-banafsh :host /deep/ label[for="active"],
+.nb-theme-banafsh :host /deep/ strong,
+.nb-theme-banafsh :host /deep/ label[for="pageSize"],
+.nb-theme-banafsh :host /deep/ label[for="pageNumber"],
+.nb-theme-banafsh :host /deep/ #serachCard label,
+.nb-theme-banafsh :host /deep/ #serachCard h6,
+.nb-theme-banafsh :host /deep/ app-gasrequestdetailbox label,
+.nb-theme-banafsh :host /deep/ app-admin-panel nb-card label strong,
+.nb-theme-banafsh :host /deep/ app-gasrequestdetailbox h6,
+.nb-theme-siah :host /deep/ nb-action nb-icon,
+.nb-theme-siah :host /deep/ nb-search button,
+.nb-theme-siah :host /deep/ .form-inline input,
+.nb-theme-siah :host /deep/ .form-inline textarea,
+.nb-theme-siah :host /deep/ #serachCard label,
+.nb-theme-siah :host /deep/ #serachCard h6,
+.nb-theme-siah :host /deep/ label[for="pageSize"],
+.nb-theme-siah :host /deep/ label[for="pageNumber"],
+.nb-theme-siah :host /deep/ app-gasrequestdetailbox label,
+.nb-theme-siah :host /deep/ app-gasrequestdetailbox h6,
+.nb-theme-siah :host /deep/ label[for="active"],
+.nb-theme-siah :host /deep/ strong,
+.nb-theme-siah :host /deep/ app-admin-panel nb-card label strong {
+  color: #fff !important;
+}
+
+.nb-theme-banafsh :host /deep/ nb-card,
+.nb-theme-banafsh :host /deep/ nb-card label strong,
+.nb-theme-banafsh :host /deep/ h6,
+.nb-theme-banafsh :host /deep/ h4,
+.nb-theme-banafsh :host /deep/ nb-icon[icon="printer-outline"],
+.nb-theme-siah :host /deep/ nb-card,
+.nb-theme-siah :host /deep/ nb-card label strong,
+.nb-theme-siah :host /deep/ h6,
+.nb-theme-siah :host /deep/ h4,
+.nb-theme-siah :host /deep/ nb-icon[icon="printer-outline"] {
+  color: #111 !important;
+}
+
+.nb-theme-banafsh :host /deep/ .ng2-smart-titles,
+.nb-theme-banafsh :host /deep/ .pagination .ngx-pagination .current {
+  background-image: linear-gradient(
+    to right,
+    #b18aff,
+    #a16eff
+  ) !important;
+}
+
+.nb-theme-banafsh :host /deep/ nb-card-header span:last-child {
+  color: #b18aff !important;
+}
+
+.nb-theme-banafsh
+  :host
+  /deep/
+  nb-select.appearance-outline.status-info
+  .select-button {
+  border-color: #b18aff;
+}
+
+.nb-theme-banafsh :host /deep/ dp-date-picker .dp-input-container input,
+.nb-theme-siah :host /deep/ dp-date-picker .dp-input-container input {
+  background: transparent;
+  border: 1px solid #272744;
+}

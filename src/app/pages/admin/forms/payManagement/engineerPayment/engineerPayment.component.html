@@ -1,0 +1,297 @@
+<style>
+  dp-date-picker.dp-material .dp-picker-input {
+    width: 228px !important;
+  }
+  dp-date-picker /deep/button.dp-calendar-nav-left::before {
+    transform: rotate(52deg)!important;
+  }
+  dp-date-picker /deep/button.dp-calendar-nav-right::before {
+    transform: rotate(224deg)!important;
+  }
+  dp-date-picker /deep/ .dp-nav-btns-container
+  {
+    direction: rtl!important;
+  }
+ 
+</style>
+
+<nb-card id="serachCard" style="box-shadow: 0 0 4px">
+  <nb-card-header>
+    ریز کارکرد / فیش حقوقی
+  </nb-card-header>
+  <nb-card-body> 
+    <div class="container">
+
+      <form (ngSubmit)="loadList()" [formGroup]="form">
+
+        <div class="row">
+<div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
+
+<div>
+  <label for="requestPayType">
+    <span class="text-danger font-weight-bold">*</span>
+    نوع درخواست</label>
+</div>
+
+<div>
+    <!-- (valueChange)="onChangeRequestPayType($event)"  -->
+    <nb-radio-group class="form-inline radio-x-inline w-100" formControlName="requestPayType" id="requestPayType"
+    name="requestPayType">
+    <nb-radio value="1">
+      فیش حقوقی
+    </nb-radio>
+    <nb-radio value="2">
+      ریز کارکرد
+    </nb-radio>
+  </nb-radio-group>
+</div>
+
+</div>
+
+          <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div>
+              <label for="pFromDate">
+                از تاریخ:
+              </label>
+            </div>
+          <div>
+            <dp-date-picker name="ds" id="ds" nbInput dir="rtl" mode="day" theme="dp-material"
+            formControlName="pFromDate" [config]="datePickerConfig" (open)="openFromDayPicker()"
+            (close)="closeFromDayPicker()" nbInput></dp-date-picker>
+          <div>
+            <span *ngIf="
+                form.get('pFromDate').value > form.get('pToDate').value &&
+                form.get('pToDate').value !== ''
+              " class="text-danger">
+              بازه تاریخ انتخابی نامعتبر است.
+            </span>
+          </div>
+          </div>
+          </div>
+
+          <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div>
+              <label for="pToDate">
+                تا تاریخ:
+              </label>
+            </div>
+
+            <div>
+              <dp-date-picker name="ds" class="w-100" id="ds" nbInput dir="rtl" mode="day" theme="dp-material" formControlName="pToDate"
+              [config]="datePickerConfig" (open)="openToDayPicker()" (close)="closeToDayPicker()" nbInput>
+            </dp-date-picker>
+            </div>
+
+          </div>
+
+          <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+            <div>
+              <label for="workTypes">
+                حوزه فعالیت
+              </label>
+            </div>
+            <div>
+              <nb-select class="w-100" multiple #workStates formControlName="workTypes" status="info"
+                id="workStates" placeholder="انتخاب..." size="medium">
+                <nb-option [value]="null">هیچ کدام</nb-option>
+                <nb-option *ngFor="let p of workTypes" [value]="p.id">
+                  {{ p.title }}
+                </nb-option>
+              </nb-select>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+            <label for="gasRequestFileNumber">
+              شماره ملک:
+            </label>
+
+            <input formControlName="gasRequestFileNumber" size="small" fullWidth id="gasRequestFileNumber" nbInput
+              type="number" />
+          </div>
+
+          <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+            <label for="trackNumber">
+              شناسه پرداخت:
+            </label>
+
+            <input formControlName="trackNumber" size="small" fullWidth id="trackNumber" nbInput type="text" />
+
+            <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.trackNumber">
+              <span class="text-danger" *ngIf="
+                form.get('trackNumber').hasError(validation.type) &&
+                (form.get('trackNumber').dirty ||
+                  form.get('trackNumbers').touched)
+              ">{{ validation.message }}</span>
+            </div>
+          </div>
+
+          <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div>
+              <div>
+                <label for="areas">
+                  ناحیه گازی:
+                 </label>
+              </div>
+              <div>
+                <nb-select
+                multiple
+                class="w-100"
+                formControlName="areas"
+                id="areas"
+                placeholder="انتخاب ..."
+              >
+                <nb-option [value]="null">هیچ کدام</nb-option>
+                <nb-option *ngFor= "let a of areas" [value]="a.id" >
+                  {{ a.title }}
+                </nb-option>
+                <!-- <nb-option value="1">
+                  فشار ضعیف
+                </nb-option>
+
+                <nb-option value="2">
+                  فشار قوی
+                </nb-option> -->
+                </nb-select>
+              </div>
+              <!-- <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.trackNumber">
+                <span class="text-danger" *ngIf="
+                  form.get('projectKinds').hasError(validation.type) &&
+                  (form.get('projectKinds').dirty ||
+                    form.get('projectKinds').touched)
+                ">{{ validation.message }}</span>
+              </div> -->
+            </div>
+
+          </div>
+
+          <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div>
+              <div>
+                <label for="projectKinds">
+                  نوع فشار گاز:
+                 </label>
+              </div>
+              <div>
+                <nb-select
+                class="w-100"
+                multiple
+                formControlName="projectKinds"
+                id="projectKinds"
+                placeholder="انتخاب ..."
+              >
+                <nb-option [value]="null">هیچ کدام</nb-option>
+                <nb-option *ngFor= "let p of projectKinds" [value]="p.id" >
+                  {{ p.descp }}
+                </nb-option>
+                <!-- <nb-option value="1">
+                  فشار ضعیف
+                </nb-option>
+
+                <nb-option value="2">
+                  فشار قوی
+                </nb-option> -->
+                </nb-select>
+              </div>
+              <!-- <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.trackNumber">
+                <span class="text-danger" *ngIf="
+                  form.get('projectKinds').hasError(validation.type) &&
+                  (form.get('projectKinds').dirty ||
+                    form.get('projectKinds').touched)
+                ">{{ validation.message }}</span>
+              </div> -->
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="form-group col-lg-3 col-md-3 col-sm-4 col-xs-12 ">
+            <label for="engineerOrganizationCode">
+              کد دفتر گاز مهندس:
+            </label>
+
+            <input *ngIf= "!isEngineerFinancialDepartment" formControlName="engineerOrganizationCode" size="small" fullWidth id="engineerOrganizationCode"
+              nbInput type="text" />
+
+            <input *ngIf= "isEngineerFinancialDepartment" disabled formControlName="engineerOrganizationCode" size="small" fullWidth id="engineerOrganizationCode"
+              nbInput type="text" />
+
+              <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.engineerOrganizationCode">
+                <span class="text-danger" *ngIf="
+                  form.get('engineerOrganizationCode').hasError(validation.type) &&
+                  (form.get('engineerOrganizationCode').dirty ||
+                    form.get('engineerOrganizationCode').touched)
+                ">{{ validation.message }}</span>
+              </div>
+          </div>
+
+          <div class="form-group col-lg-3 col-md-3 col-sm-4 col-xs-12 ">
+            <label for="engineerName">
+              نام مهندس:
+            </label>
+            <input *ngIf= "!isEngineerFinancialDepartment" formControlName="engineerName" size="small" fullWidth id="engineerName" nbInput type="text" />
+            <input *ngIf= "isEngineerFinancialDepartment" disabled formControlName="engineerName" size="small" fullWidth id="engineerName" nbInput type="text" />
+          </div>
+
+          <div class="form-group col-lg-3 col-md-3 col-sm-4 col-xs-12 ">
+            <label for="nationalCode">
+              کد ملی مهندس:
+            </label>
+
+            <input *ngIf= "!isEngineerFinancialDepartment" formControlName="nationalCode" size="small" fullWidth id="nationalCode" nbInput type="text" />
+            <input *ngIf= "isEngineerFinancialDepartment" disabled formControlName="nationalCode" size="small" fullWidth id="nationalCode" nbInput type="text" />
+
+            <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.nationalCode">
+              <span class="text-danger" *ngIf="
+                form.get('nationalCode').hasError(validation.type) &&
+                (form.get('nationalCode').dirty ||
+                  form.get('nationalCode').touched)
+              ">{{ validation.message }}</span>
+            </div>
+          </div>
+
+          <!-- <div class="form-group col-lg-3 col-md-3 col-sm-4 col-xs-12 float-left">
+            <button nbTooltip="جستجو" nbTooltipPlacement="top" nbButton hero size="tiny" status="info" type="button"
+              (click)="onSearch()" class="ml-1" style="margin-bottom:28px">
+              <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="search-outline">
+              </nb-icon>
+            </button>
+
+            <button nbTooltip="بازسازی" nbTooltipPlacement="top" size="tiny" nbButton hero status="primary"
+              type="button" (click)="resetFilters()" style="margin-bottom:28px">
+              <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="refresh-outline">
+              </nb-icon>
+            </button>
+          </div> -->
+
+          <div class="form-group col-lg-3 col-md-3 col-sm-4 col-xs-12">
+            <button [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="tiny" [disabled]="loading || form.invalid"
+              nbTooltip="جستجو" nbTooltipPlacement="top" nbButton hero size="tiny" status="info" type="submit"
+              class="ml-1 h-50" style="margin-top: 26px;">
+              <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="search-outline">
+              </nb-icon>
+            </button>
+
+            <button [disabled]="loading" nbTooltip="بازسازی" nbTooltipPlacement="top" size="tiny" nbButton hero status="primary"
+              type="button" (click)="resetFilters()" class="ml-1 h-50" style="margin-top: 26px;">
+              <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="refresh-outline">
+              </nb-icon>
+            </button>
+          </div>
+
+        </div>
+
+      </form>
+      <br />
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<ngx-paySalaryRecieptList (onPrintPayment)="onPrintPayment()" (changePage)="onChangePage($event)" *ngIf="showReciept"></ngx-paySalaryRecieptList>
+
+<ngx-payDetailList (onExcelExportPayment) = "onExcelExport()" (onPrintPayment)="onPrintPayment()" (changePage)="onChangePage($event)" *ngIf="!showReciept"></ngx-payDetailList>

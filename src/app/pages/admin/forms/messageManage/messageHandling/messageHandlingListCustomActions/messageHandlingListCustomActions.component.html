@@ -1,0 +1,45 @@
+
+<button
+title="حذف"
+size="tiny"
+class="mb-2 mr-1"
+nbButton
+status="danger"
+(click)="onDelete(rData)"
+>
+<nb-icon
+  [options]="{ animation: { type: 'zoom' } }"
+  class="icon-button"
+  icon="close-outline"
+>
+</nb-icon>
+</button>
+
+<button
+title="ویرایش"
+size="tiny"
+class="mb-2 mr-1"
+nbButton
+status="warning"
+(click)="onEdit()"
+>
+<nb-icon
+  [options]="{ animation: { type: 'zoom' } }"
+  class="icon-button"
+  icon="edit-outline"
+>
+</nb-icon>
+</button>
+
+<!-- <nb-select placeholder="انتخاب عملیات" *ngIf="rData.isPaidTo === false">
+  <nb-option>
+      <button
+        fullWidth
+        nbButton
+        status="success"
+        (click)="onConfirmPayment(rData.id)"
+      >
+          تأیید پرداخت به مهندسان
+      </button>
+  </nb-option>
+</nb-select> -->

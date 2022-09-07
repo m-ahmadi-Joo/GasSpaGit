@@ -1,0 +1,220 @@
+<style>
+  .pagination /deep/ .ngx-pagination .current {
+    background: lightseagreen;
+  }
+
+  .pagination /deep/ pagination-template {
+    width: 100% !important;
+  }
+
+  .pagination {
+    text-align: center !important;
+  }
+
+  dp-date-picker /deep/ .dp-input-container .dp-picker-input {
+    width: 220px !important;
+  }
+
+  nb-select.pageSizeSelect /deep/ .select-button {
+    min-width: 8rem !important;
+  }
+
+  nb-select.workStatus /deep/ .select-button {
+    /* width:100%;
+          min-width: 19rem !important;
+          max-width: 22rem !important; */
+    padding: 0.3rem 1.125rem !important;
+  }
+
+  nb-accordion nb-accordion-item-body /deep/ .item-body {
+    padding: 0 !important;
+  }
+
+  /* nb-accordion nb-accordion-item-body /deep/ .map-position {
+    position: relative;
+    top: 0;
+    right: 0;
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px 0;
+  } */
+
+  .col-lg-3.col-md-3.col-sm-6.col-xs-12,
+  .col-lg-2.col-md-2.col-sm-6.col-xs-12 {
+    padding: 7px;
+  }
+
+  p {
+    text-align: justify;
+    text-justify: inter-word;
+    line-height: 1.8;
+    font-size: 1rem;
+    /* margin: 0 20px 15px 20px; */
+  }
+</style>
+
+<nb-card style="box-shadow: 0 0 4px">
+
+  <nb-card-header>بروز رسانی مناطق مهندسین</nb-card-header>
+
+  <nb-card-body>
+
+    <form [formGroup]="fileUploadForm" (ngSubmit)="onFormSubmit()">
+      <div class="row col-sm-12 mb-4">
+        <div class="col-sm-12" id="title">
+          <label>
+            <span class="text-danger font-weight-bold ml-1">*</span>
+            آپلود اکسل منطقه بندی مهندسین
+          </label>
+
+        </div>
+
+        <div class="col-md-5 mt-4">
+          <div class="file-drop-area">
+            <span class="fake-btn">فایل را انتخاب کنید</span>
+            <span class="Pre-file-msg" *ngIf="!fileInputLabel">
+              "فایل را بکشید و در اینجا رها کنید"
+            </span>
+            <span class="Pre-file-msg" *ngIf="fileInputLabel">
+              {{ fileInputLabel }}
+            </span>
+            <input
+              accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+              (change)="onFileSelect($event)" #UploadFileInput class="file-input" type="file" multiple />
+
+            <div class="progress" *ngIf="progress">
+              <div class="progress-bar" [style.width]="progress + '%'">{{progress}}%</div>
+            </div>
+
+          </div>
+        </div>
+        <div class="col-md-2 mt-4">
+
+          <circle-progress [percent]="progress" [radius]="30" [outerStrokeWidth]="5" [innerStrokeWidth]="5"
+            [outerStrokeColor]="'#76C2AF'" [innerStrokeColor]="'#C7E596'" [animation]="true" [animationDuration]="300"
+            [space]="-5"></circle-progress>
+        </div>
+
+      </div>
+
+      <!-- <span class="file-msg">{{ img.name }}</span> -->
+
+      <!-- </tr>
+        </table> -->
+      <!-- <app-progress [progress]="progress"></app-progress> -->
+
+      <div class="row">
+        <div class="col-md-6">
+          <button [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" type="submit" nbButton
+            status="success" class="btn btn-success btn-block" [disabled]=" loading">
+            ثبت
+          </button>
+        </div>
+        <div class="col-md-6">
+          <button type="button" nbButton status="warning" class="btn btn-block"
+            [routerLink]="['/pages/admin/AdminPanel']" [disabled]="loading">
+            بازگشت
+          </button>
+        </div>
+      </div>
+    </form>
+    <br>
+    <nb-card *ngIf="updateResult.length > 0" id="serachCard" style="box-shadow: 0 0 4px">
+      <nb-card-body>
+        <!-- <div class="container"> -->
+        <form class="form-inline" (ngSubmit)="onSerach()" [formGroup]="searchForm">
+          <div class="row">
+            <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+              <label for="engineerOrganizationCode">
+                کد دفتر گاز:
+              </label>
+              <input formControlName="engineerOrganizationCode" size="small" fullWidth id="engineerOrganizationCode"
+                nbInput type="text" />
+              <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.engineerOrganizationCode">
+                <span class="text-danger" *ngIf="
+                searchForm.get('engineerOrganizationCode').hasError(validation.type) &&
+                    (searchForm.get('engineerOrganizationCode').dirty ||
+                    searchForm.get('engineerOrganizationCode').touched)
+                  ">{{ validation.message }}</span>
+              </div>
+            </div>
+            <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+              <label for="fullName">
+                نام مهندس:
+              </label>
+              <input formControlName="fullName" size="small" fullWidth id="fullName" nbInput type="text" />
+            </div>
+
+            <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+              <label for="nationalCode">
+                کد ملی:
+              </label>
+
+              <input formControlName="nationalCode" size="small" fullWidth id="nationalCode" nbInput type="text" />
+
+              <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.nationalCode">
+                <span class="text-danger" *ngIf="
+                searchForm.get('nationalCode').hasError(validation.type) &&
+                  (searchForm.get('nationalCode').dirty ||
+                  searchForm.get('nationalCode').touched)
+                ">{{ validation.message }}</span>
+              </div>
+            </div>
+
+            <div class="form-group col-lg-3 col-md-3 col-sm-4 col-xs-12 float-left mt-3">
+              <button nbTooltip="بازسازی" nbTooltipPlacement="top" size="tiny" nbButton hero status="primary"
+                type="button" (click)="resetFilters()" style="margin-top: 24px;height: 50%;">
+                <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="refresh-outline">
+                </nb-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+        <br />
+
+        <!-- </div> -->
+      </nb-card-body>
+    </nb-card>
+    <nb-card style="height: 460px;" *ngIf="updateResult.length > 0">
+      <nb-card-body>
+        <div style="clear: both"></div>
+        <!-- <div class="table-wrapper">
+          <ng2-smart-table [settings]="settings" [source]="source | paginate: pagingConfig" (custom)="onCustom($event)"
+            style="direction: ltr"></ng2-smart-table>
+        </div> -->
+
+        <!-- <div class=" "> -->
+        <table class="table table-wrapper-scroll-y">
+          <thead>
+            <tr>
+              <th scope="col">کد مهندس</th>
+              <th scope="col">نام و نام خانوادگی</th>
+              <th scope="col">کد دفتر گاز</th>
+              <th scope="col">مناطق</th>
+              <th scope="col">تاریخ شروع</th>
+              <th scope="col">روز های شیفت</th>
+              <th scope="col">ساعات</th>
+              <th scope="col">نتیجه</th>
+
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of updateResult| tableFilter: searchForm.value">
+              <td>{{ item.engineerId }}</td>
+              <td>{{ item.fullName }}</td>
+              <td>{{ item.engineerOrganizationCode }}</td>
+              <td>{{ item.areasName }}</td>
+              <td>{{ item.startWorkTime }}</td>
+              <td>{{ item.dayWorks }}</td>
+              <td>{{ item.shiftTimes }}</td>
+              <td>{{ item.result }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- </div> -->
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+
+</nb-card>

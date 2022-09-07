@@ -1,0 +1,139 @@
+.img-fluid {
+  display: block;
+  margin: 0 auto;
+}
+
+.col-sm-2 {
+  margin-top: 20px;
+  float: right;
+  padding: 0 10px;
+  min-width: 170px;
+}
+
+.col-sm-2:hover a,
+.col-sm-2:focus a {
+  transform: scale(1.06);
+}
+
+.col-sm-2 a {
+  display: block;
+  cursor: pointer;
+  padding: 12px 0;
+  box-shadow: 0 0 10px;
+  border-radius: 0.25rem;
+  transition: all ease-in 0.3s;
+}
+
+.col-sm-2 a strong {
+  display: block;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.btn-routing-primary,
+.btn-routing-warning,
+.btn-routing-info,
+.btn-routing-success {
+  transition: all 0.8s ease !important;
+}
+
+.btn-routing-primary:hover {
+  background: linear-gradient(
+    90deg,
+    rgb(4, 1, 53) 0%,
+    rgba(9, 9, 121, 1) 35%,
+    rgba(0, 212, 255, 1) 100%
+  ) !important;
+  color: #fff !important;
+}
+
+.btn-routing-warning:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(226, 52, 26, 1) 0%,
+    rgba(247, 86, 23, 1) 50%,
+    rgba(252, 176, 69, 1) 100%
+  ) !important;
+  color: #fff !important;
+}
+
+.btn-routing-info:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(7, 74, 126, 1) 0%,
+    rgba(28, 105, 244, 1) 35%,
+    rgba(112, 193, 198, 0.9808298319327731) 100%
+  ) !important;
+  color: #fff !important;
+}
+
+.btn-routing-success:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(17, 77, 6, 1) 0%,
+    rgba(19, 228, 33, 1) 35%,
+    rgba(166, 214, 134, 0.9808298319327731) 100%
+  ) !important;
+  color: #fff !important;
+}
+
+#according-card {
+  height: 340px;
+}
+
+.login-card {
+  direction: rtl;
+  text-align: center;
+  height: 340px;
+  // height: 100%;
+}
+
+input[nbInput] {
+  font-family: IRANSansWeb;
+  text-align: center;
+}
+
+.accordion-item-header {
+  font-family: IRANSansWeb;
+}
+
+.card-header-title {
+  font-family: IRANSansWeb;
+}
+
+.btn {
+  font-family: IRANSansWeb;
+  width: 100%;
+  margin-top: 1.85rem;
+}
+
+// .row {
+//   height: 100%;
+// }
+
+input[type=text],
+input[type=password] {
+  background-color: #e7e9ef !important;
+  border-color: #c9cede !important;
+}
+
+.size-giant {
+  font-size: 1rem !important;
+}
+
+input.size-giant {
+  line-height: 1.3rem !important;
+  padding: 0.9rem 1.125rem !important;
+}
+
+.text-info {
+  margin-top: 0.75rem;
+}
+
+.cards-div {
+  text-align: center;
+  display: inline-block;
+  display: -moz-inline-block;
+  vertical-align: middle;
+  margin-top: 7%;
+}

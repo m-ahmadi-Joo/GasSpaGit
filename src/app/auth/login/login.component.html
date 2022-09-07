@@ -1,0 +1,937 @@
+<!-- <div class="container">
+
+  <div class="row justify-content-md-center">
+    <div class="col col-lg-2"></div>
+    <div class="col-md-auto">
+      <nb-card accent="primary">
+        <nb-card-body>
+          <h1 class="text-center text-primary">
+            سیستم کنترل و بازرسی دفتر گاز استان فارس
+          </h1>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col col-lg-2"></div>
+  </div>
+
+</div> -->
+
+<!-- <style>
+  .img-fluid {
+    display: block;
+    margin: 0 auto;
+  }
+
+  .col-sm-2 {
+    margin-top: 20px;
+    float: right;
+    padding: 0 10px;
+    min-width: 170px;
+  }
+
+  .col-sm-2:hover a,
+  .col-sm-2:focus a {
+    transform: scale(1.06);
+  }
+
+  .col-sm-2 a {
+    display: block;
+    cursor: pointer;
+    padding: 12px 0;
+    box-shadow: 0 0 10px;
+    border-radius: 0.25rem;
+    transition: all ease-in 0.3s;
+  }
+
+  .col-sm-2 a strong {
+    display: block;
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  .btn-routing-primary,
+  .btn-routing-warning,
+  .btn-routing-info,
+  .btn-routing-success {
+    transition: all 0.8s ease !important;
+  }
+
+  .btn-routing-primary:hover {
+    background: linear-gradient(
+      90deg,
+      rgb(4, 1, 53) 0%,
+      rgba(9, 9, 121, 1) 35%,
+      rgba(0, 212, 255, 1) 100%
+    ) !important;
+    color: #fff !important;
+  }
+
+  .btn-routing-warning:hover {
+    background: linear-gradient(
+      90deg,
+      rgba(226, 52, 26, 1) 0%,
+      rgba(247, 86, 23, 1) 50%,
+      rgba(252, 176, 69, 1) 100%
+    ) !important;
+    color: #fff !important;
+  }
+
+  .btn-routing-info:hover {
+    background: linear-gradient(
+      90deg,
+      rgba(7, 74, 126, 1) 0%,
+      rgba(28, 105, 244, 1) 35%,
+      rgba(112, 193, 198, 0.9808298319327731) 100%
+    ) !important;
+    color: #fff !important;
+  }
+
+  .btn-routing-success:hover {
+    background: linear-gradient(
+      90deg,
+      rgba(17, 77, 6, 1) 0%,
+      rgba(19, 228, 33, 1) 35%,
+      rgba(166, 214, 134, 0.9808298319327731) 100%
+    ) !important;
+    color: #fff !important;
+  }
+</style> -->
+
+<nb-card>
+  <nb-card-body>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <!-- <div class="row justify-content-center">
+        <div class="col-auto w-100 mb-n5 p-0">
+          <nb-card
+            style="
+              box-shadow: 0px 2px 4px;
+              margin-bottom: 30px;
+              margin-top: 30px;
+              border-top-style: solid;
+              border-top-width: 0.25rem;
+              border-top-color: #3b4a8b;
+            "
+          >
+            <nb-card-body> -->
+      <div
+        class="row"
+        style="
+          box-shadow: 0px 2px 4px;
+          margin-bottom: 30px;
+          margin-top: 30px;
+          border-top-style: solid;
+          border-top-width: 0.25rem;
+          border-top-color: #3b4a8b;
+          margin-right: 15px;
+          margin-left: 15px;
+          border-radius: 4px;
+        "
+      >
+      <!-- style="width: 120px" -->
+        <div class="mx-auto my-2">
+          <img
+            class="d-inline-block"
+            src="../../../assets/images/logo-01.png"
+          />
+
+          <h5 class="d-inline-block" style="color: #3b4a8b">
+            <span>سیستم کنترل و بازرسی دفتر گاز نظام مهندسی استان فارس</span>
+          </h5>
+        </div>
+      </div>
+      <!-- </nb-card-body>
+          </nb-card>
+        </div>
+      </div> -->
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="row">
+        <div class="col-md-6" style="padding-right: 30px">
+          <nb-card style="box-shadow: 0px 0px 4px; min-height: 420px">
+            <nb-card-header
+              class="card-header-title text-center"
+              style="padding: 24px 0;font-size: 1rem;"
+            >
+              جهت درخواست انشعاب گاز ثبت نام در سیستم الزامی است
+            </nb-card-header>
+            <nb-card-body class="px-5 py-4">
+              <!-- <button
+                            [disabled]="authenticating"
+                            [routerLink]="['/pages']"
+                            class="btn"
+                            nbButton
+                            status="info"
+                          >
+                            مشاهده ی پورتال ها
+                          </button> -->
+              <!-- <nb-accordion>
+                <nb-accordion-item expanded="true">
+                  <nb-accordion-item-header class="accordion-item-header">
+                    ثبت نام مالک
+                  </nb-accordion-item-header>
+                  <nb-accordion-item-body> -->
+              <div class="row container mt-4 ml-0 mr-0" style="margin-bottom: 11px;">
+                <button
+                  [routerLink]="['/auth/reg']"
+                  class="btn-routing-primary"
+                  routerLinkActive="router-link-active"
+                  fullWidth
+                  nbButton
+                  outline
+                  shape="semi-round"
+                  status="primary"
+                  size="giant"
+                >
+                  ثبت نام مالک
+                </button>
+              </div>
+
+              <!-- </nb-accordion-item-body>
+                </nb-accordion-item>
+                <nb-accordion-item>
+                  <nb-accordion-item-header class="accordion-item-header"> -->
+
+              <!-- </nb-accordion-item-header>
+              <nb-accordion-item-body> -->
+              <div class="row container ml-0 mr-0" style="margin-bottom: 11px;">
+                <button
+                  [routerLink]="['/auth/ExecutersList']"
+                  class="btn-routing-warning"
+                  routerLinkActive="router-link-active"
+                  fullWidth
+                  nbButton
+                  outline
+                  shape="semi-round"
+                  status="warning"
+                  size="giant"
+                >
+                  لیست مجریان
+                </button>
+              </div>
+
+              <!-- </nb-accordion-item-body>
+              </nb-accordion-item>
+              <nb-accordion-item> -->
+              <!-- <nb-accordion-item-header class="accordion-item-header">
+                لیست تعرفه ها
+              </nb-accordion-item-header>
+              <nb-accordion-item-body> -->
+              <div class="row container ml-0 mr-0" style="margin-bottom: 11px;">
+                <div class="col-sm-6 pr-0 pl-1">
+                  <button
+                    [routerLink]="['/auth/TariffList']"
+                    class="btn-routing-info"
+                    routerLinkActive="router-link-active"
+                    fullWidth
+                    nbButton
+                    outline
+                    shape="semi-round"
+                    status="info"
+                    size="giant"
+                  >
+                    تعرفه بازرسی
+                  </button>
+                </div>
+                <div class="col-sm-6 pl-0 pr-1">
+                  <button
+                    [routerLink]="['/auth/TariffNewBuildingList']"
+                    class="btn-routing-info"
+                    routerLinkActive="router-link-active"
+                    fullWidth
+                    nbButton
+                    outline
+                    shape="semi-round"
+                    status="info"
+                    size="giant"
+                  >
+                    تعرفه گازرسانی
+                  </button>
+                </div>
+              </div>
+
+              <!-- </nb-accordion-item-body>
+              </nb-accordion-item>
+              <nb-accordion-item> -->
+              <!-- <nb-accordion-item-header class="accordion-item-header">
+                  خدمات
+                </nb-accordion-item-header>
+                <nb-accordion-item-body> -->
+              <div class="row container ml-0 mr-0" style="margin-bottom: 11px;">
+                <button
+                  [routerLink]="['/auth/PeriodicVisitsRequest']"
+                  class="btn-routing-success"
+                  fullWidth
+                  nbButton
+                  outline
+                  shape="semi-round"
+                  status="success"
+                  size="giant"
+                >
+                  درخواست بازرسی ایمنی/نشتی
+                </button>
+              </div>
+
+              <!-- </nb-accordion-item-body>
+              </nb-accordion-item>
+              </nb-accordion> -->
+            </nb-card-body>
+          </nb-card>
+        </div>
+
+        <div class="col-md-6" style="padding-left: 30px">
+          <nb-card
+            class="login-card"
+            style="box-shadow: 0 0 4px; min-height: 420px"
+          >
+            <nb-card-header class="card-header-title" style="padding: 24px 0;font-size: 1rem;">
+              ورود به سیستم
+            </nb-card-header>
+            <nb-card-body class="px-5 py-4">
+              <form (ngSubmit)="submit()" [formGroup]="userLoginDto">
+                <div class="col-md-12" name="username">
+                  <label
+                    class="input-label d-block text-right"
+                    style="font-weight: 600"
+                    for="username"
+                    >نام کاربری</label
+                  >
+                  <input
+                    formControlName="username"
+                    fullWidth
+                    id="username"
+                    nbInput
+                    fieldSize="giant"
+                    type="text"
+                  />
+                  <div class="text-right mt-2"
+                    *ngFor="let validation of INPUT_Validation_Message.username"
+                  >
+                    <div
+                      *ngIf="
+                        userLoginDto
+                          .get('username')
+                          .hasError(validation.type) &&
+                        (userLoginDto.get('username').touched ||
+                          userLoginDto.get('username').dirty)
+                      "
+                    >
+                      <span class="text-danger">{{ validation.message }}</span>
+                    </div>
+                  </div>
+                </div>
+                &nbsp;
+                <div class="col-md-12 mt-2" name="password">
+                  <label
+                    class="input-label d-block text-right"
+                    style="font-weight: 600"
+                    for="password"
+                    >رمز عبور</label
+                  >
+                  <input
+                    class="input-group"
+                    formControlName="password"
+                    fullWidth
+                    id="password"
+                    nbInput
+                    fieldSize="giant"
+                    type="password"
+                  />
+                  <div class="text-right mt-2"
+                    *ngFor="let validation of INPUT_Validation_Message.password"
+                  >
+                    <div
+                      *ngIf="
+                        userLoginDto
+                          .get('password')
+                          .hasError(validation.type) &&
+                        (userLoginDto.get('password').touched ||
+                          userLoginDto.get('password').dirty)
+                      "
+                    >
+                      <span class="text-danger">{{ validation.message }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- <div *ngIf="!isAuthorized" class="text-danger">
+                              <label>نام کاربری یا رمز عبور اشتباه است</label>
+                            </div> -->
+
+                <div
+                  class="btn-group col-md-12"
+                  style="padding: 0; margin-top: 26px"
+                >
+                  <div class="col-md-6">
+                    <button
+                      [disabled]="authenticating"
+                      [nbSpinner]="authenticating"
+                      class="btn mt-0"
+                      nbButton
+                      nbSpinnerMessage=""
+                      nbSpinnerSize="large"
+                      nbSpinnerStatus="info"
+                      status="success"
+                      hero
+                      type="submit"
+                      size="giant"
+                      style="line-height: 1.4rem !important;padding: 0.96rem 1.125rem !important;"
+                    >
+                      ورود
+                    </button>
+                  </div>
+                  <div class="col-md-6">
+                    <button
+                      (click)="onRegister()"
+                      [disabled]="authenticating"
+                      class="btn mt-0"
+                      nbButton
+                      status="primary"
+                      hero
+                      size="giant"
+                      style="line-height: 1.4rem !important;padding: 0.96rem 1.125rem !important;"
+                    >
+                      ثبت نام
+                    </button>
+                  </div>
+                </div>
+                <p class="mt-3 mb-1 text-right">
+                  <a
+                    style="text-decoration: none; font-weight: 500"
+                    [routerLink]="['/auth/PasswordRecovery']"
+                    routerLinkActive="router-link-active"
+                    style="
+                      font-weight: 500;
+                      font-weight: 600;
+                      text-decoration: none;
+                      padding-right: 15px;
+                      padding-top: 7px;
+                      display: block;
+                    "
+                  >
+                    رمز عبور خود را فراموش کرده ام
+                  </a>
+                </p>
+              </form>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 mt-2">
+      <!-- <div class="row justify-content-center">
+        <div class="col-auto w-100 mb-n5 p-0">
+          <nb-card
+            style="
+              box-shadow: 0px 2px 4px;
+              margin-bottom: 30px;
+              margin-top: 30px;
+              border-top-style: solid;
+              border-top-width: 0.25rem;
+              border-top-color: #3b4a8b;
+            "
+          >
+            <nb-card-body> -->
+      <div
+        class="row"
+        style="
+          box-shadow: 0px 1px 5px;
+          margin-bottom: 30px;
+          margin-right: 15px;
+          margin-left: 15px;
+          border-radius: 4px;
+        "
+      >
+          <div class="row my-2 w-100">
+            <div class="col-sm-6">
+              <nb-card class="mb-0">
+                <nb-card-header style="font-size: 1rem;">
+                  <span class="font-weight-bold text-primary"
+                    >اطلاعات سازمان نظام مهندسی</span
+                  >
+                </nb-card-header>
+                <nb-card-body>
+                  <p>
+                    <span class="font-weight-bold mb-3">آدرس : </span>
+                    <span style="direction: rtl"
+                      >شیراز-بلوار ستارخان-انتهای 12 متری نمازی-سازمان نظام مهندسی
+                      ساختمان استان فارس</span
+                    >
+                  </p>
+                  <p>
+                    <span class="font-weight-bold mb-3">شماره های تماس : </span>
+                    <span style="direction: rtl">9-07136488094</span> و
+                    <span style="direction: rtl">7-07136488070</span>
+                  </p>
+                  <p>
+                    <span class="font-weight-bold mb-3">کدپستی : </span>
+                    <span style="direction: rtl">7184755354</span>
+                  </p>
+                </nb-card-body>
+              </nb-card>
+            </div>
+
+            <div class="col-sm-6">
+              <nb-card class="mb-0">
+                <nb-card-header style="font-size: 1rem;">
+                  <span class="font-weight-bold text-primary"
+                    >اطلاعات دفتر کنترل و نظارت گاز</span
+                  >
+                </nb-card-header>
+                <nb-card-body>
+                  <p>
+                    <span class="font-weight-bold mb-3">آدرس : </span>
+                    <span style="direction: rtl"
+                      >خیابان قدوسی شرقی-نبش کوچه ۹-دفتر کنترل و نظارت گاز</span
+                    >
+                  </p>
+                  <p>
+                    <span class="font-weight-bold mb-3">شماره های تماس : </span>
+                    <span style="direction: rtl">07138422474</span> و
+                    <span style="direction: rtl">07138422767</span> و
+                    <span style="direction: rtl">07138423545</span>
+                  </p>
+                  <p>
+                    <span class="font-weight-bold mb-3">کدپستی : </span>
+                    <span style="direction: rtl">7184973539</span>
+                  </p>
+                </nb-card-body>
+              </nb-card>
+            </div>
+          </div>
+      </div>
+      <!-- </nb-card-body>
+          </nb-card>
+        </div>
+      </div> -->
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<ng-template
+  #dialogResetPass
+  let-data
+  let-ref="dialogResetPassRef"
+  id="chanegPass"
+>
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-2-12 form-inline">
+      <div class="col-md-12">
+        <nb-card>
+          <nb-card-header class="card-header-title"
+            >تغییر رمز عبور
+          </nb-card-header>
+          <nb-card-body>
+            <form>
+              <nb-card>
+                <nb-card-body>
+                  <div name="NationalID">
+                    <label class="input-label" for="username"> رمز جدید </label>
+                    <input
+                      [(ngModel)]="passChange"
+                      name="passChange"
+                      fullWidth
+                      id="newPassword"
+                      nbInput
+                      type="password"
+                      placeholder="رمز جدید"
+                    />
+                  </div>
+
+                  <div name="PhoneNumber" class="inline-input">
+                    <label class="input-label" for="mn"> تکرار رمز عبور </label>
+                    <input
+                      [(ngModel)]="rePassChange"
+                      name="rePassChange"
+                      fullWidth
+                      id="reNewPassword"
+                      nbInput
+                      type="password"
+                      placeholder="تکرار رمز عبور"
+                    />
+                  </div>
+
+                  <div class="col-md-12 btn-group-inline">
+                    <button
+                      class="btn half-width-btn"
+                      nbButton
+                      status="success"
+                      type="button"
+                      (click)="submitChangePass()"
+                    >
+                      ثبت
+                    </button>
+
+                    <button
+                      class="btn half-width-btn"
+                      nbButton
+                      (click)="closeDialogResetPassRef()"
+                      status="danger"
+                      type="button"
+                    >
+                      انصراف
+                    </button>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            </form>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #dialogRoles let-data let-ref="dialogRolesRef">
+  <nb-card status="info">
+    <nb-card-header
+      >انتخاب نقش
+
+      <span
+        class="pull-left"
+        style="font-weight: 600; font-size: 20px; cursor: pointer"
+        (click)="closeRoleDialog()"
+        >&times;</span
+      >
+    </nb-card-header>
+    <nb-card-body style="padding: 0 15px 20px 15px">
+      <div>
+        <div
+          class="col-sm-2"
+          *ngIf="userRoles.includes('Admin')"
+          (click)="goToHomePage('Admin')"
+        >
+          <a>
+            <img
+              src="../../../assets/images/Icons/Login/Black&White/icons8-businessman-100.png"
+              class="img-fluid"
+              alt="مدیر"
+            />
+            <strong class="text-primary">مدیر</strong>
+          </a>
+        </div>
+
+        <div
+          class="col-sm-2"
+          *ngIf="userRoles.includes('GasEmployee')"
+          (click)="goToHomePage('GasEmployee')"
+        >
+          <a>
+            <img
+              src="../../../assets/images/Icons/Login/Black&White/icons8-manager-100.png"
+              class="img-fluid"
+              alt="کارمند دفتر گاز"
+            />
+            <strong class="text-primary">کارمند دفتر گاز</strong>
+          </a>
+        </div>
+
+        <div
+          class="col-sm-2"
+          *ngIf="userRoles.includes('SupplierHP')"
+          (click)="goToHomePage('SupplierHP')"
+        >
+          <a>
+            <img
+              src="../../../assets/images/Icons/Login/Black&White/icons8-spy-100.png"
+              class="img-fluid"
+              alt="تامین کننده"
+            />
+            <strong class="text-primary">تامین کننده</strong>
+          </a>
+        </div>
+
+        <div
+          class="col-sm-2"
+          *ngIf="userRoles.includes('SupervisorHP')"
+          (click)="goToHomePage('SupervisorHP')"
+        >
+          <a>
+            <img
+              src="../../../assets/images/Icons/Login/Black&White/icons8-spy-100.png"
+              class="img-fluid"
+              alt="ناظر عالی گاز فشار قوی"
+            />
+            <strong class="text-primary">ناظر عالی گاز فشار قوی</strong>
+          </a>
+        </div>
+
+        <div
+          class="col-sm-2"
+          *ngIf="userRoles.includes('TechnicalInspectionManagerHP')"
+          (click)="goToHomePage('TechnicalInspectionManagerHP')"
+        >
+          <a>
+            <img
+              src="../../../assets/images/Icons/Login/Black&White/icons8-manager-100-2.png"
+              class="img-fluid"
+              alt="مسئول بازرسی فنی"
+            />
+            <strong class="text-primary">مسئول بازرسی فنی</strong>
+          </a>
+        </div>
+
+        <div
+          class="col-sm-2"
+          *ngIf="userRoles.includes('TechnicalInspectorHP')"
+          (click)="goToHomePage('TechnicalInspectorHP')"
+        >
+          <a>
+            <img
+              src="../../../assets/images/Icons/Login/Black&White/icons8-spy-100.png"
+              class="img-fluid"
+              alt="بازرس فنی گاز فشار قوی"
+            />
+            <strong class="text-primary">بازرس فنی گاز فشار قوی</strong>
+          </a>
+        </div>
+
+        <div
+          class="col-sm-2"
+          *ngIf="userRoles.includes('Owner')"
+          (click)="goToHomePage('Owner')"
+        >
+          <a>
+            <img
+              src="../../../assets/images/Icons/Login/Black&White/icons8-house-keys-100.png"
+              class="img-fluid"
+              alt="مالک"
+            />
+            <strong class="text-primary">مالک</strong>
+          </a>
+        </div>
+
+        <div
+          class="col-sm-2"
+          *ngIf="userRoles.includes('Engineer')"
+          (click)="goToHomePage('Engineer')"
+        >
+          <a>
+            <img
+              src="../../../assets/images/Icons/Login/Black&White/icons8-spy-100.png"
+              class="img-fluid"
+              alt="مهندس"
+            />
+            <strong class="text-primary">مهندس</strong>
+          </a>
+        </div>
+
+        <div
+          class="col-sm-2"
+          *ngIf="userRoles.includes('Pishkhan')"
+          (click)="goToHomePage('Pishkhan')"
+        >
+          <a>
+            <img
+              src="../../../assets/images/Icons/Login/Black&White/icons8-front-desk-100.png"
+              class="img-fluid"
+              alt="پیشخوان"
+            />
+            <strong class="text-primary">پیشخوان</strong>
+          </a>
+        </div>
+
+        <div
+          class="col-sm-2"
+          *ngIf="userRoles.includes('Association')"
+          (click)="goToHomePage('Association')"
+        >
+          <a>
+            <img
+              src="../../../assets/images/Icons/Login/Black&White/icons8-conclusion-contract-100.png"
+              class="img-fluid"
+              alt="اتحادیه"
+            />
+            <strong class="text-primary">اتحادیه</strong>
+          </a>
+        </div>
+
+        <div
+          class="col-sm-2"
+          *ngIf="userRoles.includes('GasRuleCheckerGroupOne')"
+          (click)="goToHomePage('GasRuleCheckerGroupOne')"
+        >
+          <a>
+            <img
+              src="../../../assets/images/Icons/Login/Black&White/icons8-spy-100.png"
+              class="img-fluid"
+              alt="مهندس ضوابط گازرسانی گروه اول"
+            />
+            <strong class="text-primary">مهندس ضوابط گازرسانی گروه اول</strong>
+          </a>
+        </div>
+
+        <div
+          class="col-sm-2"
+          *ngIf="userRoles.includes('GasRuleCheckerGroupTwo')"
+          (click)="goToHomePage('GasRuleCheckerGroupTwo')"
+        >
+          <a>
+            <img
+              src="../../../assets/images/Icons/Login/Black&White/icons8-spy-100.png"
+              class="img-fluid"
+              alt="مهندس ضوابط گازرسانی گروه دوم"
+            />
+            <strong class="text-primary">مهندس ضوابط گازرسانی گروه دوم</strong>
+          </a>
+        </div>
+
+        <div
+          class="col-sm-2"
+          *ngIf="userRoles.includes('GasRuleEngineer')"
+          (click)="goToHomePage('GasRuleEngineer')"
+        >
+          <a>
+            <img
+              src="../../../assets/images/Icons/Login/Black&White/icons8-spy-100.png"
+              class="img-fluid"
+              alt="مهندس ضوابط گازرسانی"
+            />
+            <strong class="text-primary">مهندس ضوابط گازرسانی</strong>
+          </a>
+        </div>
+
+        <div
+          class="col-sm-2"
+          *ngIf="userRoles.includes('GasRuleCheckerGroupThree')"
+          (click)="goToHomePage('GasRuleCheckerGroupThree')"
+        >
+          <a>
+            <img
+              src="../../../assets/images/Icons/Login/Black&White/icons8-spy-100.png"
+              class="img-fluid"
+              alt="مهندس ضوابط گازرسانی گروه سوم"
+            />
+            <strong class="text-primary">مهندس ضوابط گازرسانی گروه سوم</strong>
+          </a>
+        </div>
+
+        <div
+          class="col-sm-2"
+          *ngIf="userRoles.includes('HPManager')"
+          (click)="goToHomePage('HPManager')"
+        >
+          <a>
+            <img
+              src="../../../assets/images/Icons/Login/Black&White/icons8-manager-100-2.png"
+              class="img-fluid"
+              alt="مسئول گاز فشار قوی"
+            />
+            <strong class="text-primary">مسئول گاز فشار قوی</strong>
+          </a>
+        </div>
+
+        <div
+          class="col-sm-2"
+          *ngIf="userRoles.includes('ConsultManager')"
+          (click)="goToHomePage('ConsultManager')"
+        >
+          <a>
+            <img
+              src="../../../assets/images/Icons/Login/Black&White/icons8-manager-100-2.png"
+              class="img-fluid"
+              alt="مسئول مشاوره"
+            />
+            <strong class="text-primary">مسئول مشاوره</strong>
+          </a>
+        </div>
+
+        <div
+          class="col-sm-2"
+          *ngIf="userRoles.includes('Executor')"
+          (click)="goToHomePage('Executor')"
+        >
+          <a>
+            <img
+              src="../../../assets/images/Icons/Login/Black&White/icons8-worker-100.png"
+              class="img-fluid"
+              alt="مجری"
+            />
+            <strong class="text-primary">مجری</strong>
+          </a>
+        </div>
+
+        <div
+          class="col-sm-2"
+          *ngIf="userRoles.includes('GasEmployeeHP')"
+          (click)="goToHomePage('GasEmployeeHP')"
+        >
+          <a>
+            <img
+              src="../../../assets/images/Icons/Login/Black&White/icons8-manager-100.png"
+              class="img-fluid"
+              alt="کارمند گاز فشار قوی"
+            />
+            <strong class="text-primary">کارمند گاز فشار قوی</strong>
+          </a>
+        </div>
+
+        <div
+          class="col-sm-2"
+          *ngIf="userRoles.includes('GasRuleEmployeeHP')"
+          (click)="goToHomePage('GasRuleEmployeeHP')"
+        >
+          <a>
+            <img
+              src="../../../assets/images/Icons/Login/Black&White/icons8-manager-100.png"
+              class="img-fluid"
+              alt="کارمند ضوابط گاز فشار قوی"
+            />
+            <strong class="text-primary">کارمند ضوابط گاز فشار قوی</strong>
+          </a>
+        </div>
+
+        <div
+          class="col-sm-2"
+          *ngIf="userRoles.includes('GasEmployeeExceptShiraz')"
+          (click)="goToHomePage('GasEmployeeExceptShiraz')"
+        >
+          <a>
+            <img
+              src="../../../assets/images/Icons/Login/Black&White/icons8-manager-100.png"
+              class="img-fluid"
+              alt="کارمند دفتر گاز شهرستان"
+            />
+            <strong class="text-primary">کارمند دفتر گاز شهرستان</strong>
+          </a>
+        </div>
+
+ <div
+          class="col-sm-2"
+          *ngIf="userRoles.includes('DoubleControlExpert')"
+          (click)="goToHomePage('DoubleControlExpert')"
+        >
+          <a>
+            <img
+              src="../../../assets/images/Icons/Login/Black&White/icons8-spy-100.png"
+              class="img-fluid"
+              alt="کارشناس کنترل مضاعف"
+            />
+            <strong class="text-primary">کارشناس کنترل مضاعف</strong>
+          </a>
+        </div>
+
+        <div class="clearfix"></div>
+      </div>
+    </nb-card-body>
+    <!-- <nb-card-footer>
+      <button
+        class="pull-left"
+        nbButton
+        hero
+        status="info"
+        (click)="closeRoleDialog()"
+      >
+        انصراف
+      </button>
+    </nb-card-footer> -->
+  </nb-card>
+</ng-template>
+<!-- <ng-template #dialogExecuterList let-data let-ref="dialogExecuterListRef">
+<executersList></executersList>
+</ng-template> -->
+<!-- <ng-template #changePassword let-data>
+  <ngx-changePassword
+
+  ></ngx-changePassword>
+</ng-template> -->

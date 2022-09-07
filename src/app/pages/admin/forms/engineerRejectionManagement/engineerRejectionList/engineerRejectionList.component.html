@@ -1,0 +1,375 @@
+<!-- <style>
+    .pagination /deep/ .ngx-pagination .current {
+      background: lightseagreen;
+    }
+
+    .pagination /deep/ pagination-template {
+      width: 100% !important;
+    }
+    .pagination {
+      text-align: center !important;
+    }
+    dp-date-picker /deep/ .dp-input-container .dp-picker-input {
+      width: 220px !important;
+    }
+
+    nb-select.pageSizeSelect /deep/ .select-button {
+      min-width: 8rem !important;
+    }
+
+    .col-lg-3.col-md-3.col-sm-6.col-xs-12,
+    .col-lg-2.col-md-2.col-sm-6.col-xs-12 {
+      padding: 7px;
+    }
+  </style> -->
+
+<nb-card class="table-x-mine" style="box-shadow: 0 0 4px">
+  <nb-card-header class="pt-4" style="border-bottom: 0">
+    <div class="pull-right pt-2">
+      <span>کارتابل مدیریت</span>
+      <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="arrow-ios-back-outline">
+      </nb-icon>
+
+      <span class="mr-1" style="color:#3366ff">انصراف های بازرسی</span>
+    </div>
+
+    <div class="clearfix"></div>
+  </nb-card-header>
+
+  <nb-card-body>
+
+    <nb-card id="serachCard" style="box-shadow: 0 0 4px">
+      <div class="container" id="serachCard">
+
+        <form class="form-inline" (ngSubmit)="onSearch()" [formGroup]="formSearch">
+          <ul class="pt-3">
+            <li class="text-danger" *ngIf="
+                formSearch.get('dateStart').value > formSearch.get('dateEnd').value &&
+                formSearch.get('dateEnd').value !== ''
+              ">
+              <span class="text-danger">تاریخ شروع ثبت می بایست کوچکتر از پایان ثبت باشد.</span>
+            </li>
+
+            <span *ngFor="let validation of INPUT_VALIDATION_MESSAGES_Search.nationalCode">
+              <li class="text-danger" *ngIf="
+                formSearch.get('nationalCode').hasError(validation.type) &&
+                (formSearch.get('nationalCode').dirty ||
+                formSearch.get('nationalCode').touched || isSubmitedSearch)
+              ">{{ validation.message }}</li>
+            </span>
+
+            <span *ngFor="let validation of INPUT_VALIDATION_MESSAGES_Search.engineerOrganizationCode">
+              <li class="text-danger" *ngIf="
+                formSearch.get('engineerOrganizationCode').hasError(validation.type) &&
+                (formSearch.get('engineerOrganizationCode').dirty ||
+                formSearch.get('engineerOrganizationCode').touched || isSubmitedSearch)
+              ">{{ validation.message }}</li>
+            </span>
+
+            <span *ngFor="let validation of INPUT_VALIDATION_MESSAGES_Search.engineerName">
+              <li class="text-danger" *ngIf="
+                formSearch.get('engineerName').hasError(validation.type) &&
+                (formSearch.get('engineerName').dirty ||
+                formSearch.get('engineerName').touched || isSubmitedSearch)
+              ">{{ validation.message }}</li>
+            </span>
+
+          </ul>
+
+          <div class="row">
+
+            <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-12">
+              <label for="dateStart">
+                زمان ثبت از:
+              </label>
+
+              <dp-date-picker name="ds" placeHolder="زمان ثبت شروع" id="ds" nbInput dir="rtl" mode="day"
+                theme="dp-material" formControlName="dateStart" [config]="datePickerConfig"
+                (open)="openStartDayPicker()" (close)="closeStartDayPicker()" nbInput></dp-date-picker>
+            </div>
+
+            <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-12">
+              <label for="dateEnd">
+                زمان ثبت تا:
+              </label>
+
+              <dp-date-picker name="de" placeHolder="زمان ثبت پایان" id="de" nbInput dir="rtl" mode="day"
+                theme="dp-material" formControlName="dateEnd" [config]="datePickerConfig" (open)="openEndDayPicker()"
+                (close)="closeEndDayPicker()" nbInput></dp-date-picker>
+            </div>
+
+
+            <div class="form-group mt-3 col-lg-4 col-md-4 col-sm-6 col-xs-12">
+              <label for="areas">
+                منطقه گازی:
+              </label>
+
+              <nb-select multiple [selected]="filterParams?.areas?.length > 0 ? filterParams?.areas : emptyArray"
+                #areasSelect placeholder="انتخاب ناحیه" fullWidth id="areas" formControlName="areas">
+                <nb-option [value]="null">هیچ کدام</nb-option>
+                <nb-option *ngFor="let area of areas" [value]="area.id">
+                  {{ area.title }}
+                </nb-option>
+              </nb-select>
+            </div>
+
+          </div>
+
+          <div class="row">
+            <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+              <label for="engineerOrganizationCode">
+                کد دفتر گاز:
+              </label>
+
+              <input formControlName="engineerOrganizationCode" size="small" fullWidth id="engineerOrganizationCode"
+                nbInput type="text" />
+            </div>
+
+            <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+              <label for="nationalCode">
+                کد ملی:
+              </label>
+
+              <input formControlName="nationalCode" size="small" fullWidth id="nationalCode" nbInput type="text" />
+
+            </div>
+
+            <div class="form-group col-lg-4 col-md-4 col-sm-6 col-xs-12 ">
+              <label for="engineerName">
+                نام مهندس:
+              </label>
+              <input formControlName="engineerName" size="small" fullWidth id="engineerName" nbInput type="text" />
+            </div>
+
+            <div class="form-group col-lg-2 col-md-2 col-sm-6 col-xs-12 float-left mt-3">
+              <button nbTooltip="جستجو" nbTooltipPlacement="top" nbButton hero size="tiny" status="info" type="submit"
+                class="ml-1" style="margin-top: 24px;height: 50%;">
+                <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="search-outline">
+                </nb-icon>
+              </button>
+
+              <button nbTooltip="بازسازی" nbTooltipPlacement="top" size="tiny" nbButton hero status="primary"
+                type="button" (click)="resetFilters()" style="margin-top: 24px;height: 50%;">
+                <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="refresh-outline">
+                </nb-icon>
+              </button>
+            </div>
+          </div>
+
+        </form>
+        <br />
+      </div>
+    </nb-card>
+
+
+    <div style="clear: both"></div>
+
+    <div class="table-wrapper">
+      <ng2-smart-table [settings]="settings" [source]="source | paginate: pagingConfig" style="direction:ltr">
+      </ng2-smart-table>
+    </div>
+
+    <span *ngFor="let item of collection | paginate: pagingConfig"></span>
+
+    <nb-card>
+      <nb-card-body>
+        <div class="row">
+          <div class="input-group">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 form-inline pull-left">
+              <label for="pageSize" style="margin-left: 0.45rem;">
+                تعداد رکورد:
+              </label>
+              <nb-select [selected]="pagination.itemsPerPage" status="info" #pageSizeSelect class="pageSizeSelect"
+                (selectedChange)="changePageSize(pageSizeSelect.selected)" id="pageSize" placeholder="انتخاب ...">
+                <nb-option *ngFor="let p of pageSizes" [value]="p.id">
+                  {{ p.display }}
+                </nb-option>
+              </nb-select>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              <div class="d-flex justify-content-center">
+                <pagination-controls class="pagination" (pageChange)="pageChanged($event)" previousLabel=""
+                  nextLabel="">
+                </pagination-controls>
+              </div>
+            </div>
+
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 form-inline pull-right">
+              <label for="pageNumber" style="margin-left: 0.45rem;">
+                شماره صفحه:
+              </label>
+              <input [value]="pagination.currentPage" style="width:30%" #pageNumber size="tiny" id="pageNumber" nbInput
+                type="number" min="1" max="pagination.totalPages" (keydown.enter)="pageChanged(pageNumber.value)" />
+            </div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #dialogCheckRejection let-data let-ref="dialogCheckRejectionRef">
+  <nb-card status="success" accent="success">
+    <nb-card-header>
+      <h6 style="color: rgb(17, 75, 39)">
+        تعیین تکلیف انصراف مهندس {{ data.engineerFullName }} در {{ data.rDateTime }}
+      </h6>
+    </nb-card-header>
+    <nb-card-body>
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <label>زمان ارجاع کار:</label>
+          <label class="control-label">{{ data.refferedDate }}</label>
+        </div>
+
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <label>تاریخ اجرای بازرسی:</label>
+          <label class="control-label">{{ data.workInspectionDate }}</label>
+        </div>
+
+        <!-- <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <label>زمان ثبت انصراف:</label>
+          <label class="control-label">{{ data.rDateTime }}</label>
+        </div> -->
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <label>دلیل انصراف:</label>
+          <label *ngIf="data.rejectedReason" class="control-label">
+            {{ data.rejectedReason }}
+          </label>
+        </div>
+      </div>
+    </nb-card-body>
+    <nb-card-footer>
+      <form [formGroup]="formCheckRejection" (submit)="onSubmit(data)">
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <label>
+              <span class="text-danger font-weight-bold ml-1">*</span>
+              توضیحات:</label>
+            <textarea nbInput fullWidth formControlName="adminDescription" name="adminDescription" id="adminDescription"
+              rows="2"></textarea>
+
+            <div *ngFor="
+                let validation of INPUT_VALIDATION_MESSAGES.adminDescription
+              ">
+              <span class="text-danger" *ngIf="
+                  isSubmited &&
+                  formCheckRejection
+                    .get('adminDescription')
+                    .hasError(validation.type) &&
+                  (formCheckRejection.get('adminDescription').dirty ||
+                    formCheckRejection.get('adminDescription').touched)
+                ">
+                {{ validation.message }}</span>
+            </div>
+          </div>
+
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <!-- <label>
+              <span class="text-danger font-weight-bold ml-1">*</span>
+              عذر:</label
+            > -->
+
+            <!-- (valueChange)="onChangeBuildingType($event)" -->
+            <!-- style="margin-top: 1.61rem;" -->
+
+            <nb-radio-group class="form-inline radio-x-inline" formControlName="isAcceptable" id="isAcceptable"
+              name="isAcceptable">
+              <nb-radio value="1">عذر موجه</nb-radio>
+              <nb-radio value="2"> عذر غیر موجه
+                <span>
+                  ( <strong class="text-danger"> کسر از امتیاز => اعمال {{daysForRejectInspection}} روز مرخصی
+                  </strong> )</span>
+              </nb-radio>
+            </nb-radio-group>
+
+            <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.isAcceptable">
+
+              <span class="text-danger"
+                *ngIf="isSubmited && formCheckRejection.controls.isAcceptable.value === ''">{{ validation.message }}</span>
+
+            </div>
+          </div>
+
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+            *ngIf="formCheckRejection.controls.isAcceptable.value === '1'">
+            <nb-checkbox value="true" formControlName="decreaseRank"
+              *ngIf="formCheckRejection.controls.isAcceptable.value">
+              <span>کسر از امتیاز ( <strong class="text-danger">اعمال {{daysForAcceptableRejectInspection}} روز
+                  مرخصی</strong> )</span>
+              <!-- <span
+                *ngIf="formCheckRejection.controls.isAcceptable.value === '2'"
+                >کسر از امتیاز ( <strong class="text-danger">اعمال دو هفته مرخصی</strong>)</span
+              > -->
+            </nb-checkbox>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-sm-6">
+            <button fullWidth nbButton hero status="success" type="submit" [disabled]="loading" [nbSpinner]="loading"
+              nbSpinnerStatus="info" nbSpinnerSize="large">
+              تأیید و ثبت
+            </button>
+          </div>
+          <div class="col-sm-6">
+            <button fullWidth nbButton hero status="primary" (click)="dialogCheckRejectionRef.close()">
+              انصراف
+            </button>
+          </div>
+        </div>
+      </form>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+<!--<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card status="danger" accent="danger">
+    <nb-card-header><h4 style="color: linen">هشدار</h4></nb-card-header>
+    <nb-card-body><h6>آیا از حذف مورد اطمینان دارید؟</h6></nb-card-body>
+    <nb-card-footer>
+      <div class="row">
+        <div class="col-sm-6">
+          <button
+            fullWidth
+            nbButton
+            hero
+            status="danger"
+            (click)="confirmDelete(data)"
+          >
+            بلی
+          </button>
+        </div>
+        <div class="col-sm-6">
+          <button
+            fullWidth
+            nbButton
+            hero
+            status="primary"
+            (click)="ref.close()"
+          >
+            انصراف
+          </button>
+        </div>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template> -->
+
+<ng-template #contentUnitDetailTemplate let-data>
+  <!-- let-ref="dialogRef"> -->
+  <app-recordMapInformationDetail [rowContractId]="data.contractId" [requestUnitId]="data.unitId">
+  </app-recordMapInformationDetail>
+
+  <!-- <button
+    class="btn pull-left"
+    nbButton
+    hero
+    status="primary"
+    (click)="ref.close()"
+  >
+    بستن
+  </button> -->
+</ng-template>

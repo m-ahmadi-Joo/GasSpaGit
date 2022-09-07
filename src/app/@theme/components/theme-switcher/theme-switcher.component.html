@@ -1,0 +1,22 @@
+<div
+  [nbPopoverContext]="{popover: popover}"
+  [nbPopover]="switcherListComponent"
+  class="themes-switcher"
+     nbPopoverPlacement="bottom"
+     >
+  <span *ngIf="showTitle">
+    <!-- نمایه -->
+    <nb-icon
+    [options]="{
+      animation: { type: 'zoom' },
+      width: '22px',
+      height: '22px'
+    }"
+    class="icon-button"
+    icon="color-palette-outline"
+    nbTooltip="تغییر نمایه"
+     nbTooltipPlacement="bottom"
+    >
+  </nb-icon>
+  </span>
+</div>

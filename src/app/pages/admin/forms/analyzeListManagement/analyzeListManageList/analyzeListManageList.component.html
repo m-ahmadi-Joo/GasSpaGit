@@ -1,0 +1,145 @@
+
+
+<nb-card class="table-x-mine" style="box-shadow: 0 0 4px;">
+  <nb-card-header class="pt-4" style="border-bottom: 0;"
+    ><span class="ml-1"> ورودی</span>
+    <nb-icon
+      [options]="{ animation: { type: 'pulse' } }"
+      class="icon-button"
+      icon="arrow-ios-back-outline"
+    >
+    </nb-icon>
+
+    <span class="mr-1" style="color: #3366ff;">مدیریت ارجاعات</span>
+    <nb-icon
+      [options]="{ animation: { type: 'pulse' } }"
+      class="icon-button"
+      icon="arrow-ios-back-outline"
+    >
+    </nb-icon>
+    <span class="mr-1" style="color: #3366ff;">تنظیمات لیست</span>
+    <div class="pull-left">
+      <button
+        class="btn btn-info ml-2"
+        style="color: #fff;"
+        (click)="onCreateSetting()"
+      >
+        <nb-icon
+          [options]="{ animation: { type: 'pulse' } }"
+          class="icon-button"
+          icon="edit-2-outline"
+        >
+        </nb-icon>
+        تنظیمات جدید
+      </button>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+    <div class="table-wrapper">
+      <ng2-smart-table
+        [settings]="settings"
+        [source]="source | paginate: pagingConfig"
+        (custom)="onCustom($event)"
+        style="direction: ltr;"
+      ></ng2-smart-table>
+    </div>
+
+    <span *ngFor="let item of collection | paginate: pagingConfig"></span>
+
+    <nb-card>
+      <nb-card-body>
+        <div class="row">
+          <div class="input-group">
+            <div
+              class="col-lg-3 col-md-3 col-sm-6 col-xs-6 form-inline pull-left"
+            >
+              <label for="pageSize" style="margin-left: 0.45rem;">
+                تعداد رکورد:
+              </label>
+              <nb-select
+                [selected]="pagination.itemsPerPage"
+                status="info"
+                #pageSizeSelect
+                class="pageSizeSelect"
+                (selectedChange)="changePageSize(pageSizeSelect.selected)"
+                id="pageSize"
+                placeholder="انتخاب ..."
+              >
+                <nb-option *ngFor="let p of pageSizes" [value]="p.id">
+                  {{ p.display }}
+                </nb-option>
+              </nb-select>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              <div class="d-flex justify-content-center">
+                <pagination-controls
+                  class="pagination"
+                  (pageChange)="pageChanged($event)"
+                  previousLabel=""
+                  nextLabel=""
+                >
+                </pagination-controls>
+              </div>
+            </div>
+
+            <div
+              class="col-lg-3 col-md-3 col-sm-6 col-xs-6 form-inline pull-right"
+            >
+              <label for="pageNumber" style="margin-left: 0.45rem;">
+                شماره صفحه:
+              </label>
+              <input
+                [value]="pagination.currentPage"
+                style="width: 30%;"
+                #pageNumber
+                size="tiny"
+                id="pageNumber"
+                nbInput
+                type="number"
+                min="1"
+                max="pagination.totalPages"
+                (keydown.enter)="pageChanged(pageNumber.value)"
+              />
+            </div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card status="danger" accent="danger">
+    <nb-card-header><h4 style="color: linen;">هشدار</h4></nb-card-header>
+    <nb-card-body><h6>آیا از حذف مورد اطمینان دارید؟</h6></nb-card-body>
+    <nb-card-footer>
+      <div class="row">
+        <div class="col-sm-6">
+          <button
+            fullWidth
+            nbButton
+            hero
+            status="danger"
+            (click)="confirmDelete(data)"
+          >
+            بلی
+          </button>
+        </div>
+        <div class="col-sm-6">
+          <button
+            fullWidth
+            nbButton
+            hero
+            status="primary"
+            (click)="ref.close()"
+          >
+            انصراف
+          </button>
+        </div>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+

@@ -1,0 +1,741 @@
+<style>
+   /* nb-select.pageSizeSelect /deep/ .select-button {
+      max-width: 30px !important;
+      width: 60%;
+    } */
+    ejs-richtexteditor /deep/ .e-toolbar-wrapper {
+    height: 0px !important;
+  }
+
+  /* ejs-richtexteditor /deep/ .e-richtexteditor.e-rte-toolbar, .e-richtexteditor.e-rte-toolbar.e-toolbar.e-extended-toolbar {
+      z-index: 0 !important;
+      background-color: black;
+    } */
+
+  #divMessageContainer{
+    width: 100%;
+    max-width: 100%;
+    max-height: 600px;
+    overflow-y: scroll;
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+   #divWarningContainer {
+     min-width: 400px;
+    width: 100%;
+    max-height: 600px;
+    overflow-y: scroll;
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  #divNewsContainer{
+    width: 100%;
+    max-width: 100%;
+    max-height: 600px;
+    overflow-y: scroll;
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+  /* Extra small devices (phones, 600px and down) */
+  @media only screen and (max-width: 600px) {
+    #divMessageContainer  {
+      min-width: 300px;
+    }
+  }
+
+  /* Small devices (portrait tablets and large phones, 600px and up) */
+  @media only screen and (min-width: 600px) {
+    #divMessageContainer {
+      min-width: 600px;
+    }
+  }
+
+  /* Medium devices (landscape tablets, 768px and up) */
+  @media only screen and (min-width: 768px) {
+    #divMessageContainer  {
+      min-width: 768px;
+    }
+  }
+
+  /* Large devices (laptops/desktops, 992px and up) */
+  @media only screen and (min-width: 992px) {
+    #divMessageContainer {
+      min-width: 992px;
+    }
+  }
+
+  /* Extra large devices (large laptops and desktops, 1200px and up) */
+  @media only screen and (min-width: 1200px) {
+    #divMessageContainer {
+      min-width: 1200px;
+    }
+  }
+
+    /* Extra small devices (phones, 600px and down) */
+    @media only screen and (max-width: 600px) {
+    #divNewsContainer  {
+      min-width: 300px;
+    }
+  }
+
+  /* Small devices (portrait tablets and large phones, 600px and up) */
+  @media only screen and (min-width: 600px) {
+    #divNewsContainer {
+      min-width: 600px;
+    }
+  }
+
+  /* Medium devices (landscape tablets, 768px and up) */
+  @media only screen and (min-width: 768px) {
+    #divNewsContainer  {
+      min-width: 768px;
+    }
+  }
+
+  /* Large devices (laptops/desktops, 992px and up) */
+  @media only screen and (min-width: 992px) {
+    #divNewsContainer {
+      min-width: 992px;
+    }
+  }
+
+  /* Extra large devices (large laptops and desktops, 1200px and up) */
+  @media only screen and (min-width: 1200px) {
+    #divNewsContainer {
+      min-width: 1200px;
+    }
+  }
+
+  .user-action {
+    cursor: pointer;
+  }
+
+  .control-item a {
+    padding: 0 3px;
+  }
+
+  .img-fluid {
+    display: block;
+    margin: 0 auto;
+  }
+
+  .col-sm-2 {
+    margin-top: 20px;
+    float: right;
+    padding: 0 10px;
+    min-width: 170px;
+  }
+
+  .col-sm-2:hover a,
+  .col-sm-2:focus a {
+    transform: scale(1.06);
+  }
+
+  .col-sm-2 a {
+    display: block;
+    cursor: pointer;
+    padding: 12px 0;
+    box-shadow: 0 0 10px;
+    border-radius: 0.25rem;
+    transition: all ease-in 0.3s;
+  }
+
+  .col-sm-2 a strong {
+    display: block;
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  ngx-theme-switcher /deep/ .themes-switcher {
+    padding: 0 !important;
+  }
+
+  ngx-theme-switcher /deep/ .ng-star-inserted {
+    margin: 0 3px !important;
+  }
+.unreadednews{
+  color: #0c5460 !important;
+    background-color: #bee5eb !important;
+}
+</style>
+
+<ngx-layout-direction-switcher></ngx-layout-direction-switcher>
+<div [class.left]="position === 'normal'" [class.right]="position === 'inverse'" class="header-container">
+  <div class="logo-containter">
+    <nb-icon [options]="{ animation: { type: 'pulse' } }" (click)="toggleSidebar()" icon="menu" style="cursor: pointer">
+    </nb-icon>
+    <span class="logo">
+      <!-- دفتر گاز -->
+      دفتر کنترل و نظارت گاز استان فارس
+    </span>
+  </div>
+</div>
+
+<div class="header-container">
+  <!-- <div style="min-width: 390px;">
+    <span style="display: block;text-align: center;">
+      {{ userGender }} {{ userFullName }} خوش آمدید
+    </span>
+  </div> -->
+
+  <!-- <nb-select
+  [(ngModel)]="userRolesSelected"
+  id="roleSelect"
+  #roleSelect
+  (selectedChange) = "onRoleSelected(roleSelect.selected)">
+  <nb-option *ngFor="let role of userRolesSelect" [value]="role.name">
+    {{ role.persianName }}
+  </nb-option>
+</nb-select>  -->
+
+  <nb-search type="rotate-layout"></nb-search>
+
+  <!-- <ngx-theme-switcher></ngx-theme-switcher> -->
+
+  <nb-actions [class.left]="position === 'inverse'" [class.right]="position === 'normal'" size="small">
+    <!-- <nb-action>
+      <a *appHasRole="['Admin']" routerLink="/pages/admin/AdminPanel">مدیر</a>
+    </nb-action> -->
+
+    <nb-action class="user-action pt-0">
+      <div style="position: relative; top: -17px; width: 120px">
+        <nb-user style="position: relative; right: 35px" size="large" [nbContextMenu]="userMenu" onlyPicture
+          [name]="userFullName" [picture]="avatarSrc"></nb-user>
+        <span style="display: block; text-align: center;background-color: #fff;border-radius: 30%;
+        padding-bottom: 2px;">{{ userFullName }} <br />
+          <span class="text-success"> {{ currentPersianRole }} </span>
+        </span>
+      </div>
+    </nb-action>
+
+    <nb-action>
+      <ngx-theme-switcher class="p-0 m-0"></ngx-theme-switcher>
+    </nb-action>
+
+    <!-- <nb-action class="control-item">
+      <a routerLink="/auth/logout" style="text-decoration: none;font-size:12px" nbTooltip="خروج"
+        nbTooltipPlacement="top">
+        <nb-icon [options]="{ animation: { type: 'zoom' } , width: '20px',height: '20px' }" class="icon-button"
+        icon="power-outline">
+      </nb-icon>
+      <span style="position: relative;top:-2px;"></span>
+    </a>
+  </nb-action> -->
+
+
+
+    <nb-action class="control-item">
+      <a (click)="onOpenRoleDialog()" style="cursor: pointer; text-decoration: none; font-size: 30px"
+        nbTooltip="تغییر نقش" nbTooltipPlacement="bottom">
+        <nb-icon [options]="{
+            animation: { type: 'zoom' },
+            width: '20px',
+            height: '20px'
+          }" class="icon-button" icon="flip-2-outline">
+        </nb-icon>
+      </a>
+    </nb-action>
+
+    <nb-action class="control-item" >
+      <a (click)="showWarnings()" style="cursor: pointer; text-decoration: none; font-size: 30px" nbTooltip="هشدار ها"
+      nbTooltipPlacement="bottom">
+      <nb-icon [options]="{
+          animation: { type: 'zoom' },
+          width: '20px',
+          height: '20px'
+        }" class="icon-button" icon="bell-outline">
+      </nb-icon>
+       <nb-badge *ngIf="warningMessages.length > 0" [text]="warningMessages.length" status="warning" position="top right"
+        style="border-radius: 50%; margin-top: -5px; margin-right: 10px">
+      </nb-badge>
+      <span style="position: relative; top: -2px"></span>
+    </a>
+    </nb-action>
+
+    <nb-action class="control-item">
+      <a (click)="showMessages()" style="cursor: pointer; text-decoration: none; font-size: 30px" nbTooltip="پیام ها"
+        nbTooltipPlacement="bottom">
+        <nb-icon [options]="{
+            animation: { type: 'zoom' },
+            width: '20px',
+            height: '20px'
+          }" class="icon-button" icon="email-outline">
+        </nb-icon>
+        <nb-badge *ngIf="countOfUnreadMessages > 0" [text]="countOfUnreadMessages" status="danger" position="top right"
+          style="border-radius: 50%; margin-top: -5px; margin-right: 10px">
+        </nb-badge>
+        <span style="position: relative; top: -2px"></span>
+      </a>
+    </nb-action>
+
+    <nb-action class="control-item">
+      <a (click)="onOpenNewsDialog()" style="cursor: pointer; text-decoration: none; font-size: 30px"
+        nbTooltip="اخبار و اطلاعیه" nbTooltipPlacement="bottom">
+        <nb-icon [options]="{
+            animation: { type: 'zoom' },
+            width: '20px',
+            height: '20px'
+          }" class="icon-button" icon="book-outline">
+        </nb-icon>
+        <nb-badge *ngIf="countOfUnreadNews > 0" [text]="countOfUnreadNews" status="warning" position="top right"
+          style="border-radius: 50%; margin-top: -5px; margin-right: 10px">
+        </nb-badge>
+        <span style="position: relative; top: -2px"></span>
+      </a>
+    </nb-action>
+    <!-- <nb-action class="control-item" icon="email-outline"></nb-action> -->
+    <!-- <nb-action class="control-item">
+      <nb-search type="rotate-layout" (click)="startSearch()"></nb-search>
+    </nb-action> -->
+    <!-- <nb-action>
+      <a routerLink="/auth/reg">ثبت نام</a>
+    </nb-action> -->
+  </nb-actions>
+</div>
+
+<ng-template #dialogMessages let-data let-ref="dialogMessagesRef">
+  <nb-card status="primary" accent="primary">
+    <nb-card-header>
+      <h6 class="pull-right text-light">پیام ها</h6>
+      <span title="بستن" style="position: left; float: left; cursor: pointer" class="pull-left text-light"
+        (click)="dialogMessagesRef.close()">
+        &times;
+      </span>
+    </nb-card-header>
+    <div id="divMessageContainer">
+      <nb-card-body *ngFor="let data of messages | paginate: pagingConfig; let i = index">
+        <div class="row pt-2" [ngStyle]="{
+            'background-color': i % 2 === 0 ? '#e7ecf6' : '#f8f8f8'
+          }">
+          <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+            <span>
+              <nb-icon *ngIf="!data.hasRead" status="danger" [options]="{ width: '20px', height: '20px' }"
+                class="icon-button" icon="email-outline">
+              </nb-icon>
+              <nb-icon *ngIf="data.hasRead" status="info" [options]="{ width: '20px', height: '20px' }"
+                class="icon-button" icon="inbox-outline">
+              </nb-icon>
+              &nbsp;&nbsp;
+            </span>
+            <label><strong>شماره:&nbsp;</strong> </label>
+            <label class="control-label">{{
+              (pagination.currentPage - 1) * this.pagination.itemsPerPage +
+                i +
+                1
+            }}</label>
+          </div>
+
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <label><strong>عنوان:&nbsp;</strong></label>
+            <label class="control-label">{{ data.title }}</label>
+          </div>
+
+          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <label><strong>نوع:&nbsp;</strong></label>
+            <label class="control-label">{{ data.msgType }}</label>
+          </div>
+
+          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <label><strong>تاریخ ارسال:&nbsp;</strong></label>
+            <label class="control-label">{{ data.rDateTime }}</label>
+          </div>
+
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <label><strong>شرح:&nbsp;</strong></label>
+            <label class="control-label" *ngIf="!showDesc(data.id) && !isHtml(data.description)"
+              [innerHTML]="data.description.substring(0, 18) + '...'">
+            </label>
+            <label class="control-label" *ngIf="showDesc(data.id) && !isHtml(data.description)"
+              [innerHTML]="data.description">
+            </label>
+
+            <!--  [showHeader]='false' [enabled]='false' [editorMode]='Markdown' [enableRtl]="true" [readonly]="true"  -->
+            <!-- <ejs-richtexteditor *ngIf="showDesc(data.id) && isHtml(data.description)"
+             [toolbarSettings]="tools"
+              [value]="data.description">
+            </ejs-richtexteditor> -->
+
+           <blockquote *ngIf="showDesc(data.id) && isHtml(data.description)" [innerHtml]= "data.description">
+           </blockquote>
+
+            <a class="p-3 pt-1 d-inline-block" [id]="data.id" (click)="toggleDescription(data.id,'message')"
+              style="cursor: pointer; text-decoration: none; font-size: 20px"
+              [nbTooltip]="showDesc(data.id) === true ? 'پنهان' : 'نمایش'" nbTooltipPlacement="top">
+              <nb-icon *ngIf="!showDesc(data.id)" status="success" [options]="{
+                  animation: { type: 'zoom' },
+                  width: '20px',
+                  height: '20px'
+                }" class="icon-button" icon="eye-outline">
+              </nb-icon>
+              <nb-icon *ngIf="showDesc(data.id)" status="basic" [options]="{
+                  animation: { type: 'zoom' },
+                  width: '20px',
+                  height: '20px'
+                }" class="icon-button" icon="eye-off-outline">
+              </nb-icon>
+              <!-- <span style="position: relative;top:-2px;"></span> -->
+            </a>
+          </div>
+        </div>
+      </nb-card-body>
+
+      <span *ngFor="let item of messages | paginate: pagingConfig"></span>
+
+      <nb-card *ngIf="messages.length === 0">
+        <nb-card-body>
+          <p class="lead text-info">
+            در حال حاضر، پیغامی برای شما ثبت نشده است.
+          </p>
+        </nb-card-body>
+      </nb-card>
+
+      <nb-card *ngIf="messages.length > 0">
+        <nb-card-body>
+          <div class="row">
+            <div class="d-flex justify-content-center col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <pagination-controls class="pagination" (pageChange)="pageChanged($event)" previousLabel="" nextLabel="">
+              </pagination-controls>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </nb-card>
+</ng-template>
+
+<ng-template #dialogWarnings let-data let-ref="dialogWarningsRef">
+  <nb-card status="warning" accent="warning">
+    <nb-card-header>
+      <h6 class="pull-right text-light">هشدار ها</h6>
+      <span title="بستن" style="position: left; float: left; cursor: pointer" class="pull-left text-light"
+        (click)="dialogWarningsRef.close()">
+        &times;
+      </span>
+    </nb-card-header>
+    <div id="divWarningContainer">
+      <nb-card-body *ngFor="let data of warningMessages, let i = index">
+        <div class="row pt-2" [ngStyle]="{
+            'background-color': i % 2 === 0 ? '#f8f8f8' : '#e7ecf6'
+          }">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <span>{{ i + 1 }} - &nbsp;</span>
+            <blockquote style="display: inline;" [innerHtml] = "data"></blockquote>
+            <!-- <label class="control-label"> {{ i + 1 }} - &nbsp; {{ data}}</label>
+            <label class="control-label" [innerHtml] = "(i+1) -&nbsp; data"></label> -->
+          </div>
+        </div>
+      </nb-card-body>
+
+      <nb-card *ngIf="warningMessages.length === 0">
+        <nb-card-body>
+          <p class="lead text-info">
+            در حال حاضر، پیغام هشدار برای شما ثبت نشده است.
+          </p>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </nb-card>
+</ng-template>
+
+<ng-template #dialogRoles let-data let-ref="dialogRolesRef">
+  <nb-card status="info">
+    <nb-card-header>انتخاب نقش
+      <span class="pull-left" style="font-weight: 600; font-size: 20px; cursor: pointer"
+        (click)="dialogRolesRef.close()">&times;</span>
+    </nb-card-header>
+    <nb-card-body style="padding: 20px 30px">
+      <div>
+        <div class="col-sm-2" *ngIf='userRoles.includes("Admin")' (click)="onRoleSelected('Admin')">
+          <a>
+            <img src="../../../assets/images/Icons/Login/Black&White/icons8-businessman-100.png" class="img-fluid"
+              alt="مدیر" />
+            <strong class="text-primary">مدیر</strong>
+          </a>
+        </div>
+
+        <div class="col-sm-2" *ngIf='userRoles.includes("GasEmployee")' (click)="onRoleSelected('GasEmployee')">
+          <a>
+            <img src="../../../assets/images/Icons/Login/Black&White/icons8-manager-100.png" class="img-fluid"
+              alt="کارمند دفتر گاز" />
+            <strong class="text-primary">کارمند دفتر گاز</strong>
+          </a>
+        </div>
+
+        <div class="col-sm-2" *ngIf='userRoles.includes("SupplierHP")' (click)="onRoleSelected('SupplierHP')">
+          <a>
+            <img src="../../../assets/images/Icons/Login/Black&White/icons8-spy-100.png" class="img-fluid"
+              alt="تامین کننده" />
+            <strong class="text-primary">تامین کننده</strong>
+          </a>
+        </div>
+
+        <div class="col-sm-2" *ngIf='userRoles.includes("SupervisorHP")' (click)="onRoleSelected('SupervisorHP')">
+          <a>
+            <img src="../../../assets/images/Icons/Login/Black&White/icons8-spy-100.png" class="img-fluid"
+              alt="ناظر عالی گاز فشار قوی" />
+            <strong class="text-primary">ناظر عالی گاز فشار قوی</strong>
+          </a>
+        </div>
+
+        <div class="col-sm-2" *ngIf='userRoles.includes("TechnicalInspectionManagerHP")'
+          (click)="onRoleSelected('TechnicalInspectionManagerHP')">
+          <a>
+            <img src="../../../assets/images/Icons/Login/Black&White/icons8-manager-100-2.png" class="img-fluid"
+              alt="مسئول بازرسی فنی" />
+            <strong class="text-primary">مسئول بازرسی فنی</strong>
+          </a>
+        </div>
+
+        <div class="col-sm-2" *ngIf='userRoles.includes("TechnicalInspectorHP")'
+          (click)="onRoleSelected('TechnicalInspectorHP')">
+          <a>
+            <img src="../../../assets/images/Icons/Login/Black&White/icons8-spy-100.png" class="img-fluid"
+              alt="بازرس فنی گاز فشار قوی" />
+            <strong class="text-primary">بازرس فنی گاز فشار قوی</strong>
+          </a>
+        </div>
+
+        <div class="col-sm-2" *ngIf='userRoles.includes("Owner")' (click)="onRoleSelected('Owner')">
+          <a>
+            <img src="../../../assets/images/Icons/Login/Black&White/icons8-house-keys-100.png" class="img-fluid"
+              alt="مالک" />
+            <strong class="text-primary">مالک</strong>
+          </a>
+        </div>
+
+        <div class="col-sm-2" *ngIf='userRoles.includes("Engineer")' (click)="onRoleSelected('Engineer')">
+          <a>
+            <img src="../../../assets/images/Icons/Login/Black&White/icons8-spy-100.png" class="img-fluid"
+              alt="مهندس" />
+            <strong class="text-primary">مهندس</strong>
+          </a>
+        </div>
+
+        <div class="col-sm-2" *ngIf='userRoles.includes("Pishkhan")' (click)="onRoleSelected('Pishkhan')">
+          <a>
+            <img src="../../../assets/images/Icons/Login/Black&White/icons8-front-desk-100.png" class="img-fluid"
+              alt="پیشخوان" />
+            <strong class="text-primary">پیشخوان</strong>
+          </a>
+        </div>
+
+        <div class="col-sm-2" *ngIf='userRoles.includes("Association")' (click)="onRoleSelected('Association')">
+          <a>
+            <img src="../../../assets/images/Icons/Login/Black&White/icons8-conclusion-contract-100.png"
+              class="img-fluid" alt="اتحادیه" />
+            <strong class="text-primary">اتحادیه</strong>
+          </a>
+        </div>
+
+        <div class="col-sm-2" *ngIf='userRoles.includes("GasRuleCheckerGroupOne")'
+          (click)="onRoleSelected('GasRuleCheckerGroupOne')">
+          <a>
+            <img src="../../../assets/images/Icons/Login/Black&White/icons8-spy-100.png" class="img-fluid"
+              alt="مهندس ضوابط گازرسانی گروه اول" />
+            <strong class="text-primary">مهندس ضوابط گازرسانی گروه اول</strong>
+          </a>
+        </div>
+
+        <div class="col-sm-2" *ngIf='userRoles.includes("GasRuleCheckerGroupTwo")'
+          (click)="onRoleSelected('GasRuleCheckerGroupTwo')">
+          <a>
+            <img src="../../../assets/images/Icons/Login/Black&White/icons8-spy-100.png" class="img-fluid"
+              alt="مهندس ضوابط گازرسانی گروه دوم" />
+            <strong class="text-primary">مهندس ضوابط گازرسانی گروه دوم</strong>
+          </a>
+        </div>
+
+        <div class="col-sm-2" *ngIf='userRoles.includes("GasRuleEngineer")' (click)="onRoleSelected('GasRuleEngineer')">
+          <a>
+            <img src="../../../assets/images/Icons/Login/Black&White/icons8-spy-100.png" class="img-fluid"
+              alt="مهندس ضوابط گازرسانی" />
+            <strong class="text-primary">مهندس ضوابط گازرسانی</strong>
+          </a>
+        </div>
+
+        <div class="col-sm-2" *ngIf='userRoles.includes("GasRuleCheckerGroupThree")'
+          (click)="onRoleSelected('GasRuleCheckerGroupThree')">
+          <a>
+            <img src="../../../assets/images/Icons/Login/Black&White/icons8-spy-100.png" class="img-fluid"
+              alt="مهندس ضوابط گازرسانی گروه سوم" />
+            <strong class="text-primary">مهندس ضوابط گازرسانی گروه سوم</strong>
+          </a>
+        </div>
+
+        <div class="col-sm-2" *ngIf='userRoles.includes("HPManager")' (click)="onRoleSelected('HPManager')">
+          <a>
+            <img src="../../../assets/images/Icons/Login/Black&White/icons8-manager-100-2.png" class="img-fluid"
+              alt="مسئول گاز فشار قوی" />
+            <strong class="text-primary">مسئول گاز فشار قوی</strong>
+          </a>
+        </div>
+
+        <div class="col-sm-2" *ngIf='userRoles.includes("ConsultManager")' (click)="onRoleSelected('ConsultManager')">
+          <a>
+            <img src="../../../assets/images/Icons/Login/Black&White/icons8-manager-100-2.png" class="img-fluid"
+              alt="مسئول مشاوره" />
+            <strong class="text-primary">مسئول مشاوره</strong>
+          </a>
+        </div>
+
+        <div class="col-sm-2" *ngIf='userRoles.includes("Executor")' (click)="onRoleSelected('Executor')">
+          <a>
+            <img src="../../../assets/images/Icons/Login/Black&White/icons8-worker-100.png" class="img-fluid"
+              alt="مجری" />
+            <strong class="text-primary">مجری</strong>
+          </a>
+        </div>
+
+        <div class="col-sm-2" *ngIf='userRoles.includes("GasEmployeeHP")' (click)="onRoleSelected('GasEmployeeHP')">
+          <a>
+            <img src="../../../assets/images/Icons/Login/Black&White/icons8-manager-100.png" class="img-fluid"
+              alt="کارمند گاز فشار قوی" />
+            <strong class="text-primary">کارمند گاز فشار قوی</strong>
+          </a>
+        </div>
+
+        <div class="col-sm-2" *ngIf='userRoles.includes("GasRuleEmployeeHP")'
+          (click)="onRoleSelected('GasRuleEmployeeHP')">
+          <a>
+            <img src="../../../assets/images/Icons/Login/Black&White/icons8-manager-100.png" class="img-fluid"
+              alt="کارمند ضوابط گاز فشار قوی" />
+            <strong class="text-primary">کارمند ضوابط گاز فشار قوی</strong>
+          </a>
+        </div>
+
+        <div class="col-sm-2" *ngIf='userRoles.includes("GasEmployeeExceptShiraz")'
+          (click)="onRoleSelected('GasEmployeeExceptShiraz')">
+          <a>
+            <img src="../../../assets/images/Icons/Login/Black&White/icons8-manager-100.png" class="img-fluid"
+              alt="کارمند دفتر گاز شهرستان" />
+            <strong class="text-primary">کارمند دفتر گاز شهرستان</strong>
+          </a>
+        </div>
+
+        <div class="col-sm-2" *ngIf='userRoles.includes("DoubleControlExpert")'
+        (click)="onRoleSelected('DoubleControlExpert')">
+        <a>
+          <img src="../../../assets/images/Icons/Login/Black&White/icons8-spy-100.png" class="img-fluid"
+            alt="کارشناس کنترل مضاعف" />
+          <strong class="text-primary">کارشناس کنترل مضاعف</strong>
+        </a>
+      </div>
+
+        <div class="clearfix"></div>
+
+      </div>
+    </nb-card-body>
+  </nb-card>
+</ng-template>
+
+
+<ng-template #dialogNews let-data let-ref="dialogNewsRef">
+  <nb-card status="primary" accent="primary">
+    <nb-card-header>
+      <h6 class="pull-right text-light">اخبار ها</h6>
+      <span title="بستن" style="position: left; float: left; cursor: pointer" class="pull-left text-light"
+        (click)="dialogNewsRef.close()">
+        &times;
+      </span>
+    </nb-card-header>
+    <div id="divNewsContainer">
+      <nb-card-body *ngFor="let data of news | paginate: pagingConfig; let i = index">
+        <div
+        [ngStyle]="{'background-color': i % 2 === 0 ? '#e7ecf6' :  '#f8f8f8'}"
+        [className]="!data.hasRead ? 'row pt-2 unreadednews' : 'row pt-2'">
+
+          <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12 mt-1">
+            <span>
+              <nb-icon *ngIf="!data.hasRead" status="danger" [options]="{ width: '20px', height: '20px' }"
+                class="icon-button" icon="book-outline">
+              </nb-icon>
+              <nb-icon *ngIf="data.hasRead" status="info" [options]="{ width: '20px', height: '20px' }"
+                class="icon-button" icon="book-open-outline">
+              </nb-icon>
+              &nbsp;&nbsp;
+            </span>
+            <label><strong>شماره:&nbsp;</strong> </label>
+            <label class="control-label">{{
+              (pagination.currentPage - 1) * this.pagination.itemsPerPage +
+                i +
+                1
+            }}</label>
+          </div>
+
+          <div class="col-lg-10 col-md-10 col-sm-6 col-xs-12 mt-1">
+            <label><strong>عنوان:&nbsp;</strong></label>
+            <label class="control-label">{{ data.subject }}</label>
+          </div>
+
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 mt-3 pr-5">
+            <label><strong>ارسال کننده:&nbsp;</strong></label>
+            <label class="control-label">{{ data.sender }}</label>
+          </div>
+
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 mt-3">
+            <label><strong>تاریخ ثبت:&nbsp;</strong></label>
+            <label class="control-label">{{ data.rDateTime }}</label>
+          </div>
+
+          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 mt-3">
+            <label><strong>تاریخ انقضاء:&nbsp;</strong></label>
+            <label class="control-label">{{ data.expireDate }}</label>
+          </div>
+
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-2">
+            <label><strong>متن :&nbsp;</strong></label>
+            <label class="control-label" *ngIf="!showNewsDesc(data.id) && !isHtml(data.text)"
+              [innerHTML]="data.text.substring(0, 18) + '...'">
+            </label>
+            <label class="control-label" *ngIf="showNewsDesc(data.id) && !isHtml(data.text)"
+              [innerHTML]="data.text">
+            </label>
+
+           <blockquote style="display: inline-block;padding: 2px;" *ngIf="showNewsDesc(data.id) && isHtml(data.text)" [innerHtml]= "data.text">
+           </blockquote>
+
+            <a class="p-3 pt-1 d-inline-block" [id]="data.id" (click)="toggleDescription(data.id,'news')"
+              style="cursor: pointer; text-decoration: none; font-size: 20px"
+              [nbTooltip]="showNewsDesc(data.id) === true ? 'پنهان' : 'نمایش'" nbTooltipPlacement="top">
+              <nb-icon *ngIf="!showNewsDesc(data.id)" status="success" [options]="{
+                  animation: { type: 'zoom' },
+                  width: '20px',
+                  height: '20px'
+                }" class="icon-button" icon="eye-outline">
+              </nb-icon>
+              <nb-icon *ngIf="showNewsDesc(data.id)" status="basic" [options]="{
+                  animation: { type: 'zoom' },
+                  width: '20px',
+                  height: '20px'
+                }" class="icon-button" icon="eye-off-outline">
+              </nb-icon>
+            </a>
+          </div>
+        </div>
+      </nb-card-body>
+
+      <span *ngFor="let item of news | paginate: pagingConfig"></span>
+
+      <nb-card *ngIf="news.length === 0">
+        <nb-card-body>
+          <p class="lead text-info">
+            در حال حاضر، اخبار یا اطلاعیه ایی برای شما ثبت نشده است.
+          </p>
+        </nb-card-body>
+      </nb-card>
+
+      <nb-card *ngIf="news.length > 0">
+        <nb-card-body>
+          <div class="row">
+            <div class="d-flex justify-content-center col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <pagination-controls class="pagination" (pageChange)="pageChanged($event)" previousLabel="" nextLabel="">
+              </pagination-controls>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </nb-card>
+</ng-template>

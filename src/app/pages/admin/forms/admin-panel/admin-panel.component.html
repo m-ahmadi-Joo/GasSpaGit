@@ -1,0 +1,365 @@
+<div style="text-align:center">
+  <!-- <h1 class="card-header bg-info">
+        پنل ادمین
+    </h1> -->
+
+  <!-- <h3 class="text-secondary">
+      آمار
+    </h3> -->
+
+
+  <!-- <a *appHasRole = "['Admin']"
+    (click)= "hangfireDashboard()"
+    href= "{{hangfireUrl}}/admin/hangfire/gasjobs?access_token={{usertoken}}"
+    target="_blank">داشبورد کارهای زمان بندی شده</a> -->
+
+  <div class="mt-3 row">
+    <div class="col">
+      <nb-card accent="primary" status="info">
+        <nb-card-header>ناظرین: {{ info.activeEngineer + info.deactiveEngineer}}</nb-card-header>
+        <nb-card-body>
+          <div class="form-group">
+            <label for="active">فعال: </label>
+            <label for="">
+              <strong> {{info.activeEngineer}} </strong>
+            </label>
+          </div>
+
+          <div class="form-group">
+            <label for="active">غیر فعال: </label>
+            <label for="" class="text-danger">
+              <strong> {{ info.deactiveEngineer}} </strong>
+            </label>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col">
+      <nb-card accent="primary" status="info">
+        <nb-card-header>مجریان: {{ info.activeExecutor + info.deactiveExecutor}}</nb-card-header>
+        <nb-card-body>
+          <div class="form-group">
+            <label for="active">فعال: </label>
+            <label for="">
+              <strong> {{info.activeExecutor}} </strong>
+            </label>
+          </div>
+
+          <div class="form-group">
+            <label for="active">غیر فعال: </label>
+            <label for="" class="text-danger">
+              <strong> {{info.deactiveExecutor}} </strong>
+            </label>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <div class="col">
+      <nb-card accent="primary" status="info">
+        <nb-card-header>مالکین: {{ info.ownerTotalCount }}</nb-card-header>
+        <nb-card-body>
+          <div class="form-group">
+            <label for="active">ثبت شده امروز: </label>
+            <label for="">
+              <strong> {{ info.ownerTodayRegistered }} </strong>
+            </label>
+          </div>
+          <div class="form-group">
+            <label for="active">&nbsp;&nbsp;&nbsp;</label>
+            <!-- <label for="">
+                  <strong>&nbsp;&nbsp;&nbsp; </strong>
+                </label> -->
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <nb-card accent="primary" status="info">
+        <nb-card-header>پروژه ها</nb-card-header>
+        <nb-card-body>
+
+          <div class="form-group">
+            <label for="active">املاک: <strong>{{ info.gasRequestTotal}} </strong> ،</label>
+            <label for="active">ثبت شده امروز: <strong> {{info.gasRequestTodayRegistered}} </strong></label>
+          </div>
+
+          <div class="form-group">
+            <label for="active">واحدها: <strong>{{ info.unitTotal}} </strong> ،</label>
+            <label for="active">ثبت شده امروز: <strong> {{info.unitTodayRegistered}} </strong></label>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <div class="col">
+      <nb-card accent="primary" status="info">
+        <nb-card-header>لیست ارجاعات شیراز: {{ info.shirazAnalyzeListDone + info.shirazAnalyzeListInQueue }}
+        </nb-card-header>
+        <nb-card-body>
+          <div class="form-group">
+            <label for="active">انجام شده: </label>
+            <label for="">
+              <strong> {{ info.shirazAnalyzeListDone }} </strong>
+            </label>
+          </div>
+          <div class="form-group">
+            <label for="active">در صف انتظار: </label>
+            <label for="">
+              <strong> {{ info.shirazAnalyzeListInQueue }} </strong>
+            </label>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <div class="col">
+      <nb-card accent="primary" status="info">
+        <nb-card-header>لیست ارجاعات شهرستان: {{ info.shahrestanAnalyzeListDone + info.shahrestanAnalyzeListInQueue }}
+        </nb-card-header>
+        <nb-card-body>
+          <div class="form-group">
+            <label for="active">انجام شده: </label>
+            <label for="">
+              <strong> {{ info.shahrestanAnalyzeListDone }} </strong>
+            </label>
+          </div>
+          <div class="form-group">
+            <label for="active">در صف انتظار: </label>
+            <label for="">
+              <strong> {{ info.shahrestanAnalyzeListInQueue }} </strong>
+            </label>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <nb-reveal-card>
+
+        <nb-card-front>
+          <nb-card accent="primary" status="info" style="max-height: 50rem;overflow-x: hidden;overflow-y: auto;">
+            <nb-card-header>درخواست ها: {{ info.inspectionTotalCount }}</nb-card-header>
+            <nb-card-body>
+              <div class="form-group" *ngFor="let item of info.inspections">
+                <label for="active"> {{item.title}}: </label>
+                <label for="">
+                  <strong> {{ item.count }} </strong>
+                </label>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </nb-card-front>
+        
+        <nb-card-back>
+          <nb-card>
+            <nb-card-body accent="info" status="success">
+              <nb-card-header>
+                <!-- نمودار درخواست ها -->
+                <!-- class="input-group col-md-6" -->
+                <!-- <div> -->
+
+                <!-- </div> -->
+
+                <form [formGroup]="searchForm" (submit)="loadChart()">
+                  <div class="row">
+
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                      <div class="form-group">
+                        <nb-select class="areas" multiple formControlName="areaIds" status="info" id="chartType"
+                          size="medium" placeholder="انتخاب منطقه گازی ...">
+                          <nb-option [value]="null">هیچ کدام</nb-option>
+                          <nb-option *ngFor="let p of info.areas" [value]="p.id">
+                            {{ p.title }}
+                          </nb-option>
+                        </nb-select>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                      <div class="form-group">
+                        <nb-select class="persianMonth" formControlName="chartType" status="info" id="chartType"
+                          size="medium" placeholder="انتخاب نمودار ..." >
+                          <nb-option *ngFor="let p of chartTypes | enumToArray" [value]="p.key">
+                            {{ p.value }}
+                          </nb-option>
+                        </nb-select>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12"
+                      *ngIf="searchForm.get('chartType').value === 'Monthly' || searchForm.get('chartType').value === 'Daily'">
+                      <nb-select [(selected)]="info.currentPersianYear" formControlName="persianYear"
+                        id="year" placeholder="انتخاب سال">
+                        <nb-option *ngFor="let year of info.baseYears" [value]="year.id">
+                          {{ year.persianYear }}
+                        </nb-option>
+                      </nb-select>
+                      <!-- <nb-select #yearSelect [(selected)]="info.currentPersianYear" formControlName="persianYear"
+                        (selectedChange)="getLineChartInfo(yearSelect.selected)" id="year" placeholder="انتخاب سال">
+                        <nb-option *ngFor="let year of info.baseYears" [value]="year.id">
+                          {{ year.persianYear }}
+                        </nb-option>
+                      </nb-select> -->
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" *ngIf="searchForm.get('chartType').value === 'Daily'">
+                      <div class="form-group">
+                        <nb-select class="persianMonth" #persianMonthSelect formControlName="persianMonth" status="info"
+                          id="persianMonths" placeholder="انتخاب ماه ..." size="medium">
+                          <nb-option *ngFor="let p of persianMonths | enumToArray" [value]="p.key">
+                            {{ p.value }}
+                          </nb-option>
+                        </nb-select>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-10 col-md-10" *ngIf="searchForm.get('chartType').value === 'Daily'"></div>
+                    <div class="form-group col-lg-2 col-md-2 col-sm-12 col-xs-12 float-left pl-0 ml-0 mt-0">
+                      <button nbTooltip="جستجو" nbTooltipPlacement="top" nbButton hero size="tiny" status="info"
+                        type="submit" class="ml-1" style="margin-top:42px">
+                        <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="search-outline">
+                        </nb-icon>
+                      </button>
+
+                      <button nbTooltip="بازسازی" nbTooltipPlacement="top" size="tiny" nbButton hero status="primary"
+                        type="button" (click)="resetFilters()" style="margin-top:42px">
+                        <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button"
+                          icon="refresh-outline">
+                        </nb-icon>
+                      </button>
+                    </div>
+                    
+                  </div>
+
+                </form>
+
+              </nb-card-header>
+
+              <ngx-charts-line-chart [view]="[800, 600]"
+                style="max-height: 50rem;overflow-y: auto; position: static;display: inline-block; transform: none;width: 100%;"
+                class="chartLine chart-container" [scheme]="colorScheme" [schemeType]="schemeType"
+                [results]="info.inspectionResultForChart" [animations]="animations" [legend]="true"
+                [legendTitle]="legendTitle" [legendPosition]="legendPosition"
+                (legendLabelClick)="onLegendLabelClick($event)" [gradient]="gradient" [xAxis]="showXAxis"
+                [yAxis]="showYAxis" [showXAxisLabel]="false" [showYAxisLabel]="false" [xAxisLabel]="'angle'"
+                [yAxisLabel]="'radius'" [autoScale]="autoScale" [timeline]="timeline" [showGridLines]="showGridLines"
+                [curve]="curves['Cardinal']" [rangeFillOpacity]="rangeFillOpacity" [roundDomains]="roundDomains"
+                [tooltipDisabled]="tooltipDisabled" [trimXAxisTicks]="trimXAxisTicks" [trimYAxisTicks]="trimYAxisTicks"
+                [maxXAxisTickLength]="maxXAxisTickLength" [maxYAxisTickLength]="maxYAxisTickLength"
+                (select)="select($event)">
+              </ngx-charts-line-chart>
+            </nb-card-body>
+            <!-- <nb-card-footer></nb-card-footer> -->
+          </nb-card>
+        </nb-card-back>
+
+     
+
+      </nb-reveal-card>
+    </div>
+  </div>
+
+</div>
+
+
+<style>
+   nb-select.areas /deep/ .select-button {
+    max-width: 8rem !important;
+  }
+
+
+  .chartLine /deep/ .ngx-charts-outer {
+    width: 100% !important;
+  }
+
+  .chartLine /deep/ .chart-legend .legend-wrap {
+    min-width: 200px !important;
+    width: 100% !important;
+    /* width: calc(100% - 50px); */
+  }
+
+  .chartLine /deep/.chart-legend .legend-label-text {
+    white-space: pre-wrap !important;
+  }
+
+  .chartLine /deep/.chart-legend .legend-labels {
+    text-align: right !important;
+    float: right !important;
+  }
+
+  /*  */
+
+  /* .chart-legend .legend-wrap {
+    min-width: 700px !important;
+    width: 100% !important;
+    /*width: calc(100% - 20px) */
+  /* white-space: pre-wrap !important;;
+    overflow: scroll !important;;
+} */
+  */
+  /* Makes the chart container expand to the full width of the parent container*/
+  /* .ngx-charts-outer {
+    width: 100% !important;
+} */
+
+  /* Sets the legend width to auto expand to fit labels, but caps at 200px */
+  /* .chart-legend > div {
+    width: auto !important;
+    max-width: 800px;
+} */
+
+  /* Some extra space is needed to offset the way the labels display */
+  /* .legend-labels {
+    width: 100% !important;
+    /* width: calc(100% + 500px) !important; */
+  /* } */
+  */
+
+  /* Wrap the label text if it ends up being longer than the max width */
+  .legend-label-text {
+    white-space: pre-wrap !important;
+    width: 100% !important;
+  }
+</style>
+
+
+<!-- <div class="col">
+        <div class="row">
+          <h4>
+            Vertical Bar Chart
+          </h4>
+        </div>
+        <div class="row">
+          <ngx-charts-bar-vertical
+          [view]="view"
+          [scheme]="colorScheme"
+            [results]="single"
+            [gradient]="gradient"
+            [xAxis]="showXAxis"
+            [yAxis]="showYAxis"
+            [legend]="showLegend"
+            [showXAxisLabel]="showXAxisLabel"
+            [showYAxisLabel]="showYAxisLabel"
+            [xAxisLabel]="xAxisLabel"
+            [yAxisLabel]="yAxisLabel"
+            (select)="onSelect($event)">
+            </ngx-charts-bar-vertical>
+      </div>
+    </div> -->
+
+
+<!-- <style>
+    .flipcard-body[_ngcontent-ptp-c18] .back-container[_ngcontent-ptp-c18] .flip-button[_ngcontent-ptp-c18] {
+      cursor: pointer;
+      position: absolute;
+      right: 0;
+      top: 50px !important;
+      opacity: 1;
+      transition: opacity 0s 0.15s;
+}
+</style> -->

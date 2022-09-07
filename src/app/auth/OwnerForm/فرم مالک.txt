@@ -1,0 +1,21 @@
+malekForm: FormGroup;
+
+	
+نوع حقیقی یا حقوقی :
+کد ملی :
+شناسه اقتصادی :
+نام کوچک مالک :
+نام خانوادگی مالک :
+نام پدر مالک :
+تلفن همراه مالک :
+تلفن ثابت مالک :
+	this.malekForm = this.fb.group({
+		owType-ctrl: ['', Validators.required],
+		owNationalCode-ctrl: ['', Validators.required],
+		owEcoIdentifier-ctrl: ['', Validators.required],
+		owFName-ctrl: ['', Validators.required],
+		owLName-ctrl: ['', Validators.required],
+		owDName-ctrl: ['', Validators.required],
+		owMobile-ctrl: ['', Validators.required],
+		owPhone-ctrl: ['', Validators.required],
+	});

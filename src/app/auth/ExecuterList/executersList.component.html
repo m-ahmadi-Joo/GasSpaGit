@@ -1,0 +1,310 @@
+<style>
+  .role-imgage {
+    width: 100px;
+    height: 100px;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .col-sm:hover a,
+  .col-sm:focus a {
+    transform: scale(1.06);
+  }
+  .col-sm a {
+    display: block;
+    cursor: pointer;
+    padding: 10px 15px;
+    box-shadow: 0 0 10px;
+    border-radius: 0.25rem;
+    transition: all ease-in 0.3s;
+  }
+
+  .col-sm a strong {
+    display: block;
+    margin-top: 10px;
+    text-align: center;
+  }
+</style>
+
+<div class="container mb-5" >
+  <div class="row justify-content-center">
+    <div class="col-auto w-100 mb-n5 p-0">
+      <nb-card
+        accent="primary"
+        style="box-shadow: 0px 2px 4px; margin-bottom: 30px; margin-top: 30px;"
+      >
+        <nb-card-body>
+          <h3 class="text-center text-primary">
+            سیستم کنترل و بازرسی دفتر گاز نظام مهندسی استان فارس
+          </h3>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</div>
+<nb-card id="serachCard" style="box-shadow: 0 0 4px;">
+  <nb-card-body class="mt-3">
+    <!-- <div class="container"> -->
+    <form class="form-inline" (ngSubmit)="onSerach()" [formGroup]="form">
+      <div class="row w-100">
+        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+          <label class="mb-1" for="engineerName">
+            نام :
+          </label>
+          <input formControlName="firstName" fullWidth nbInput />
+        </div>
+        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+          <label class="mb-1" for="membershipNumber">
+            نام خانوادگی :
+          </label>
+
+          <input
+            formControlName="lastName"
+            size="small"
+            fullWidth
+            id="lastName"
+            nbInput
+          />
+        </div>
+        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+          <label class="mb-1" for="nationalCode">
+            کد ملی:
+          </label>
+
+          <input
+            formControlName="nationalCode"
+            size="small"
+            fullWidth
+            id="nationalCode"
+            nbInput
+            type="number"
+          />
+        </div>
+      </div>
+      <div class="row w-100 mb-0 mt-2">
+        <!-- <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+          <label for="fromDateStart">
+            تاریخ شروع پروانه:
+          </label>
+
+          <dp-date-picker
+            name="ds"
+            id="ds"
+            nbInput
+            dir="rtl"
+            mode="day"
+            theme="dp-material"
+            formControlName="licenseStartDate"
+            [config]="datePickerConfig"
+            (open)="openFromStartDayPicker()"
+            (close)="closeFromStartDayPicker()"
+          ></dp-date-picker>
+        </div>
+        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+          <label for="fromDateStart">
+            تاریخ پایان پروانه:
+          </label>
+
+          <dp-date-picker
+            name="de"
+            id="de"
+            nbInput
+            dir="rtl"
+            mode="day"
+            theme="dp-material"
+            formControlName="licenseExpireDate"
+            [config]="datePickerConfig"
+            (open)="openFromEndtDayPicker()"
+            (close)="closeFromEndtDayPicker()"
+          ></dp-date-picker>
+        </div> -->
+        <div class="mt-3 form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
+          <label class="mb-1">انتخاب شهر محل کار:</label>
+          <!-- style="box-shadow: 0 0 3px" -->
+          <nb-select
+            [selected]="filterParams?.workTown"
+            placeholder="انتخاب شهر"
+            fullWidth
+            id="neighborhood"
+            formControlName="workTown"
+          >
+            <nb-option *ngFor="let town of lstTowns" [value]="town.townId">
+              {{ town.townName }}
+            </nb-option>
+          </nb-select>
+        </div>
+        <div
+          class="form-group col-lg-3 col-md-3 col-sm-4 col-xs-12"
+          style="margin-bottom: -40px; margin-top: -31px;"
+        >
+          <button
+            nbTooltip="جستجو"
+            nbTooltipPlacement="top"
+            nbButton
+            hero
+            size="tiny"
+            status="info"
+            type="submit"
+            class="ml-1"
+            style="margin-top: 25px;"
+          >
+            <nb-icon
+              [options]="{ animation: { type: 'pulse' } }"
+              class="icon-button"
+              icon="search-outline"
+            >
+            </nb-icon>
+          </button>
+
+          <button
+            nbTooltip="بازسازی"
+            nbTooltipPlacement="top"
+            size="tiny"
+            nbButton
+            hero
+            status="primary"
+            type="button"
+            (click)="resetFilters()"
+            style="margin-top: 25px;"
+          >
+            <nb-icon
+              [options]="{ animation: { type: 'pulse' } }"
+              class="icon-button"
+              icon="refresh-outline"
+            >
+            </nb-icon>
+          </button>
+        </div>
+      </div>
+    </form>
+    <br />
+
+    <!-- </div> -->
+  </nb-card-body>
+</nb-card>
+
+<nb-card class="table-x-mine" style="box-shadow: 0 0 4px;">
+  <nb-card-header class="pt-4" style="border-bottom: 0;"
+    ><span class="ml-1"> ورودی</span>
+    <nb-icon
+      [options]="{ animation: { type: 'pulse' } }"
+      class="icon-button"
+      icon="arrow-ios-back-outline"
+    >
+    </nb-icon>
+
+    <span class="mr-1" style="color: #3366ff;">مجریان</span>
+  </nb-card-header>
+
+  <nb-card-body>
+    <ng2-smart-table
+      [settings]="settings"
+      [source]="source | paginate: pagingConfig"
+      (custom)="onCustom($event)"
+      style="direction: ltr;"
+    ></ng2-smart-table>
+
+    <span *ngFor="let item of collection | paginate: pagingConfig"></span>
+
+    <nb-card>
+      <nb-card-body>
+        <div class="row">
+          <div class="input-group">
+            <div
+              class="col-lg-3 col-md-3 col-sm-6 col-xs-6 form-inline pull-left"
+            >
+              <label for="pageSize" style="margin-left: 0.45rem;">
+                تعداد رکورد:
+              </label>
+              <nb-select
+                [selected]="pagination.itemsPerPage"
+                status="info"
+                #pageSizeSelect
+                class="pageSizeSelect"
+                (selectedChange)="changePageSize(pageSizeSelect.selected)"
+                id="pageSize"
+                placeholder="انتخاب ..."
+              >
+                <nb-option *ngFor="let p of pageSizes" [value]="p.id">
+                  {{ p.display }}
+                </nb-option>
+              </nb-select>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              <div class="d-flex justify-content-center">
+                <pagination-controls
+                  class="pagination"
+                  (pageChange)="pageChanged($event)"
+                  previousLabel=""
+                  nextLabel=""
+                >
+                </pagination-controls>
+              </div>
+            </div>
+
+            <div
+              class="col-lg-3 col-md-3 col-sm-6 col-xs-6 form-inline pull-right"
+            >
+              <label for="pageNumber" style="margin-left: 0.45rem;">
+                شماره صفحه:
+              </label>
+              <input
+                [value]="pagination.currentPage"
+                style="width: 30%;"
+                #pageNumber
+                size="tiny"
+                id="pageNumber"
+                nbInput
+                type="number"
+                min="1"
+                max="pagination.totalPages"
+                (keydown.enter)="pageChanged(pageNumber.value)"
+              />
+            </div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+    <button
+      [routerLink]="['/auth/login']"
+      routerLinkActive="router-link-active"
+      class="btn btn-md btn-primary pull-left"
+    >
+      بازگشت
+    </button>
+  </nb-card-body>
+</nb-card>
+
+<!-- <ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card status="danger" accent="danger">
+    <nb-card-header><h4 style="color: linen">هشدار</h4></nb-card-header>
+    <nb-card-body><h6>آیا از حذف مورد اطمینان دارید؟</h6></nb-card-body>
+    <nb-card-footer>
+      <div class="row">
+        <div class="col-sm-6">
+          <button
+            fullWidth
+            nbButton
+            hero
+            status="danger"
+            (click)="confirmDelete(data)"
+          >
+            بلی
+          </button>
+        </div>
+        <div class="col-sm-6">
+          <button
+            fullWidth
+            nbButton
+            hero
+            status="primary"
+            (click)="dialogRef.close()"
+          >
+            انصراف
+          </button>
+        </div>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template> -->

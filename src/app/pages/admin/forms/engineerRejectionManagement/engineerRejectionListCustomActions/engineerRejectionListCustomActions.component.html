@@ -1,0 +1,27 @@
+<nb-select placeholder="انتخاب عملیات"  status="success">
+  <!-- <nb-option *ngIf="rData.unitId !== 0 && rData.contractId !== 0">
+      <button
+        fullWidth
+        nbButton
+        status="primary"
+        *appHasRole="['Admin']"
+        (click)="onShowUnitDetail(rData.unitId, rData.contractId)"
+      >
+      مشاهده جزئیات واحد
+    </button>
+    </nb-option> -->
+
+    <nb-option>
+      <button
+        fullWidth
+        nbButton
+        status="success"
+        *appHasRole="['Admin']"
+        (click)="onCheckRejection(rData)"
+        [disabled] ="rData.isAcceptable === true"
+        >
+        تعیین تکلیف
+      </button>
+    </nb-option>
+
+  </nb-select>

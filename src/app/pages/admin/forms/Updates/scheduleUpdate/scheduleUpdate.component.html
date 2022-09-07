@@ -1,0 +1,223 @@
+<style>
+  .pull-right button {
+    font-size: 0.9rem !important;
+  }
+
+  nb-select /deep/ .select-button {
+    min-width: 12.3rem;
+  }
+</style>
+
+<nb-card>
+  <nb-card-header> عملیات سیستم </nb-card-header>
+  <nb-card-body>
+    <nb-card>
+      <nb-card-body>
+        <div class="row" *appHasRole="['Admin']">
+          <div class="pull-right ml-2 mr-3">
+            <button
+              class="btn"
+              nbButton
+              status="primary"
+              hero
+              size="large"
+              type="submit"
+              (click)="engineerUpdates()"
+              [nbSpinner]="loading"
+              nbSpinnerStatus="info"
+              nbSpinnerSize="large"
+              [disabled]="loading"
+            >
+              بروزرسانی اطلاعات مهندسان
+            </button>
+          </div>
+
+          <div class="pull-right ml-2">
+            <button
+              class="btn"
+              nbButton
+              hero
+              status="primary"
+              size="large"
+              type="submit"
+              (click)="engineerCollaborationExcelExport()"
+            >
+              گزارش همکاری مهندسان
+            </button>
+          </div>
+
+          <div class="pull-right ml-2">
+            <button
+              class="btn"
+              nbButton
+              status="primary"
+              hero
+              size="large"
+              type="submit"
+              (click)="calculatePastMainFactor()"
+              [nbSpinner]="loadingCalculatePastMainFactor"
+              nbSpinnerStatus="info"
+              nbSpinnerSize="large"
+              [disabled]="loading"
+            >
+              محاسبه مجموع ارزش ریالی کارهای واگذار شده قبلی مهندسان
+            </button>
+          </div>
+
+          <!-- <div class="pull-right">
+            <button
+              class="btn"
+              nbButton
+              status="primary"
+              hero
+              size="large"
+              type="submit"
+              [nbSpinner]="loadingForImportEngineerRatings"
+              nbSpinnerStatus="info"
+              nbSpinnerSize="large"
+              [disabled]="loading"
+              (click)="updateEngineerRatingin1398()"
+            >
+                ورود اطلاعات امتیازدهی مهندسان سال 1398
+            </button>
+          </div> -->
+
+          <div class="pull-right">
+            <button
+              class="btn"
+              nbButton
+              status="primary"
+              hero
+              size="large"
+              type="submit"
+              [nbSpinner]="loadingForImportEngineerRatings"
+              nbSpinnerStatus="info"
+              nbSpinnerSize="large"
+              [disabled]="loading"
+              (click)="updateEngineerRating()"
+            >
+               ورود اطلاعات امتیازدهی مهندسان سال 1399
+            </button>
+          </div>
+
+          <div class="pull-right mr-2">
+            <button
+              class="btn"
+              nbButton
+              status="primary"
+              hero
+              size="large"
+              type="submit"
+              [nbSpinner]="loadingForGetCompletedFilesExcelExportReport"
+              nbSpinnerStatus="info"
+              nbSpinnerSize="large"
+              [disabled]="loading"
+              (click)="getCompletedFilesExcelExportReport()"
+            >
+              خروجی اکسل پرونده های تکمیل شده
+            </button>
+          </div>
+
+          <div class="clearfix"></div>
+        </div>
+
+        <form
+          [formGroup]="updates"
+          class="mt-3"
+          *appHasRole="['Admin', 'GasEmployee']"
+        >
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 pt-3">
+              <nb-select
+                #areasSelect
+                placeholder="انتخاب ناحیه"
+                id="neighborhood"
+                formControlName="areas"
+              >
+                <nb-option *ngFor="let area of areas" [value]="area.id">
+                  {{ area.title }}
+                </nb-option>
+              </nb-select>
+
+              <button
+                class="btn mr-2"
+                style="width: 11.3rem"
+                nbButton
+                hero
+                status="success"
+                type="submit"
+                [nbSpinner]="loadingCreateList"
+                nbSpinnerStatus="info"
+                nbSpinnerSize="large"
+                [disabled]="loadingCreateList"
+                (click)="analyzeListCreateLists(updates.value)"
+              >
+                تفکیک لیست
+              </button>
+
+              <!-- <button
+                class="btn mr-2"
+                style="width: 11.3rem"
+                nbButton
+                hero
+                status="danger"
+                type="submit"
+                [nbSpinner]="loadingCreateAndRefering"
+                nbSpinnerStatus="info"
+                nbSpinnerSize="large"
+                [disabled]="loadingCreateAndRefering"
+                (click)="analyzeListSeprateAndRefers(updates.value)"
+              >
+                تفکیک و ارجاع
+              </button> -->
+            </div>
+            <div class="row mt-4">
+              <div class="col-sm-4 col-md-4">
+                <nb-select
+                  #areasReferSelect
+                  (selectedChange)="getCities(areasReferSelect.selected)"
+                  placeholder="انتخاب ناحیه"
+                  id="areasReferSelect"
+                  formControlName="areasReferSelect"
+                >
+                  <nb-option *ngFor="let area of areas" [value]="area.id">
+                    {{ area.title }}
+                  </nb-option>
+                </nb-select>
+              </div>
+              <div class="col-sm-4 col-md-4">
+                <nb-select
+                  #areasSelect
+                  placeholder="انتخاب دفتر"
+                  id="cities"
+                  formControlName="cities"
+                >
+                  <nb-option *ngFor="let city of cities" [value]="city.id">
+                    {{ city.title }}
+                  </nb-option>
+                </nb-select>
+              </div>
+              <div class="col-sm-4 col-md-4">
+                <button
+                  class="btn mr-2"
+                  style="width: 11.3rem"
+                  nbButton
+                  hero
+                  status="success"
+                  type="submit"
+                  [nbSpinner]="loadingRefering"
+                  nbSpinnerStatus="info"
+                  nbSpinnerSize="large"
+                  [disabled]="loadingRefering"
+                  (click)="analyzeListRefers(updates.value)"
+                >
+                  ارجاع لیست
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+</nb-card>

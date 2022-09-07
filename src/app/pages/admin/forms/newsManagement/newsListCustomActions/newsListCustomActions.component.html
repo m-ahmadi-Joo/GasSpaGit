@@ -1,0 +1,50 @@
+<button
+title="حذف"
+size="tiny"
+class="mb-2 mr-1"
+nbButton
+status="danger"
+(click)="onDelete(rData)"
+*appHasRole="['Admin']"
+
+>
+<nb-icon
+  [options]="{ animation: { type: 'zoom' } }"
+  class="icon-button"
+  icon="close-outline"
+>
+</nb-icon>
+</button>
+<button
+title="ویرایش"
+size="tiny"
+class="mb-2 mr-1"
+*appHasRole="['Admin']"
+
+nbButton
+status="warning"
+(click)="onEdit()"
+>
+<nb-icon
+  [options]="{ animation: { type: 'zoom' } }"
+  class="icon-button"
+  icon="edit-outline"
+>
+</nb-icon>
+</button>
+<button
+  title="مشاهده جزئیات"
+  size="tiny"
+  class="mb-2 mr-1"
+  nbButton
+  status="info"
+  *appHasRole="['GasEmployee','Executor','Engineer','Owner','Admin']"
+  (click)="onDetail(rData.id)"
+>
+  <nb-icon
+    [options]="{ animation: { type: 'zoom' } }"
+    class="alert-circle-outline"
+    icon="eye-outline"
+  >
+  </nb-icon>
+</button>

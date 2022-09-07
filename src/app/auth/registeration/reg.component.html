@@ -1,0 +1,101 @@
+
+<div class="container mt-5 mb-n5">
+  <div class="row justify-content-center">
+    <div class="col-auto w-100 mb-n5 p-0">
+      <nb-card accent="primary" style="box-shadow: 0px 2px 4px;margin-bottom: 30px;margin-top: 30px">
+        <nb-card-body>
+          <h3 class="text-center text-primary">
+            سیستم کنترل و بازرسی دفتر گاز نظام مهندسی استان فارس
+          </h3>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</div>
+
+
+<div class="row" >
+  <div class="col-lg-12 col-md-12 col-sm-12 form-inline mb-5">
+    <div class="col-md-12 mb-5">
+      <nb-card class="center">
+        <nb-card-header class="card-header-title">ثبت نام در سیستم</nb-card-header>
+        <nb-card-body>
+          <form (ngSubmit)="register()" [formGroup]="userRegisterDto">
+            <nb-card>
+              <nb-card-body>
+
+                <div name="NationalID">
+
+                  <label class="input-label" for="username">
+                    کد ملی
+                  </label>
+                  <input
+                  [status]="(userRegisterDto.get('nationalID').touched ||  userRegisterDto.get('nationalID').dirty) ? (userRegisterDto.get('nationalID').invalid ? 'danger':'success'):''"
+                    formControlName="nationalID"
+                    fullWidth
+                    id="username"
+                    nbInput
+                    placeholder="کد ملی"
+
+                    (blur)="nationalIDIsExist()">
+
+                    <div *ngFor="let validation of login_validation_messages.nationalID">
+                      <span class="text-danger"  *ngIf="userRegisterDto.get('nationalID').hasError(validation.type) && (userRegisterDto.get('nationalID').dirty || userRegisterDto.get('nationalID').touched)">{{validation.message}}</span>
+                    </div>
+
+
+                </div>
+
+                <div name="PhoneNumber" class="inline-input">
+
+                  <label class="input-label" for="mn">
+                    شماره موبایل
+                  </label>
+                  <input
+                  [status]="(userRegisterDto.get('phoneNumber').touched ||  userRegisterDto.get('phoneNumber').dirty) ? (userRegisterDto.get('phoneNumber').invalid ? 'danger':'success'):''"
+                    formControlName="phoneNumber"
+                    fullWidth
+                    id="mn"
+                    nbInput
+                    placeholder="شماره موبایل"
+                    type="text">
+
+                    <div *ngFor="let validation of login_validation_messages.phoneNumber">
+                      <span class="text-danger"  *ngIf="userRegisterDto.get('phoneNumber').hasError(validation.type) && (userRegisterDto.get('phoneNumber').dirty || userRegisterDto.get('phoneNumber').touched)">{{validation.message}}</span>
+                    </div>
+                </div>
+
+                <div class="col-md-12 btn-group-inline mr-3">
+
+                <button
+                  [nbSpinner]="loading"
+                  nbSpinnerStatus="info"
+                  nbSpinnerSize="large"
+                  [disabled]="userRegisterDto.invalid || loading"
+                  class="btn half-width-btn"
+                  nbButton
+                  status="success"
+                  type="submit">
+                  ثبت نام
+                </button>
+
+                  <button
+                    [disabled]="loading"
+                    (click)="onCancel()"
+                    class="btn half-width-btn"
+                    nbButton
+                    status="danger"
+                    type="button">
+                    انصراف
+                  </button>
+
+                </div>
+
+              </nb-card-body>
+            </nb-card>
+          </form>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</div>

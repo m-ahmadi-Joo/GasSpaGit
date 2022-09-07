@@ -1,0 +1,203 @@
+<style>
+  input,
+  nb-select {
+    width: 100% !important;
+  }
+</style>
+
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <form (ngSubmit)="onSubmit()" [formGroup]="payForm" >
+      <nb-card>
+        <nb-card-header>اعمال تخفیف</nb-card-header>
+        <nb-card-body>
+          <nb-card>
+            <nb-card-body>
+
+              <ul *ngIf="notPassed.length> 0">
+                <li class="text-danger" *ngFor="let item of notPassed">{{item}}</li>
+              </ul>
+
+              <!-- <nb-card>
+                <nb-card-body> -->
+              <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
+                <div class="input-group">
+
+                  <!-- <p class="lead text-info font-weight-bold">
+                    <span>*</span>
+                    توجه نمایید در صورت عدم انتخاب مشاوره و یا واحد، تخفیف به صورت پیش فرض برای تمامی واحدهای فعلی و آتی ملک و مشاوره های فعلی و آتی ملک در نظر گرفته خواهد شد.
+                    در صورت تمایل به استثناء قائل شدن برای یک مجموعه واحد و یا یک مجموعه درخواست مشاوره، می توانید درصد تخفیف متفاوتی را برای آن مجموعه ثبت نمایید.
+                  </p> -->
+
+                  <div class="col-lg-3 col-md-3 col-sm-6">
+                    <label class="d-block" for="payTypes"> <span class="text-danger font-weight-bold">*</span>شماره
+                      ملک:</label>
+
+                    <input formControlName="gasRequestId" [typeahead]="gasRequests" (change)="changeGasRequest($event)"
+                      typeaheadOptionField="itemForSearch" (typeaheadOnSelect)="onSelect($event)"
+                      [typeaheadOptionsLimit]="7" [typeaheadMinLength]="0" class="form-control" class="form-control">
+
+                    <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.gasRequestId">
+                      <span class="text-danger" *ngIf="
+                      payForm.get('gasRequestId').hasError(validation.type) &&
+                        (payForm.get('gasRequestId').dirty ||
+                        payForm.get('gasRequestId').touched ||
+                          isSubmitted)
+                      ">
+                        {{ validation.message }}</span>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4 col-md-4 col-sm-6">
+                    <label class="d-block" for="payTypes"> <span class="text-danger font-weight-bold">*</span>نوع
+                      پرداخت:</label>
+
+                    <nb-select (selectedChange)="onChangePayType($event)" multiple formControlName="payTypes"
+                      id="payTypes" placeholder="انتخاب کنید..">
+                      <nb-option [value]="item.id" *ngFor="let item of payStateTypes">
+                        {{item.title}}
+                      </nb-option>
+                    </nb-select>
+
+                    <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.payTypes
+                        ">
+                      <span class="text-danger" *ngIf="
+                      payForm.get('payTypes').value ===
+                              '' && isSubmitted
+                          ">{{ validation.message }}</span>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-3 col-md-3 col-sm-6">
+                    <label for="discountPercent"> <span class="text-danger font-weight-bold">*</span>درصد تخفیف:</label>
+                    <input type="number" step='0.01' class="d-block" formControlName="discountPercent" fullWidth
+                      id="discountPercent" nbInput min="0.01" max="100">
+                    <div *ngFor="
+                            let validation of INPUT_VALIDATION_MESSAGES.discountPercent
+                          ">
+                      <span class="text-danger" *ngIf="
+                      payForm
+                                .get('discountPercent')
+                                .hasError(validation.type) &&
+                                (isSubmitted || payForm.get('discountPercent').dirty ||
+                                payForm.get('discountPercent').touched)
+                            ">{{ validation.message }}</span>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4 col-md-4 col-sm-6 mt-2">
+                    <label class="d-block" for="requestUnits">واحدها:</label>
+
+                    <nb-select [disabled]="untiDisable" multiple formControlName="requestUnits" id="requestUnits"
+                      placeholder="انتخاب واحد (ها)">
+                      <nb-option [value]="item.id" *ngFor="let item of units">
+                        {{item.fileNumber}}
+                      </nb-option>
+                    </nb-select>
+
+                    <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.requestUnits
+                        ">
+                      <span class="text-danger" *ngIf="
+                      payForm.get('requestUnits').hasError(validation.type) && isSubmitted">{{ validation.message
+                        }}</span>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4 col-md-4 col-sm-6 mt-2">
+                    <label class="d-block" for="requestConsults">مشاوره ها:</label>
+
+                    <nb-select [disabled]="consultDisable" multiple formControlName="requestConsults"
+                      id="requestConsults" placeholder="انتخاب کنید..">
+                      <nb-option [value]="item.id" *ngFor="let item of consults">
+                        {{item.fileNumber}}
+                      </nb-option>
+                    </nb-select>
+
+                    <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.requestConsults
+                        ">
+                      <span class="text-danger"
+                        *ngIf="payForm.get('requestConsults').hasError(validation.type) && isSubmitted">{{
+                        validation.message }}</span>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 col-md-12 col-sm-12 mt-5 mb-5">
+                    <label for="file">مستندات :</label>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                      <div *ngFor="let a of inputCount; let i = index">
+                        <strong class="mb-2" style="color: rgb(0, 68, 255); display:block; font-size: 11px;"> حداکثر حجم
+                          {{sizeTitles[i]}} - فرمت ها ({{a.extentions}}) </strong>
+                          <app-uploader
+                          [formControlName]="a.formControlName"
+      
+                          [filePath]="imagePathEdit"
+                          [fileExtentions]="a.extentions"
+                          [fileSize]="a.size"
+                        >
+                        </app-uploader>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="input-group">
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <label for="reason">توضیحات و نظرات</label>
+                    <textarea formControlName="reason" fullWidth nbInput rows="5" shape="round"></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <nb-card class="inline-form-card">
+                <nb-card-body>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <ng-container *ngIf="!isEdit; then btnRegister; else btnEdit">
+                      </ng-container>
+                      <ng-template #btnRegister>
+                        <button class="btn btn-success btn-block" nbButton status="success" style="width: 100%;"
+                          type="submit" [disabled]="
+                        loading" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large">
+                          ثبت
+                        </button>
+                      </ng-template>
+                      <ng-template #btnEdit>
+                        <button type="submit" nbButton status="success" class="btn btn-success btn-block"
+                          [disabled]="!payForm.valid || loading" [nbSpinner]="loading" nbSpinnerStatus="info"
+                          nbSpinnerSize="large">
+                          ویرایش
+                        </button>
+                      </ng-template>
+                    </div>
+                    <div class="col-md-6">
+                      <button type="button" nbButton status="warning" class="btn btn-block"
+                        routerLink="/pages/admin/PayDiscountList" [disabled]="loading">
+                        بازگشت به لیست تخفیف ها
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="row" style="height: 15px;"></div>
+
+                </nb-card-body>
+              </nb-card>
+
+            </nb-card-body>
+          </nb-card>
+
+        </nb-card-body>
+      </nb-card>
+    </form>
+  </div>
+</div>
+
+
+<!-- {{form.value | json}}}
+
+{{form.status | json}} -->
