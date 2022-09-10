@@ -17,11 +17,11 @@
           <span target="_blank" (click)="download()"
             *ngIf="filePath != null && filePath.toString().indexOf('.pdf') !== -1">
       
-            <pdf-viewer [src]="filePath"
+            <!-- <pdf-viewer [src]="filePath"
             [render-text]="true"
             [original-size]="false"
             style="width: 400px; height: 500px"
-            ></pdf-viewer>
+            ></pdf-viewer> -->
           </span>
         </div>
       </nb-card-body>

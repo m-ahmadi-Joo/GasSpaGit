@@ -3,8 +3,8 @@ import {  NbDialogService} from '@nebular/theme';
 
 @Component({
   selector: 'ngx-pay-discount-list-custom-actions',
-  templateUrl: './pay-discount-list-custom-actions.component.html',
-  styleUrls: ['./pay-discount-list-custom-actions.component.scss']
+  templateUrl: './payDiscountListCustomActions.component.html',
+  styleUrls: ['./payDiscountListCustomActions.component.scss']
 })
 export class PayDiscountListCustomActionsComponent implements OnInit {
 
