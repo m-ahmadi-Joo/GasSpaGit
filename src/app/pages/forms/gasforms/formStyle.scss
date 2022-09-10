@@ -244,3 +244,14 @@ span.outer-circle.inner-circle.text{
   cursor: pointer !important;
  }
 //#13a093!important
+/*datetimepickerstyle*/
+dp-date-picker /deep/button.dp-calendar-nav-left::before {
+  transform: rotate(52deg)!important;
+}
+dp-date-picker /deep/button.dp-calendar-nav-right::before {
+  transform: rotate(224deg)!important;
+}
+dp-date-picker /deep/ .dp-nav-btns-container
+{
+  direction: rtl!important;
+}
