@@ -1,3 +1,9 @@
+<style>
+  
+  .ng-star-inserted{
+    width: 100%!important;
+  }
+</style>
 <nb-card>
   <nb-card-body>
     <nb-card>
@@ -16,12 +22,7 @@
 
           <span target="_blank" (click)="download()"
             *ngIf="filePath != null && filePath.toString().indexOf('.pdf') !== -1">
-      
-            <!-- <pdf-viewer [src]="filePath"
-            [render-text]="true"
-            [original-size]="false"
-            style="width: 400px; height: 500px"
-            ></pdf-viewer> -->
+          <ng2-pdfjs-viewer [pdfSrc]="filePath"  style="width: 400px; height: 500px"></ng2-pdfjs-viewer> 
           </span>
         </div>
       </nb-card-body>

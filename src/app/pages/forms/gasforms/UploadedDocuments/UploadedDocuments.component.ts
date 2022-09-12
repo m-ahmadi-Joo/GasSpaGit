@@ -18,7 +18,7 @@ export class UploadedDocumentsComponent implements OnInit {
   @Input() uploaderType: string;
   isSubmitted: boolean = false;
   contractId: number;
-  imagePath = [];
+  imagePath = []; 
   path;
   base;
   notImage = [];

@@ -1,3 +1,10 @@
+<style>
+  
+  a.ng-star-inserted{
+    width: 100%!important;
+    text-align: center!important;
+  }
+</style>
 <nb-card>
   <nb-card-body>
     <nb-card>
@@ -41,7 +48,7 @@
               left: 20px;
             " [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="file-outline">
             </nb-icon> -->
-            <ng2-pdfjs-viewer [pdfSrc]="singleImagePath"  style="width: 400px; height: 500px"></ng2-pdfjs-viewer>
+            <ng2-pdfjs-viewer [pdfSrc]="singleImagePath"  style="width: 200%!important; height: 200%!important"></ng2-pdfjs-viewer>
           </a>
         </div>
       </nb-card-body>
