@@ -9,7 +9,7 @@ import { LeafletModule } from "@asymmetrik/ngx-leaflet";
 // import { NgxUploaderModule } from "ngx-uploader";
 import { Ng2SmartTableModule } from "ng2-smart-table";
 import { NgbTimepickerModule } from "@ng-bootstrap/ng-bootstrap";
-// import { PdfViewerModule } from "ng2-pdf-viewer";
+import{PdfJsViewerModule} from "ng2-pdfjs-viewer"
 import {
   GasReqListCustomActionsComponent,
   ContractListCustomActionsComponent,
@@ -110,7 +110,7 @@ import { DesignerResolver } from "src/app/@core/utils/DesignerResolver";
     DirectivesModule,
     AngularDualListBoxModule,
     PinchZoomModule,
-    // PdfViewerModule
+    PdfJsViewerModule
     // SharedModule,
   ],
   declarations: [

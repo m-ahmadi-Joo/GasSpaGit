@@ -28,7 +28,7 @@ import { PersianDate } from 'src/app/@core/utils/persianDate';
 @Component({
   selector: 'ngx-news',
   templateUrl: './news.component.html',
-  styleUrls: ['./news.component.scss', '../../../../../../../node_modules/angular-4-multiselect-dropdown-scroll/themes/default.theme.scss'],
+  styleUrls: ['./news.component.scss', '../../../../../../../node_modules/angular-4-multiselect-dropdown-scroll/themes/default.theme.css'],
   // providers: [ToolbarService, LinkService, ImageService, HtmlEditorService, TableService]
 })
 export class NewsComponent implements OnInit, AfterViewInit {
