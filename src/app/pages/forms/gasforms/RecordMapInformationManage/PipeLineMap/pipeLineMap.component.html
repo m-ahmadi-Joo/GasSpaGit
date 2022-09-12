@@ -21,10 +21,7 @@
             <button class="btn btn-link" (click)="download(path)"> دانلود</button>
           </a>
         </div>
-        <!-- </div> -->
-        <!-- <a [href]="path" [download]="imageName">
-        دانلود
-    </a> -->
+       
         <div class="d-flex justify-content-center">
           <a target="_blank" (click)="download(singleImagePath)"
             *ngIf="singleImagePath != null && singleImagePath.toString().indexOf('.pdf') === -1">
@@ -36,14 +33,15 @@
 
           <a target="_blank" (click)="download(singleImagePath)"
             *ngIf="singleImagePath != null && singleImagePath.toString().indexOf('.pdf') !== -1">
-            <nb-icon *ngIf="singleImagePath.toString().indexOf('.pdf') !== -1" style="
+            <!-- <nb-icon *ngIf="singleImagePath.toString().indexOf('.pdf') !== -1" style="
               font-size: 60px;
 
               position: relative;
               top: -4px;
               left: 20px;
             " [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="file-outline">
-            </nb-icon>
+            </nb-icon> -->
+            <ng2-pdfjs-viewer [pdfSrc]="singleImagePath"  style="width: 400px; height: 500px"></ng2-pdfjs-viewer>
           </a>
         </div>
       </nb-card-body>
