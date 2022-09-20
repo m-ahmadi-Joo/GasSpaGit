@@ -92,6 +92,7 @@ import { EngineerEditMapListResolver } from "src/app/@core/utils/EngineerEditMap
 import{gridCheckboxForEditMapComponent} from "./gasforms/Engineer/gridCheckboxForEditMap/gridCheckboxForEditMap.component";
 import { CookieService } from 'ngx-cookie-service';
 import { DesignerResolver } from "src/app/@core/utils/DesignerResolver";
+import { ExcuterLimitedDetailComponent } from './gasforms/ExecuterManage/excuterLimitedDetail/excuterLimitedDetail.component';
 
 @NgModule({
   imports: [
@@ -115,6 +116,7 @@ import { DesignerResolver } from "src/app/@core/utils/DesignerResolver";
   ],
   declarations: [
     ...routedComponents,
+    ExcuterLimitedDetailComponent,
     // MapDialogComponent,
     // HasRoleDirective,
     // CustomTypeaheadDirective

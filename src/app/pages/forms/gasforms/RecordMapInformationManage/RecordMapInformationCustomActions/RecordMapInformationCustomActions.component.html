@@ -649,6 +649,33 @@
         فعال سازی
       </button>
     </nb-option>
+    <nb-option *ngIf="!rData?.endOrBlockRequestId && 
+    !rData?.suspendRequestId">
+      <button fullWidth nbButton status="basic" *appHasRole="['Admin', 'GasEmployee', 'GasEmployeeExceptShiraz']"
+        (click)="
+          onSuspendRequest(
+            rData?.id,
+            'SuspendRequest',
+            rData?.contractId
+          )
+        ">
+        تعلیق
+            </button>
+    </nb-option>
+
+    <nb-option *ngIf="!rData?.endOrBlockRequestId && 
+    rData?.suspendRequestId">
+      <button fullWidth nbButton status="basic" *appHasRole="['Admin', 'GasEmployee', 'GasEmployeeExceptShiraz']"
+        (click)="
+        onCancelSuspendedRequest(
+            rData?.id,
+            'UnSuspendRequest',
+            rData?.contractId
+          )
+        ">
+        عدم تعلیق
+            </button>
+    </nb-option>
   </nb-select>
 </div>
 

@@ -7,27 +7,40 @@ import {
   NbDialogRef,
   NbGlobalLogicalPosition,
 } from "@nebular/theme";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { LocalDataSource } from "ng2-smart-table";
 import { ServerSourceConf } from "ng2-smart-table/lib/data-source/server/server-source.conf";
 import { Pagination, pageSize } from "src/app/@core/models/pagination";
 import { IDatePickerConfig } from "ng2-jalali-date-picker";
 import { ExecuterCustomActionsComponent } from "../executerCustomActions/ExecuterCustomActions.component";
 import { HttpErrorResponse } from "@angular/common/http";
+import { requiredFileSize, requiredFileType } from "src/app/@core/utils/upload-file-validators";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "ngx-executersList",
   templateUrl: "./executersList.component.html",
-  styleUrls: ["../../formStyle.scss"],
+  styleUrls: ["../../formStyle.scss", "./executersList.component.scss"],
 })
 export class ExecutersListComponent {
   source: LocalDataSource;
   config: ServerSourceConf;
   collection = [];
+  excuterLimitedForm: FormGroup;
 
   form: FormGroup;
   datePickerConfig: IDatePickerConfig;
   reg: any;
+  inputCount;
+  fileName;
+  sizeTitle: string;
+  sizeTitles = [];
+  isEdit;
+  filePathEdit: string[];
+  imagePathEdit = [];
+  imageName = [];
+  sendForm: FormGroup;
+  limitedLoading: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -35,7 +48,7 @@ export class ExecutersListComponent {
     private fb: FormBuilder,
     private dialogService: NbDialogService,
     private toastrService: NbToastrService
-  ) {}
+  ) { }
   isOpenFromStartDayPicker = false;
   isOpenFromEndDayPicker = false;
   engineersList;
@@ -44,6 +57,10 @@ export class ExecutersListComponent {
   pageSizes: pageSize[] = [];
   @ViewChild("dialog", { static: false }) dialog: TemplateRef<any>;
   dialogRef: NbDialogRef<any>;
+
+
+  @ViewChild("dialogLimited", { static: false }) dialogLimited: TemplateRef<any>;
+  dialogRefLimited: NbDialogRef<any>;
 
   engineerVacationResultDto: {
     Result;
@@ -63,6 +80,13 @@ export class ExecutersListComponent {
     hideSubHeader: true,
     noDataMessage: ".داده یافت نشد",
     actions: false,
+    rowClassFunction: (row) => {
+      if (row.data.isLimited) {
+        return 'aborted'
+      } else {
+        return ''
+      }
+    },
     pager: {
       display: false,
       // perPage: 10
@@ -80,7 +104,11 @@ export class ExecutersListComponent {
           instance.deleteConfirm.subscribe((row) => {
             this.deleteRecord(row);
           });
+          instance.limitedConfirm.subscribe((row) => {
+            this.limitRecord(row);
+          });
         },
+
       },
       status: {
         title: "وضعیت مجری",
@@ -90,7 +118,7 @@ export class ExecutersListComponent {
         title: "وضعیت اعتبار پروانه",
         filter: true,
         valuePrepareFunction(value, row, cell) {
-          if(row.totalDays >= 0 ) {
+          if (row.totalDays >= 0) {
             return `معتبر (تا ${row.totalDays} روز دیگر)`
           } else {
             return `منقضی (${row.totalDays * -1} روز پیش)`
@@ -216,6 +244,55 @@ export class ExecutersListComponent {
     this.pageSizes.push({ id: 20, display: "20" });
     this.pageSizes.push({ id: 50, display: "50" });
     this.pageSizes.push({ id: 100, display: "100" });
+
+    this.excuterLimitedForm = this.fb.group({
+      excuterId: [""],
+      comment: ["", Validators.required],
+    });
+
+    this.fileName = "ExcuterLimit";
+
+    this.api
+      .getFrombyidUploader("Documents", "InputCount", this.fileName)
+      .subscribe((res: any) => {
+        if (res.body) {
+          this.inputCount = res.body;
+          this.inputCount.forEach(element => {
+            console.log(element.extentions);
+            let size: number = element.size / 1000;
+
+            if (size > 1024) {
+              this.sizeTitle = (size / 1024).toFixed(2);
+
+              this.sizeTitles.push(this.sizeTitle + "مگابایت");
+            } else {
+              this.sizeTitle = size.toFixed(2);
+              this.sizeTitles.push(this.sizeTitle + "کیلوبایت");
+            }
+            console.log(element.formControlName);
+            if (element.required == true && this.isEdit == false) {
+              this.excuterLimitedForm.addControl(
+                element.formControlName,
+
+                new FormControl("", [
+                  Validators.required,
+                  requiredFileType(element.extentions),
+                  requiredFileSize(element.size)
+                ])
+              );
+            } else {
+              this.excuterLimitedForm.addControl(
+                element.formControlName,
+
+                new FormControl("", [
+                  requiredFileType(element.extentions),
+                  requiredFileSize(element.size)
+                ])
+              );
+            }
+          });
+        }
+      });
   }
 
   loadList() {
@@ -352,6 +429,7 @@ export class ExecutersListComponent {
       }
     );
   }
+
   resetFilters() {
     localStorage.removeItem("ExecutorListFilterParams");
     localStorage.removeItem("ExecutorListPagination");
@@ -377,4 +455,143 @@ export class ExecutersListComponent {
 
     this.loadList();
   }
+
+  limitRecord(row) {
+    this.imagePathEdit = [];
+    if (!row.isLimited) {
+      this.excuterLimitedForm.controls.excuterId.setValue("");
+      this.excuterLimitedForm.controls.comment.setValue("");
+      
+    } else {
+
+      this.excuterLimitedForm.controls.excuterId.setValue(row.id);
+      this.excuterLimitedForm.controls.comment.setValue(row.limitedComment);
+
+      this.api
+      .getById("Executers/GetFileLimitedExecuter", row.id)
+      .subscribe(res => {
+        if (res) {
+          let base = environment.SERVER_URL.split("/api")[0];
+          // this.imagePathEdit = res.body;
+          if (res.body) {
+            for (let index = 0; index < res.body.length; index++) {
+              this.imagePathEdit.push( base +res.body[index]);
+  
+            }
+          }
+        }
+      });
+    }
+    this.dialogRefLimited = this.dialogService.open(this.dialogLimited, {
+      context: row,
+      autoFocus: true,
+      hasBackdrop: true,
+      closeOnBackdropClick: false,
+      closeOnEsc: true,
+    });
+  }
+
+  confirmLimited(row) {
+    this.limitedLoading = true;
+    if (this.excuterLimitedForm.valid) {
+
+      this.sendForm = this.fb.group({
+        ExcuterId: row.id,
+        Comment: this.excuterLimitedForm.controls.comment.value,
+        IsLimited: !row.isLimited
+      });
+
+      Object.keys(this.excuterLimitedForm.controls).forEach((key) => {
+        for (
+          let index = 0;
+          index < this.excuterLimitedForm.controls[key].value.length;
+          index++
+        ) {
+          if (key == this.inputCount[0].formControlName) {
+            console.log("ok");
+            for (
+              let index = 0;
+              index < this.excuterLimitedForm.controls[key].value.length;
+              index++
+            ) {
+              console.log("ppp");
+              this.sendForm.addControl(
+                key + "_" + index,
+                new FormControl(
+                  this.excuterLimitedForm.controls[key].value[index]
+                )
+              );
+            }
+          } else {
+            this.sendForm.addControl(
+              key,
+              new FormControl(
+                this.excuterLimitedForm.controls[key].value[index]
+              )
+            );
+          }
+        }
+        console.log(this.sendForm.value);
+      });
+      this.api
+        .postTo(
+          "Executers",
+          "LimitExecuterEdit", this.toFormData(this.sendForm.value)
+        )
+        .subscribe(
+          (res: any) => {
+            if (res.ok) {
+              const message = "ثبت با موفقیت انجام شد.";
+              this.toastrService.success(message, " ", {
+                position: NbGlobalLogicalPosition.TOP_START,
+                duration: 5000,
+              });
+              // location.reload();
+              this.loadList();
+              this.dialogRefLimited.close();
+              this.limitedLoading = false;
+              this.sendForm.reset();
+              this.imagePathEdit = [];
+            }
+          },
+          (err: HttpErrorResponse) => {
+
+            if (err.error instanceof Error) {
+              console.log("Client-side error occured.");
+            } else {
+              console.log("Server-side error occured.");
+            }
+            this.dialogRefLimited.close();
+            this.limitedLoading = false;
+            this.sendForm.reset();
+            this.loadList();
+          }
+        );
+    } else {
+      const message = "اطلاعات فرم بدرستی وارد نشده";
+      return this.toastrService.success(message, " ", {
+        position: NbGlobalLogicalPosition.TOP_START,
+        duration: 5000,
+      });
+    }
+
+
+
+  }
+  toFormData<T>(formValue: T) {
+    const formData = new FormData();
+
+    for (const key of Object.keys(formValue)) {
+      const value = formValue[key];
+      formData.append(key, value);
+    }
+
+    return formData;
+  }
+  INPUT_VALIDATION_Limited =
+    {
+      comment: [
+        { type: 'required', comment: 'شرح الزامی است.' }
+      ]
+    }
 }

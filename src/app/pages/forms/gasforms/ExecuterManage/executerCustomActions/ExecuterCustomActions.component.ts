@@ -25,14 +25,17 @@ export class ExecuterCustomActionsComponent implements ViewCell, OnInit {
   @Input() value: string | number;
   @Input() rowData: any;
   @Output() deleteConfirm: EventEmitter<any> = new EventEmitter();
+  @Output() limitedConfirm: EventEmitter<any> = new EventEmitter();
 
+  @ViewChild("ExcuterLimitedHistory", { static: false })
+  ExcuterLimitedHistoryRef: TemplateRef<any>;
   constructor(
     private router: Router,
     private windowService: NbWindowService,
     private unitStateService: UnitStateService,
     private api: ApiCommandCenter,
     private reportService: ReportService
-  ) {}
+  ) { }
 
   // @ViewChild('contentTemplate', { static: false }) contentTemplate: TemplateRef<any>;
 
@@ -120,5 +123,16 @@ export class ExecuterCustomActionsComponent implements ViewCell, OnInit {
     this.unitStateService.set(type, true);
     // localStorage.setItem('changeExecutorState','ChangeExecutor');
     this.router.navigate(["/pages/forms/Contract/" + contractId]);
+  }
+  onLimitedExecuter(event) {
+    console.log(event);
+    this.limitedConfirm.emit(event);
+  }
+  onHistory(id) {
+    this.windowService.open(this.ExcuterLimitedHistoryRef, {
+      hasBackdrop: true,
+      windowClass: "nb-window-control"
+    });
+    //this.router.navigate(['/pages/forms/Contract/'+this.contractId+'/RecordMapInformationHistory/'+ id ]);
   }
 }

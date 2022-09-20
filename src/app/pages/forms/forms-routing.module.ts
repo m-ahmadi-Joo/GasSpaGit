@@ -8,7 +8,7 @@ import {
   // AgentInfoFormComponent,
   AuditInfoFormComponent,
   BluePrintInfoFormComponent,
-  AlamakDeletionFormComponent, 
+  AlamakDeletionFormComponent,
   ExecuterContractFormComponent,
   CreateMailForMunicipalityFormComponent,
   DesignerFormComponent,
@@ -150,13 +150,14 @@ import {
   HistoryEngineerAreaRatingCustomActionsComponent,
 
 
-  
+
   EngineerAreasStatusComponent,
   ControlFinalComponent,
   CompleteControlFinalComponent,
   EditMapListComponent,
   AdminAddDocumentComponent,
-  
+  ExcuterLimitedDetailComponent
+
 } from "./gasforms";
 import { GasRequestListResolver } from "src/app/@core/utils/gasRequestList-resolver";
 import { RecordMapInformationListResolver } from "src/app/@core/utils/recordMapInformationList-resolver";
@@ -222,7 +223,7 @@ import { DesignerResolver } from "src/app/@core/utils/DesignerResolver";
 import { ExecutorOldGasRequestEditComponent } from "./gasforms/GasRequestManage/ExecutorOldGasRequestManage/ExecutorOldGasRequestEdit.component";
 import { DocumentryFormForExecutorComponent } from "./gasforms/DocumentryFormForExecutor/DocumentryFormForExecutor.component";
 import { SubmitAuditResultForOldGasRequestsFormComponent } from "./gasforms/SubmitAuditResultsForOldGasRequests/submitARForOldGasRequests.component";
-import{ShowGasRequestDocumentsDetailComponent}from "./gasforms/GasRequestManage/showGasRequestDocumentsDetail/showGasRequestDocumentsDetail.component"
+import { ShowGasRequestDocumentsDetailComponent } from "./gasforms/GasRequestManage/showGasRequestDocumentsDetail/showGasRequestDocumentsDetail.component"
 const routes: Routes = [
   {
     // /pages/forms/*
@@ -244,7 +245,7 @@ const routes: Routes = [
         path: "GasRequest/:id/ArchitectureAlbumApprove",
         component: ArchitectureAlbumApproveFormComponent,
       },
-       {
+      {
         path: "Engineer/EngineerSignature/:id",
         component: EngineerSignatureComponent,
       },
@@ -292,7 +293,7 @@ const routes: Routes = [
       {
         path: "df/ReUpload/:id",
         component: DocumentryFormComponent,
-         resolve: {
+        resolve: {
           data: DocumentsResolver,
           editData: DocumentryFormEditResolver
         },
@@ -368,7 +369,7 @@ const routes: Routes = [
         resolve: {
           data: GasRequestLisForContractResolver,
           contract: ContractResolver,
-          designer:DesignerResolver,
+          designer: DesignerResolver,
         },
       },
       {
@@ -376,7 +377,7 @@ const routes: Routes = [
         component: ContractComponent,
         resolve: {
           data: GasRequestLisForContractResolver,
-          designer:DesignerResolver,
+          designer: DesignerResolver,
           contract: ContractResolver,
           edit: EditContractResolver
         },
@@ -487,7 +488,7 @@ const routes: Routes = [
       },
       {
         path: "ConsultList",
-        component: ConsultListComponent, 
+        component: ConsultListComponent,
         resolve: {
           data: ConsultListResolver,
           info: GetTableWorksFilterResolver,
@@ -642,7 +643,7 @@ const routes: Routes = [
       {
         path: "GasRequest/:id/RequestSafetyInspectionForPeriodicVisits",
         component: RequestSafetyInspectionForPeriodicVisitsComponent,
-      }, 
+      },
       {
         path: "GasRequest/:id/ResultSafetyInspectionForPeriodicVisits",
         component: ResultSafetyInspectionForPeriodicVisitsComponent,
@@ -771,7 +772,7 @@ const routes: Routes = [
         resolve: { data: ExecutersListResolver, info: GetAllTownsResolver },
       },
       {
-        path: "AnalyzeList", 
+        path: "AnalyzeList",
         component: AnalyzeListComponent,
         resolve: { data: AnalyzeListResolver, areas: GetAllAreasResolver },
       },
@@ -1062,11 +1063,11 @@ const routes: Routes = [
         component: PreUploadedDocumentsComponent,
       },
       {
-  path: "ExecutorOldGasRequestEdit/:id/contractId/:contractId",
+        path: "ExecutorOldGasRequestEdit/:id/contractId/:contractId",
         component: ExecutorOldGasRequestEditComponent,
         //resolve: { data: GasRequestResolver },
       },
-	{
+      {
 
         path: "dfexecutor/:id/contractId/:contractId",
         component: DocumentryFormForExecutorComponent,
@@ -1075,7 +1076,7 @@ const routes: Routes = [
           editData: DocumentryFormEditResolver
         }
       },
-	{
+      {
         path: "AdminAddDocument/:id",
         component: AdminAddDocumentComponent,
         resolve: {
@@ -1090,7 +1091,11 @@ const routes: Routes = [
       {
         path: "ShowGasRequestDocumentsDetail/:filePath",
         component: ShowGasRequestDocumentsDetailComponent,
-      }
+      },
+      {
+        path: "ExcuterLimitedHistory/:id",
+        component: ExcuterLimitedDetailComponent,
+      },
 
     ],
   },
@@ -1267,12 +1272,12 @@ export const routedComponents = [
   gridCheckboxForEditMapComponent,
   PreUploadedDocumentsComponent,
   EditUnitInfoForGasEmployeeComponent,
-ExecutorOldGasRequestEditComponent,
-DocumentryFormForExecutorComponent,
+  ExecutorOldGasRequestEditComponent,
+  DocumentryFormForExecutorComponent,
   AdminAddDocumentComponent,
   SubmitAuditResultForOldGasRequestsFormComponent,
-  ShowGasRequestDocumentsDetailComponent
+  ShowGasRequestDocumentsDetailComponent,
+  ExcuterLimitedDetailComponent
 
-  
 ];
 
