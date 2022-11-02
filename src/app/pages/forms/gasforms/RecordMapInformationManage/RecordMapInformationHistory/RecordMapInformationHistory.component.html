@@ -164,13 +164,21 @@
                         <td width="15%">
                           {{ step?.unitStateTime }}
                         </td>
-                        <td width="21%">
+                        <td width="21%" *ngIf="step?.suspendRegistrarInfo == null">
                           {{ step?.registrarInfo }}
                           <span *ngIf="step?.registrarInfo == null">
                             ثبت سیستم
                           </span>
                         </td>
+<<<<<<< HEAD
                         <td *ngIf="step?.suspendRegistrarInfo != null" width="21%">
+=======
+<<<<<<< HEAD
+                        <td *ngIf="step?.suspendRegistrarInfo != null" width="21%">
+=======
+                        <td width="21%">
+>>>>>>> 69f69b506d8086eb8cfad661c01bd65bc1f7bfdf
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
                           {{ step?.suspendRegistrarInfo }}
                           <span *ngIf="step?.suspendRegistrarInfo == null">
                             ثبت سیستم

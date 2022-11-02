@@ -1132,6 +1132,12 @@ export class SubmitAuditResultFormComponent implements OnInit {
                 position: NbGlobalLogicalPosition.TOP_START,
                 duration: 5000
               });
+<<<<<<< HEAD
+=======
+              this.sarForm.controls.isCollectorInspectionWelding.setValidators([]);
+              this.sarForm.controls.isCollectorInspectionWelding.setValue("false");
+              this.sarForm.controls.isCollectorInspectionWelding.updateValueAndValidity();
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
             }
           
           }

@@ -77,7 +77,8 @@ import { GetNewsInfoResolver } from 'src/app/@core/utils/getNewsInfo-resolver';
 import { NewsListCustomActionsComponent } from './forms/newsManagement/newsListCustomActions/newsListCustomActions.component';
 import { AngularMultiSelectModule } from 'angular-4-multiselect-dropdown-scroll';
 import { NewsDetailFormComponent } from './forms/newsManagement/newsDetailForm/newsDetailForm.component';
-
+import { GetMoreFiveUnitsListResolver } from "src/app/@core/utils/getMoreFiveUnitsList-resolver";
+import { GetMoreFiveUnitsSearchInfoResolver } from 'src/app/@core/utils/getMoreFiveUnitsSearchInfo-resolver';
 @NgModule({
   imports: [
     ThemeModule,
@@ -178,7 +179,8 @@ import { NewsDetailFormComponent } from './forms/newsManagement/newsDetailForm/n
     SendSmsListResolver,
     NewsListResolver,
     GetNewsInfoResolver,
-    
+    GetMoreFiveUnitsSearchInfoResolver,
+    GetMoreFiveUnitsListResolver
     // PersianDate
   ],
   // exports: [  EngineerPaymentComponent, PayDetailListComponent , PayDetailListCustomActionsComponent,

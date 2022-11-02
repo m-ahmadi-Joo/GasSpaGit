@@ -253,6 +253,7 @@ export class UploaderComponent implements ControlValueAccessor {
       let reader = new FileReader();
       reader.onload = (e: any) => {
         this.urls.push(e.target.result);
+      
       };
       reader.readAsDataURL(this.file[index]);
 

@@ -203,12 +203,12 @@ export const MENU_ITEMS_Admin: NbMenuItem[] = [
       {
         title: "مدیریت آپلودر عکس",
         link: "/pages/admin/FileUploaderList",
-        icon: "upload-outline",
+        icon: "cloud-upload-outline",
       },
       {
         title:"مدیریت تنظیمات سیستم",
         link: "/pages/admin/SystemSettingList",
-        icon: "upload-outline",
+        icon: "settings-2-outline",
       },
 
       {
@@ -230,68 +230,19 @@ export const MENU_ITEMS_Admin: NbMenuItem[] = [
       {
         title:"مدیریت مناطق مهندسین",
         link: "/pages/admin/ManageEngineerAreas",
-        icon: "upload-outline",
+        icon: "navigation-outline",
       },
-      // {
-      //   title: "مدیریت اطلاعات روستاها",
-      //   link: "/pages/admin/villages"
-      // },
-      // {
-      //   title: "مدیریت نواحی گاز رسانی",
-      //   link: "/pages/admin/area",
-      //   icon: "pin-outline"
-      // },
-      // {
-      //   title: "مدیریت عملیات سیستم",
-      //   link: "/pages/admin/ScheduleUpdate",
-      //   icon: "briefcase-outline",
-      // },
-      // {
-      //   title: "مدیریت تعرفه های بازرسی",
-      //   link: "/pages/admin/InspectionTariffsList",
-      //   icon: "briefcase-outline",
-      // },
-
-
-
-      // {
-      //   title: "مدیریت شهرستان",
-      //   link: "/pages/admin/CityList",
-      //   icon: "pin-outline",
-      // },
-      // {
-      //   title: "مدیریت شهر",
-      //   link: "/pages/admin/TownList",
-      //   icon: "pin-outline",
-      // },
-
-
-
+      {
+        title:"گزارشات",
+        icon: "pie-chart-outline",
+        children: [
+          {
+            title:"املاک بیش از پنج واحد",
+            link: "/pages/admin/GasMoreThanFiveUnitsList",
+            icon: "list-outline",
+          }
+        ],
+      },
     ],
   },
-  // {
-  //   title: "عملیات",
-  //   children: [
-  //     {
-  //       title: "نقشه",
-  //       link: "#"
-  //     },
-  //     {
-  //       title: "کالاها و قطعات",
-  //       link: "#"
-  //     },
-  //     {
-  //       title: "آنالیز مهندسی",
-  //       link: "#"
-  //     },
-  //     {
-  //       title: "هزینه های پرداختی",
-  //       link: "#"
-  //     },
-  //     {
-  //       title: "مستندات",
-  //       link: "#"
-  //     }
-  //   ]
-  // }
 ];

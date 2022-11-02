@@ -12,7 +12,11 @@
   <nb-icon
     [options]="{ animation: { type: 'zoom' } }"
     class="icon-button"
+<<<<<<< HEAD
     icon="printer-outline" 
+=======
+    icon="printer-outline"
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
   >
   </nb-icon>
 </button> -->
@@ -26,8 +30,13 @@
   <!-- <button nbButton (click)="open(dialog)">Open Dialog</button> -->
 
   <button [disabled]="rData?.hasAproveArchitectualAlbum === true" nbTooltip="ویرایش" nbTooltipPlacement="top"
+<<<<<<< HEAD
     size="tiny" class="mb-2 mr-1" nbButton *appHasRole="['Admin', 'GasEmployeeHP', 'Owner']" status="warning"
     (click)="onEditGasRequest(rData?.id, '')">
+=======
+    size="tiny" class="mb-2 mr-1" nbButton *appHasRole="['Admin', 'GasEmployeeHP', 'GasEmployee','Owner']"
+    status="warning" (click)="onEditGasRequest(rData?.id, '')">
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
     <nb-icon [options]="{ animation: { type: 'zoom' } }" class="icon-button" icon="edit-2-outline">
     </nb-icon>
   </button>
@@ -169,9 +178,15 @@
         آپلود مستندات
       </button>
     </nb-option>
+<<<<<<< HEAD
     <nb-option *ngIf="rData?.nextStateType?.includes('EditDocuments')">
       <button fullWidth nbButton status="primary" *appHasRole="['Admin', 'Owner', 'HPManager']"
         (click)="onEditDocument(rData?.id, rData?.hpDocumentType)">
+=======
+     <nb-option *ngIf="rData?.nextStateType?.includes('EditDocuments')">
+      <button fullWidth nbButton status="primary" *appHasRole="['Admin', 'Owner', 'HPManager']"
+        (click)="onEditDocument(rData?.id, 'EditUploadHPDocuments')">
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
         ویرایش مستندات
       </button>
     </nb-option>
@@ -179,12 +194,20 @@
     <nb-option *ngIf="rData?.nextStateType?.includes('ReUploadArchitectualAlbum')">
       <button fullWidth nbButton status="primary" *appHasRole="['Admin', 'Owner', 'HPManager']"
         (click)="onEditDocument(rData?.id, 'ReUploadArchitectualAlbum')">
+<<<<<<< HEAD
         آپلود مجدد نقشه معماری
+=======
+        آپلود مجدد نقشه معماری 
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
       </button>
     </nb-option>
 
 
+<<<<<<< HEAD
     <nb-option *ngIf="rData?.nextStateType?.includes('ControlProjectInfo')">
+=======
+      <nb-option *ngIf="rData?.nextStateType?.includes('ControlProjectInfo')">
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
       <button *appHasRole="[
           'Admin',
           'GasRuleEmployeeHP',
@@ -195,6 +218,7 @@
         بررسی پرونده
       </button>
     </nb-option>
+<<<<<<< HEAD
     
     <!-- ------------------------------------------------------- -->
     <!-- comment by br -->
@@ -210,6 +234,8 @@
         کنترل مدارک توسط مسئول گاز فشار قوی
       </button>
     </nb-option>
+=======
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
 
     <nb-option *ngIf="
         rData?.hasGasRule && rData?.nextStateType?.includes('PayForGasRules')
@@ -223,7 +249,11 @@
         پرداخت هزینه گازرسانی
       </button>
     </nb-option>
+<<<<<<< HEAD
 
+=======
+    >
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
 
     <nb-option *ngIf="
         rData?.hasGasRule &&
@@ -326,7 +356,11 @@
     rData?.nextStateType?.includes('FirstGroupAproveArchitectualAlbum')">
       <button fullWidth nbButton status="success" *appHasRole="['Admin', 'Engineer', 'GasRuleCheckerGroupOne']"
         (click)="onArchitecturalAlbum(rData?.id)">
+<<<<<<< HEAD
         بررسی آلبوم معماری
+=======
+        بررسی آلبوم معماری  
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
       </button>
     </nb-option>
 
@@ -465,7 +499,11 @@
           )
         ">
         تعلیق
+<<<<<<< HEAD
       </button>
+=======
+            </button>
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
     </nb-option>
 
     <nb-option *ngIf="!rData?.endOrBlockRequestId && 
@@ -479,7 +517,11 @@
           )
         ">
         عدم تعلیق
+<<<<<<< HEAD
       </button>
+=======
+            </button>
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
     </nb-option>
     <!-- old -->
     <!-- <nb-option
@@ -530,6 +572,7 @@
     <!-- HP -->
 
     <!-- تعیین ناظر دستی -->
+<<<<<<< HEAD
 
 
     <!-- ------------------------------------------------------- -->
@@ -545,11 +588,21 @@
         <!-- ---------------------------------------------- -->
         <!-- commented by br -->
         <!-- {{
+=======
+    <nb-option *ngIf="
+        rData?.lastStateType?.includes('Manual') &&
+        rData?.baseProjectKindTitle == 'HighGasPressure'
+      ">
+      <button *appHasRole="['Admin', 'GasEmployeeHP', 'HpManager']" fullWidth nbButton status="primary"
+        (click)="onDefineObserverHP(rData?.id, rData?.lastStateType?.substr(6))">
+        {{
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
         rData?.lastRequestStateTypeTitle
         .replace("انتظار", "")
         .replace("دستی", "")
         .replace("برای", "")
         .replace("جهت", "")
+<<<<<<< HEAD
         }} -->
         <!-- ------------------------------------- -->
         <!-- added by br -->
@@ -574,6 +627,19 @@
         (click)="onGreatObserver(rData?.id,'GreatObserver')"
       >
         تعیین ناظر عالی
+=======
+        }}
+      </button>
+    </nb-option>
+
+    <nb-option *ngIf="
+        rData?.nextStateType?.includes('ControlProjectInfoByHpManager') &&
+        rData?.baseProjectKindTitle == 'HighGasPressure'
+      ">
+      <button *appHasRole="['Admin', 'HPManager']" fullWidth nbButton status="primary"
+        (click)="onEditGasRequest(rData?.id, 'ControlProjectInfoByHpManager')">
+        کنترل مدارک توسط مسئول گاز فشار قوی
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
       </button>
     </nb-option>
 
@@ -589,6 +655,7 @@
         </button>
       </nb-option> -->
 
+<<<<<<< HEAD
 
 
     <!-- --------------------------------------------------- -->
@@ -606,10 +673,19 @@
    برای تست فشار قوی اضافه شد در نسخه اصلی باید حذف گردد
     -->
       <button *appHasRole="['Admin', 'Engineer','GasEmployeeHP']" fullWidth nbButton status="primary"
+=======
+    <nb-option *ngIf="
+        rData?.baseProjectKindTitle == 'HighGasPressure' &&
+        rData?.nextStateType?.includes('EstimationOfConsumption') &&
+        rData?.hpType === 'Residential'
+      ">
+      <button *appHasRole="['Admin', 'Engineer']" fullWidth nbButton status="primary"
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
         (click)="onEstimationOfConsumption(rData?.id, 'ResidentialEstimation')">
         (محوطه مسکونی) برآورد مصرف
       </button>
     </nb-option>
+<<<<<<< HEAD
     <!-- --------------------------------------------------- -->
     <!-- comment by br -->
     <!-- *ngIf="
@@ -626,13 +702,25 @@
     -->
     <nb-option >
       <button *appHasRole="['Admin', 'Engineer','GasEmployeeHP']" fullWidth nbButton status="primary"
+=======
+
+    <nb-option *ngIf="
+        rData?.baseProjectKindTitle == 'HighGasPressure' &&
+        rData?.nextStateType?.includes('EstimationOfConsumption') &&
+        rData?.hpType === 'Industrial'
+      ">
+      <button *appHasRole="['Admin', 'Engineer']" fullWidth nbButton status="primary"
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
         (click)="onEstimationOfConsumption(rData?.id, 'IndustrialEstimation')">
         (مجموعه صنعتی ) برآورد مصرف
       </button>
     </nb-option>
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
     <!-- <nb-option
 
     >
@@ -651,17 +739,22 @@
         (مجموعه صنعتی )آپلود برآورد مصرف
       </button>
     </nb-option> -->
+<<<<<<< HEAD
 
 
 
  <!-- --------------------------------------------------- -->
     <!-- comment by br -->
     <!-- *ngIf="
+=======
+    <nb-option *ngIf="
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
         rData?.baseProjectKindTitle == 'HighGasPressure' &&
         rData?.nextStateType?.includes(
           'ControlConsumptionEstimationSupervisorHP'
         ) &&
         rData?.hpType === 'Residential'
+<<<<<<< HEAD
       " -->
 
     <!-- شرط مرتبط با منوی پایین -->
@@ -673,6 +766,10 @@
 
     <nb-option >
       <button *appHasRole="['Admin', 'SupervisorHP','GasEmployeeHP']" fullWidth nbButton status="primary" (click)="
+=======
+      ">
+      <button *appHasRole="['Admin', 'SupervisorHP']" fullWidth nbButton status="primary" (click)="
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
           onControlConsumptionEstimationHP(
             rData?.id,
             'ControlConsumptionEstimationSupervisorHP'
@@ -682,9 +779,12 @@
       </button>
     </nb-option>
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
     <nb-option *ngIf="
         rData?.baseProjectKindTitle == 'HighGasPressure' &&
         rData?.nextStateType?.includes(
@@ -702,9 +802,12 @@
       </button>
     </nb-option>
 
+<<<<<<< HEAD
 
 
     
+=======
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
     <nb-option *ngIf="
         rData?.baseProjectKindTitle == 'HighGasPressure' &&
         rData?.nextStateType?.includes(
@@ -779,6 +882,7 @@
       </button>
     </nb-option>
 
+<<<<<<< HEAD
 
  <!-- --------------------------------------------------- -->
     <!-- comment by br -->
@@ -798,10 +902,18 @@
 
     <nb-option >
       <button *appHasRole="['Admin', 'Owner','GasEmployeeHP']" fullWidth nbButton status="primary"
+=======
+    <nb-option *ngIf="
+        rData?.baseProjectKindTitle == 'HighGasPressure' &&
+        rData?.nextStateType?.includes('Map2500')
+      ">
+      <button *appHasRole="['Admin', 'Owner']" fullWidth nbButton status="primary"
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
         (click)="onMap12500(rData?.id, '1/2500Map')">
         بارگذاری نقشه 1/2500
       </button>
     </nb-option>
+<<<<<<< HEAD
     <!-- --------------------------------------------------- -->
     <!-- comment by br -->
     <!-- *ngIf="
@@ -818,6 +930,14 @@
 
     <nb-option >
       <button *appHasRole="['Admin', 'HPManager','GasEmployeeHP']" fullWidth nbButton status="primary"
+=======
+
+    <nb-option *ngIf="
+        rData?.baseProjectKindTitle == 'HighGasPressure' &&
+        rData?.nextStateType?.includes('AlamakDesignationHP')
+      ">
+      <button *appHasRole="['Admin', 'HPManager']" fullWidth nbButton status="primary"
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
         (click)="onAlamakDesignationHP(rData?.id)">
         ثبت اطلاعات ایستگاه/علمک
       </button>
@@ -846,6 +966,7 @@
     </nb-option>
 
     <!-- && !rData?.nextStateType?.includes('PayDiffrenceEstimationOfConsumptionHP') -->
+<<<<<<< HEAD
     <!-- --------------------------------------------------- -->
     <!-- comment by br -->
     <!-- *ngIf="
@@ -860,11 +981,18 @@
     -->
     <nb-option >
       <button *appHasRole="['Admin', 'Owner','GasEmployeeHP']" fullWidth nbButton status="primary"
+=======
+    <nb-option *ngIf="
+        rData?.baseProjectKindTitle == 'HighGasPressure' &&
+        rData?.nextStateType?.includes('PayPrepaymentMonitoringHP')">
+      <button *appHasRole="['Admin', 'Owner']" fullWidth nbButton status="primary"
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
         (click)="onPayHP(rData?.id, 'PayPrepaymentMonitoringHP')">
         پرداخت هزینه علی الحساب نظارت
       </button>
     </nb-option>
 
+<<<<<<< HEAD
      <!-- && !rData?.nextStateType?.includes('PayDiffrenceEstimationOfConsumptionHP') -->
     <!-- --------------------------------------------------- -->
     <!-- comment by br -->
@@ -884,6 +1012,16 @@
     >
       <button
         *appHasRole="['Admin', 'Owner','GasEmployeeHP']"
+=======
+    <!-- <nb-option
+      *ngIf="
+        rData?.baseProjectKindTitle == 'HighGasPressure' &&
+        rData?.nextStateType?.includes('PayDesignationHp')
+      "
+    >
+      <button
+        *appHasRole="['Admin', 'Owner']"
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
         fullWidth
         nbButton
         status="primary"
@@ -891,7 +1029,11 @@
       >
         پرداخت هزینه طراحی
       </button>
+<<<<<<< HEAD
     </nb-option>
+=======
+    </nb-option> -->
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
 
     <nb-option *ngIf="
         rData?.baseProjectKindTitle == 'HighGasPressure' &&
@@ -915,6 +1057,7 @@
       </button>
     </nb-option>
 
+<<<<<<< HEAD
  <!-- --------------------------------------------------- -->
     <!-- comment by br -->
     <!-- *ngIf="
@@ -933,10 +1076,18 @@
 
     <nb-option >
       <button *appHasRole="['Admin', 'Engineer','GasEmployeeHP']" fullWidth nbButton status="primary"
+=======
+    <nb-option *ngIf="
+        rData?.baseProjectKindTitle == 'HighGasPressure' &&
+        rData?.nextStateType?.includes('EngineerDesignationMap')
+      ">
+      <button *appHasRole="['Admin', 'Engineer']" fullWidth nbButton status="primary"
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
         (click)="onMap(rData?.id, 'EngineersMap')">
         بارگذاری نقشه (توسط ناظر)
       </button>
     </nb-option>
+<<<<<<< HEAD
 
 
     <!-- --------------------------------------------------- -->
@@ -954,10 +1105,18 @@
     -->
     <nb-option >
       <button *appHasRole="['Admin', 'Engineer','GasEmployeeHP']" fullWidth nbButton status="primary"
+=======
+    <nb-option *ngIf="
+    rData?.baseProjectKindTitle == 'HighGasPressure' &&
+    rData?.nextStateType?.includes('ReuploadEngineerDesignationMap')
+  ">
+      <button *appHasRole="['Admin', 'Engineer']" fullWidth nbButton status="primary"
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
         (click)="onMapReupload(rData?.id, 'ReuploadEngineerDesignationMap')">
         بارگذاری مجدد نقشه (توسط ناظر)
       </button>
     </nb-option>
+<<<<<<< HEAD
 
       <!-- --------------------------------------------------- -->
     <!-- comment by br -->
@@ -974,6 +1133,13 @@
     -->
     <nb-option >
       <button *appHasRole="['Admin', 'SupervisorHP','GasEmployeeHP']" fullWidth nbButton status="primary"
+=======
+    <nb-option *ngIf="
+        rData?.baseProjectKindTitle == 'HighGasPressure' &&
+        rData?.nextStateType?.includes('DesignationMapControlHP')
+      ">
+      <button *appHasRole="['Admin', 'SupervisorHP']" fullWidth nbButton status="primary"
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
         (click)="onMapControl(rData?.id, 'DesignationMapControlHP')">
         بررسی نقشه طراحی
       </button>
@@ -997,6 +1163,7 @@
         انعقاد قرارداد با مجری
       </button>
     </nb-option>
+<<<<<<< HEAD
      <!-- --------------------------------------------------- -->
     <!-- comment by br -->
     <!--*ngIf="
@@ -1012,10 +1179,18 @@
     -->
     <nb-option >
       <button *appHasRole="['Admin', 'Executor','GasEmployeeHP']" fullWidth nbButton status="primary" (click)="onSupplier(rData?.id)">
+=======
+    <nb-option *ngIf="
+        rData?.baseProjectKindTitle == 'HighGasPressure' &&
+        rData?.nextStateType?.includes('SelectSupplierAndDetermineMaterials')
+      ">
+      <button *appHasRole="['Admin', 'Executor']" fullWidth nbButton status="primary" (click)="onSupplier(rData?.id)">
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
         انتخاب تامین کننده و تعیین مصالح
       </button>
     </nb-option>
 
+<<<<<<< HEAD
     <!-- --------------------------------------------------- -->
     <!-- comment by br -->
     <!--*ngIf="
@@ -1031,6 +1206,13 @@
     -->
     <nb-option >
       <button *appHasRole="['Admin', 'SupplierHP','GasEmployeeHP']" fullWidth nbButton status="primary"
+=======
+    <nb-option *ngIf="
+        rData?.baseProjectKindTitle == 'HighGasPressure' &&
+        rData?.nextStateType?.includes('SupplyMaterials')
+      ">
+      <button *appHasRole="['Admin', 'SupplierHP']" fullWidth nbButton status="primary"
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
         (click)="onGoodsControl(rData?.id)">
         کنترل و تامین قطعات
       </button>
@@ -1083,6 +1265,7 @@
       </button>
     </nb-option>
 
+<<<<<<< HEAD
     
     <!-- --------------------------------------------------- -->
     <!-- comment by br -->
@@ -1100,6 +1283,13 @@
     
     <nb-option >
       <button *appHasRole="['Admin', 'TechnicalInspectionManagerHP','GasEmployeeHP']" fullWidth nbButton status="primary" (click)="
+=======
+    <nb-option *ngIf="
+    rData?.baseProjectKindTitle == 'HighGasPressure' &&
+    rData?.hpType === 'Residential' &&
+    rData?.nextStateType?.includes('ResultTechnicalInspectionHP')">
+      <button *appHasRole="['Admin', 'TechnicalInspectionManagerHP']" fullWidth nbButton status="primary" (click)="
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
       onGoodsInspectionResultHP(rData?.id, 'ResultTechnicalInspectionHP')
     ">
         نتیجه بازرسی کالا
@@ -1127,6 +1317,7 @@
         نتیجه بازرسی مجدد کالا
       </button>
     </nb-option>
+<<<<<<< HEAD
      
     <!-- --------------------------------------------------- -->
     <!-- comment by br -->
@@ -1145,6 +1336,12 @@
     <nb-option *ngIf="rData?.baseProjectKindTitle == 'HighGasPressure'">
           <button
             *appHasRole="['Admin', 'Executor','HPManager','GasEmployeeHP']"
+=======
+
+    <!-- <nb-option *ngIf="rData?.baseProjectKindTitle == 'HighGasPressure'">
+          <button
+            *appHasRole="['Admin', 'Executor','HPManager']"
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
             fullWidth
             nbButton
             status="primary"
@@ -1152,7 +1349,11 @@
           >
            درخواست بازرسی مصالح
           </button>
+<<<<<<< HEAD
         </nb-option>
+=======
+        </nb-option> -->
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
 
     <nb-option *ngIf="
         rData?.baseProjectKindTitle == 'HighGasPressure' &&
@@ -1203,6 +1404,7 @@
         مجوز شروع به کار
       </button>
     </nb-option>
+<<<<<<< HEAD
 
      <!-- --------------------------------------------------- -->
     <!-- comment by br -->
@@ -1217,6 +1419,11 @@
     <nb-option >
         <button
           *appHasRole="['Admin', 'Executor','HPManager','GasEmployeeHP']"
+=======
+    <!-- <nb-option *ngIf="rData?.baseProjectKindTitle == 'HighGasPressure'&& rData?.nextStateType?.includes('WeldingInformationHP')">
+        <button
+          *appHasRole="['Admin', 'Executor','HPManager']"
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
           fullWidth
           nbButton
           status="primary"
@@ -1224,6 +1431,7 @@
         >
           تعیین زمان اجرا
         </button>
+<<<<<<< HEAD
       </nb-option>
   <!-- --------------------------------------------------- -->
     <!-- comment by br -->
@@ -1240,12 +1448,35 @@
     -->
     <nb-option >
       <button *appHasRole="['Admin', 'SupplierHP','GasEmployeeHP']" fullWidth nbButton status="primary"
+=======
+      </nb-option> -->
+
+    <nb-option *ngIf="
+        rData?.baseProjectKindTitle == 'HighGasPressure' &&
+        rData?.nextStateType?.includes('SpecifyInspectionTimeHP')
+      ">
+      <button *appHasRole="['Admin', 'SupplierHP']" fullWidth nbButton status="primary"
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
         (click)="onSpecifyRuntime(rData?.id, 'SpecifyInspectionTimeHP')">
         تعیین زمان آمادگی جهت بازرسی
       </button>
     </nb-option>
 
+<<<<<<< HEAD
     
+=======
+    <!-- <nb-option *ngIf="rData?.baseProjectKindTitle == 'HighGasPressure'">
+        <button
+          *appHasRole="['Admin', 'Executor','HPManager']"
+          fullWidth
+          nbButton
+          status="primary"
+          (click)="onGreatObserver(rData?.id,'GreatObserver')"
+        >
+          تعیین ناظر عالی
+        </button>
+      </nb-option> -->
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
 
     <nb-option *ngIf="
         rData?.baseProjectKindTitle == 'HighGasPressure' &&
@@ -1256,6 +1487,7 @@
         درخواست بازرسی
       </button>
     </nb-option>
+<<<<<<< HEAD
 
     <!-- --------------------------------------------------- -->
     <!-- comment by br -->
@@ -1273,12 +1505,20 @@
     <nb-option >
       
       <button *appHasRole="['Admin', 'Engineer','SupervisorHP','GasEmployeeHP']" fullWidth nbButton status="primary" (click)="
+=======
+    <nb-option *ngIf="
+        rData?.baseProjectKindTitle == 'HighGasPressure' &&
+        rData?.nextStateType?.includes('InspectionResultObserverHP')
+      ">
+      <button *appHasRole="['Admin', 'Engineer','SupervisorHP']" fullWidth nbButton status="primary" (click)="
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
           onObserverInspectionResult(rData?.id, 'InspectionResultObserverHP')
         ">
         نتیجه بازرسی ناظر
       </button>
     </nb-option>
 
+<<<<<<< HEAD
  <!-- --------------------------------------------------- -->
     <!-- comment by br -->
     <!-- *ngIf="
@@ -1295,6 +1535,13 @@
 
     <nb-option>
       <button *appHasRole="['Admin', 'SupervisorHP','GasEmployeeHP']" fullWidth nbButton status="primary" (click)="
+=======
+    <nb-option *ngIf="
+        rData?.baseProjectKindTitle == 'HighGasPressure' &&
+        rData?.nextStateType?.includes('InspectionResultSupervisorHP')
+      ">
+      <button *appHasRole="['Admin', 'SupervisorHP']" fullWidth nbButton status="primary" (click)="
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
           onGreatObserverInspectionResult(
             rData?.id,
             'InspectionResultSupervisorHP'
@@ -1304,6 +1551,7 @@
       </button>
     </nb-option>
 
+<<<<<<< HEAD
     <!-- --------------------------------------------------- -->
     <!-- comment by br -->
     <!-- *ngIf="
@@ -1320,11 +1568,19 @@
 
     <nb-option >
       <button *appHasRole="['Admin', 'Executor','GasEmployeeHP']" fullWidth nbButton status="primary" (click)="
+=======
+    <nb-option *ngIf="
+        rData?.baseProjectKindTitle == 'HighGasPressure' &&
+        rData?.nextStateType?.includes('FinalBookControlByExecutorHP')
+      ">
+      <button *appHasRole="['Admin', 'Executor']" fullWidth nbButton status="primary" (click)="
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
           onControlFinalBookHP(rData?.id, 'FinalBookControlByExecutorHP')
         ">
         تکمیل و کنترل فاینال بوک توسط مجری
       </button>
     </nb-option>
+<<<<<<< HEAD
     <!-- --------------------------------------------------- -->
     <!-- comment by br -->
     <!-- **ngIf="
@@ -1342,6 +1598,14 @@
 
     <nb-option >
       <button *appHasRole="['Admin', 'Engineer','GasEmployeeHP']" fullWidth nbButton status="primary" (click)="
+=======
+
+    <nb-option *ngIf="
+        rData?.baseProjectKindTitle == 'HighGasPressure' &&
+        rData?.nextStateType?.includes('FinalBookControlByObserverHP')
+      ">
+      <button *appHasRole="['Admin', 'Engineer']" fullWidth nbButton status="primary" (click)="
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
           onControlFinalBookHP(rData?.id, 'FinalBookControlByObserverHP')
         ">
         کنترل فاینال بوک توسط ناظر فشار قوی
@@ -1369,6 +1633,7 @@
       </button>
     </nb-option>
 
+<<<<<<< HEAD
 
 <!-- --------------------------------------------------- -->
     <!-- comment by br -->
@@ -1387,6 +1652,11 @@
     <nb-option *ngIf="rData?.baseProjectKindTitle == 'HighGasPressure'">
         <button
           *appHasRole="['Admin', 'Executor','HPManager' ,'GasEmployee','GasEmployeeHP']"
+=======
+    <!-- <nb-option *ngIf="rData?.baseProjectKindTitle == 'HighGasPressure'">
+        <button
+          *appHasRole="['Admin', 'Executor','HPManager' ,'GasEmployee']"
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
           fullWidth
           nbButton
           status="primary"
@@ -1394,7 +1664,11 @@
         >
           پرداخت تسویه حساب نهایی
         </button>
+<<<<<<< HEAD
       </nb-option>
+=======
+      </nb-option> -->
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
 
     <nb-option *ngIf="
         rData?.baseProjectKindTitle == 'HighGasPressure' &&
@@ -1486,8 +1760,13 @@
 </nb-select>
 
 
+<<<<<<< HEAD
 <ng-template #hPContentDetailTemplate let-data>
   <app-hPGasRequestDetail [id]="rData?.id"></app-hPGasRequestDetail>
+=======
+<ng-template #contentDetailTemplate let-data>
+  <app-gasRequestDetail [id]="rData?.id"></app-gasRequestDetail>
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
   <!-- <p>Here is the text provided via config: "{{ data.text }}"</p> -->
 </ng-template>
 
@@ -1496,6 +1775,11 @@
     ></ngx-collectorRegisterationBox>
   </ng-template> -->
 
+<<<<<<< HEAD
 <ng-template #hPGasRequestHistory let-data>
   <app-hPGasRequestHistory [id]="rData?.id"></app-hPGasRequestHistory>
+=======
+<ng-template #GasRequestHistory let-data>
+  <app-gasRequestHistory [id]="rData?.id"></app-gasRequestHistory>
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
 </ng-template>

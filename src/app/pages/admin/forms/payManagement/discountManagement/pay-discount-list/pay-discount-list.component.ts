@@ -214,7 +214,10 @@ export class PayDiscountListComponent {
             this.dialogRef.close();
             this.loading = false;
             this.loadList();
-          } 
+          } else {
+            this.dialogRef.close();
+          }
+
         }
       },
       (err: HttpErrorResponse) => {

@@ -67,4 +67,6 @@ export * from './newsManagement/news/news.component';
 export * from './newsManagement/news-list/news-list.component';
 export * from './newsManagement/newsListCustomActions/newsListCustomActions.component';
 export * from './UploadedDocuments/UploadedDocuments.component';
+export * from './reports/gasRequestUnits/moreThanFiveUnits.component';
+
 

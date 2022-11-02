@@ -128,6 +128,10 @@ export class DocumentryFormComponent implements OnInit {
       this.fileName = this.requestStateType;
       this.routerLink = '/pages/forms/HPGasReqList';
     }
+    else if (this.requestStateType === "hPGardenDocuments" || this.requestStateType === "hPIndustrialColonyDocuments") {
+      this.fileName = this.requestStateType;
+      this.routerLink = '/pages/forms/HPGasReqList';
+    }
     else {
       this.fileName = "Documents";
     }
@@ -226,8 +230,12 @@ export class DocumentryFormComponent implements OnInit {
           });
 
           //یکی کردن لیست فایل و داکیومنت ها جهت برطرف کردن مشکل داکیومنت های اختیاری
+<<<<<<< HEAD
           if (this.requestStateType === "EditUploadDocuments" || this.requestStateType === "ReUploadArchitectualAlbum" 
           || this.requestStateType === "ReuploadEngineerDesignationMap" ||this.requestStateType === "hPGardenDocuments"||this.requestStateType === "hPIndustrialColonyDocuments") {
+=======
+          if (this.requestStateType === "EditUploadDocuments" || this.requestStateType === "ReUploadArchitectualAlbum" || this.requestStateType === "ReuploadEngineerDesignationMap") {
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
 
             for (let i = 0; i < this.inputCount.length; i++) {
               let filenameTmp = "";
@@ -254,9 +262,14 @@ export class DocumentryFormComponent implements OnInit {
           }
         }
       });
+<<<<<<< HEAD
     if (this.requestStateType === "EditUploadDocuments" || this.requestStateType === "ReUploadArchitectualAlbum" || this.requestStateType === "ReuploadEngineerDesignationMap"
     ||this.requestStateType === "hPGardenDocuments"||this.requestStateType === "hPIndustrialColonyDocuments") {
    
+=======
+    if (this.requestStateType === "EditUploadDocuments" || this.requestStateType === "ReUploadArchitectualAlbum" || this.requestStateType === "ReuploadEngineerDesignationMap") {
+
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
       this.route.data.subscribe((data) => {
         console.log(data["editData"].path);
         //  data["editData"];

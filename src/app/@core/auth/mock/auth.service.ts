@@ -45,25 +45,24 @@ export class AuthService extends Auth {
       environment.SERVER_URL = "http://localhost:52805/api";
     } else if (url.includes("gas.fceo.ir")) {
       environment.SERVER_URL = "http://gas.fceo.ir:2727/api";
-    } else if (url.includes("http://192.168.0.201")) {
-      environment.SERVER_URL = "http://192.168.0.201:81/api";
-    } else if (url.includes("http://192.168.0.6")) {
-      environment.SERVER_URL = "http://192.168.0.6:82/api";
     }
+    else if (url.includes("http://192.168.0.201")) {
+      environment.SERVER_URL = "http://192.168.0.201:81/api";
+    } 
     else if (url.includes("http://192.168.0.18:83")) {
       environment.SERVER_URL = "http://192.168.0.18:82/api";
     }
-    else if (url.includes("http://192.168.0.06:83")) {
+    else if (url.includes("http://192.168.0.6:83")) {
       environment.SERVER_URL = "http://192.168.0.06:82/api";
     }
-    else if (url.includes("http://192.168.2.06:83")) {
-      environment.SERVER_URL = "http://192.168.2.06:82/api";
+    else if (url.includes("http://192.168.0.6:84")) {
+      environment.SERVER_URL = "http://192.168.0.6:200/api";
     }
-    else if (url.includes("http://192.168.2.6:83")) {
-      environment.SERVER_URL = "http://192.168.2.06:82/api";
+    else if (url.includes("http://192.168.0.6:84")) {
+      environment.SERVER_URL = "http://192.168.0.06:200/api";
     }
-    else if (url.includes("http://192.168.0.15:83")) {
-      environment.SERVER_URL = "http://192.168.0.15:82/api";
+    else if (url.includes("http://192.168.0.06:84")) {
+      environment.SERVER_URL = "http://192.168.0.6:200/api";
     }
     else {
       environment.SERVER_URL = "http://localhost:5000/api";
