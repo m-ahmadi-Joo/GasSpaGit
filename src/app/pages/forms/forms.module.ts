@@ -92,9 +92,12 @@ import { EngineerEditMapListResolver } from "src/app/@core/utils/EngineerEditMap
 import{gridCheckboxForEditMapComponent} from "./gasforms/Engineer/gridCheckboxForEditMap/gridCheckboxForEditMap.component";
 import { CookieService } from 'ngx-cookie-service';
 import { DesignerResolver } from "src/app/@core/utils/DesignerResolver";
+<<<<<<< HEAD
 import { HpGasRequestResolver } from "src/app/@core/utils/hPGasRequest-resolver";
 import { HPGasRequestListResolver } from "src/app/@core/utils/hPGasRequestList-resolver";
 import { HPGasReqListCustomActionsComponent } from "./gasforms/GasRequestManage/HPGasReqListCustomActions/HPGasReqListCustomActions.component";
+=======
+>>>>>>> 69f69b506d8086eb8cfad661c01bd65bc1f7bfdf
 import { ExcuterLimitedDetailComponent } from './gasforms/ExecuterManage/excuterLimitedDetail/excuterLimitedDetail.component';
 
 @NgModule({
@@ -119,7 +122,11 @@ import { ExcuterLimitedDetailComponent } from './gasforms/ExecuterManage/excuter
   ],
   declarations: [
     ...routedComponents,
+<<<<<<< HEAD
 
+=======
+    ExcuterLimitedDetailComponent,
+>>>>>>> 69f69b506d8086eb8cfad661c01bd65bc1f7bfdf
     // MapDialogComponent,
     // HasRoleDirective,
     // CustomTypeaheadDirective

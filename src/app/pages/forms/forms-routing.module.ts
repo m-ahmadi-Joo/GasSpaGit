@@ -156,6 +156,10 @@ import {
   CompleteControlFinalComponent,
   EditMapListComponent,
   AdminAddDocumentComponent,
+<<<<<<< HEAD
+=======
+  ExcuterLimitedDetailComponent
+>>>>>>> 69f69b506d8086eb8cfad661c01bd65bc1f7bfdf
 
 } from "./gasforms";
 import { GasRequestListResolver } from "src/app/@core/utils/gasRequestList-resolver";
@@ -222,6 +226,7 @@ import { DesignerResolver } from "src/app/@core/utils/DesignerResolver";
 import { ExecutorOldGasRequestEditComponent } from "./gasforms/GasRequestManage/ExecutorOldGasRequestManage/ExecutorOldGasRequestEdit.component";
 import { DocumentryFormForExecutorComponent } from "./gasforms/DocumentryFormForExecutor/DocumentryFormForExecutor.component";
 import { SubmitAuditResultForOldGasRequestsFormComponent } from "./gasforms/SubmitAuditResultsForOldGasRequests/submitARForOldGasRequests.component";
+<<<<<<< HEAD
 import{ShowGasRequestDocumentsDetailComponent}from "./gasforms/GasRequestManage/showGasRequestDocumentsDetail/showGasRequestDocumentsDetail.component"
 import{HPGasRequestListComponent} from "./gasforms/GasRequestManage/HPGasRequestListForm/HPGasRequestList.component"
 import { HPGasRequestFormComponent } from "./gasforms/GasRequestManage/HPGasRequestForm/hPGasRequestForm.component";
@@ -229,6 +234,9 @@ import { HpGasRequestResolver } from "src/app/@core/utils/hPGasRequest-resolver"
 import { HPGasRequestListResolver } from "src/app/@core/utils/hPGasRequestList-resolver";
 import { HPGasReqListCustomActionsComponent } from "./gasforms/GasRequestManage/HPGasReqListCustomActions/HPGasReqListCustomActions.component";
 import { ExcuterLimitedDetailComponent } from "./gasforms/ExecuterManage/excuterLimitedDetail/excuterLimitedDetail.component";
+=======
+import { ShowGasRequestDocumentsDetailComponent } from "./gasforms/GasRequestManage/showGasRequestDocumentsDetail/showGasRequestDocumentsDetail.component"
+>>>>>>> 69f69b506d8086eb8cfad661c01bd65bc1f7bfdf
 const routes: Routes = [
   {
     // /pages/forms/*
@@ -1098,6 +1106,7 @@ const routes: Routes = [
         component: ShowGasRequestDocumentsDetailComponent,
       },
       {
+<<<<<<< HEAD
                path: "ExcuterLimitedHistory/:id",
         component: ExcuterLimitedDetailComponent,
       },
@@ -1121,6 +1130,12 @@ const routes: Routes = [
         component: HPGasRequestFormComponent,
         resolve: { data: HpGasRequestResolver },
       },
+=======
+        path: "ExcuterLimitedHistory/:id",
+        component: ExcuterLimitedDetailComponent,
+      },
+
+>>>>>>> 69f69b506d8086eb8cfad661c01bd65bc1f7bfdf
     ],
   },
 ];
@@ -1297,15 +1312,18 @@ export const routedComponents = [
   gridCheckboxForEditMapComponent,
   PreUploadedDocumentsComponent,
   EditUnitInfoForGasEmployeeComponent,
-ExecutorOldGasRequestEditComponent,
-DocumentryFormForExecutorComponent,
+  ExecutorOldGasRequestEditComponent,
+  DocumentryFormForExecutorComponent,
   AdminAddDocumentComponent,
   SubmitAuditResultForOldGasRequestsFormComponent,
   ShowGasRequestDocumentsDetailComponent,
+<<<<<<< HEAD
  ExcuterLimitedDetailComponent,
   HPGasRequestListComponent,
   HPGasRequestFormComponent
+=======
+  ExcuterLimitedDetailComponent
+>>>>>>> 69f69b506d8086eb8cfad661c01bd65bc1f7bfdf
 
-  
 ];
 
