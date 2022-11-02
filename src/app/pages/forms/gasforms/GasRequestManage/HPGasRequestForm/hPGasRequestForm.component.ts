@@ -410,10 +410,7 @@ export class HPGasRequestFormComponent implements OnInit {
       ).id;
     });
 
-<<<<<<< HEAD
       
-=======
->>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
     let currentUrl = this.router.url;
     let lastSection = currentUrl.substring(currentUrl.lastIndexOf("/") + 1);
     if (lastSection === "HPGasRequest") {
@@ -806,11 +803,7 @@ export class HPGasRequestFormComponent implements OnInit {
               "",
               [
                 Validators.pattern(this.reg.meterCount),
-<<<<<<< HEAD
                
-=======
-                Validators.required,
->>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
                 Validators.min(1),
               ],
             ],
@@ -1935,11 +1928,7 @@ export class HPGasRequestFormComponent implements OnInit {
             ? true
             : false
           : null,
-<<<<<<< HEAD
       baseProjectKindId:2,// this.piForm.controls.mkGasPresureType.value,
-=======
-      baseProjectKindId: this.piForm.controls.mkGasPresureType.value,
->>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
       approximateConsumption: this.piForm.controls.mkGasUsageCloseTotal.value,
       hasMeterNow: false, //this.piForm.controls.mkDoHave.value,
       instaurationCode: this.piForm.controls.mkRenewerCode.value,

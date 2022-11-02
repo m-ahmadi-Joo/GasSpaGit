@@ -22,11 +22,7 @@ import { ReportService } from "src/app/@core/utils/report.service";
 import {
   DefineOberverSelect,
   CollectiveDefineObserverService,
-<<<<<<< HEAD
 } from "src/app/@core/utils/collectiveDefineObserver.service"; 
-=======
-} from "src/app/@core/utils/collectiveDefineObserver.service";
->>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
 
 @Component({
   selector: "ngx-HPGasReqListCustomActions",
@@ -96,11 +92,7 @@ export class HPGasReqListCustomActionsComponent implements ViewCell, OnInit {
   }
 
   onHistory(id) {
-<<<<<<< HEAD
     this.windowService.open(this.hPGasRequestHistory, {
-=======
-    this.windowService.open(this.GasRequestHistory, {
->>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
       hasBackdrop: true,
       windowClass: "nb-window-control"
     });

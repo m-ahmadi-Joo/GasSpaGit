@@ -378,19 +378,12 @@ export abstract class ApiCommandCenter {
     abstract setDataForNewsDetail(id);
     abstract getDataForNewsDetail();
     //#endregio
-<<<<<<< HEAD
-    abstract getSuppliersList(
-=======
 
     //#region GetMoreFiveUnitsListResolver
     abstract getAllMoreFiveUnitsList(
->>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
       page?,
       itemsPerPage?,
       filterParams?
     ): Observable<PaginatedResult<any[]>>;
-<<<<<<< HEAD
-=======
         //#endregio
->>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
 }

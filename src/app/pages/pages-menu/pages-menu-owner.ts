@@ -46,18 +46,6 @@ export const MENU_ITEMS_Owner: NbMenuItem[] = [
             },
           ]
         },
-<<<<<<< HEAD
-        {
-          title: "کارتابل فشار قوی",
-          children: [
-            {
-              title: " املاک فشار قوی",
-              link: "/pages/forms/HPGasReqList",
-              icon: 'home-outline'
-            },
-          ]
-        }
-=======
         // {
         //   title: "کارتابل فشار قوی",
         //   children: [
@@ -68,5 +56,4 @@ export const MENU_ITEMS_Owner: NbMenuItem[] = [
         //     },
         //   ]
         // }
->>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
 ];
