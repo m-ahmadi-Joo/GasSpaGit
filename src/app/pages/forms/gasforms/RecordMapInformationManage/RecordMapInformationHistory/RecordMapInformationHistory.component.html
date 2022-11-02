@@ -170,6 +170,12 @@
                             ثبت سیستم
                           </span>
                         </td>
+                        <td *ngIf="step?.suspendRegistrarInfo != null" width="21%">
+                          {{ step?.suspendRegistrarInfo }}
+                          <span *ngIf="step?.suspendRegistrarInfo == null">
+                            ثبت سیستم
+                          </span>
+                        </td>
                         <td width="33%">
                           <div *ngIf="step?.closeComment !== null">
                             <div *ngIf="step?.closeResult === true">
@@ -184,16 +190,30 @@
                             </div>
 
                           </div>
-                          <div *ngIf="step?.unCloseComment !== null">
-                            <div *ngIf="step?.unCloseResult === true">
-                              <span class="font-weight-bold">نتیجه انسداد : </span>
+                          <div *ngIf="step?.suspendCloseComment !== null">
+                            <div *ngIf="step?.suspendCloseResult === true">
+                              <span class="font-weight-bold">نتیجه تعلیق : </span>
+                              <span class="ml-2 font-weight-bold text-danger">
+                                معلق شده</span>
+                              <!-- <br /> -->
+                              <p class=" mb-0">
+                                <span class="font-weight-bold text-justify">توضیحات : </span>
+                                {{ step?.suspendCloseComment }}
+                              </p>
+                            </div>
+
+                          </div>
+
+                          <div *ngIf="step?.suspendUnCloseComment !== null">
+                            <div *ngIf="step?.suspendUnCloseResult === true">
+                              <span class="font-weight-bold">نتیجه تعلیق : </span>
                               <span class="ml-2 font-weight-bold text-success">
                               فعال سازی
                               </span>
                               <!-- <br /> -->
                               <p class="text-justify mb-0">
                                 <span class="font-weight-bold">توضیحات : </span>
-                                {{ step?.unCloseComment }}
+                                {{ step?.suspendUnCloseComment }}
                               </p>
                             </div>
 
@@ -375,6 +395,13 @@
                             <span class="font-weight-bold"> ناظر : </span>
                             <span class="font-weight-bold">
                               {{ step?.observer }}
+                            </span>
+                            
+                          </div>
+                          <div *ngIf="step?.observer != null">
+                            <span class="font-weight-bold"> تاریخ بازرسی : </span>
+                            <span class="font-weight-bold">
+                              {{ step?.workInspectionDate }}
                             </span>
                           </div>
                           <div *ngIf="step?.welder != null">

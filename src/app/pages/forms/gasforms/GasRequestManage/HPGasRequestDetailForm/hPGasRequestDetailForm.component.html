@@ -1,0 +1,369 @@
+<style>
+  .form-inline>* {
+    margin: 0.45rem !important;
+  }
+
+  .form-inline input,
+  .form-inline textarea {
+    color: #826b6b;
+  }
+</style>
+
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <nb-card>
+      <nb-card-body class="p-0">
+        <nb-card>
+          <nb-card-body>
+            <h6 class="text-center" *ngIf="info?.gender === 1" style="margin-bottom: 30px">
+              مشخصات ملک سرکار خانم {{ info?.ownerFullName }}
+            </h6>
+            <h6 class="text-ceter" *ngIf="info?.gender === 0" style="margin-bottom: 30px">
+              مشخصات ملک جناب آقای {{ info?.ownerFullName }}
+            </h6>
+            <div class="col-lg-12 col-md-12 col-sm-12 form-hanging">
+              <div class="input-group">
+                <div class="col-lg-2 col-md-2 col-sm-3 form-inline">
+                  <label><strong>شماره درخواست</strong></label>
+                  <div class="form-group">
+                    <input type="text" readonly nbInput value="{{ info?.fileNumber }}" />
+                  </div>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-sm-3 form-inline">
+                  <label><strong>نام پروژه </strong></label>
+                  <div class="form-group">
+                    <input type="text" readonly nbInput value="{{ info?.projectName }}" />
+                  </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-3 form-inline">
+                  <label><strong>نوع پروژه </strong></label>
+                  <div class="form-group">
+                    <input type="text" readonly nbInput value="{{ info?.hpBuildTypeName }}" />
+                  </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-3 form-inline">
+                  <label><strong> کاربری </strong></label>
+                  <div class="form-group">
+                    <input type="text" readonly nbInput value="{{ info?.hpUsageKindTitle }}" />
+                  </div>
+                </div>
+<!-- 
+                <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+                  <label class="ml-0"><strong> متقاضی در حال حاضر مشترک است</strong></label>
+                  <div class="form-group">
+                    <input *ngIf="info?.hasMeterNow" type="text" readonly nbInput value="بلی" />
+                    <input *ngIf="!info?.hasMeterNow" type="text" readonly nbInput value="خیر" />
+                  </div>
+                </div> -->
+                
+              </div>
+            </div>
+          
+          
+
+<!-- 
+            <div class="col-lg-12 col-md-12 col-sm-12 form-hanging" *ngIf="info?.isRequiredAlamakDeletion !== null">
+              <div class="input-group">
+                <div class="col-lg-12 col-md-12 col-sm-12 form-inline">
+                  <label><strong>نیاز به جمع آوری علمک</strong></label>
+                  <div class="form-group">
+                    <input type="text" readonly nbInput value="{{ info?.isRequiredAlamakDeletion }}" />
+                  </div>
+                </div>
+              </div>
+            </div> -->
+
+  
+            <div class="col-lg-9 col-md-9 col-sm-12 form-hanging">
+              <div class="input-group">
+                <!-- <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+                  <label><strong>کد نوسازی</strong> </label>
+                  <div class="form-group">
+                    <input type="text" readonly nbInput value="{{ info?.instaurationCode }}" />
+                  </div>
+                </div> -->
+
+                <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+                  <label><strong>پلاک ثبتی</strong> </label>
+                  <div class="form-group">
+                    <input type="text" readonly nbInput value="{{ info?.registrationPlaque }}" />
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+                  <label><strong>کد پستی</strong> </label>
+                  <div class="form-group">
+                    <input type="text" readonly nbInput value="{{ info?.postalCode }}" />
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+                  <label><strong>زیربنای کل </strong> </label>
+                  <div class="form-group">
+                    <input type="text" readonly nbInput value="{{ info?.totalFoundation }}" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          
+
+            <div class="col-lg-12 col-md-12 col-sm-12 form-hanging" *ngIf="info?.baseUsageKindId === 7">
+              <div class="input-group">
+                <div class="col-lg-12 col-md-12 col-sm-12 form-inline">
+                  <label><strong>میزان مصرف ساعتی پروژه صنعتی/کشاورزی</strong></label>
+
+                  <div class="form-group">
+                    <input *ngIf="info?.consumptionPerHourBaseUsageKind" type="text" readonly nbInput
+                      value="بیشتر از 100 متر مکعب" />
+                    <input *ngIf="!info?.consumptionPerHourBaseUsageKind" type="text" readonly nbInput
+                      value="کمتر از 100 متر مکعب" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-12 col-md-12 col-sm-12 form-hanging" *ngIf="info?.residentalComplex">
+              <div class="input-group">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                  <label class="text-right"><strong>درخواست انشعاب مربوط به مجتمع های مسکونی ( مجموعه مسکونی)
+                      می باشد:
+                    </strong>
+                  </label>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 form-inline">
+                  <label><strong>پلاک ثبتی / شماره پروانه تاسیس یا بهره برداری</strong></label>
+
+                  <div class="form-group">
+                    <input *ngIf="info?.establishmentLicense" type="text" readonly nbInput
+                      value={{info?.establishmentLicense}} />
+                    
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 form-inline">
+                  <label class="ml-0"><strong> موتور خانه مرکزی    </strong></label>
+                  <div class="form-group">
+                    <input *ngIf="info?.hasCentralPowerHouse" type="text" readonly nbInput value="دارد" />
+                    <input *ngIf="!info?.hasCentralPowerHouse" type="text" readonly nbInput value="ندارد" />
+                  </div>
+                </div> 
+                <!-- <div class="col-lg-6 col-md-6 col-sm-6 form-inline">
+                  <label><strong>میزان مصرف ساعتی هر مجتمع</strong></label>
+
+                  <div class="form-group">
+                    <input *ngIf="info?.consumptionPerHourComplex" type="text" readonly nbInput
+                      value="بیشتر از 100 متر مکعب" />
+                    <input *ngIf="!info?.consumptionPerHourComplex" type="text" readonly nbInput
+                      value="کمتر از 100 متر مکعب" />
+                  </div>
+                </div> -->
+
+                <div class="col-lg-6 col-md-6 col-sm-6 form-inline">
+                  <label><strong>زیربنای هر مجتمع</strong></label>
+                  <div class="form-group">
+                    <input *ngIf="info?.foundationPerComplex" type="text" readonly nbInput
+                      value="بالای 3000 متر مربع" />
+                    <input *ngIf="!info?.foundationPerComplex" type="text" readonly nbInput
+                      value="کمتر 3000 متر مربع" />
+                  </div>
+                </div>
+              </div>
+             </div>
+          </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 form-hanging" *ngIf="info?.residentalArea">
+              <div class="input-group">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                  <label class="text-right"><strong>درخواست انشعاب مربوط به محوطه مسکونی می باشد:
+                    </strong>
+                  </label>
+                </div>
+
+                <div *ngFor="let block of info.hpGasRequestBlocks;let i=index" class="col-lg-12 col-md-12 col-sm-12 form-hanging">
+
+                  <div class="col-lg-12 col-md-12 col-sm-12 form-inline" >
+                      
+                    
+                      <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+                        <label class="ml-0">
+                         <strong>نام بلوک   {{i+1}}</strong> 
+                        </label>
+        
+                        <input type="text" readonly nbInput value="{{ block.name }}" />
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+                        <label class="ml-0">
+                          <strong> تعداد طبقات {{i+1}}</strong>
+                        </label>
+        
+                        <input type="text" readonly nbInput value="{{ block.floorCount }} " />
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+                        <label class="ml-0">
+                          <strong> تعداد واحد بلوک {{i+1}}</strong>
+                        </label>
+        
+                        <input type="text" readonly nbInput value="{{ block.unitCount }} " />
+                      </div>
+                  </div>
+                  
+                </div>
+                <!-- <div class="col-lg-12 col-md-12 col-sm-12 form-inline">
+                  <label><strong>میزان مصرف ساعتی در محوطه مسکونی</strong></label>
+
+                  <div class="form-group">
+                    <input *ngIf="info?.consumptionPerHourArea" type="text" readonly nbInput
+                      value="بیشتر از 100 متر مکعب" />
+                    <input *ngIf="!info?.consumptionPerHourArea" type="text" readonly nbInput
+                      value="کمتر از 100 متر مکعب" />
+                  </div>
+                </div> -->
+              </div>
+            </div>
+
+            <!-- <div class="col-lg-12 col-md-12 col-sm-12 form-hanging">
+              <div class="input-group">
+                <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+                  <label><strong>تعداد کنتور مورد درخواست</strong> </label>
+                  <div class="form-group">
+                    <input type="text" readonly nbInput value="{{ info?.meterCount }}" />
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+                  <label><strong>نوع فشار گاز مصرفی</strong> </label>
+                  <div class="form-group">
+                    <input type="text" readonly nbInput value="{{ info?.projectKindTitle }}" />
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 form-inline" *ngIf="!info?.buildingWidth">
+                  <label><strong>موقعیت ملک</strong></label>
+                  <div class="form-group">
+                    <input type="text" readonly nbInput value="{{ info?.buildingLocation }}" />
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 form-inline" *ngIf="info?.buildingWidth">
+                  <label><strong>موقعیت ملک</strong></label>
+                  <div class="form-group">
+                    <input type="text" readonly nbInput value="{{ info?.buildingLocation }}" />
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 form-inline" *ngIf="info?.buildingWidth">
+                  <label><strong>عرض ملک</strong></label>
+                  <div class="form-group">
+                    <input type="text" readonly nbInput value="{{ info?.buildingWidth }}" />
+                  </div>
+                </div>
+              </div>
+            </div> -->
+
+            <div class="col-lg-12 col-md-12 col-sm-12 form-hanging" *ngIf="info?.buildingLocation">
+              <div>
+                <!-- class="input-group" -->
+
+                <div *ngIf="info?.buildingWidth" class="col-lg-12 col-md-12 col-sm-12 form-inline">
+                  <div class="input-group"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-12 col-md-12 col-sm-12 form-hanging">
+              <div class="input-group">
+                <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+                  <label><strong>شهرستان</strong> </label>
+                  <div class="form-group">
+                    <input type="text" readonly nbInput value="{{ info?.cityName }}" />
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+                  <label><strong>شهر/روستا</strong> </label>
+                  <div class="form-group">
+                    <input type="text" readonly nbInput value="{{ info?.townName }}" />
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+                  <label><strong>منطقه گازی</strong> </label>
+                  <div class="form-group">
+                    <input type="text" readonly nbInput value="{{ info?.areaTitle }}" />
+                  </div>
+                </div>
+
+                <!-- <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+                  <label><strong>شهری/روستایی</strong> </label>
+                  <div class="form-group">
+                    <input type="text" readonly nbInput value="{{ info?.urban_Rural }}" />
+                  </div>
+                </div> -->
+
+              </div>
+            </div>
+
+            <div class="input-group col-lg-12 col-md-12 col-sm-12 form-inline">
+              <label><strong> آدرس دقیق و کامل</strong> </label>
+              <textarea [value]="info?.address" readonly fullWidth id="fullPath" nbInput rows="3"></textarea>
+            </div>
+
+            <div class="col-lg-12 col-md-12 col-sm-12 form-hanging">
+              <div class="input-group">
+                <div class="col-lg-6 col-md-6 col-sm-6 form-inline">
+                  <label><strong>طول جغرافیایی</strong> </label>
+                  <div class="form-group">
+                    <input type="text" readonly nbInput value="{{ info?.long }}" />
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6 form-inline"> 
+                  <label><strong>عرض جغرافیایی</strong> </label>
+                  <div class="form-group">
+                    <input type="text" readonly nbInput value="{{ info?.lat }}" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 form-hanging">
+              <div class="input-group">
+                <div class="col-lg-4 col-md-4 col-sm-4 form-inline">
+                  <label><strong>X</strong> </label>
+                  <div class="form-group">
+                    <input type="text" readonly nbInput value="{{ info?.x }}" />
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-4 form-inline"> 
+                  <label><strong>Y</strong> </label>
+                  <div class="form-group">
+                    <input type="text" readonly nbInput value="{{ info?.y }}" />
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4 form-inline"> 
+                  <label><strong>Zone</strong> </label>
+                  <div class="form-group">
+                    <input type="text" readonly nbInput value="{{ info?.zone }}" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-12 col-md-12 col-sm-12 form-hanging mt-6">
+              <div class="input-group">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                  <label><strong>مستندات آپلود شده</strong> </label>
+                  <DocumentsUploaded [id]="id" [type]="'GasRequest'"></DocumentsUploaded>
+                
+                </div>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+
+     
+        
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+

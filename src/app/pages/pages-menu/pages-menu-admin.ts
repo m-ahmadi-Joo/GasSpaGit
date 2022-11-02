@@ -56,6 +56,11 @@ export const MENU_ITEMS_Admin: NbMenuItem[] = [
         icon: "people-outline",
       },
       {
+        title: "تامین کنندگان قطعات فشارقوی",
+        link: "/pages/forms/SuppliersList",
+        icon: "people-outline",
+      },
+      {
         title: "کنترل مضاعف",
         link: "/pages/forms/DoubleControlList",
         icon: "edit-2-outline",

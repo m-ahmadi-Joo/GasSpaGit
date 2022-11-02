@@ -118,7 +118,6 @@ export class LoginComponent implements OnInit {
       this.currentRole == "GasRuleCheckerGroupOne" ||
       this.currentRole == "GasRuleCheckerGroupTwo" ||
       this.currentRole == "GasRuleCheckerGroupThree" ||
-      this.currentRole == "GasEmployeeHP" ||
       this.currentRole == "GasRuleEmployeeHP" ||
       this.currentRole == "HPManager" ||
       this.currentRole == "SupplierHP" ||
@@ -130,6 +129,10 @@ export class LoginComponent implements OnInit {
       this.currentRole == "GasCompany"
       ) {
       this.router.navigate(["/pages/forms/GasReqList"]);
+    }
+    else if (this.currentRole == "GasEmployeeHP" )
+    {
+      this.router.navigate(["/pages/forms/HPGasReqList"]);
     }
     else if (this.currentRole == "Engineer") {
       this.router.navigate(["/pages/forms/AnalyzeList"])

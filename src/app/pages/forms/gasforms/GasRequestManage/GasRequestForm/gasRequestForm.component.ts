@@ -37,7 +37,7 @@ import {
   Usagekind,
   City,
   SubscriptionType,
-  Town,
+  Town, 
   Neighbourhood,
   BaseArea,
 } from "src/app/@core/models/baseInterfaces";
@@ -45,10 +45,10 @@ import { UnitStateService } from "src/app/@core/utils/unitState.service";
 // import "../../../../../../../node_modules/leaflet/dist/leaflet.css";
 import "style-loader!leaflet/dist/leaflet.css";
 import { outputs } from "@syncfusion/ej2-angular-richtexteditor/src/rich-text-editor/richtexteditor.component";
-import { HttpParams } from "@angular/common/http";
+import { HttpParams } from "@angular/common/http"; 
 // /pages/forms/pif
 @Component({
-  selector: "app-gasRequestForm",
+  selector: "app-gasRequestForm", 
   templateUrl: "./gasRequestForm.component.html",
   styleUrls: ["../../formStyle.scss"],
 })
@@ -57,6 +57,7 @@ export class GasRequestFormComponent implements OnInit {
   @ViewChild("rdbIsRequiredAlamakDeletion", { static: false })
   rdbIsRequiredAlamakDeletion: NbRadioGroupComponent;
   // @ViewChild("consumptionPerHourComplex", { static: false }) rdbConsumptionPerHourComplex: NbRadioGroupComponent;
+
   isEdit = false;
   insaturationCodeRepeatInfos = [];
   id: number = 0;
@@ -2009,7 +2010,7 @@ export class GasRequestFormComponent implements OnInit {
             ? true
             : false
           : null,
-      isRequiredAlamakDeletion:
+      isRequiredAlamakDeletion: 
         (this.userRole === "Admin" ||
           this.userRole === "Engineer" ||
           this.userRole === "GasRuleCheckerGroupOne" ||
@@ -2070,6 +2071,7 @@ export class GasRequestFormComponent implements OnInit {
 
       projectName: this.piForm.controls.mkProjectName.value,
       area: this.piForm.controls.mkArea.value,
+      hasRenewerCode:this.hasRenewerCode,
     };
 
     if (this.propertyInfo.baseBuildTypeId !== this.establishBuildingId) {
@@ -2134,7 +2136,7 @@ export class GasRequestFormComponent implements OnInit {
                     position: NbGlobalLogicalPosition.TOP_START,
                     duration: 5000,
                   });
-                }
+                } 
               }
               if (this.isOldTmp) {
                 this.router.navigate([

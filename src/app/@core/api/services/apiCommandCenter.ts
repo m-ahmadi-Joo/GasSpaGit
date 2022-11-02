@@ -97,7 +97,8 @@ export abstract class ApiCommandCenter {
   abstract getGasRequestList(
     page?,
     itemsPerPage?,
-    filterParams?
+    filterParams?,
+    hPRequests?
   ): Observable<PaginatedResult<any[]>>;
 
   abstract getEngineerGasRule(
@@ -377,4 +378,9 @@ export abstract class ApiCommandCenter {
     abstract setDataForNewsDetail(id);
     abstract getDataForNewsDetail();
     //#endregio
+    abstract getSuppliersList(
+      page?,
+      itemsPerPage?,
+      filterParams?
+    ): Observable<PaginatedResult<any[]>>;
 }
