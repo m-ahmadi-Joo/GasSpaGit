@@ -157,9 +157,14 @@ import {
   EditMapListComponent,
   AdminAddDocumentComponent,
 <<<<<<< HEAD
+  SuppliersListComponent,
+  SupplierCustomActionsComponent
+=======
+<<<<<<< HEAD
 =======
   ExcuterLimitedDetailComponent
 >>>>>>> 69f69b506d8086eb8cfad661c01bd65bc1f7bfdf
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
 
 } from "./gasforms";
 import { GasRequestListResolver } from "src/app/@core/utils/gasRequestList-resolver";
@@ -234,9 +239,15 @@ import { HpGasRequestResolver } from "src/app/@core/utils/hPGasRequest-resolver"
 import { HPGasRequestListResolver } from "src/app/@core/utils/hPGasRequestList-resolver";
 import { HPGasReqListCustomActionsComponent } from "./gasforms/GasRequestManage/HPGasReqListCustomActions/HPGasReqListCustomActions.component";
 import { ExcuterLimitedDetailComponent } from "./gasforms/ExecuterManage/excuterLimitedDetail/excuterLimitedDetail.component";
+<<<<<<< HEAD
+import { HPGasRequestHistoryComponent } from "./gasforms/GasRequestManage/HPGasRequestHistory/hPGasRequestHistory.component";  
+import { HPGasRequestDetailFormComponent } from "./gasforms/GasRequestManage/HPGasRequestDetailForm/hPGasRequestDetailForm.component";
+import { SuppliersListResolver } from "src/app/@core/utils/suppliersList-resolver";
+=======
 =======
 import { ShowGasRequestDocumentsDetailComponent } from "./gasforms/GasRequestManage/showGasRequestDocumentsDetail/showGasRequestDocumentsDetail.component"
 >>>>>>> 69f69b506d8086eb8cfad661c01bd65bc1f7bfdf
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
 const routes: Routes = [
   {
     // /pages/forms/*
@@ -890,7 +901,6 @@ const routes: Routes = [
         resolve: {
           data: GetAllTownsResolver,
         },
-
       },
       {
         path: "AnalyzeProjectEngineer/:id",
@@ -1107,6 +1117,9 @@ const routes: Routes = [
       },
       {
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
                path: "ExcuterLimitedHistory/:id",
         component: ExcuterLimitedDetailComponent,
       },
@@ -1130,12 +1143,32 @@ const routes: Routes = [
         component: HPGasRequestFormComponent,
         resolve: { data: HpGasRequestResolver },
       },
+<<<<<<< HEAD
+      {
+        path: "HPGasRequestHistory/:id",
+        component: HPGasRequestHistoryComponent,
+      },
+      {
+        path: "HPGasRequestDetail/:id",
+        component: HPGasRequestDetailFormComponent,
+      },
+      {
+        path: "SuppliersList",
+        component: SuppliersListComponent,
+        resolve: { data: SuppliersListResolver, info: GetAllTownsResolver },
+      },
+      {
+        path: "SupplierCustomActions",
+        component: SupplierCustomActionsComponent,
+      },
+=======
 =======
         path: "ExcuterLimitedHistory/:id",
         component: ExcuterLimitedDetailComponent,
       },
 
 >>>>>>> 69f69b506d8086eb8cfad661c01bd65bc1f7bfdf
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
     ],
   },
 ];
@@ -1320,10 +1353,21 @@ export const routedComponents = [
 <<<<<<< HEAD
  ExcuterLimitedDetailComponent,
   HPGasRequestListComponent,
+  HPGasRequestFormComponent,
+  HPGasRequestHistoryComponent,
+  HPGasRequestDetailFormComponent,
+  SuppliersListComponent,
+  SupplierCustomActionsComponent
+  
+=======
+<<<<<<< HEAD
+ ExcuterLimitedDetailComponent,
+  HPGasRequestListComponent,
   HPGasRequestFormComponent
 =======
   ExcuterLimitedDetailComponent
 >>>>>>> 69f69b506d8086eb8cfad661c01bd65bc1f7bfdf
 
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
 ];
 

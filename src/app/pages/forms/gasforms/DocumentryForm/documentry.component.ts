@@ -114,11 +114,19 @@ export class DocumentryFormComponent implements OnInit {
     });
     if (this.requestStateType === "1/2500Map") {
       this.fileName = "1/2500Map";
+      this.routerLink = '/pages/forms/HPGasReqList';
     } else if (this.requestStateType === "EngineersMap") {
+    //بارگذاری نقشه=EngineerMap
       this.fileName = "EngineersMap";
+      this.routerLink = '/pages/forms/HPGasReqList';
     }
     else if (this.requestStateType === "ReuploadEngineerDesignationMap") {
       this.fileName = "EngineersMap";
+      this.routerLink = '/pages/forms/HPGasReqList';
+    }
+    else if (this.requestStateType === "hPGardenDocuments" || this.requestStateType === "hPIndustrialColonyDocuments") {
+      this.fileName = this.requestStateType;
+      this.routerLink = '/pages/forms/HPGasReqList';
     }
     else if (this.requestStateType === "hPGardenDocuments" || this.requestStateType === "hPIndustrialColonyDocuments") {
       this.fileName = this.requestStateType;
@@ -127,10 +135,12 @@ export class DocumentryFormComponent implements OnInit {
     else {
       this.fileName = "Documents";
     }
+   
     this.commandCenter
       .getFrombyidUploader("Documents", "InputCount", this.fileName)
       .subscribe((res: any) => {
         if (res.body) {
+          debugger;
           this.inputCount = res.body;
 
           console.log(this.inputCount);
@@ -219,9 +229,13 @@ export class DocumentryFormComponent implements OnInit {
             }
           });
 
-
           //یکی کردن لیست فایل و داکیومنت ها جهت برطرف کردن مشکل داکیومنت های اختیاری
+<<<<<<< HEAD
+          if (this.requestStateType === "EditUploadDocuments" || this.requestStateType === "ReUploadArchitectualAlbum" 
+          || this.requestStateType === "ReuploadEngineerDesignationMap" ||this.requestStateType === "hPGardenDocuments"||this.requestStateType === "hPIndustrialColonyDocuments") {
+=======
           if (this.requestStateType === "EditUploadDocuments" || this.requestStateType === "ReUploadArchitectualAlbum" || this.requestStateType === "ReuploadEngineerDesignationMap") {
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
 
             for (let i = 0; i < this.inputCount.length; i++) {
               let filenameTmp = "";
@@ -237,7 +251,7 @@ export class DocumentryFormComponent implements OnInit {
               this.inputCount[i].filePaths = filePathTmp;
 
             }
-            console.log(this.inputCount)
+            console.log("inputCount"+this.inputCount)
           }
 
 
@@ -248,8 +262,14 @@ export class DocumentryFormComponent implements OnInit {
           }
         }
       });
+<<<<<<< HEAD
+    if (this.requestStateType === "EditUploadDocuments" || this.requestStateType === "ReUploadArchitectualAlbum" || this.requestStateType === "ReuploadEngineerDesignationMap"
+    ||this.requestStateType === "hPGardenDocuments"||this.requestStateType === "hPIndustrialColonyDocuments") {
+   
+=======
     if (this.requestStateType === "EditUploadDocuments" || this.requestStateType === "ReUploadArchitectualAlbum" || this.requestStateType === "ReuploadEngineerDesignationMap") {
 
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
       this.route.data.subscribe((data) => {
         console.log(data["editData"].path);
         //  data["editData"];

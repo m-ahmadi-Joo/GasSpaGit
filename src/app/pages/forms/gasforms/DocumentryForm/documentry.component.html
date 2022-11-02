@@ -47,7 +47,8 @@
                           </app-uploader>
                            -->
                           <app-uploader *ngIf=" 
-                           this.requestStateType === 'EditUploadDocuments'||this.requestStateType === 'ReUploadArchitectualAlbum'|| this.requestStateType === 'ReuploadEngineerDesignationMap'
+                           this.requestStateType === 'EditUploadDocuments'||this.requestStateType === 'ReUploadArchitectualAlbum'|| 
+                           this.requestStateType === 'ReuploadEngineerDesignationMap'||this.requestStateType === 'hPGardenDocuments'||this.requestStateType === 'hPIndustrialColonyDocuments'
                          " [formControlName]="a.formControlName" [progress]="progress" [className]="this.requestStateType" [filePath]="
                           
                            a.filePaths.length>0
@@ -62,6 +63,8 @@
                               this.requestStateType !== 'EditUploadDocuments'
                               &&this.requestStateType !== 'ReuploadEngineerDesignationMap'
                               &&this.requestStateType !== 'ReUploadArchitectualAlbum'
+                              &&this.requestStateType !== 'hPGardenDocuments'
+                              &&this.requestStateType !== 'hPIndustrialColonyDocuments'
                             " [formControlName]="a.formControlName" [progress]="progress"
                             [fileExtentions]="a.extentions" [className]="this.requestStateType" [fileSize]="a.size">
                           </app-uploader>

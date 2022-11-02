@@ -22,7 +22,11 @@ import { ReportService } from "src/app/@core/utils/report.service";
 import {
   DefineOberverSelect,
   CollectiveDefineObserverService,
+<<<<<<< HEAD
+} from "src/app/@core/utils/collectiveDefineObserver.service"; 
+=======
 } from "src/app/@core/utils/collectiveDefineObserver.service";
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
 
 @Component({
   selector: "ngx-HPGasReqListCustomActions",
@@ -66,14 +70,24 @@ export class HPGasReqListCustomActionsComponent implements ViewCell, OnInit {
     // private loadingService: LoadingService
   ) { }
 
+<<<<<<< HEAD
+  @ViewChild("hPContentDetailTemplate", { static: false })
+  hPContentDetailTemplate: TemplateRef<any>;
+=======
   @ViewChild("contentDetailTemplate", { static: false })
   contentDetailTemplate: TemplateRef<any>;
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
 
   @ViewChild("collectorRegisteration", { static: false })
   collectorRegisteration: TemplateRef<any>;
 
+<<<<<<< HEAD
+  @ViewChild("hPGasRequestHistory", { static: false })
+  hPGasRequestHistory: TemplateRef<any>;
+=======
   @ViewChild("GasRequestHistory", { static: false })
   GasRequestHistory: TemplateRef<any>;
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
 
   ngOnInit() {
     //this.renderValue = this.value.toString();
@@ -82,7 +96,11 @@ export class HPGasReqListCustomActionsComponent implements ViewCell, OnInit {
   }
 
   onHistory(id) {
+<<<<<<< HEAD
+    this.windowService.open(this.hPGasRequestHistory, {
+=======
     this.windowService.open(this.GasRequestHistory, {
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
       hasBackdrop: true,
       windowClass: "nb-window-control"
     });
@@ -195,7 +213,11 @@ export class HPGasReqListCustomActionsComponent implements ViewCell, OnInit {
     this.router.navigate(["/pages/forms/WeldersHp/" + id]);
   }
   onShowDetailGasRequest() {
+<<<<<<< HEAD
+    this.windowService.open(this.hPContentDetailTemplate, {
+=======
     this.windowService.open(this.contentDetailTemplate, {
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
       // title: 'مشاهده جزئیات ملک',
       hasBackdrop: true,
       windowClass: "nb-window-control",
@@ -402,7 +424,11 @@ export class HPGasReqListCustomActionsComponent implements ViewCell, OnInit {
   }
 
   onContract(id, type) {
+<<<<<<< HEAD
+    this.unitStateService.set(type, true);  
+=======
     this.unitStateService.set(type, true);
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
     this.router.navigate(["/pages/forms/ContractHP/" + id]);
   }
   onSpecifyRuntime(id, type) {

@@ -1,0 +1,458 @@
+<style>
+  table td {
+    vertical-align: middle;
+    padding: 4px !important;
+  }
+</style>
+
+<nb-card>
+  <nb-card-header class="text-center">
+    <h4 class="mb-3">سوابق ملک</h4>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-4 col-md-4 col-lg-4">
+        <label>نام و نام خانوادگی مالک</label>
+        <input fullWidth autocomplete="false" id="fn" nbInput readonly="true"
+          [value]="history?.gasRequestHistoryDto.owner" type="text" />
+      </div>
+      <div class="col-sm-4 col-md-4 col-lg-4">
+        <label>کد ملی مالک</label>
+        <input fullWidth autocomplete="false" id="fn" nbInput readonly="true"
+          [value]="history?.gasRequestHistoryDto.ownerNationalCode" type="text" />
+      </div>
+      <div class="col-sm-4 col-md-4 col-lg-4">
+        <label>تلفن ثابت مالک</label>
+        <input fullWidth autocomplete="false" id="fn" nbInput readonly="true"
+          [value]="history?.gasRequestHistoryDto.ownerTel" type="text" />
+      </div>
+    </div>
+
+    <nb-card class="mt-3">
+      <nb-card-body>
+        <nb-accordion multi>
+          <nb-accordion-item expanded>
+            <!-- <nb-accordion-item-header>
+              <label>سوابق ملک</label>
+            </nb-accordion-item-header> -->
+            <nb-accordion-item-header>
+              <label>عملیات بر روی ملک:</label>
+            </nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                  <table class="table table-striped" style="width: 100% !important">
+                    <thead>
+                      <tr>
+                        <th>ردیف</th>
+                        <th>عنوان درخواست</th>
+                        <th>زمان ثبت</th>
+                        <th>اپراتور - نقش</th>
+                        <th width="30%">توضیحات</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="
+                          let step of history?.requestStateHistoryDto;
+                          let i = index
+                        ">
+                        <td width="2%">{{ i + 1 }}</td>
+                        <td width="29%">{{ step?.requestStateTypeTitle }}</td>
+                        <td width="18%">
+                          {{ step?.requestStateTime }}
+                        </td>
+                        <td width="21%">
+                          {{ step?.registrarInfo }}
+                          <span *ngIf="step?.registrarInfo == null">
+                            ثبت سیستم
+                          </span>
+                        </td>
+
+                        <td width="30%">
+                          <div *ngIf="step?.observerName !== null">
+                            <span class="ml-2 font-weight-bold">
+                              نام ناظر:
+                            </span>
+                            <span class="ml-2 font-weight-bold">
+                              {{ step?.observerName }}
+                            </span>
+                            <p class="text-justify mb-0">
+                              <span class="ml-2 font-weight-bold">
+                                شماره تماس ناظر:
+                              </span>
+                              <span class="ml-2 font-weight-bold">
+                                {{ step?.observerPhoneNumber }}
+                              </span>
+                            </p>
+                          </div>
+
+                          <div *ngIf="step?.result !== null">
+                            <div *ngIf="step?.result === false">
+                              <span class="font-weight-bold"> نتیجه: </span>
+                              <span class="ml-4 font-weight-bold text-danger">
+                                عدم تایید</span>
+                            </div>
+                            <div *ngIf="step?.result === true">
+                              <span class="font-weight-bold"> نتیجه: </span>
+                              <span class="ml-4 font-weight-bold text-success">
+                                تایید</span>
+                            </div>
+                            <div *ngIf="step?.desc !== null">
+                              <span class="font-weight-bold">
+                                توضیحات:
+                              </span>
+                              <span class="ml-4">
+                                {{ step?.desc}}</span>
+
+                            </div>
+                          </div>
+
+                          <div *ngIf="
+                              step?.executer !== null &&
+                              (step?.className == 'ContractHP' ||
+                                step?.className == 'ContractRegister' ||
+                                step?.className == 'ChangeExecutor' ||
+                                step?.className ==
+                                  'DefineExecutorForInternalSafety' ||
+                                step?.className ==
+                                  'DefineExecutorForMeterSeparationSafety')
+                            ">
+                            <span class="ml-2 font-weight-bold">
+                              نام مجری:
+                            </span>
+                            <span class="ml-2 font-weight-bold">
+                              {{ step?.executor }}
+                            </span>
+                            <p class="text-justify mb-0">
+                              <span class="ml-2 font-weight-bold">
+                                شماره تماس مجری:
+                              </span>
+                              <span class="ml-2 font-weight-bold">
+                                {{ step?.executorPhoneNumber }}
+                              </span>
+                            </p>
+                          </div>
+
+                          <div *ngIf="
+                          step?.designationMapResult !== null">
+                            <span class="ml-2 font-weight-bold">
+                              نتیجه:
+                            </span>
+
+                            <span class="ml-2 font-weight-bold text-success" *ngIf="step?.designationMapResult"> تایید
+                            </span>
+                            <span class="ml-2 font-weight-bold text-danger" *ngIf="!step?.designationMapResult"> عدم
+                              تایید </span>
+
+                            <p class="text-justify mb-1" *ngIf="step?.designationMapDesc !== ''">
+                              <span class="ml-2 font-weight-bold">
+                                توضیحات:
+                              </span>
+                              <span class="ml-2 font-weight-bold">
+                                {{ step?.designationMapDesc }}
+                              </span>
+                            </p>
+
+                            <p class="text-justify mb-0" *ngIf="step?.designationMapProblems?.includes('-')">
+                              <span class="ml-2 font-weight-bold">
+                                مشکلات:
+                              </span>
+                              <span class="ml-2 font-weight-bold">
+                                {{ step?.designationMapProblems }}
+                              </span>
+                            </p>
+                          </div>
+
+                          <div *ngIf="
+                              step?.supplier !== null &&
+                              step?.className ==
+                                'SelectSupplierAndDetermineMaterials'
+                            ">
+                            <span class="ml-2 font-weight-bold">
+                              نام تامین کننده:
+                            </span>
+                            <span class="ml-2 font-weight-bold">
+                              {{ step?.supplier }}
+                            </span>
+                            <p class="text-justify mb-0">
+                              <span class="ml-2 font-weight-bold">
+                                شماره تماس تامین کننده:
+                              </span>
+                              <span class="ml-2 font-weight-bold">
+                                {{ step?.supplierPhoneNumber }}
+                              </span>
+                            </p>
+                          </div>
+
+                          <div *ngIf="step?.transportDate !== null">
+                            <span class="ml-2 font-weight-bold">
+                              تاریخ حمل:
+                            </span>
+                            <span class="ml-2 font-weight-bold">
+                              {{ step?.transportDate }}
+                            </span>
+                          </div>
+
+                          <div *ngIf="step?.inspectionReqTime !== null">
+                            <span class="ml-2 font-weight-bold">
+                              تاریخ بازرسی درخواستی:
+                            </span>
+                            <span class="ml-2 font-weight-bold">
+                              {{ step?.inspectionReqTime }}
+                            </span>
+                          </div>
+
+                          <div *ngIf="step?.collectorCount !== null">
+                            <span class="ml-2 font-weight-bold">
+                              تعداد کلکتور:
+                            </span>
+                            <span class="ml-2 font-weight-bold text-success">
+                              {{ step?.collectorCount }}
+                            </span>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+
+          <nb-accordion-item>
+            <nb-accordion-item-header>
+              <label>مشاوره های انجام شده بر روی ملک:</label>
+            </nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <div *ngIf="history?.consultHistories.length === 0">
+                <p class="text-danger">
+                  درخواست مشاوره برای این ملک ثبت نشده است.
+                </p>
+              </div>
+
+              <div class="row" *ngFor="let consult of history?.consultHistories; let i = index">
+                <h5 class="mt-2 pr-3" style="font-size: 12px">
+                  <label class="text-primary text-center">مشاوره شماره {{ i + 1 }}
+                  </label>
+                </h5>
+                <hr />
+
+                <div class="row w-100 pr-3">
+                  <div class="col-sm-2">
+                    <label>سوال مشاوره:</label>
+                  </div>
+                  <div class="col-sm-10 pr-0">
+                    <p>{{ consult.question }}</p>
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                  <table class="table table-striped" style="width: 100% !important">
+                    <thead>
+                      <tr>
+                        <th>ردیف</th>
+                        <th>عنوان درخواست</th>
+                        <th>زمان ثبت</th>
+                        <th>اپراتور - نقش</th>
+                        <th>توضیحات</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let step of consult.states; let i = index">
+                        <td class="text-center" width="2%">{{ i + 1 }}</td>
+                        <td width="29%" *ngIf="
+                            step?.requestStateTypeClassName !==
+                            'PayRequestConsult'
+                          ">
+                          {{ step?.requestStateTypeTitle }}
+                        </td>
+                        <td width="29%" *ngIf="
+                            step?.requestStateTypeClassName ===
+                            'PayRequestConsult'
+                          ">
+                          {{ step?.requestStateTypeTitle }} - مبلغ:
+                          {{ step?.consultPrice }} ریال
+                        </td>
+                        <td class="text-center" width="18%">
+                          {{ step?.requestStateTime }}
+                        </td>
+                        <td class="text-center" width="21%">
+                          {{ step?.registrarInfo }}
+                          <span *ngIf="step?.registrarInfo == null">
+                            ثبت سیستم
+                          </span>
+                        </td>
+                        <td width="30%">
+                          <div *ngIf="step?.observerName !== null">
+                            <span class="ml-2 font-weight-bold">
+                              نام ناظر:
+                            </span>
+                            <span class="ml-2 font-weight-bold">
+                              {{ step?.observerName }}
+                            </span>
+                            <p class="text-justify mb-0">
+                              <span class="ml-2 font-weight-bold">
+                                <!-- کد ملی ناظر: -->
+                                شماره تماس ناظر:
+                              </span>
+                              <span class="ml-2 font-weight-bold">
+                                <!-- {{ step?.observerNationalCode }} -->
+                                {{ step?.observerPhoneNumber }}
+                              </span>
+                            </p>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+
+
+
+          <!-- EndOrBlockGasRequest -->
+          <nb-accordion-item>
+            <nb-accordion-item-header>
+              <label>مسدودی / بلاک بر روی ملک:</label>
+            </nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <div *ngIf="history?.endOrBlockItemDto === null ">
+                <p class="text-danger">
+                  درخواست مسدودی برای این ملک ثبت نشده است.
+                </p>
+              </div>
+              <div class="row" *ngIf="history?.endOrBlockItemDto !== null ">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                  <table class="table table-striped" style="width: 100% !important">
+                    <thead>
+                      <tr>
+                        <th>عنوان</th>
+                        <th>زمان ثبت</th>
+                        <th>کاربر درخواست</th>
+                        <th>نقش</th>
+                        <th>توضیحات درخواست</th>
+                        <th ng-if="history?.endOrBlockItemDto.unCloserUserId">کاربر- نقش رفع درخواست</th>
+                        <th ng-if="history?.endOrBlockItemDto.unCloseDate">زمان رفع درخواست</th>
+                        <th ng-if="history?.endOrBlockItemDto.unCloseComment">توضیحات</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="text-center text-danger" width="8%">
+                          {{ history?.endOrBlockItemDto.status }}
+                        </td>
+                        <td class="text-center" width="13.1%">
+                          {{ history?.endOrBlockItemDto.rDateTime }}
+                        </td>
+                        <td class="text-center" width="11.1%">
+                          {{ history?.endOrBlockItemDto.userId }}
+                        </td>
+                        <td class="text-center" width="8%">
+                          {{ history?.endOrBlockItemDto.currentRole }}
+                        </td>
+                        <td class="text-center" width="15.1%">
+                          {{ history?.endOrBlockItemDto.comment }}
+                        </td>
+                        <td class="text-center" ng-if="history?.endOrBlockItemDto.unCloserUserId && 
+                        history?.endOrBlockItemDto.unCloserUserId !== null"
+                         width="24%">
+                          {{ history?.endOrBlockItemDto.unCloserUserId }} -
+                          {{ history?.endOrBlockItemDto.unCloserCurrentRole }}
+
+                        </td>
+                        <td class="text-center" ng-if="history?.endOrBlockItemDto.unCloseDate && 
+                        history?.endOrBlockItemDto.unCloseDate !== null"
+                         width="13.1%">
+                          {{ history?.endOrBlockItemDto.unCloseDate }}
+                        </td>
+                        <td class="text-center" width="11.1%" ng-if="history?.endOrBlockItemDto.unCloseComment && 
+                        history?.endOrBlockItemDto.unCloseComment !== null">
+                          {{ history?.endOrBlockItemDto.unCloseComment }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <hr />
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+
+          <!-- EndOrBlockGasRequest -->
+
+                    <!-- SuspendedRequest -->
+                    <nb-accordion-item>
+                      <nb-accordion-item-header>
+                        <label>معوقه بر روی ملک:</label>
+                      </nb-accordion-item-header>
+                      <nb-accordion-item-body>
+                        <div *ngIf="history?.suspendItemDto === null ">
+                          <p class="text-danger">
+                            درخواست معوقه برای این ملک ثبت نشده است.
+                          </p>
+                        </div>
+                        <div class="row" *ngIf="history?.suspendItemDto !== null ">
+                          <div class="col-sm-12 col-md-12 col-lg-12">
+                            <table class="table table-striped" style="width: 100% !important">
+                              <thead>
+                                <tr>
+                                  <th>عنوان</th>
+                                  <th>زمان ثبت</th>
+                                  <th>کاربر درخواست</th>
+                                  <th>نقش</th>
+                                  <th>توضیحات درخواست</th>
+                                  <th ng-if="history?.suspendItemDto.unCloserUserId">کاربر- نقش رفع درخواست</th>
+                                  <th ng-if="history?.suspendItemDto.unCloseDate">زمان رفع درخواست</th>
+                                  <th ng-if="history?.suspendItemDto.unCloseComment">توضیحات</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td class="text-center text-danger" width="8%">
+                                    {{ history?.suspendItemDto.status }}
+                                  </td>
+                                  <td class="text-center" width="13.1%">
+                                    {{ history?.suspendItemDto.rDateTime }}
+                                  </td>
+                                  <td class="text-center" width="11.1%">
+                                    {{ history?.suspendItemDto.userId }}
+                                  </td>
+                                  <td class="text-center" width="8%">
+                                    {{ history?.suspendItemDto.currentRole }}
+                                  </td>
+                                  <td class="text-center" width="15.1%">
+                                    {{ history?.suspendItemDto.comment }}
+                                  </td>
+                                  <td class="text-center" ng-if="history?.suspendItemDto.unCloserUserId && 
+                                  history?.suspendItemDto.unCloserUserId !== null"
+                                   width="24%">
+                                    {{ history?.suspendItemDto.unCloserUserId }} -
+                                    {{ history?.suspendItemDto.unCloserCurrentRole }}
+          
+                                  </td>
+                                  <td class="text-center" ng-if="history?.suspendItemDto.unCloseDate && 
+                                  history?.suspendItemDto.unCloseDate !== null"
+                                   width="13.1%">
+                                    {{ history?.suspendItemDto.unCloseDate }}
+                                  </td>
+                                  <td class="text-center" width="11.1%" ng-if="history?.suspendItemDto.unCloseComment && 
+                                  history?.suspendItemDto.unCloseComment !== null">
+                                    {{ history?.suspendItemDto.unCloseComment }}
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <hr />
+                      </nb-accordion-item-body>
+                    </nb-accordion-item>
+          
+                    <!-- SuspendedRequest -->
+        </nb-accordion>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+</nb-card>

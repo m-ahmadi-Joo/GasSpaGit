@@ -2769,8 +2769,13 @@ export class ApiCommandCenterService extends ApiCommandCenter {
     return this._newsId.asObservable();
   }
   //#endregion
+<<<<<<< HEAD
+
+  getSuppliersList(
+=======
   //#region getAllMoreFiveUnitsList
   getAllMoreFiveUnitsList(
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
     page?,
     itemsPerPage?,
     filterParams?
@@ -2787,6 +2792,23 @@ export class ApiCommandCenterService extends ApiCommandCenter {
     }
 
     if (filterParams != null) {
+<<<<<<< HEAD
+      params = params.append("firstName", filterParams.firstName);
+      params = params.append("nationalCode", filterParams.nationalCode);
+      params = params.append("lastName", filterParams.lastName);
+      params = params.append("workTown", filterParams.workTown);
+      
+    }
+
+    return this.getFromByParamsAndObserveResponse(
+      "Suppliers",
+      "GetAllSuppliers",
+      params
+    ).pipe(
+      map((response: any) => {
+        console.log("hiiiiiii");
+        console.log(response.body);
+=======
       params = params.append("toDate", filterParams.pFromDate);
       params = params.append("fromDate", filterParams.pToDate);
       params = params.append("engineerName", filterParams.payerName);
@@ -2804,6 +2826,7 @@ export class ApiCommandCenterService extends ApiCommandCenter {
       params
     ).pipe(
       map((response: any) => {
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
         paginatedResult.result = response.body;
         if (response.headers.get("Pagination") != null) {
           paginatedResult.pagination = JSON.parse(
@@ -2814,5 +2837,8 @@ export class ApiCommandCenterService extends ApiCommandCenter {
       })
     );
   }
+<<<<<<< HEAD
+=======
   //#endregion
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
 }

@@ -1,0 +1,73 @@
+<!-- <button
+  nbTooltip="چاپ قرارداد"
+  nbTooltipPlacement="top"
+  size="tiny"
+  class="mb-2 mr-1"
+  nbButton
+  status="secondary"
+  *appHasRole="['Admin', 'Owner', 'Association']"
+  (click)="onPrintContract(rData.id)"
+>
+  <nb-icon
+    [options]="{ animation: { type: 'zoom' } }"
+    class="icon-button"
+    icon="printer-outline"
+  >
+  </nb-icon>
+</button> -->
+
+<button
+  nbTooltip="حذف"
+  nbTooltipPlacement="top"
+  size="tiny"
+  class="mb-2 mr-1"
+  nbButton
+  status="danger"
+  (click)="onDeleteContract(rData)"
+  *appHasRole="['Admin', 'GasEmployee']"
+>
+  <nb-icon
+    [options]="{ animation: { type: 'zoom' } }"
+    class="icon-button"
+    icon="close-outline"
+  >
+  </nb-icon>
+</button>
+
+<button
+  nbTooltip="ویرایش"
+  nbTooltipPlacement="top"
+  *appHasRole="['Admin', 'GasEmployee', 'GasEmployeeExceptShiraz']"
+  [disabled]="rData.hasUnit"
+  [ngStyle]="{ cursor: rData.hasUnit ? 'not-allowed' : 'pointer' }"
+  size="tiny"
+  class="mb-2 mr-1"
+  nbButton
+  status="warning"
+  (click)="onEditExecuter(rData.id)"
+>
+  <nb-icon
+    [options]="{ animation: { type: 'zoom' } }"
+    class="icon-button"
+    icon="edit-2-outline"
+  >
+  </nb-icon>
+</button>
+
+
+<button
+  nbTooltip="مشاهده جزئیات"
+  nbTooltipPlacement="top"
+  size="tiny"
+  class="mb-2 mr-1"
+  nbButton
+  status="info"
+  (click)="onHistory(rData?.id)"
+>
+  <nb-icon
+    [options]="{ animation: { type: 'zoom' } }"
+    class="alert-circle-outline"
+    icon="eye-outline"
+  >
+  </nb-icon>
+</button>
