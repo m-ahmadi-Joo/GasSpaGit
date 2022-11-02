@@ -28,6 +28,8 @@ import { UnitStateService } from "src/app/@core/utils/unitState.service";
 import { ReportService } from "src/app/@core/utils/report.service";
 import { Auth } from "src/app/@core/auth/services/auth";
 import { IDatePickerConfig } from "ng2-jalali-date-picker";
+import { PersianDate } from 'src/app/@core/utils/persianDate';
+
 
 interface contractData {
   comment: string;
@@ -101,6 +103,7 @@ export class ContractComponent implements OnInit {
   currentRole: string;
   executerList = [];
   test = [];
+  datePickerConfig: IDatePickerConfig;
   // gasMeterCollection: GasMeterCollection;
   constructor(
     private fb: FormBuilder,
@@ -114,6 +117,8 @@ export class ContractComponent implements OnInit {
     private unitStateService: UnitStateService,
     private reportService: ReportService,
     private auth: Auth,
+    private persianDate: PersianDate,
+
 
   ) {
     this.currentRole = this.auth.getCurrentRole();
@@ -180,6 +185,8 @@ export class ContractComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.datePickerConfig = this.persianDate.datePickerConfig;
+
     this.unitStateService.className.subscribe((x) => {
       this.requestStateType = x;
     });
@@ -291,7 +298,6 @@ export class ContractComponent implements OnInit {
         let res: contractData = edit["edit"];
 
         if (res) {
-          console.log(res);
 
           this.designerType = res.designerType;
 

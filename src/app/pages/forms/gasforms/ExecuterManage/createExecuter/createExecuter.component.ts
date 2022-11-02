@@ -12,6 +12,9 @@ import { RegularService } from "src/app/@core/utils/regular.service";
 import { DatePipe } from "@angular/common";
 import { Auth } from "src/app/@core/auth/services/auth";
 import { TypeaheadMatch } from "ngx-bootstrap";
+import { IDatePickerConfig } from 'ng2-jalali-date-picker';
+import { PersianDate } from 'src/app/@core/utils/persianDate';
+
 
 function nationalIDCheck(
   control: AbstractControl
@@ -72,7 +75,8 @@ function nationalIDCheck(
 @Component({
   selector: "ngx-createExecuter",
   templateUrl: "./createExecuter.component.html",
-  styleUrls: ["./createExecuter.component.scss"],
+  styleUrls: [ "../../formStyle.scss" , "./createExecuter.component.scss"],
+ 
 })
 export class CreateExecuterComponent implements OnInit {
   currentRole: string;
@@ -84,7 +88,9 @@ export class CreateExecuterComponent implements OnInit {
     private route: ActivatedRoute,
     public datepipe: DatePipe,
     public regularService: RegularService,
-    private auth: Auth
+    private auth: Auth,
+    private persianDate: PersianDate,
+
    
   ) {
     this.currentRole = this.auth.getCurrentRole();
@@ -130,7 +136,11 @@ export class CreateExecuterComponent implements OnInit {
   gasReqId;
   gasStates: any;
   loading = false;
+  datePickerConfig: IDatePickerConfig;
+
   ngOnInit() {
+    this.datePickerConfig = this.persianDate.datePickerConfig;
+    console.log(this.datePickerConfig+"datepickerconfig")
     if (
       this.currentRole !== "Admin" &&
       this.currentRole !== "GasEmployee" &&
