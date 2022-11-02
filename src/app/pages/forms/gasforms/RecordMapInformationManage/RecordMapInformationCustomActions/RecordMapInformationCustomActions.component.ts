@@ -37,6 +37,9 @@ export class RecordMapInformationCustomActionsComponent
   @Output() rejectConfirm: EventEmitter<any> = new EventEmitter();
   @Output() stopEndOrBlockRequest: EventEmitter<any> = new EventEmitter();
   @Output() endOrBlockRequest: EventEmitter<any> = new EventEmitter();
+  @Output() suspendRequest: EventEmitter<any> = new EventEmitter();
+  @Output() cancelSuspendedRequest: EventEmitter<any> = new EventEmitter();
+
   collctiveDefineObserver: DefineOberverSelect[] = [];
 
   constructor(
@@ -489,5 +492,11 @@ export class RecordMapInformationCustomActionsComponent
   onStopEndOrBlockRequest() {
     this.stopEndOrBlockRequest.emit(this.rowData);
   }
+  onSuspendRequest() {
+    this.suspendRequest.emit(this.rowData);
+   }
 
+   onCancelSuspendedRequest() {
+    this.cancelSuspendedRequest.emit(this.rowData);
+  }
 }

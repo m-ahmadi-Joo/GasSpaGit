@@ -162,14 +162,13 @@ export class GasRequestListComponent {
     private fb: FormBuilder,
     private fbEndOrBlockRequest: FormBuilder,
     private fbStopEndOrBlockRequest: FormBuilder,
+    private fbSuspendRequest: FormBuilder,
     private fbCancelSuspendRequest: FormBuilder,
-
     private reg: RegularService,
     private dialogService: NbDialogService,
     private toastrService: NbToastrService,
     private unitStateService: UnitStateService, // private loadingService: LoadingService,
     private gasReqStateService: GasRequestStateService,
-    private fbSuspendRequest: FormBuilder,
 
   ) { }
 
@@ -1968,7 +1967,6 @@ cancelSuspendedRequest(row) {
     this.collectorType = '1';
   }
   selectUnitRadio(selecteItem) {
-    debugger;
     let selectedList = [];
     this.collectorCountArr.forEach(element => {
       if (element.idx !== selecteItem.idx) {

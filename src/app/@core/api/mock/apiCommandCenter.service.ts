@@ -572,17 +572,21 @@ export class ApiCommandCenterService extends ApiCommandCenter {
   getGasRequestList(
     page?,
     itemsPerPage?,
-    filterParams?
+    filterParams?,
+    hPRequests?
   ): Observable<PaginatedResult<any[]>> {
     const paginatedResult: PaginatedResult<any[]> = new PaginatedResult<
       any[]
     >();
 
     let params = new HttpParams();
-
+    if (hPRequests == null||hPRequests=='undefined') {
+      hPRequests = false;
+    }
     if (page != null && itemsPerPage != null) {
       params = params.append("page", page);
       params = params.append("limit", itemsPerPage);
+      params = params.append("hPRequests", hPRequests)
     }
 
     if (filterParams != null) {
@@ -2763,6 +2767,52 @@ export class ApiCommandCenterService extends ApiCommandCenter {
   }
   getDataForNewsDetail() {
     return this._newsId.asObservable();
+  }
+  //#endregion
+  //#region getAllMoreFiveUnitsList
+  getAllMoreFiveUnitsList(
+    page?,
+    itemsPerPage?,
+    filterParams?
+  ): Observable<PaginatedResult<any[]>> {
+    const paginatedResult: PaginatedResult<any[]> = new PaginatedResult<
+      any[]
+    >();
+
+    let params = new HttpParams();
+
+    if (page != null && itemsPerPage != null) {
+      params = params.append("page", page);
+      params = params.append("limit", itemsPerPage);
+    }
+
+    if (filterParams != null) {
+      params = params.append("toDate", filterParams.pFromDate);
+      params = params.append("fromDate", filterParams.pToDate);
+      params = params.append("engineerName", filterParams.payerName);
+      params = params.append("engineerIds", filterParams.payerNationalCode);
+      params = params.append("engineerName", filterParams.payType);
+      params = params.append("unitCountMin", filterParams.payReason);
+      params = params.append("unitCountMax", filterParams.trackNumber);
+      params = params.append("requestStateIds", filterParams.bankRefrence);
+      params = params.append("gasRequestFileNumber", filterParams.gasRequestFileNumber);
+    }
+
+    return this.getFromByParamsAndObserveResponse(
+      "Analyze",
+      "GetGasRequestFromAnalyze",
+      params
+    ).pipe(
+      map((response: any) => {
+        paginatedResult.result = response.body;
+        if (response.headers.get("Pagination") != null) {
+          paginatedResult.pagination = JSON.parse(
+            response.headers.get("Pagination")
+          );
+        }
+        return paginatedResult;
+      })
+    );
   }
   //#endregion
 }

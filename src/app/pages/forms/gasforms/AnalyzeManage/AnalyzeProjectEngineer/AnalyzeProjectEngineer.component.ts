@@ -62,6 +62,7 @@ export class AnalyzeProjectEngineerComponent implements OnInit {
       this.workInspectionDate = res["data"].workInspectionDate;
       // console.log(this.workInspectionDate)
       this.engineersList = res["data"].list;
+      console.log(this.engineersList );
       this.reasonForNotFoundEngineer = res["data"].reason;
       this.selectedArea = res["data"].areaId,
         this.areaTitle = res["data"].areaTitle,
@@ -264,7 +265,16 @@ export class AnalyzeProjectEngineerComponent implements OnInit {
     this.selectedOption = Array.of(event.item);
     // console.log(this.selectedOption)
     this.engineerId = event.item.engineerId;
-    // console.log(this.engineerId);
+    this.api.getById("Engineer/CheckEngCollabCrntYear", this.engineerId).subscribe((res: any) => {
+      if (res) {
+        if (res.body) {
+          if (res.body != 'ok') {
+            this.cgmForm.get('engineerSelect').setValue('');
+            this.engineerId = null;
+          }
+        }
+      }
+     });    // console.log(this.engineerId);
   }
 
   INPUT_VALIDATION_MESSAGES = {
@@ -355,6 +365,7 @@ export class AnalyzeProjectEngineerComponent implements OnInit {
         this.engineerId = null;
       } else {
         this.engineerId = this.selectedOption.engineerId;
+
       }
     }
   }

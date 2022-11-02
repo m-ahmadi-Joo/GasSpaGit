@@ -779,7 +779,6 @@ export class ContractComponent implements OnInit {
         if (this.requestStateType == "ChangeExecutor") {
           this.sendForm.get("Id").setValue(this.contractId);
         }
-        debugger;
         this.api
           .postTo("Contract", "", this.toFormData(this.sendForm.value))
           .subscribe(

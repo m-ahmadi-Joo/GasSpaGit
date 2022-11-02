@@ -8,7 +8,7 @@ import {
   // AgentInfoFormComponent,
   AuditInfoFormComponent,
   BluePrintInfoFormComponent,
-  AlamakDeletionFormComponent, 
+  AlamakDeletionFormComponent,
   ExecuterContractFormComponent,
   CreateMailForMunicipalityFormComponent,
   DesignerFormComponent,
@@ -150,13 +150,13 @@ import {
   HistoryEngineerAreaRatingCustomActionsComponent,
 
 
-  
+
   EngineerAreasStatusComponent,
   ControlFinalComponent,
   CompleteControlFinalComponent,
   EditMapListComponent,
   AdminAddDocumentComponent,
-  
+
 } from "./gasforms";
 import { GasRequestListResolver } from "src/app/@core/utils/gasRequestList-resolver";
 import { RecordMapInformationListResolver } from "src/app/@core/utils/recordMapInformationList-resolver";
@@ -223,6 +223,12 @@ import { ExecutorOldGasRequestEditComponent } from "./gasforms/GasRequestManage/
 import { DocumentryFormForExecutorComponent } from "./gasforms/DocumentryFormForExecutor/DocumentryFormForExecutor.component";
 import { SubmitAuditResultForOldGasRequestsFormComponent } from "./gasforms/SubmitAuditResultsForOldGasRequests/submitARForOldGasRequests.component";
 import{ShowGasRequestDocumentsDetailComponent}from "./gasforms/GasRequestManage/showGasRequestDocumentsDetail/showGasRequestDocumentsDetail.component"
+import{HPGasRequestListComponent} from "./gasforms/GasRequestManage/HPGasRequestListForm/HPGasRequestList.component"
+import { HPGasRequestFormComponent } from "./gasforms/GasRequestManage/HPGasRequestForm/hPGasRequestForm.component";
+import { HpGasRequestResolver } from "src/app/@core/utils/hPGasRequest-resolver";
+import { HPGasRequestListResolver } from "src/app/@core/utils/hPGasRequestList-resolver";
+import { HPGasReqListCustomActionsComponent } from "./gasforms/GasRequestManage/HPGasReqListCustomActions/HPGasReqListCustomActions.component";
+import { ExcuterLimitedDetailComponent } from "./gasforms/ExecuterManage/excuterLimitedDetail/excuterLimitedDetail.component";
 const routes: Routes = [
   {
     // /pages/forms/*
@@ -244,7 +250,7 @@ const routes: Routes = [
         path: "GasRequest/:id/ArchitectureAlbumApprove",
         component: ArchitectureAlbumApproveFormComponent,
       },
-       {
+      {
         path: "Engineer/EngineerSignature/:id",
         component: EngineerSignatureComponent,
       },
@@ -292,7 +298,7 @@ const routes: Routes = [
       {
         path: "df/ReUpload/:id",
         component: DocumentryFormComponent,
-         resolve: {
+        resolve: {
           data: DocumentsResolver,
           editData: DocumentryFormEditResolver
         },
@@ -368,7 +374,7 @@ const routes: Routes = [
         resolve: {
           data: GasRequestLisForContractResolver,
           contract: ContractResolver,
-          designer:DesignerResolver,
+          designer: DesignerResolver,
         },
       },
       {
@@ -376,7 +382,7 @@ const routes: Routes = [
         component: ContractComponent,
         resolve: {
           data: GasRequestLisForContractResolver,
-          designer:DesignerResolver,
+          designer: DesignerResolver,
           contract: ContractResolver,
           edit: EditContractResolver
         },
@@ -487,7 +493,7 @@ const routes: Routes = [
       },
       {
         path: "ConsultList",
-        component: ConsultListComponent, 
+        component: ConsultListComponent,
         resolve: {
           data: ConsultListResolver,
           info: GetTableWorksFilterResolver,
@@ -642,7 +648,7 @@ const routes: Routes = [
       {
         path: "GasRequest/:id/RequestSafetyInspectionForPeriodicVisits",
         component: RequestSafetyInspectionForPeriodicVisitsComponent,
-      }, 
+      },
       {
         path: "GasRequest/:id/ResultSafetyInspectionForPeriodicVisits",
         component: ResultSafetyInspectionForPeriodicVisitsComponent,
@@ -771,7 +777,7 @@ const routes: Routes = [
         resolve: { data: ExecutersListResolver, info: GetAllTownsResolver },
       },
       {
-        path: "AnalyzeList", 
+        path: "AnalyzeList",
         component: AnalyzeListComponent,
         resolve: { data: AnalyzeListResolver, areas: GetAllAreasResolver },
       },
@@ -1062,11 +1068,11 @@ const routes: Routes = [
         component: PreUploadedDocumentsComponent,
       },
       {
-  path: "ExecutorOldGasRequestEdit/:id/contractId/:contractId",
+        path: "ExecutorOldGasRequestEdit/:id/contractId/:contractId",
         component: ExecutorOldGasRequestEditComponent,
         //resolve: { data: GasRequestResolver },
       },
-	{
+      {
 
         path: "dfexecutor/:id/contractId/:contractId",
         component: DocumentryFormForExecutorComponent,
@@ -1075,7 +1081,7 @@ const routes: Routes = [
           editData: DocumentryFormEditResolver
         }
       },
-	{
+      {
         path: "AdminAddDocument/:id",
         component: AdminAddDocumentComponent,
         resolve: {
@@ -1090,8 +1096,31 @@ const routes: Routes = [
       {
         path: "ShowGasRequestDocumentsDetail/:filePath",
         component: ShowGasRequestDocumentsDetailComponent,
-      }
-
+      },
+      {
+               path: "ExcuterLimitedHistory/:id",
+        component: ExcuterLimitedDetailComponent,
+      },
+      {
+        path: "HPGasReqList",
+        component: HPGasRequestListComponent,
+        resolve: {
+          data: HPGasRequestListResolver,
+          info: GetTableWorksFilterResolver,
+          areas: GetAllAreasResolver,
+          towns: GetAllTownsResolver,
+        },
+      },
+      {
+        path: "HPGasRequest",
+        component: HPGasRequestFormComponent,
+        resolve: { data: HpGasRequestResolver },
+      },
+      {
+        path: "HPGasRequest/:id",
+        component: HPGasRequestFormComponent,
+        resolve: { data: HpGasRequestResolver },
+      },
     ],
   },
 ];
@@ -1129,6 +1158,7 @@ export const routedComponents = [
   ConsultHistoryComponent,
   RequestConsultComponent,
   GasReqListCustomActionsComponent,
+  HPGasReqListCustomActionsComponent,
   ContractComponent,
   GasRequestDetailFormComponent,
   ContractListComponent,
@@ -1271,7 +1301,10 @@ ExecutorOldGasRequestEditComponent,
 DocumentryFormForExecutorComponent,
   AdminAddDocumentComponent,
   SubmitAuditResultForOldGasRequestsFormComponent,
-  ShowGasRequestDocumentsDetailComponent
+  ShowGasRequestDocumentsDetailComponent,
+ ExcuterLimitedDetailComponent,
+  HPGasRequestListComponent,
+  HPGasRequestFormComponent
 
   
 ];

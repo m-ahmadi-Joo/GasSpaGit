@@ -65,6 +65,25 @@
                 </span>
               </div>
             </div>
+            <div class="col-lg-3 col-md-3 col-sm-3">
+              <label class="d-block mt-1" for="ot">
+                <span class="text-danger font-weight-bold ml-1">*</span>
+                نوع درخواست :</label>
+              <nb-radio-group formControlName="requestKind" id="rk" name="rk">
+                <nb-radio class="d-inline-block" value="0">انشعاب فشار ضعیف</nb-radio>
+                <nb-radio class="d-inline-block" value="1">انشعاب فشار قوی</nb-radio>
+              </nb-radio-group>
+              <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.requestKind">
+                <span *ngIf="
+                        userOwnerDto.get('requestKind').hasError(validation.type) &&
+                        (userOwnerDto.get('requestKind').dirty ||
+                          userOwnerDto.get('requestKind').touched)
+                      " class="text-danger">
+                  {{ validation.message }}
+                </span>
+              </div>
+            </div>
+
           </div>
           <div class="row">
             <div class="input-group full-name-input col-lg-12 col-md-12 col-sm-12">

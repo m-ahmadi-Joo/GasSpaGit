@@ -92,6 +92,10 @@ import { EngineerEditMapListResolver } from "src/app/@core/utils/EngineerEditMap
 import{gridCheckboxForEditMapComponent} from "./gasforms/Engineer/gridCheckboxForEditMap/gridCheckboxForEditMap.component";
 import { CookieService } from 'ngx-cookie-service';
 import { DesignerResolver } from "src/app/@core/utils/DesignerResolver";
+import { HpGasRequestResolver } from "src/app/@core/utils/hPGasRequest-resolver";
+import { HPGasRequestListResolver } from "src/app/@core/utils/hPGasRequestList-resolver";
+import { HPGasReqListCustomActionsComponent } from "./gasforms/GasRequestManage/HPGasReqListCustomActions/HPGasReqListCustomActions.component";
+import { ExcuterLimitedDetailComponent } from './gasforms/ExecuterManage/excuterLimitedDetail/excuterLimitedDetail.component';
 
 @NgModule({
   imports: [
@@ -115,6 +119,7 @@ import { DesignerResolver } from "src/app/@core/utils/DesignerResolver";
   ],
   declarations: [
     ...routedComponents,
+
     // MapDialogComponent,
     // HasRoleDirective,
     // CustomTypeaheadDirective
@@ -135,7 +140,8 @@ import { DesignerResolver } from "src/app/@core/utils/DesignerResolver";
     ArchitecturalAlbumApproveCustomActionsComponent,
     HistoryEngineerAreaRatingCustomActionsComponent,
     gridCheckboxForEditMapComponent,
-    EngineerEditMapListCustomActionsComponent
+    EngineerEditMapListCustomActionsComponent,
+    HPGasReqListCustomActionsComponent
 
     // PayDetailListComponent,
     // PayDetailListCustomActionsComponent,
@@ -198,6 +204,8 @@ import { DesignerResolver } from "src/app/@core/utils/DesignerResolver";
     // EngineerPaymentService
     EngineerEditMapListResolver,
     DesignerResolver,
+    HpGasRequestResolver,
+    HPGasRequestListResolver,
     [CookieService],
   ],
   exports: [RecordMapInformationDetailComponent , AddressTooltipComponent],

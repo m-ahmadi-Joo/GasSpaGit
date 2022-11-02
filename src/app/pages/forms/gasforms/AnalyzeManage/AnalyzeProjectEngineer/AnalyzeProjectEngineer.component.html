@@ -46,9 +46,10 @@
           <label>
             مهندس
           </label>
-          <input formControlName="engineerSelect" [typeahead]="engineersList" (change)="changeEngineer($event)" [disabled]="temporaryDisable"
+          <input formControlName="engineerSelect" [typeahead]="engineersList" (change)="changeEngineer($event)" 
+           [disabled]="temporaryDisable"
             typeaheadOptionField="itemForSearch" (typeaheadOnSelect)="onSelect($event)" [typeaheadOptionsLimit]="7"
-            [typeaheadMinLength]="0" class="form-control" class="form-control">
+            [typeaheadMinLength]="0" class="form-control">
 
           <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.engineerSelect">
             <span class="text-danger" *ngIf="

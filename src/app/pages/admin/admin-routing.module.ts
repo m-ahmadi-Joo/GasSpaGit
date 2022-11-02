@@ -68,6 +68,7 @@ import {
   NewsListCustomActionsComponent,
   NewsComponent,
   UploadedDocumentsComponent,
+  MoreThanFiveUnitsComponent
 } from "./forms";
 
 import { AuthGuard } from "src/app/@core/auth/mock/authguard";
@@ -104,6 +105,8 @@ import { SendSmsListResolver } from "src/app/@core/utils/sendSmsList-resolver";
 import { GetTableWorksFilterResolver } from "src/app/@core/utils/getTableWorksFilter-resolver";
 import { NewsListResolver } from "src/app/@core/utils/NewsListResolver";
 import { GetNewsInfoResolver } from "src/app/@core/utils/getNewsInfo-resolver";
+import { GetMoreFiveUnitsSearchInfoResolver } from "src/app/@core/utils/getMoreFiveUnitsSearchInfo-resolver";
+import { GetMoreFiveUnitsListResolver } from "src/app/@core/utils/getMoreFiveUnitsList-resolver";
 
 const routes: Routes = [
   {
@@ -479,6 +482,14 @@ const routes: Routes = [
            data: GetNewsInfoResolver,
          },
       },
+      {
+        path: "GasMoreThanFiveUnitsList",
+        component: MoreThanFiveUnitsComponent,
+        resolve: {
+          info: GetMoreFiveUnitsSearchInfoResolver,
+          // listData: GetMoreFiveUnitsListResolver,
+        },
+      },
     ],
   },
 ];
@@ -554,4 +565,5 @@ export const routerComponents = [
   NewsListCustomActionsComponent,
   NewsComponent,
   UploadedDocumentsComponent,
+  MoreThanFiveUnitsComponent,
 ];

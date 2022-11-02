@@ -72,6 +72,7 @@ export class DocumentryFormComponent implements OnInit {
   pathsData = []
   filePathRes = [];
   sizeTitles = [];
+  routerLink = '';
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -92,11 +93,12 @@ export class DocumentryFormComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.unitStateService.className.subscribe((x) => {
       this.requestStateType = x;
     });
     console.log(this.requestStateType)
-
+    this.routerLink = '/pages/forms/GasReqList';
     this.route.data.subscribe((data) => {
       this.isVillage = data["data"];
     });
@@ -117,6 +119,10 @@ export class DocumentryFormComponent implements OnInit {
     }
     else if (this.requestStateType === "ReuploadEngineerDesignationMap") {
       this.fileName = "EngineersMap";
+    }
+    else if (this.requestStateType === "hPGardenDocuments" || this.requestStateType === "hPIndustrialColonyDocuments") {
+      this.fileName = this.requestStateType;
+      this.routerLink = '/pages/forms/HPGasReqList';
     }
     else {
       this.fileName = "Documents";
@@ -153,7 +159,7 @@ export class DocumentryFormComponent implements OnInit {
               if (
                 element.required == true &&
                 element.formControlName !== "Principal Agreement" &&
-                this.requestStateType !== "EditUploadDocuments"&&
+                this.requestStateType !== "EditUploadDocuments" &&
                 this.requestStateType !== "ReUploadArchitectualAlbum"
               ) {
                 this.docForm.addControl(
@@ -186,7 +192,7 @@ export class DocumentryFormComponent implements OnInit {
               if (
                 element.required == true &&
                 // element.formControlName !== "DehyariLetter" &&
-                this.requestStateType !== "EditUploadDocuments"&&
+                this.requestStateType !== "EditUploadDocuments" &&
                 this.requestStateType !== "ReUploadArchitectualAlbum"
               ) {
                 this.docForm.addControl(
@@ -215,7 +221,7 @@ export class DocumentryFormComponent implements OnInit {
 
 
           //یکی کردن لیست فایل و داکیومنت ها جهت برطرف کردن مشکل داکیومنت های اختیاری
-          if (this.requestStateType === "EditUploadDocuments" || this.requestStateType === "ReUploadArchitectualAlbum"|| this.requestStateType === "ReuploadEngineerDesignationMap") {
+          if (this.requestStateType === "EditUploadDocuments" || this.requestStateType === "ReUploadArchitectualAlbum" || this.requestStateType === "ReuploadEngineerDesignationMap") {
 
             for (let i = 0; i < this.inputCount.length; i++) {
               let filenameTmp = "";
@@ -242,8 +248,7 @@ export class DocumentryFormComponent implements OnInit {
           }
         }
       });
-    if (this.requestStateType === "EditUploadDocuments" || this.requestStateType === "ReUploadArchitectualAlbum" ||this.requestStateType === "ReuploadEngineerDesignationMap")
-     {
+    if (this.requestStateType === "EditUploadDocuments" || this.requestStateType === "ReUploadArchitectualAlbum" || this.requestStateType === "ReuploadEngineerDesignationMap") {
 
       this.route.data.subscribe((data) => {
         console.log(data["editData"].path);
@@ -277,18 +282,31 @@ export class DocumentryFormComponent implements OnInit {
         control.updateValueAndValidity();
       });
     }
-    this.api
-      .getFrom("Documents", "CheckingConstructionType/" + this.gasReqId)
-      .subscribe((res: any) => {
-        this.buildType = res;
-        if (this.buildType == 0) {
-          this.docForm.controls["GasBill"].clearValidators();
-          this.docForm.controls["GasBill"].disable();
-        }
-      });
+
+    if (this.requestStateType !== "hPGardenDocuments" && this.requestStateType !== "hPIndustrialColonyDocuments")//فشار قوی نباشد
+    {
+      this.api
+        .getFrom("Documents", "CheckingConstructionType/" + this.gasReqId)
+        .subscribe((res: any) => {
+          this.buildType = res;
+          if (this.buildType == 0) {
+            this.docForm.controls["GasBill"].clearValidators();
+            this.docForm.controls["GasBill"].disable();
+          }
+        });
+    }
+
   }
 
   submit() {
+    var routerLink='';
+    if (this.requestStateType === "hPGardenDocuments" || this.requestStateType === "hPIndustrialColonyDocuments") {
+
+      routerLink="/pages/forms/HPGasReqList";
+    }
+    else
+    routerLink=="/pages/forms/GasReqList";
+
     if (
       this.requestStateType === "EngineersMap" ||
       this.requestStateType === "1/2500Map"
@@ -332,8 +350,7 @@ export class DocumentryFormComponent implements OnInit {
             this.progress = 0;
             this.success = true;
             this.sendForm.reset();
-            this.router.navigate(["/pages/forms/GasReqList"]);
-            // }
+            this.router.navigate([this.routerLink]);
           },
           (err) => {
             this.loading = false;
@@ -379,8 +396,7 @@ export class DocumentryFormComponent implements OnInit {
             this.progress = 0;
             this.success = true;
             this.sendForm.reset();
-            this.router.navigate(["/pages/forms/GasReqList"]);
-            // }
+            this.router.navigate([this.routerLink]);
           },
           (err) => {
             this.loading = false;
@@ -431,8 +447,7 @@ export class DocumentryFormComponent implements OnInit {
             this.progress = 0;
             this.success = true;
             this.sendForm.reset();
-            this.router.navigate(["/pages/forms/GasReqList"]);
-            // }
+            this.router.navigate([this.routerLink]);
           },
           (err) => {
             this.loading = false;
@@ -482,17 +497,15 @@ export class DocumentryFormComponent implements OnInit {
             this.progress = 0;
             this.success = true;
             this.sendForm.reset();
-            this.router.navigate(["/pages/forms/GasReqList"]);
-            // }
+            this.router.navigate([this.routerLink]);
           },
           (err) => {
             this.loading = false;
           }
         );
-    }  
+    }
 
-    else 
-    {
+    else {
       this.success = false;
       if (!this.docForm.valid) {
         this.markAllAsDirty(this.docForm);
@@ -551,8 +564,7 @@ export class DocumentryFormComponent implements OnInit {
               this.progress = 0;
               this.success = true;
               this.sendForm.reset();
-              this.router.navigate(["/pages/forms/GasReqList"]);
-              //}
+              this.router.navigate([this.routerLink]);
             },
             (err) => {
               this.loading = false;
@@ -581,8 +593,7 @@ export class DocumentryFormComponent implements OnInit {
               this.progress = 0;
               this.success = true;
               this.sendForm.reset();
-              this.router.navigate(["/pages/forms/GasReqList"]);
-              // }
+              this.router.navigate([this.routerLink]);
             },
             (err) => {
               this.loading = false;

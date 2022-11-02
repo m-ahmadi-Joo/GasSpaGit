@@ -378,7 +378,9 @@
                   <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="!showCollectorWelding">
                     <div>
                       <label for="isCollectorInspectionWelding">نیاز به بازرسی جوش کلکتوری</label>
-                      <nb-radio-group *ngIf="this.checkAnalyze !== 'View'" class="form-inline pr-3"
+                      <nb-radio-group *ngIf="this.checkAnalyze !== 'View'"
+                      (valueChange)="onChangeCheckCollector($event)"
+                       class="form-inline pr-3"
                         formControlName="isCollectorInspectionWelding" id="isCollectorInspectionWelding"
                         name="isCollectorInspectionWelding">
                         <nb-radio value="true">
