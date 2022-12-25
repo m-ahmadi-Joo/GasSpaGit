@@ -11,7 +11,7 @@ import {Component} from '@angular/core';
   `,
 })
 export class UmgnComponent {
-  tabs: any[] = [
+  tabs: any[] = [   
     {
       title: 'کاربران',
       icon: 'person',

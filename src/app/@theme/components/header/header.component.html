@@ -463,6 +463,15 @@
           </a>
         </div>
 
+        
+        <div class="col-sm-2" *ngIf='userRoles.includes("AnalyzeEmployee")' (click)="onRoleSelected('AnalyzeEmployee')">
+          <a>
+            <img src="../../../assets/images/Icons/Login/Black&White/icons8-manager-100.png" class="img-fluid"
+              alt="کارمند ارجاعات" />
+            <strong class="text-primary">کارمند ارجاعات</strong>
+          </a>
+        </div>
+
         <div class="col-sm-2" *ngIf='userRoles.includes("SupplierHP")' (click)="onRoleSelected('SupplierHP')">
           <a>
             <img src="../../../assets/images/Icons/Login/Black&White/icons8-spy-100.png" class="img-fluid"
@@ -642,6 +651,7 @@
     </nb-card-header>
     <div id="divNewsContainer">
       <nb-card-body *ngFor="let data of news | paginate: pagingConfig; let i = index">
+        
         <div
         [ngStyle]="{'background-color': i % 2 === 0 ? '#e7ecf6' :  '#f8f8f8'}"
         [className]="!data.hasRead ? 'row pt-2 unreadednews' : 'row pt-2'">
@@ -669,19 +679,19 @@
             <label class="control-label">{{ data.subject }}</label>
           </div>
 
-          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 mt-3 pr-5">
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 mt-3 pr-5">
             <label><strong>ارسال کننده:&nbsp;</strong></label>
             <label class="control-label">{{ data.sender }}</label>
           </div>
 
-          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 mt-3">
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 mt-3">
             <label><strong>تاریخ ثبت:&nbsp;</strong></label>
             <label class="control-label">{{ data.rDateTime }}</label>
           </div>
 
-          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 mt-3">
-            <label><strong>تاریخ انقضاء:&nbsp;</strong></label>
-            <label class="control-label">{{ data.expireDate }}</label>
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 mt-3">
+            <button (click)="gotoDetail(data.id)">مشاهده جزئیات</button>
+
           </div>
 
           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-2">
@@ -705,12 +715,6 @@
                   height: '20px'
                 }" class="icon-button" icon="eye-outline">
               </nb-icon>
-              <nb-icon *ngIf="showNewsDesc(data.id)" status="basic" [options]="{
-                  animation: { type: 'zoom' },
-                  width: '20px',
-                  height: '20px'
-                }" class="icon-button" icon="eye-off-outline">
-              </nb-icon>
             </a>
           </div>
         </div>
@@ -730,7 +734,7 @@
         <nb-card-body>
           <div class="row">
             <div class="d-flex justify-content-center col-lg-12 col-md-12 col-sm-12 col-xs-12">
-              <pagination-controls class="pagination" (pageChange)="pageChanged($event)" previousLabel="" nextLabel="">
+              <pagination-controls class="pagination" (pageChange)="newsPageChanged($event)" previousLabel="" nextLabel="">
               </pagination-controls>
             </div>
           </div>

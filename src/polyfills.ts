@@ -93,4 +93,7 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 if (typeof SVGElement.prototype.contains === 'undefined') {
   SVGElement.prototype.contains = HTMLDivElement.prototype.contains;
 }
+if (!(Symbol as any).observable) {
+  (Symbol as any).observable = Symbol('Symbol.observable polyfill from RxJS Testing');
+}
 

@@ -26,7 +26,7 @@
 <nb-select *appHasRole="['Admin', 'Executor', 'Owner', 'Engineer', 'GasEmployee','Association']"
   placeholder="انتخاب عملیات" status="success">
   <nb-option *ngIf="rData.contractId !== 0 && rData.collectorCount != null">
-    <button fullWidth nbButton status="primary" *appHasRole="['Admin', 'Executor', 'Owner', 'Engineer', 'GasEmployee']"
+    <button fullWidth nbButton status="primary" *appHasRole="['Admin', 'Executor', 'Owner', 'Engineer', 'GasEmployee','AnalyzeEmployee']"
       (click)="manageRecordMapInformation(rData.id)">
       مدیریت انشعاب های گاز
     </button>
@@ -43,7 +43,7 @@
     </button>
   </nb-option>
   <nb-option *ngIf="!rData?.endOrBlockRequestId">
-    <button fullWidth nbButton status="danger" *appHasRole="['Admin', 'GasEmployee']"
+    <button fullWidth nbButton status="danger" *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']"
       (click)="onEndOrBlockRequest(rData)">
       غیر فعال سازی
     </button>
@@ -53,7 +53,7 @@
       fullWidth
       nbButton
       status="success"
-      *appHasRole="['Admin', 'GasEmployee']"
+      *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']"
       (click)="onStopEndOrBlockRequest()"
     >
       فعال سازی

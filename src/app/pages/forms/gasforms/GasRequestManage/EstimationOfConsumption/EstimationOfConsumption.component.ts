@@ -60,7 +60,7 @@ export class EstimationOfConsumptionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.unitStateService.className.subscribe(
+    this.unitStateService.className.subscribe( 
       (x) => (this.requestStateType = x)
     );
 
@@ -92,8 +92,8 @@ export class EstimationOfConsumptionComponent implements OnInit {
         maximumConsumptionEstimation: this.fb.group({
           totalConsimptionUnit: [""],
         }),
-        needCommomMeter: ["", [Validators.required]],
-        gasPressure: ["", [Validators.required]],
+        // needCommomMeter: ["", [Validators.required]],
+        // gasPressure: ["", [Validators.required]],
         DistanceFromShiraz: ["", Validators.required],
       });
     } else {
@@ -109,8 +109,8 @@ export class EstimationOfConsumptionComponent implements OnInit {
           this.initdevelopmentPlan(),
         ]),
         IndustrialTotalHPDto: this.fb.array([this.inittotal()]),
-        needCommomMeter: ["", [Validators.required]],
-        gasPressure: ["", [Validators.required]],
+        // needCommomMeter: ["", [Validators.required]],
+        // gasPressure: ["", [Validators.required]],
         SubscriptionTypeHP: ["", Validators.required],
         DistanceFromShiraz: ["", Validators.required],
       });
@@ -144,7 +144,7 @@ export class EstimationOfConsumptionComponent implements OnInit {
                 element.formControlName,
 
                 new FormControl("", [
-                  Validators.required,
+                  // Validators.required,
                   requiredFileType(element.extentions),
                   requiredFileSize(element.size),
                 ])

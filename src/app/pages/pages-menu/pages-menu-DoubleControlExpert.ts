@@ -13,6 +13,11 @@ export const MENU_ITEMS_DoubleControlExpert: NbMenuItem[] = [
         link: "/pages/forms/GasReqList",
         icon: "home-outline"
       },
+      {
+        title: "کنترل مضاعف",
+        link: "/pages/forms/DoubleControlList",
+        icon: "edit-2-outline",
+      },
     ]
   },
   {

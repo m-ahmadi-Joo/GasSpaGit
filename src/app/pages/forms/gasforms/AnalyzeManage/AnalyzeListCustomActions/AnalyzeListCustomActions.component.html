@@ -1,17 +1,17 @@
 <div class="row">
     <div class="col-sm-2">
       <button style="height: 35px;"   class="mx-1" nbTooltip="حذف" nbTooltipPlacement="top" size="tiny" nbButton status="danger"
-        *appHasRole="['Admin', 'GasEmployee']" (click)="onDelet(rData)" >
+        *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']" (click)="onDelet(rData)" >
         <nb-icon [options]="{ animation: { type: 'zoom' } }" class="icon-button" icon="close-outline">
         </nb-icon>
       </button>
     </div>
 
     <div class="col-sm-10">
-      <nb-select *appHasRole="['Admin', 'Executor', 'Owner', 'Engineer', 'GasEmployee','GasEmployeeExceptShiraz']" placeholder="انتخاب عملیات"  status="success">
+      <nb-select *appHasRole="['Admin', 'Executor', 'Owner', 'Engineer', 'GasEmployee','GasEmployeeExceptShiraz','AnalyzeEmployee', 'Shahrsazi']" placeholder="انتخاب عملیات"  status="success">
         <nb-option *ngIf="rData.isReferredTo === false">
           <!-- *ngIf="rData.isReferredTo === false" -->
-          <button *appHasRole="['Admin', 'GasEmployee']" fullWidth nbButton status="primary"
+          <button *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']" fullWidth nbButton status="primary"
             (click)="onShowAvailableEngineers()">
             مهندسان در صف ارجاع
           </button>
@@ -19,7 +19,7 @@
 
         <nb-option *ngIf="rData.isReferredTo === false">
           <!-- *ngIf="rData.isReferredTo === false" -->
-          <button *appHasRole="['Admin', 'GasEmployee']" fullWidth nbButton status="primary"
+          <button *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']" fullWidth nbButton status="primary"
             (click)="onExportAvailableEngineers()">
             اکسل  مهندسان در صف ارجاع
           </button>
@@ -27,14 +27,14 @@
 
         <!-- *ngIf="rData.isReferredTo === true" -->
         <nb-option>
-          <button *appHasRole="['Admin', 'GasEmployee']" fullWidth nbButton status="primary"
+          <button *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']" fullWidth nbButton status="primary"
             (click)="onShowRefferingHistory(rData.id)">
             تاریخچه ارجاعات
           </button>
         </nb-option>
 
         <nb-option>
-          <button *appHasRole="['Admin', 'GasEmployee', 'Engineer','GasEmployeeExceptShiraz']" fullWidth nbButton status="primary"
+          <button *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee', 'Engineer','GasEmployeeExceptShiraz', 'Shahrsazi']" fullWidth nbButton status="primary"
             (click)="onShowUnits(rData.id)">
             درخواست ها
           </button>
@@ -48,13 +48,13 @@
         </nb-option>
 
         <nb-option *ngIf="rData.referralMethod === 0 && rData.isReferredTo === false">
-          <button *appHasRole="['Admin', 'GasEmployee']" fullWidth nbButton status="warning" (click)="onProjectEngineer(rData.id)">
+          <button *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']" fullWidth nbButton status="warning" (click)="onProjectEngineer(rData.id)">
             تعیین ناظر
           </button>
         </nb-option>
 
         <nb-option *ngIf= "rData.canReject === true">
-          <button *appHasRole="['Admin', 'GasEmployee']" fullWidth nbButton status="primary" (click)="onSetting()">
+          <button *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']" fullWidth nbButton status="primary" (click)="onSetting()">
             تنظیمات
           </button>
         </nb-option>

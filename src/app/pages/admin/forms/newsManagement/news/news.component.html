@@ -12,7 +12,7 @@
     border-width: 1px;
     color: #1a2138;
     font-family: IRANSansWeb;
-    -webkit-appearance: none;
+    /* -webkit-appearance: none; */
     transition-duration: 0.15s;
     transition-property: border, background-color, color, box-shadow;
     transition-timing-function: ease-in;
@@ -69,65 +69,33 @@
               {{ role.name }}
             </nb-option>
           </nb-select>
-
-          <div *ngFor="
-            let validation of INPUT_VALIDATION_newsS.recieverRoles
-          ">
-            <span class="text-danger" *ngIf="
-              form.controls.recieverRoles.value === '' && isSubmitted
-            ">{{ validation.news }}</span>
-          </div>
-
         </div>
-
-
-
-        <!-- </div> -->
       </div>
 
       <div class="row col-sm-12 mb-4">
 
-        <div class="col-md-6">
-          <label for="cd">
-            <span class="text-danger font-weight-bold ml-1">*</span>
-            مدت اعتبار :
-          </label>
-          <dp-date-picker name="cd" fullWidth id="cd" nbInput dir="rtl" mode="day" theme="dp-material"
-            [config]="dateConfig"
-            formControlName="expireDate" class="appearance-outline full-width size-medium shape-rectangle">
-          </dp-date-picker>
-
-          <!-- [config]="dateConfig" -->
-          <div *ngFor="
-              let validation of INPUT_VALIDATION_newsS.expireDate
-            ">
-            <span class="text-danger" *ngIf="
-                form
-                  .get('expireDate')
-                  .hasError(validation.type) &&
-                (form.get('expireDate').dirty ||
-                form.get('expireDate').touched)
-              ">
-              {{ validation.news }}</span>
-          </div>
-        </div>
 
         <div class="col-md-6 form-group">
           <label for="name">کاربران</label>
 
-          <angular2-multiselect [data]="userList" 
-          [settings]="dropdownSettings" 
-          [loading] = "loadingDrpDwn"
-          (onSelect)="onItemSelect($event.idx)" 
-          (onDeSelect)="OnItemDeSelect($event.idx)"
-          (onSelectAll)="onSelectAll($event.idx)"
-          (onDeSelectAll)="onDeSelectAll($event.idx)"
-          (onScrollToEnd)="fetchMore($event)"
-          formControlName="recieverUsers"></angular2-multiselect>
-     
-    </div>
+          <angular2-multiselect [data]="userList" [settings]="dropdownSettings" [loading]="loadingDrpDwn"
+            (onSelect)="onItemSelect($event.idx)" (onDeSelect)="OnItemDeSelect($event.idx)"
+            (onSelectAll)="onSelectAll($event.idx)" (onDeSelectAll)="onDeSelectAll($event.idx)"
+            formControlName="recieverUsers"></angular2-multiselect>
 
-       
+        </div>
+
+        <div class="col-md-6 form-group">
+          <label for="name">گروه کاربران</label>
+
+          <angular2-multiselect [data]="groupList" [settings]="grpDropdownSettings" [loading]="loadingGrpDrpDwn"
+            (onSelect)="onGrpItemSelect($event.idx)" (onDeSelect)="OnGrpItemDeSelect($event.idx)"
+            (onSelectAll)="onGrpSelectAll($event.idx)" (onDeSelectAll)="onGrpDeSelectAll($event.idx)"
+            formControlName="selectedGroup"></angular2-multiselect>
+
+        </div>
+
+
       </div>
       <div class="row col-sm-12 mb-4">
         <div class="col-md-12 mt-5 mb-5">

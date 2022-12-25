@@ -105,7 +105,7 @@
 
       <div class="row">
         <div class="col-md-6">
-          <button [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" type="submit" nbButton
+          <button *appHasNoRole="['Shahrsazi']" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" type="submit" nbButton
             status="success" class="btn btn-success btn-block" [disabled]=" loading">
             ثبت
           </button>

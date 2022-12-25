@@ -78,7 +78,7 @@
       <span style="color:#3366ff">واحدها</span>
     </div>
     <div class="pull-left">
-      <button *appHasRole="['Admin', 'Executor', 'GasEmployee']" [disabled]="selectedPay.length === 0 " [ngStyle]="{
+      <button *appHasRole="['Admin', 'Executor', 'GasEmployee','AnalyzeEmployee']" [disabled]="selectedPay.length === 0 " [ngStyle]="{
           cursor: selectedPay.length === 0 || !hasSamePay ? 'not-allowed' : 'pointer'
         }" class="btn btn-info ml-2" style="color:#fff" (click)="totalPay($event)">
         <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="credit-card-outline">
@@ -91,6 +91,13 @@
         [disabled]="canExecuterAddNewUnit==false " [ngStyle]="{
           cursor: canExecuterAddNewUnit==false ? 'not-allowed' : 'pointer' 
         }">
+        <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="home-outline">
+        </nb-icon>
+        ثبت واحد جدید
+      </button>
+
+      <!-- cursor: unitCount <= pagination.totalItems ? 'not-allowed' : 'pointer'  -->
+      <button *appHasRole="['Engineer']" class="btn btn-info" style="color:#fff" [routerLink]="[path]">
         <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="home-outline">
         </nb-icon>
         ثبت واحد جدید
@@ -509,3 +516,134 @@
 <!-- <ng-template #contentDetailTemplate let-data>
           <app-gasRequestDetail [id]="info?.id"></app-gasRequestDetail>
       </ng-template> -->
+
+      <ng-template #suspendRequest let-data let-ref="dialogSuspendRef">
+        <nb-card size="medium" status="success" accent="success">
+          <nb-card-header>
+            <h6 >
+              معلق سازی پرونده شماره {{ data.fileNumber }}
+            </h6>
+          </nb-card-header>
+          <nb-card-body>
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <form [formGroup]="formSuspendRequest" (ngSubmit)="suspendRequestConfirm(data.entityId)">
+                  <nb-card>
+                    <nb-card-body>
+                      <div class="row mt-2 mb-3 mb-0">
+                        <div class="col-sm-4 mt-2">
+                          <span style="display: inline-block">
+                            <span class="text-danger font-weight-bold">*</span>
+                            توضیحات:
+                          </span>
+                        </div>
+      
+                        <div class="col-sm-8">
+                          <textarea formControlName="comment" fullWidth id="comment" nbInput placeholder="توضیحات"
+                            rows="5"></textarea>
+      
+                          <div *ngFor="
+                              let validation of INPUT_VALIDATION_MESSAGES_SuspendRequest.comment
+                            ">
+                            <span class="text-danger" *ngIf="
+                                formSuspendRequest
+                                  .get('comment')
+                                  .hasError(validation.type) &&
+                                (formSuspendRequest.get('comment').dirty ||
+                                  formSuspendRequest.get('comment').touched ||
+                                  isSubmitedSuspendRequest)
+                              ">{{ validation.message }}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </nb-card-body>
+                    <nb-card-footer>
+                      <div class="row">
+                        <div class="col-sm-6 pl-1">
+                          <button [nbSpinner]="suspendRequestLoading" [disabled]="suspendRequestLoading"
+                            nbSpinnerStatus="info" nbSpinnerSize="large" fullWidth nbButton hero status="success" type="submit">
+                            تعلیق
+                          </button>
+                        </div>
+                        <div class="col-sm-6 pr-1">
+                          <button [disabled]="suspendRequestLoading" fullWidth nbButton hero status="danger"
+                            (click)="dialogSuspendRef.close()">
+                            انصراف
+                          </button>
+                        </div>
+                      </div>
+                    </nb-card-footer>
+                  </nb-card>
+                </form>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </ng-template>
+      
+      
+      <ng-template #cancelSuspendedRequest let-data let-ref="dialogCancelSuspendedRef">
+        <nb-card size="medium" status="info" accent="info">
+          <nb-card-header>
+            <h6 >فعال سازی پرونده شماره {{ data.fileNumber }}</h6>
+          </nb-card-header>
+          <nb-card-body>
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <form [formGroup]="formCancelSuspendRequest"
+                  (ngSubmit)="cancelSuspendRequestConfirm(data.suspendRequestId)">
+                  <nb-card>
+                    <nb-card-body>
+                      <div class="row mt-2 mb-3 mb-0">
+                        <div class="col-sm-4 mt-2">
+                          <span style="display: inline-block">
+                            <span class="text-danger font-weight-bold">*</span>
+                            توضیحات:
+                          </span>
+                        </div>
+      
+                        <div class="col-sm-8">
+                          <textarea formControlName="unCloseComment" fullWidth id="unCloseComment" nbInput
+                            placeholder="توضیحات" rows="5"></textarea>
+      
+                          <div *ngFor="
+                              let validation of INPUT_VALIDATION_MESSAGES_CancelSuspendRequest.unCloseComment
+                            ">
+                            <span class="text-danger" *ngIf="
+                            formCancelSuspendRequest
+                                  .get('unCloseComment')
+                                  .hasError(validation.type) &&
+                                (formCancelSuspendRequest.get('unCloseComment')
+                                  .dirty ||
+                                  formCancelSuspendRequest.get('unCloseComment')
+                                    .touched ||
+                                    isSubmitedCancelSuspendRequest)
+                              ">{{ validation.message }}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </nb-card-body>
+                  </nb-card>
+      
+                  <nb-card-footer>
+                    <div class="row">
+                      <div class="col-sm-6 pl-1">
+                        <button [nbSpinner]="cancelSuspendedRequestLoading" [disabled]="cancelSuspendedRequestLoading"
+                          nbSpinnerStatus="info" nbSpinnerSize="large" fullWidth nbButton hero status="success" type="submit">
+       عدم تعلیق
+                        </button>
+                      </div>
+                      <div class="col-sm-6 pr-1">
+                        <button [disabled]="cancelSuspendedRequestLoading" fullWidth nbButton hero status="danger"
+                          (click)="dialogCancelSuspendRef.close()">
+                          انصراف
+                        </button>
+                      </div>
+                    </div>
+                  </nb-card-footer>
+                </form>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </ng-template>

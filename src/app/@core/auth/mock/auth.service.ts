@@ -9,6 +9,7 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 import * as jwt_decode from "jwt-decode";
 import { environment } from "src/environments/environment";
 import { ApiCommandCenter } from "../../api/services/apiCommandCenter";
+import { NbMenuService } from "@nebular/theme";
 
 @Injectable()
 export class AuthService extends Auth {
@@ -32,7 +33,8 @@ export class AuthService extends Auth {
     private router: Router,
     private urlProvider: ApiUrlProvider,
     // private api: ApiCommandCenter,
-    public jwtHelper: JwtHelperService
+    public jwtHelper: JwtHelperService,
+    private menuService: NbMenuService,
   ) {
     super();
     this.token = this.getToken();
@@ -45,25 +47,24 @@ export class AuthService extends Auth {
       environment.SERVER_URL = "http://localhost:52805/api";
     } else if (url.includes("gas.fceo.ir")) {
       environment.SERVER_URL = "http://gas.fceo.ir:2727/api";
-    } else if (url.includes("http://192.168.0.201")) {
+    }
+    else if (url.includes("http://192.168.0.201")) {
       environment.SERVER_URL = "http://192.168.0.201:81/api";
-    } else if (url.includes("http://192.168.0.6")) {
-      environment.SERVER_URL = "http://192.168.0.6:82/api";
     }
     else if (url.includes("http://192.168.0.18:83")) {
       environment.SERVER_URL = "http://192.168.0.18:82/api";
     }
-    else if (url.includes("http://192.168.0.06:83")) {
+    else if (url.includes("http://192.168.0.6:83")) {
       environment.SERVER_URL = "http://192.168.0.06:82/api";
     }
-    else if (url.includes("http://192.168.2.06:83")) {
-      environment.SERVER_URL = "http://192.168.2.06:82/api";
+    else if (url.includes("http://192.168.0.6:84")) {
+      environment.SERVER_URL = "http://192.168.0.6:200/api";
     }
-    else if (url.includes("http://192.168.2.6:83")) {
-      environment.SERVER_URL = "http://192.168.2.06:82/api";
+    else if (url.includes("http://192.168.0.6:84")) {
+      environment.SERVER_URL = "http://192.168.0.06:200/api";
     }
-    else if (url.includes("http://192.168.0.15:83")) {
-      environment.SERVER_URL = "http://192.168.0.15:82/api";
+    else if (url.includes("http://192.168.0.06:84")) {
+      environment.SERVER_URL = "http://192.168.0.6:200/api";
     }
     else {
       environment.SERVER_URL = "http://localhost:5000/api";
@@ -120,8 +121,9 @@ export class AuthService extends Auth {
 
   getToken(): string {
     this.token = this.jwtHelper.tokenGetter();
-    if (!this.token)
+    if (!this.token) {
       this.token = localStorage.getItem("token");
+    }
     return this.token;
   }
 
@@ -227,6 +229,7 @@ export class AuthService extends Auth {
       selectedRole == "Engineer" ||
       selectedRole == "Owner" ||
       selectedRole == "GasEmployee" ||
+      selectedRole == "AnalyzeEmployee" ||
       selectedRole == "Pishkhan" ||
       selectedRole == "GasRuleEngineer" ||
       selectedRole == "GasRuleCheckerGroupOne" ||

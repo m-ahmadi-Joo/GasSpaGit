@@ -207,7 +207,7 @@ export class Map2500HPComponent implements OnInit {
   }
 
   returnToList() {
-    this.router.navigate(["/pages/forms/GasReqList"]);
+    this.router.navigate(["/pages/forms/HPGasReqList"]);
   }
   INPUT_VALIDATION_MESSAGES = {
     netWorkSize: [

@@ -53,7 +53,7 @@ export class GetEngineerRequestPaymentsResolver implements Resolve<PaginatedResu
           return of(null);
         })
       );
-    } else if (role === "Admin" && !url.includes('FinancialDepartment')) {
+    } else if (role === "Admin" || role === "Shahrsazi" && !url.includes('FinancialDepartment')) {
       const filterParams = JSON.parse(localStorage.getItem("EngineerRequestPaymentFilterParams"));
       if (filterParams) {
         if (filterParams.requestPayType === "1") {  //فیش حقوقی

@@ -1,22 +1,4 @@
-<!-- *appHasNoRole="['Pishkhan']" -->
 <div>
-  <!-- <button
-  nbTooltip="چاپ"
-  nbTooltipPlacement="top"
-  size="tiny"
-  class="mb-2 mr-1"
-  nbButton
-  status="secondary"
-  (click)="onPrintGasRequest(rData?.id)"
->
-  <nb-icon
-    [options]="{ animation: { type: 'zoom' } }"
-    class="icon-button"
-    icon="printer-outline"
-  >
-  </nb-icon>
-</button> -->
-
   <button nbTooltip="حذف" nbTooltipPlacement="top" size="tiny" class="mb-2 mr-1" nbButton *appHasRole="['Admin']"
     status="danger" (click)="onDeleteGasRequest(rData)">
     <nb-icon [options]="{ animation: { type: 'zoom' } }" class="icon-button" icon="close-outline">
@@ -26,7 +8,7 @@
   <!-- <button nbButton (click)="open(dialog)">Open Dialog</button> -->
 
   <button [disabled]="rData?.hasAproveArchitectualAlbum === true" nbTooltip="ویرایش" nbTooltipPlacement="top"
-    size="tiny" class="mb-2 mr-1" nbButton *appHasRole="['Admin', 'GasEmployeeHP', 'GasEmployee','Owner']"
+    size="tiny" class="mb-2 mr-1" nbButton *appHasRole="['Admin', 'GasEmployeeHP', 'GasEmployee','AnalyzeEmployee','Owner']"
     status="warning" (click)="onEditGasRequest(rData?.id, '')">
     <nb-icon [options]="{ animation: { type: 'zoom' } }" class="icon-button" icon="edit-2-outline">
     </nb-icon>
@@ -53,7 +35,7 @@
           'DefineSafetyInspectionForPeriodicVisits'
         )
       ">
-      <button fullWidth nbButton status="primary" *appHasRole="['Admin', 'GasEmployeeHP', 'GasEmployee']" (click)="
+      <button fullWidth nbButton status="primary" *appHasRole="['Admin', 'GasEmployeeHP', 'GasEmployee','AnalyzeEmployee']" (click)="
           onDefineObserver(rData?.id, 'DefineSafetyInspectionForPeriodicVisits')
         ">
         تعیین بازرس ایمنی بازدید دوره ای
@@ -189,6 +171,7 @@
           'GasRuleEmployeeHP',
           'GasEmployeeHP',
           'GasEmployee',
+          'AnalyzeEmployee',
           'GasEmployeeExceptShiraz'
         ]" fullWidth nbButton status="primary" (click)="onEditGasRequest(rData?.id, 'ControlProjectInfo')">
         بررسی پرونده
@@ -202,6 +185,7 @@
           'Admin',
           'Owner',
           'GasEmployee',
+          'AnalyzeEmployee',
           'GasEmployeeExceptShiraz'
         ]" (click)="onPayForGasRules(rData?.id)">
         پرداخت هزینه گازرسانی
@@ -244,7 +228,7 @@
         rData?.hasGasRule &&
         rData?.nextStateType?.includes('AlamakRemoveRequest')
       ">
-      <button fullWidth status="success" *appHasRole="['Admin', 'GasEmployee', 'GasEmployeeExceptShiraz']" nbButton
+      <button fullWidth status="success" *appHasRole="['Admin', 'GasEmployee', 'GasEmployeeExceptShiraz','AnalyzeEmployee']" nbButton
         (click)="onAlamakDeletion(rData?.id)">
         جمع آوری علمک
       </button>
@@ -254,7 +238,7 @@
         rData?.hasGasRule &&
         rData?.nextStateType?.includes('AlamakDesignationRequest')
       ">
-      <button fullWidth nbButton status="success" *appHasRole="['Admin', 'GasEmployee', 'GasEmployeeExceptShiraz']"
+      <button fullWidth nbButton status="success" *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee', 'GasEmployeeExceptShiraz']"
         (click)="onPrintAlamakDesignation(rData?.id)">
         استعلام تعیین علمک
       </button>
@@ -341,6 +325,7 @@
           'Admin',
           'Owner',
           'GasEmployee',
+          'AnalyzeEmployee',
           'GasEmployeeExceptShiraz'
         ]" (click)="onPayDifferenceGasRule(rData?.id)">
         پرداخت هزینه مابه التفاوت
@@ -362,7 +347,7 @@
     </nb-option>
 
     <nb-option *ngIf="rData?.nextStateType?.includes('CollectorWeldingRegistration')">
-      <button fullWidth status="primary" nbButton *appHasRole="['Admin', 'Executor']"
+      <button fullWidth status="primary" nbButton *appHasRole="['Admin', 'Executor', 'Engineer']"
         (click)="onCollectorRegisteration(rData)">
         ثبت کلکتور جوش
       </button>
@@ -373,6 +358,7 @@
           'Admin',
           'Engineer',
           'GasEmployee',
+          'AnalyzeEmployee',
           'GasEmployeeExceptShiraz'
         ]" (click)="onCollectorRegisteration(rData)">
         ویرایش کلکتور جوش
@@ -386,14 +372,23 @@
       </button>
     </nb-option>
 
-    <nb-option *ngIf="rData?.contractId !== 0 && rData?.collectorCount != null">
+    <nb-option *ngIf="rData?.contractId !== 0 && rData?.collectorCount != null && rData?.isDesigner">
+      <button fullWidth nbButton *appHasRole="['Engineer']" status="primary"
+        (click)="onNavigateToRecordMapInformationList(rData?.contractId,rData)">
+        مدیریت انشعابات گاز
+      </button>
+    </nb-option>
+
+    <nb-option *ngIf="rData?.contractId !== 0 && rData?.collectorCount != null && !rData?.isDesigner ">
       <button fullWidth nbButton *appHasRole="[
           'Admin',
           'Owner',
           'Engineer',
           'GasEmployee',
+          'AnalyzeEmployee',
           'GasEmployeeExceptShiraz',
-          'GasCompany'
+          'GasCompany',
+          'Shahrsazi'
 
         ]" status="primary" (click)="onNavigateToRecordMapInformationListAsGasReqId(rData?.id)">
         مدیریت انشعابات گاز
@@ -413,7 +408,8 @@
     </nb-option>
 
     <nb-option *ngIf="rData?.nextStateType?.includes('CollectiveControlDocument')">
-      <button fullWidth nbButton status="success" *appHasRole="['Admin', 'GasEmployee', 'GasEmployeeExceptShiraz']"
+      <button fullWidth nbButton status="success" 
+      *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee', 'GasEmployeeExceptShiraz']"
         (click)="
           onControlDocuments(
             rData?.id,
@@ -426,13 +422,13 @@
     </nb-option>
 
     <nb-option *ngIf="!rData?.endOrBlockRequestId">
-      <button fullWidth nbButton status="danger" *appHasRole="['Admin', 'GasEmployee']" (click)="onEndOrBlockRequest()">
+      <button fullWidth nbButton status="danger" *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']" (click)="onEndOrBlockRequest()">
         غیر فعال سازی
       </button>
     </nb-option>
 
     <nb-option *ngIf="rData?.endOrBlockRequestId">
-      <button fullWidth nbButton status="success" *appHasRole="['Admin', 'GasEmployee']"
+      <button fullWidth nbButton status="success" *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']"
         (click)="onStopEndOrBlockRequest()">
         فعال سازی
       </button>
@@ -440,7 +436,7 @@
 
     <nb-option *ngIf="!rData?.endOrBlockRequestId && 
     !rData?.suspendRequestId">
-      <button fullWidth nbButton status="basic" *appHasRole="['Admin', 'GasEmployee', 'GasEmployeeExceptShiraz']"
+      <button fullWidth nbButton status="basic" *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee', 'GasEmployeeExceptShiraz']"
         (click)="
           onSuspendRequest(
             rData?.id,
@@ -454,7 +450,7 @@
 
     <nb-option *ngIf="!rData?.endOrBlockRequestId && 
     rData?.suspendRequestId">
-      <button fullWidth nbButton status="basic" *appHasRole="['Admin', 'GasEmployee', 'GasEmployeeExceptShiraz']"
+      <button fullWidth nbButton status="basic" *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee', 'GasEmployeeExceptShiraz']"
         (click)="
         onCancelSuspendedRequest(
             rData?.id,
@@ -505,7 +501,7 @@
   </nb-option> -->
 
     <nb-option *ngIf="rData?.hasCoverageLicense && rData?.collectorCount != null">
-      <button *appHasRole="['Admin', 'GasEmployee', 'GasEmployeeExceptShiraz', 'Owner', 'Executor']" fullWidth nbButton
+      <button *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee', 'GasEmployeeExceptShiraz', 'Owner', 'Executor']" fullWidth nbButton
         status="primary" (click)="onCoverageLicense(rData?.id)">
         صدور مجوز پوشش
       </button>

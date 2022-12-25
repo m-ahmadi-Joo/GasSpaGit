@@ -42,7 +42,7 @@ export class SubmitAuditResultFormComponent implements OnInit {
   showtypeofConsumables = false;
   collectorCheckMsg = "";
   currentRole: string;
-  NotConfirmedForEdit:number;
+  NotConfirmedForEdit: number;
   constructor(
     private fb: FormBuilder,
     private api: ApiCommandCenter,
@@ -63,7 +63,7 @@ export class SubmitAuditResultFormComponent implements OnInit {
   selectBaseWeldingMachinType: NbSelectComponent<any>;
   @ViewChild("rdbInspectionRejectionReason", { static: true })
   rdbInspectionRejectionReason: NbRadioGroupComponent;
-  ResultInspectionWeldingNotConfirmed:boolean=false;
+  ResultInspectionWeldingNotConfirmed: boolean = false;
   weldingSafetyIsShow: boolean;
   requestUnitId;
   contractId;
@@ -111,7 +111,9 @@ export class SubmitAuditResultFormComponent implements OnInit {
     weldCount: number;
     RejectReason;
     NotConfirmedReason;
-    safetyInspectionCount : number;
+    safetyInspectionCount: number;
+    pipeType: string;
+    connectionType: string;
 
   };
   sarInfo: {
@@ -138,8 +140,8 @@ export class SubmitAuditResultFormComponent implements OnInit {
     weldingInfos;
     pipeType: string;
     connectionType: string;
-    NotConfirmedReason:number;
-    safetyInspectionCount:number;
+    NotConfirmedReason: number;
+    safetyInspectionCount: number;
     // selectedPermit: { roleName: string, rolePermits: string[] } = {roleName: '', rolePermits: ['']};
   };
   basePolarityTypesView = [];
@@ -158,7 +160,6 @@ export class SubmitAuditResultFormComponent implements OnInit {
   weldingInfos: Array<WeldingInfoModel> = [];
   // contractId: number = parseInt(this.route.snapshot.paramMap.get("contractId"));
   ngOnInit() {
-
     this.route.parent.params.subscribe((params) => {
       console.log(params);
       this.id = params["id"];
@@ -289,8 +290,8 @@ export class SubmitAuditResultFormComponent implements OnInit {
       weldingInfoModels: this.fb.array([this.initialWeldingInfo()]),
       pipeType: [""],
       connectionType: [""],
-      NotConfirmedReason:[""],
-      safetyInspectionCount:[1], // only numbers
+      NotConfirmedReason: [""],
+      safetyInspectionCount: [1], // only numbers
     });
 
     this.unitStateService.className.subscribe(
@@ -348,7 +349,7 @@ export class SubmitAuditResultFormComponent implements OnInit {
             scrAuditResult: this.lastResult.result.toString(),
             scrComment: this.lastResult.descp,
             safetyInspection: this.lastResult.safetyInspection.toString(),
-             safetyInspectionCount: this.lastResult.safetyInspectionCount,
+            safetyInspectionCount: this.lastResult.safetyInspectionCount,
             isLinearInspectionWelding: this.lastResult.isLinearInspectionWelding.toString(),
             isCollectorInspectionWelding: this.lastResult.isCollectorInspectionWelding.toString(),
             mapRevision: this.lastResult.mapRevision.toString(),
@@ -421,7 +422,7 @@ export class SubmitAuditResultFormComponent implements OnInit {
       ]);
       this.sarForm.controls.safetyInspectionCount.updateValueAndValidity();
 
-      
+
       this.sarForm.controls.mapRevision.setValidators([Validators.required]);
       this.sarForm.controls.mapRevision.updateValueAndValidity();
     } else if (
@@ -445,9 +446,9 @@ export class SubmitAuditResultFormComponent implements OnInit {
     } else if (
       this.response == "SafetyInspectionResult" ||
       this.response == "ResultInspectionFinal" ||
-      this.response == "ResultReInspectionFinal"||
+      this.response == "ResultReInspectionFinal" ||
       this.response == "ResultInspectionSixMonth" ||
-      this.response == "ResultReInspectionSixMonth" 
+      this.response == "ResultReInspectionSixMonth"
     ) {
       this.requestStateType = this.response;
       this.sarForm.controls.scrAuditResult.setValidators([Validators.required]);
@@ -457,9 +458,9 @@ export class SubmitAuditResultFormComponent implements OnInit {
 
     } else if (
       this.response == "ResultInspectionFinal" ||
-      this.response == "ResultReInspectionFinal"||
+      this.response == "ResultReInspectionFinal" ||
       this.response == "ResultInspectionSixMonth" ||
-      this.response == "ResultReInspectionSixMonth" 
+      this.response == "ResultReInspectionSixMonth"
     ) {
       this.requestStateType = this.response;
       this.sarForm.controls.mapRevision.setValidators([Validators.required]);
@@ -570,7 +571,7 @@ export class SubmitAuditResultFormComponent implements OnInit {
       // this.api.getInspectionResult(this.unitStateIds[0])
       .subscribe((res: any) => {
         console.log(res.res);
-     
+
 
         this.resultDetail = res.res;
         this.getLastUnitState = res.getLastUnitState;
@@ -580,7 +581,7 @@ export class SubmitAuditResultFormComponent implements OnInit {
         if (res.res.connectionType !== null) {
           this.sarForm.controls.connectionType.setValue(res.res.connectionType);
         }
-     
+
         if (res.res.pipeType !== null) {
           this.sarForm.controls.pipeType.setValue(res.res.pipeType);
         }
@@ -606,9 +607,9 @@ export class SubmitAuditResultFormComponent implements OnInit {
           this.onDeactive();
           console.log(res.res.notConfirmedReason);
           if (res.res.notConfirmedReason !== null) {
-          //  console.log("byeeeeeeeee")
-        
-            this.NotConfirmedForEdit=res.res.notConfirmedReason;
+            //  console.log("byeeeeeeeee")
+
+            this.NotConfirmedForEdit = res.res.notConfirmedReason;
             this.sarForm.controls.NotConfirmedReason.setValue(this.NotConfirmedForEdit.toString());
             console.log(this.NotConfirmedForEdit)
           }
@@ -620,9 +621,11 @@ export class SubmitAuditResultFormComponent implements OnInit {
             this.inspectionType == "ResultInspectionPreExecution" ||
             this.inspectionType == "ChangeResultInspectionPreExecution"
           ) {
+            
             if (res.res.isNoExecutablePermission) {
               this.sarForm.controls.rejectReason.setValue("dontHaveLicense");
-            } if (res.res.dontUseStandardMaterials) {
+            } 
+            else if (res.res.dontUseStandardMaterials) {
               this.sarForm.controls.rejectReason.setValue(
                 "dontUseStandardMaterials"
               );
@@ -804,7 +807,7 @@ export class SubmitAuditResultFormComponent implements OnInit {
         return;
       } else {
         this.reqUnit.push(this.requestUnitId);
-        
+
         this.sarInfo = {
           RejectReason: this.sarForm.controls.rejectReason.value,
           Result: this.sarForm.controls.scrAuditResult.value,
@@ -837,8 +840,8 @@ export class SubmitAuditResultFormComponent implements OnInit {
           weldingInfos: this.sarForm.controls.weldingInfoModels.value,
           pipeType: this.sarForm.controls.pipeType.value,
           connectionType: this.sarForm.controls.connectionType.value,
-          NotConfirmedReason:this.sarForm.controls.NotConfirmedReason.value
-          
+          NotConfirmedReason: this.sarForm.controls.NotConfirmedReason.value
+
           // weldingInfos: this.weldingInfos
         };
         if (this.checkAnalyze === "byAnalyze") {
@@ -948,8 +951,8 @@ export class SubmitAuditResultFormComponent implements OnInit {
       this.sarForm.controls.mapRevision.updateValueAndValidity();
     }
     //barmak
-    else if(this.requestStateType==="ResultInspectionWelding"){
-      this.ResultInspectionWeldingNotConfirmed=true;
+    else if (this.requestStateType === "ResultInspectionWelding") {
+      this.ResultInspectionWeldingNotConfirmed = true;
       this.sarForm.get("NotConfirmedReason").setValidators([Validators.required]);
       this.sarForm.get("NotConfirmedReason").updateValueAndValidity();
 
@@ -959,7 +962,7 @@ export class SubmitAuditResultFormComponent implements OnInit {
   onActive() {
     console.log(this.requestStateType);
     // barmak
-    this.ResultInspectionWeldingNotConfirmed=false;
+    this.ResultInspectionWeldingNotConfirmed = false;
     this.sarForm.get("NotConfirmedReason").clearValidators();
     this.sarForm.get("NotConfirmedReason").updateValueAndValidity();
 
@@ -975,7 +978,7 @@ export class SubmitAuditResultFormComponent implements OnInit {
       this.sarForm.controls.isLinearInspectionWelding.setValue(null);
       this.sarForm.controls.rejectReason.clearValidators();
       this.sarForm.controls.rejectReason.updateValueAndValidity();
-      
+
 
       if (this.checkhasCollector) this.showCollectorWelding = true;
       else this.showCollectorWelding = false;
@@ -996,9 +999,9 @@ export class SubmitAuditResultFormComponent implements OnInit {
       this.sarForm.controls.mapRevision.setValidators([Validators.required]);
       this.sarForm.controls.mapRevision.updateValueAndValidity();
     }
-     //barmak
-     else if(this.requestStateType==="ResultInspectionWelding"){
-      this.ResultInspectionWeldingNotConfirmed=false;
+    //barmak
+    else if (this.requestStateType === "ResultInspectionWelding") {
+      this.ResultInspectionWeldingNotConfirmed = false;
       this.sarForm.controls.NotConfirmedReason.clearValidators();
       this.sarForm.controls.NotConfirmedReason.updateValueAndValidity();
       this.sarForm.controls.NotConfirmedReason.setValue(null);
@@ -1068,8 +1071,10 @@ export class SubmitAuditResultFormComponent implements OnInit {
         .value,
       inspectionRequestId: "",
       weldCount: weldCountForEdit,
-      NotConfirmedReason:this.sarForm.controls.NotConfirmedReason.value,
-      safetyInspectionCount:this.sarForm.controls.safetyInspectionCount.value
+      NotConfirmedReason: this.sarForm.controls.NotConfirmedReason.value,
+      safetyInspectionCount: this.sarForm.controls.safetyInspectionCount.value,
+      pipeType: this.sarForm.controls.pipeType.value,
+      connectionType: this.sarForm.controls.connectionType.value
     };
     this.api
       .postTo("InspectionResult", "InspectionResultEdit", this.editInfo)
@@ -1098,19 +1103,47 @@ export class SubmitAuditResultFormComponent implements OnInit {
       );
   }
 
-  onNeedSafetyInspection(){
-    
+  onNeedSafetyInspection() {
+
   }
   INPUT_VALIDATION_MESSAGES = {
-   
+
     NotConfirmedReason: [
       { type: "required", message: "  علت عدم تایید جوش سرخطی را تعیین نمایید." },
-    
+
     ],
-  
-    
+
+
   };
+  onChangeCheckCollector(event) {
+    console.log(event)
+    // this.designerType = event;
 
+    if (event == "true") {
+      this.checkCollectorWelding(this.resultDetail.requestUnitId);
+    }
+  }
 
+  checkCollectorWelding(reqUnitId) {
 
+    this.api
+      .checkCollector("GasRequest", "EditCheckCollectorWelding", reqUnitId)
+      .subscribe((res: any) => {
+        if (res) {
+          if (res.body) {
+            if (res.body.checkResult === false) {
+              const message = res.body.msg;
+              this.toastrService.danger(message, " ", {
+                position: NbGlobalLogicalPosition.TOP_START,
+                duration: 5000
+              });
+              this.sarForm.controls.isCollectorInspectionWelding.setValidators([]);
+              this.sarForm.controls.isCollectorInspectionWelding.setValue("false");
+              this.sarForm.controls.isCollectorInspectionWelding.updateValueAndValidity();
+            }
+          
+          }
+        }
+      });
+      }
 }

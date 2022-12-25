@@ -49,3 +49,4 @@ Thumbs.db
 debug.log
 *.log
 /*.log
+src/app/pages/forms/gasforms/EducationManage/CreateTrainingCourse/CreateTrainingCourse.component.spec.ts

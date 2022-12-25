@@ -55,13 +55,13 @@
     </div>
     <div class="pull-left">
       <!-- [routerLink]="['/pages/forms/GasRequest']" -->
-      <button (click)="onPrint()" class="ml-1" nbButton status="primary" hero *appHasRole="['Admin', 'GasEmployee']" >
+      <button (click)="onPrint()" class="ml-1" nbButton status="primary" hero *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']" >
         <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="printer-outline">
         </nb-icon>
           چاپ گزارش
       </button>
 
-        <button (click)="onExcelExport()" class="ml-1" nbButton status="success" hero *appHasRole="['Admin', 'GasEmployee']" >
+        <button (click)="onExcelExport()" class="ml-1" nbButton status="success" hero *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']" >
          <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="printer-outline">
          </nb-icon>
            اکسل گزارش مالی مهندسان

@@ -6,7 +6,7 @@ import {
   NbDialogService,
   NbDialogRef
 } from "@nebular/theme";
-import {LocalDataSource } from "ng2-smart-table";
+import { LocalDataSource } from "ng2-smart-table";
 import { ServerSourceConf } from "ng2-smart-table/lib/data-source/server/server-source.conf";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 
@@ -37,10 +37,21 @@ export class RecordMapInformationListComponent implements OnInit {
   selectedPay: PayTypeSelect[] = [];
   hasSamePay = false;
   unitCount: number;
-  canExecuterAddNewUnit:boolean=false;
+  canExecuterAddNewUnit: boolean = false;
   gasReqId;
   form: FormGroup;
 
+
+  dialogSuspendRef: NbDialogRef<any>;
+  dialogCancelSuspendedRef: NbDialogRef<any>;
+  formSuspendRequest: FormGroup;
+  suspendRequestLoading = false;
+  isSubmitedSuspendRequest = false;
+
+  formCancelSuspendRequest: FormGroup;
+
+  isSubmitedCancelSuspendRequest = false;
+  cancelSuspendedRequestLoading = false;
   constructor(
     private router: Router,
     private toastrService: NbToastrService,
@@ -52,6 +63,8 @@ export class RecordMapInformationListComponent implements OnInit {
     private dialogService: NbDialogService,
     private fbStopEndOrBlockRequest: FormBuilder,
     private fbEndOrBlockRequest: FormBuilder,
+    private fbSuspendRequest: FormBuilder,
+    private fbCancelSuspendRequest: FormBuilder,
     private browserButton: BrowserButtonService,
   ) {
     this.contractId = parseInt(this.route.snapshot.paramMap.get("contractId"));
@@ -107,6 +120,11 @@ export class RecordMapInformationListComponent implements OnInit {
   @ViewChild("stopEndOrBlockRequest", { static: false })
   stopEndOrBlockRequestTemplate: TemplateRef<any>;
   isSubmitedStopEndOrBlockRequest = false;
+
+  @ViewChild("suspendRequest", { static: false })
+  suspendRequestTemplate: TemplateRef<any>;
+  @ViewChild("cancelSuspendedRequest", { static: false })
+  cancelSuspendedRequestTemplate: TemplateRef<any>;
   ngOnInit() {
 
 
@@ -167,9 +185,9 @@ export class RecordMapInformationListComponent implements OnInit {
         .getById("GasRequest/CanExecuterAddNewUnit", this.contractId)
         .subscribe(res => {
           if (res) {
-       
-            this.canExecuterAddNewUnit = res.body>0?true:false;
-       
+
+            this.canExecuterAddNewUnit = res.body > 0 ? true : false;
+
           }
         });
     }
@@ -219,6 +237,17 @@ export class RecordMapInformationListComponent implements OnInit {
       reason: ["", [Validators.required]]
     });
     this.formStopEndOrBlockRequest = this.fbStopEndOrBlockRequest.group({
+      id: [""],
+      unCloseComment: ["", [Validators.required, Validators.maxLength(500)]],
+    });
+
+    this.formSuspendRequest = this.fbSuspendRequest.group({
+      entityName: ["RequestUnit"],
+      entityId: [""],
+      comment: ["", [Validators.required, Validators.maxLength(500)]],
+    });
+
+    this.formCancelSuspendRequest = this.fbCancelSuspendRequest.group({
       id: [""],
       unCloseComment: ["", [Validators.required, Validators.maxLength(500)]],
     });
@@ -287,6 +316,12 @@ export class RecordMapInformationListComponent implements OnInit {
           });
           instance.stopEndOrBlockRequest.subscribe((row) => {
             this.stopEndOrBlockRequest(row);
+          });
+          instance.suspendRequest.subscribe((row) => {
+            this.suspendRequest(row);
+          });
+          instance.cancelSuspendedRequest.subscribe((row) => {
+            this.cancelSuspendedRequest(row);
           });
         }
       },
@@ -517,14 +552,14 @@ export class RecordMapInformationListComponent implements OnInit {
       // }
       if (this.paymentService.arrayContainsObject(obj, this.selectedPay) === false) {
         this.selectedPay.push(obj);
-        if(this.paymentService.arrayContainsSameObject(obj, this.selectedPay) === false) {
+        if (this.paymentService.arrayContainsSameObject(obj, this.selectedPay) === false) {
           this.hasSamePay = false;
           this.toastrService.warning(
             " در پرداخت جمعی امکان اضافه کردن " + this.paymentService.getDisplayClassName(obj.className) + " به علت محدودیت همسان بودن پرداخت ها وجود ندارد. "
             , " ", {
-              position: NbGlobalLogicalPosition.TOP_START,
-              duration: 7000
-            });
+            position: NbGlobalLogicalPosition.TOP_START,
+            duration: 7000
+          });
         }
       } else {
         this.hasSamePay = this.paymentService.hasSamePay(this.selectedPay);;
@@ -534,7 +569,7 @@ export class RecordMapInformationListComponent implements OnInit {
       if (
         this.paymentService.arrayContainsObject(obj, this.selectedPay) === true
       ) {
-        this.selectedPay = this.paymentService.arrayRemoveElement(obj,this.selectedPay);
+        this.selectedPay = this.paymentService.arrayRemoveElement(obj, this.selectedPay);
         this.hasSamePay = this.paymentService.hasSamePay(this.selectedPay);
       }
     } else {
@@ -798,7 +833,25 @@ export class RecordMapInformationListComponent implements OnInit {
       },
     ],
   };
+  INPUT_VALIDATION_MESSAGES_SuspendRequest = {
+    comment: [
+      { type: "required", message: "توضیحات الزامی است." },
+      {
+        type: "maxlength",
+        message: "طول متن وارد شده برای توضیحات بیش از حد مجازاست.",
+      },
+    ],
+  };
 
+  INPUT_VALIDATION_MESSAGES_CancelSuspendRequest = {
+    unCloseComment: [
+      { type: "required", message: "توضیحات الزامی است." },
+      {
+        type: "maxlength",
+        message: "طول متن وارد شده برای توضیحات بیش از حد مجازاست.",
+      },
+    ],
+  };
   deleteRecord(row) {
     this.dialogRef = this.dialogService.open(this.dialog, {
       context: row,
@@ -954,35 +1007,124 @@ export class RecordMapInformationListComponent implements OnInit {
     }
     return;
   }
-  // onShowDetailGasRequest(){
-  //   this.windowService.open(
-  //     this.contentDetailTemplate,
-  //       {
-  //       // title: 'مشاهده جزئیات ملک',
-  //       hasBackdrop: true
-  //       ,windowClass:'nb-window-control'
-  //     },
-  //   );
-  // }
+  suspendRequest(row) {
+    this.formSuspendRequest.reset();
+    this.suspendRequestLoading = false;
+    this.dialogSuspendRef = this.dialogService.open(
+      this.suspendRequestTemplate,
+      {
+        context: {
+          fileNumber: row.fileNumber,
+          entityId: row.requestUnitId,
+        },
+        autoFocus: true,
+        hasBackdrop: true,
+        closeOnBackdropClick: false,
+        closeOnEsc: false,
+      }
+    );
+    console.log(row);
+  }
+  suspendRequestConfirm(suspendRequestId) {
+    if (this.formSuspendRequest.valid) {
+      this.isSubmitedSuspendRequest = true;
+      this.suspendRequestLoading = true;
+      this.formSuspendRequest.get("entityId").setValue(suspendRequestId);
+      this.formSuspendRequest.get("entityName").setValue("RequestUnit");
 
-  // onRowSelect(event) {
-  //   this.selectedRows = event.selected;
-  //  console.log(this.selectedRows);
-  // }
+      this.api
+        .postTo(
+          "Admin",
+          "SuspendRequest",
+          this.formSuspendRequest.value
+        )
+        .subscribe(
+          (res: any) => {
+            if (res.ok) {
+              const message = "ثبت با موفقیت انجام شد.";
+              this.toastrService.success(message, " ", {
+                position: NbGlobalLogicalPosition.TOP_START,
+                duration: 5000,
+              });
+              // location.reload();
+              this.loadList();
+              this.dialogSuspendRef.close();
+              this.suspendRequestLoading = false;
+              this.isSubmitedSuspendRequest = false;
+            }
+          },
+          (err: HttpErrorResponse) => {
+            this.suspendRequestLoading = false;
+            if (err.error instanceof Error) {
+              console.log("Client-side error occured.");
+            } else {
+              console.log("Server-side error occured.");
+            }
+            this.dialogSuspendRef.close();
+          }
+        );
+    }
+    return;
+  }
 
-  //selecteds = [];
-  // rowSelectedHandler(rowData:{isSelected:boolean, data:any}){
-  //   if(rowData.isSelected === false){
-  //     /*remove row*/
-  //     this.selecteds = this.selecteds.filter((rowItem)=>rowItem.id !== rowData.data.id)
-  //   }else {
-  //     /*add row*/
-  //     this.selecteds = [...this.selecteds, ...rowData.data];
-  //     console.log('added rowdata');
-  //   }
-  // }
+  cancelSuspendedRequest(row) {
+    this.formCancelSuspendRequest.reset();
+    this.cancelSuspendedRequestLoading = false;
+    this.dialogCancelSuspendedRef = this.dialogService.open(
+      this.cancelSuspendedRequestTemplate,
+      {
+        context: {
+          fileNumber: row.fileNumber,
+          suspendRequestId: row.suspendRequestId,
+        },
+        autoFocus: true,
+        hasBackdrop: true,
+        closeOnBackdropClick: false,
+        closeOnEsc: false,
+      }
+    );
+    console.log(row);
+  }
 
-  // logAllSelectedRows(){
-  //     console.log(this.selectedRows);
-  // }
+  cancelSuspendRequestConfirm(suspendRequestId) {
+    if (this.formCancelSuspendRequest.valid) {
+      this.isSubmitedCancelSuspendRequest = true;
+      this.cancelSuspendedRequestLoading = true;
+      this.formCancelSuspendRequest.get("id").setValue(suspendRequestId);
+
+      this.api
+        .postTo(
+          "Admin",
+          "CancelSuspendedRequest",
+          this.formCancelSuspendRequest.value
+        )
+        .subscribe(
+          (res: any) => {
+            if (res.ok) {
+              const message = "ثبت با موفقیت انجام شد.";
+              this.toastrService.success(message, " ", {
+                position: NbGlobalLogicalPosition.TOP_START,
+                duration: 5000,
+              });
+              // location.reload();
+              this.loadList();
+              this.dialogCancelSuspendedRef.close();
+              this.cancelSuspendedRequestLoading = false;
+              this.isSubmitedCancelSuspendRequest = false;
+            }
+          },
+          (err: HttpErrorResponse) => {
+            this.cancelSuspendedRequestLoading = false;
+            if (err.error instanceof Error) {
+              console.log("Client-side error occured.");
+            } else {
+              console.log("Server-side error occured.");
+            }
+            this.dialogCancelSuspendedRef.close();
+          }
+        );
+    }
+    return;
+  }
+
 }

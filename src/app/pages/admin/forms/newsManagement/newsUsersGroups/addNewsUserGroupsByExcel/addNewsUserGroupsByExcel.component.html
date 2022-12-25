@@ -1,0 +1,138 @@
+<style>
+  .pagination /deep/ .ngx-pagination .current {
+    background: lightseagreen;
+  }
+
+  .pagination /deep/ pagination-template {
+    width: 100% !important;
+  }
+
+  .pagination {
+    text-align: center !important;
+  }
+
+  dp-date-picker /deep/ .dp-input-container .dp-picker-input {
+    width: 220px !important;
+  }
+
+  nb-select.pageSizeSelect /deep/ .select-button {
+    min-width: 8rem !important;
+  }
+
+  nb-select.workStatus /deep/ .select-button {
+    padding: 0.3rem 1.125rem !important;
+  }
+
+  nb-accordion nb-accordion-item-body /deep/ .item-body {
+    padding: 0 !important;
+  }
+
+
+  .col-lg-3.col-md-3.col-sm-6.col-xs-12,
+  .col-lg-2.col-md-2.col-sm-6.col-xs-12 {
+    padding: 7px;
+  }
+
+  p {
+    text-align: justify;
+    text-justify: inter-word;
+    line-height: 1.8;
+    font-size: 1rem;
+    /* margin: 0 20px 15px 20px; */
+  }
+</style>
+
+<nb-card style="box-shadow: 0 0 4px">
+
+  <nb-card-header>گروه بندی کاربران اخبار </nb-card-header>
+
+  <nb-card-body>
+
+    <form [formGroup]="fileUploadForm" (ngSubmit)="onFormSubmit()">
+      <div class="row col-sm-12 mb-4">
+        <div class="col-md-12">
+          <div class="alert alert-info p-2 mt-2 rainbow" id="box" >
+            <p class="text-justify mb-0" style="line-height: 1.8">
+              <strong>ستون های به رنگ قرمز دراکسل حتما باید مقدار دهی شوند در غیر اینصورت ردیف مورد نظر به لیست کاربران گروه اضافه نخواهد شد.</strong>
+            </p>
+          </div>
+            <table class="table table-striped draw meet">
+              <thead>
+                <tr>
+                  <th>کد ملی </th>
+                  <th>نقش </th>
+                  <th>نام </th>
+                  <th> نام خانوادگی </th>
+                  <th style="color: black !important;">کد دفتر گاز</th>
+                  <th style="color: black !important;">شماره تلفن</th>
+                </tr>
+              </thead>
+            </table>
+         
+        </div>
+      <hr>
+        <div class="col-sm-3 col-md-3 col-lg-3 mt-4 pt-2">
+          <span class="text-danger font-weight-bold ml-1">*</span>
+
+          <label class="pl-2">نام گروه :</label>
+          <input type="text" id="groupName" placeholder="نام گروه خود را وارد کنید"  formControlName="groupName" nbInput />
+          <div
+            *ngFor="let validation of INPUT_VALIDATION_MESSAGES.groupName"
+          >
+            <span
+              class="text-danger"
+              *ngIf="
+              fileUploadForm.get('groupName').hasError(validation.type) &&
+                (fileUploadForm.get('groupName').dirty ||
+                fileUploadForm.get('groupName').touched)
+              "
+              >{{ validation.message }}</span
+            >
+          </div>
+        </div>
+        <div class="col-md-5 mt-4">
+          <div class="file-drop-area">
+            <span class="fake-btn">فایل را انتخاب کنید</span>
+            <span class="Pre-file-msg" *ngIf="!fileInputLabel">
+              "فایل را بکشید و در اینجا رها کنید"
+            </span>
+            <span class="Pre-file-msg" *ngIf="fileInputLabel">
+              {{ fileInputLabel }}
+            </span>
+            <input
+              accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+              (change)="onFileSelect($event)" #UploadFileInput class="file-input" type="file" />
+
+            <div class="progress" *ngIf="progress">
+              <div class="progress-bar" [style.width]="progress + '%'">{{progress}}%</div>
+            </div>
+
+          </div>
+        </div>
+        <div class="col-md-2 mt-4">
+
+          <circle-progress [percent]="progress" [radius]="30" [outerStrokeWidth]="5" [innerStrokeWidth]="5"
+            [outerStrokeColor]="'#76C2AF'" [innerStrokeColor]="'#C7E596'" [animation]="true" [animationDuration]="300"
+            [space]="-5"></circle-progress>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <button  [nbSpinner]="loading"  nbSpinnerStatus="info" nbSpinnerSize="large" type="submit" nbButton
+            status="success" class="btn btn-success btn-block" [disabled]=" loading || fileUploadForm.invalid">
+            ثبت
+          </button>
+        </div>
+        <div class="col-md-6">
+          <button type="button" nbButton status="warning" class="btn btn-block"
+            [routerLink]="['/pages/admin/NewsList']" [disabled]="loading">
+            بازگشت
+          </button>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+
+</nb-card>

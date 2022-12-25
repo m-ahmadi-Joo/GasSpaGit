@@ -1,0 +1,69 @@
+nb-list-item {
+  font-family: IRANSansWeb;
+  cursor: pointer;
+}
+
+nb-list {
+  font-family: IRANSansWeb;
+}
+
+h5 {
+  font-family: IRANSansWeb;
+}
+
+nb-card {
+  //flex: 1 1 45%;
+  //margin: 0 2.5%;
+
+  &.own-scroll {
+    height: 30rem;
+  }
+}
+
+:host /deep/ td input[type='checkbox'] {
+  height: 1.125rem;
+  background-color: #e2e4ea;
+  border-color: #e4e9f2;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 3px;
+  position: relative;
+}
+
+// :host /deep/ td input[type='checkbox'] :active {
+
+
+// }
+// :host /deep/ tr .ng2-smart-titles th {}
+
+// ::ng-deep table tr td:nth-of-type(1),
+// ::ng-deep table tr th:nth-of-type(1) {
+//   padding: 0 !important;
+//   display: block;
+//   height: 13px;
+//   position: relative;
+// }
+
+// ::ng-deep label:first-child {
+//   padding-bottom: 5px;
+// }
+
+::ng-deep table tr th {
+  // margin: 0 !important;
+  // position: absolute;
+  // top: 15px;
+  background-image: linear-gradient(to right, #598bff, #3366ff);
+}
+
+// ::ng-deep table tr td:nth-of-type(1) input,
+// ::ng-deep table tr th:nth-of-type(1) input {
+//   // margin: 0 !important;
+//   // position: absolute;
+//   // top: 15px;
+//   background-image: linear-gradient(to right, #598bff, #3366ff);
+// }
+
+// ::ng-deep table tr td:nth-of-type(2),
+// ::ng-deep table tr th:nth-of-type(2) {
+//   padding: 0 0 0 20px !important;
+// }

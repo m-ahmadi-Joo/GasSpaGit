@@ -40,6 +40,7 @@ status="danger"
   nbButton
   status="warning"
   (click)="onEdit(rData)"
+  *appHasNoRole="['Shahrsazi']"
 >
   <nb-icon
     [options]="{ animation: { type: 'zoom' } }"
@@ -60,6 +61,7 @@ status="danger"
   status="danger"
   (click)="onUpdateStatus(rData)"
   *ngIf="!rData.isDisabled"
+ 
 >
   <nb-icon
     [options]="{ animation: { type: 'zoom' } }"
@@ -114,6 +116,7 @@ status="info"
         nbButton
         status="primary"
         (click)="onChangePassWord(rData)"
+        *appHasNoRole="['Shahrsazi']"
       >
           تغییر رمز عبور
       </button>
@@ -124,6 +127,7 @@ status="info"
       nbButton
       status="primary"
       (click)="onResetPassword(rData)"
+      *appHasNoRole="['Shahrsazi']"
     >
         بازنشانی رمز عبور
     </button>

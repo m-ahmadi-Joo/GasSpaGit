@@ -1,0 +1,142 @@
+<style>
+  table td {
+    vertical-align: middle;
+    padding: 4px !important;
+  }
+</style>
+
+<nb-card>
+  <nb-card-header class="text-center">
+    <h4 class="mb-3">سوابق مجری {{excuterInf?.firstName}} {{excuterInf?.lastName}} ({{excuterInf?.code}}) </h4>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-6 col-md-6 col-lg-6">
+        <label>تلفن مجری</label>
+        <input fullWidth autocomplete="false" id="pn" nbInput readonly="true" [value]="excuterInf?.phoneNumber"
+          type="text" />
+      </div>
+      <div class="col-sm-6 col-md-6 col-lg-6">
+        <label>کد ملی مجری</label>
+        <input fullWidth autocomplete="false" id="ni" nbInput readonly="true" [value]="excuterInf?.nationalID"
+          type="text" />
+      </div>
+
+    </div>
+    <div class="row mb-3 mt-3">
+      <div class=" col-sm-12 col-md-12 col-lg-12">
+        <label>مستندات : </label>
+
+        <!-- <ngx-showGasRequestDocumentsDetail #cmp [filePath]="filePath"></ngx-showGasRequestDocumentsDetail> -->
+        <DocumentsUploaded [id]="id" [uploaderType]="'ExcuterLimitDocuments'" [type]="'BaseExcuter'">
+        </DocumentsUploaded>
+
+
+
+      </div>
+    </div>
+
+    <nb-card class="mt-3">
+      <nb-card-body>
+        <nb-accordion multi>
+          <nb-accordion-item expanded>
+            <nb-accordion-item-header>
+              <label>محدودیت بر روی مجری:</label>
+            </nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                  <table class="table table-striped" style="width: 100% !important">
+                    <thead>
+                      <tr>
+                        <th>ردیف</th>
+                        <th>عنوان درخواست</th>
+                        <th>زمان ثبت</th>
+                        <th>اپراتور - نقش</th>
+                        <th width="30%">توضیحات</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="
+                    let step of history;
+                    let i = index
+                  ">
+                        <td width="2%">{{ i + 1 }}</td>
+                        <td width="10%">{{ step?.requestStateTypeTitle }}</td>
+                        <td width="15%">
+                          {{ step?.unitStateTime }}
+                        </td>
+                        <td width="21%" *ngIf="step?.registrarInfo !== null && step?.suspendRegistrarInfo !== null">
+                          {{ step?.registrarInfo }}
+                          <span *ngIf="step?.registrarInfo == null && step?.suspendRegistrarInfo == null">
+                            ثبت سیستم
+                          </span>
+                        </td>
+                        <td width="21%" *ngIf="step?.suspendRegistrarInfo !== null">
+                          {{ step?.suspendRegistrarInfo }}
+                          <span *ngIf="step?.suspendRegistrarInfo == null">
+                            ثبت سیستم
+                          </span>
+                        </td>
+                        <td width="43%">
+                          <div *ngIf="step?.closeComment !== null">
+                            <div *ngIf="step?.closeResult === true">
+                              <span class="font-weight-bold">نتیجه : </span>
+                              <span class="ml-2 font-weight-bold text-danger">
+                                محدود شده</span>
+                              <!-- <br /> -->
+                              <p class=" mb-0">
+                                <span class="font-weight-bold text-justify">توضیحات : </span>
+                                {{ step?.closeComment }}
+                              </p>
+                            </div>
+
+                          </div>
+                          <div *ngIf="step?.suspendCloseComment !== null">
+                            <div *ngIf="step?.suspendCloseResult === true">
+                              <span class="font-weight-bold">نتیجه محدودیت : </span>
+                              <span class="ml-2 font-weight-bold text-danger">
+                                محدود شده</span>
+                              <!-- <br /> -->
+                              <p class=" mb-0">
+                                <span class="font-weight-bold text-justify">توضیحات : </span>
+                                {{ step?.suspendCloseComment }}
+                              </p>
+                            </div>
+
+                          </div>
+
+                          <div *ngIf="step?.suspendUnCloseComment !== null">
+                            <div *ngIf="step?.suspendUnCloseResult === true">
+                              <span class="font-weight-bold">نتیجه محدودیت : </span>
+                              <span class="ml-2 font-weight-bold text-success">
+                                عدم محدودیت 
+                              </span>
+                              <!-- <br /> -->
+                              <p class=" mb-0">
+                                <span class="font-weight-bold text-justify">توضیحات : </span>
+                                {{ step?.suspendUnCloseComment }}
+                              </p>
+                            </div>
+
+                          </div>
+                       
+                          <div *ngIf="step?.unClosedUser != null">
+                            <span class="font-weight-bold"> رفع محدود کننده : </span>
+                            <span class="font-weight-bold text-success">
+                              {{ step?.unClosedUser }}
+                            </span>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+        </nb-accordion>
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+</nb-card>

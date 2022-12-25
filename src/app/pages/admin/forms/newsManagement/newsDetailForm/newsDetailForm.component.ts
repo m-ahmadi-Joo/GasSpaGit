@@ -1,5 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { inputs } from '@syncfusion/ej2-angular-richtexteditor/src/rich-text-editor/richtexteditor.component';
 import { ApiCommandCenter } from 'src/app/@core/api/services/apiCommandCenter';
 
 @Component({
@@ -9,9 +10,8 @@ import { ApiCommandCenter } from 'src/app/@core/api/services/apiCommandCenter';
 })
 export class NewsDetailFormComponent implements OnInit {
   info: any = {};
-  id;
   @ViewChild('InnerHtmlInput', { static: false }) el: ElementRef;
-
+  @Input() id: number;
   constructor(
     private api: ApiCommandCenter,
     private route: ActivatedRoute
@@ -23,7 +23,15 @@ export class NewsDetailFormComponent implements OnInit {
          this.el.nativeElement.innerHTML = res.text;
           Object.assign(this.info, res);
         })
-    } else {
+    }else if (this.route.snapshot.paramMap.get("id")){
+      this.id = parseInt(this.route.snapshot.paramMap.get("id"));
+      this.api.getFrom("News", "GetDetails/" + this.id)
+      .subscribe((res: any) => {
+       this.el.nativeElement.innerHTML = res.text;
+        Object.assign(this.info, res);
+      })
+    } 
+     else {
       this.route.data.subscribe(data => {
         Object.assign(this.info, data['data']);
       });

@@ -70,11 +70,11 @@
   >
   </nb-icon>
 </button> -->
-<nb-select placeholder="انتخاب عملیات"  status="success">
+<nb-select placeholder="انتخاب عملیات"  status="success" *appHasNoRole="['Shahrsazi']">
   <!-- *ngIf="rData.nextStateType.includes('ControlePeriodicInspectionRequests')" -->
   <nb-option *ngIf="rData.nextStepType.includes('ControlePeriodicInspectionRequests')">
     <button
-      *appHasRole="['Admin', 'GasEmployee']"
+      *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']"
       fullWidth
       nbButton
       status="primary"
@@ -134,7 +134,7 @@
 
   <nb-option *ngIf="rData.nextStepType.includes('DefineObserverSafetyAndLeakInpection')">
     <button
-      *appHasRole="['Admin', 'GasEmployee']"
+      *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']"
       fullWidth
       nbButton
       status="primary"

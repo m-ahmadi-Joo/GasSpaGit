@@ -1,0 +1,157 @@
+
+:host /deep/ .custom-class-example .selected-list {
+    border-radius: 0.25rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+    padding: 0.4375rem 1.125rem;
+    border-color: #598bff;
+    background-color: #f7f9fc;
+    border-color: #edf1f7;
+    border-style: solid;
+    border-width: 1px;
+    color: #1a2138;
+    font-family: IRANSansWeb;
+    transition-duration: 0.15s;
+    transition-property: border, background-color, color, box-shadow;
+    transition-timing-function: ease-in;
+    overflow: visible;
+    margin: 0;
+    height: 34.25px;
+    // width: calc(200% - 20px);
+  }
+  
+  // .custom-class-example {
+  
+  // }
+  :host /deep/ .custom-class-example .selected-list .c-btn {
+    background: #f7f9fc;
+    color: #333;
+  
+  }
+  
+  :host /deep/ .custom-class-example .selected-list .c-btn {
+    padding: 0;
+  }
+  :host /deep/ .custom-class-example .selected-list .c-btn span:first-child {
+    margin-right: 35px;
+  }
+  :host /deep/ .custom-class-example .selected-list .c-angle-down{
+    margin-right: 0;
+  }
+  :host /deep/ .custom-class-example .selected-list .c-list .c-token {
+    background: #0079FE;
+    width: 126px;
+    height: 25px;
+    float: right;
+  }
+  :host /deep/ .custom-class-example .selected-list .c-list .c-token:first-child {
+    margin-right: 52px;
+}
+  :host /deep/ .custom-class-example .selected-list .c-list .c-token .c-label {
+    color: #fff;
+    white-space: nowrap;
+  }
+  
+  :host /deep/ .custom-class-example .selected-list .c-list .c-token .c-remove svg {
+    fill: red;
+  }
+  
+  :host /deep/ .custom-class-example .selected-list .c-angle-down svg,
+  .selected-list .c-angle-up svg {
+    fill: #333;
+  }
+
+  :host /deep/ .dropdown-list {
+    float: right;
+    direction: rtl;
+    background: #f5f5f5;
+     //width: calc(200% - 20px);
+  }
+  
+  :host /deep/ .dropdown-list ul li:hover {
+  
+    background: #f5f5f5;
+  }
+  
+  :host /deep/ .arrow-up,
+  .arrow-down {
+    border-bottom: 15px solid #fff;
+  }
+  
+  :host /deep/ .arrow-2 {
+    border-bottom: 15px solid #ccc;
+  }
+  
+  :host /deep/ .list-area {
+    border: 1px solid #ccc;
+    background: #fff;
+    box-shadow: 0px 1px 5px #959595;
+  }
+  
+  :host /deep/ .select-all {
+    border-bottom: 1px solid #ccc;
+  }
+  :host /deep/ .pure-checkbox {
+    text-align: right!important;
+  }
+  :host /deep/ .list-filter {
+    border-bottom: 1px solid #ccc;
+  }
+  
+  :host /deep/ .list-filter .c-search svg {
+    fill: #888;
+  }
+  
+  :host /deep/ .list-filter .c-clear svg {
+    fill: #888;
+  }
+  
+  :host /deep/ .pure-checkbox input[type="checkbox"]:focus+label:before,
+  .pure-checkbox input[type="checkbox"]:hover+label:before {
+    border-color: #0079FE;
+    background-color: #f2f2f2;
+  }
+  
+  :host /deep/ .pure-checkbox input[type="checkbox"]+label {
+    color: #000;
+  }
+  
+  :host /deep/ .pure-checkbox input[type="checkbox"]+label:before {
+    color: #0079FE;
+    border: 2px solid #0079FE;
+  }
+  
+  :host /deep/ .pure-checkbox input[type="checkbox"]+label:after {
+    background-color: #0079FE;
+  }
+  
+  :host /deep/ .pure-checkbox input[type="checkbox"]:disabled+label:before {
+    border-color: #cccccc;
+  }
+  
+  :host /deep/ .pure-checkbox input[type="checkbox"]:disabled:checked+label:before {
+    background-color: #cccccc;
+  }
+  
+  :host /deep/ .pure-checkbox input[type="checkbox"]+label:after {
+    border-color: #ffffff;
+  }
+  
+  :host /deep/ .pure-checkbox input[type="radio"]:checked+label:before {
+    background-color: white;
+  }
+  
+  :host /deep/ .pure-checkbox input[type="checkbox"]:checked+label:before {
+    background: #0079FE;
+  }
+  
+  :host /deep/ .selected-item {
+    background: #e9f4ff;
+  }
+  
+  :host /deep/ .btn-iceblue {
+    background: #0079FE;
+    border: 1px solid #ccc;
+    color: #fff;
+  }

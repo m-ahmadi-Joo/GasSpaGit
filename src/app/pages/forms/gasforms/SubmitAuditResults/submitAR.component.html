@@ -378,7 +378,9 @@
                   <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="!showCollectorWelding">
                     <div>
                       <label for="isCollectorInspectionWelding">نیاز به بازرسی جوش کلکتوری</label>
-                      <nb-radio-group *ngIf="this.checkAnalyze !== 'View'" class="form-inline pr-3"
+                      <nb-radio-group *ngIf="this.checkAnalyze !== 'View'"
+                      (valueChange)="onChangeCheckCollector($event)"
+                       class="form-inline pr-3"
                         formControlName="isCollectorInspectionWelding" id="isCollectorInspectionWelding"
                         name="isCollectorInspectionWelding">
                         <nb-radio value="true">
@@ -418,23 +420,22 @@
                     (inspectionType === 'ResultInspectionPreExecution' ||
                       inspectionType === 'ResultReInspectionPreExecution' ||
                       inspectionType === 'ChangeResultInspectionPreExecution') &&
-                     this.checkAnalyze !== 'View' && showtypeofConsumables">
+                     showtypeofConsumables">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                       <label for="typeofConsumables"> نوع مصالح مصرفی :
                       </label>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 form-inline mt-4 mr-5">
                       <label> لوله :
-                        <input formControlName="pipeType" size="large" id="pipeType" class="mr-4 dotted" nbInput />
+                        <input  formControlName="pipeType" size="large" id="pipeType" class="mr-4 dotted" nbInput [readonly]="this.checkAnalyze == 'View'" />
                       </label>
                       <label> اتصالات :
-                        <input formControlName="connectionType" size="large" id="connectionType" class="mr-4 dotted"
-                          nbInput />
+                        <input formControlName="connectionType" size="large" id="connectionType" class="mr-4 dotted" nbInput  [readonly]="this.checkAnalyze == 'View'"/>
                       </label>
                     </div>
-
                   </div>
                 </div>
+
                 <div class="row w-100" *ngIf="
                     (inspectionType == 'ResultInspectionWelding' ||
                       inspectionType == 'ResultInspectionCollectorWelding') &&

@@ -113,12 +113,12 @@ export class LoginComponent implements OnInit {
       // this.currentRole == "Engineer" ||
       this.currentRole == "Owner" ||
       this.currentRole == "GasEmployee" ||
+      this.currentRole == "AnalyzeEmployee" ||
       this.currentRole == "Pishkhan" ||
       this.currentRole == "GasRuleEngineer" ||
       this.currentRole == "GasRuleCheckerGroupOne" ||
       this.currentRole == "GasRuleCheckerGroupTwo" ||
       this.currentRole == "GasRuleCheckerGroupThree" ||
-      this.currentRole == "GasEmployeeHP" ||
       this.currentRole == "GasRuleEmployeeHP" ||
       this.currentRole == "HPManager" ||
       this.currentRole == "SupplierHP" ||
@@ -131,6 +131,10 @@ export class LoginComponent implements OnInit {
       ) {
       this.router.navigate(["/pages/forms/GasReqList"]);
     }
+    else if (this.currentRole == "GasEmployeeHP" )
+    {
+      this.router.navigate(["/pages/forms/HPGasReqList"]);
+    }
     else if (this.currentRole == "Engineer") {
       this.router.navigate(["/pages/forms/AnalyzeList"])
     }
@@ -139,6 +143,9 @@ export class LoginComponent implements OnInit {
     }
     else if (this.currentRole == "ConsultManager") {
       this.router.navigate(["/pages/forms/ConsultList"])
+    }
+    else if (this.currentRole == "Shahrsazi") {
+      this.router.navigate(["/pages/admin/AdminPanel"])
     }
     else {
       this.router.navigate(["/pages/forms"]);

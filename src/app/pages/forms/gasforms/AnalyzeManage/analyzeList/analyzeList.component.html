@@ -125,7 +125,7 @@
     <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="arrow-ios-back-outline">
     </nb-icon>
     <div class="pull-left">
-      <button class="btn btn-info ml-2" style="color: #fff;" *appHasRole="['Admin', 'GasEmployee']"
+      <button class="btn btn-info ml-2" style="color: #fff;" *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']"
         (click)="oncreateAnalyze()">
         <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="home-outline">
         </nb-icon>
@@ -133,7 +133,7 @@
       </button>
     </div>
     <div class="pull-left">
-      <button *appHasRole="['Admin', 'GasEmployee']" (click)="analyzeListItemDeletedExcelExport()"
+      <button *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']" (click)="analyzeListItemDeletedExcelExport()"
         class="btn btn-info ml-2" style="color: #fff;">
         <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="home-outline">
         </nb-icon>

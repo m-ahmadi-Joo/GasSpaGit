@@ -62,6 +62,42 @@
       <button
         class="btn btn-info ml-2"
         style="color:#fff"
+        [routerLink]="['/pages/admin/AddNewsUserGroups/byExcel']"
+      >
+        <nb-icon
+          [options]="{ animation: { type: 'pulse' } }"
+          class="icon-button"
+          icon="person-add-outline"
+        >
+        </nb-icon>
+       اضافه کردن گروه کاربران
+      </button>
+
+    <div style="clear: both"></div>
+    </div>
+    <div class="pull-left" *appHasRole="['Admin']"
+    >
+      <button
+        class="btn btn-info ml-2"
+        style="color:#fff"
+        [routerLink]="['/pages/admin/NewsUserGroupsList']"
+      >
+        <nb-icon
+          [options]="{ animation: { type: 'pulse' } }"
+          class="icon-button"
+          icon="person-add-outline"
+        >
+        </nb-icon>
+      لیست گروه کاربران
+      </button>
+
+    <div style="clear: both"></div>
+    </div>
+    <div class="pull-left" *appHasRole="['Admin']"
+    >
+      <button
+        class="btn btn-info ml-2"
+        style="color:#fff"
         [routerLink]="['/pages/admin/News']"
       >
         <nb-icon

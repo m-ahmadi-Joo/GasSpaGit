@@ -23,6 +23,7 @@
   nbButton
   status="danger"
   (click)="onDeleteGasRequest(rData)"
+  *appHasNoRole="['Shahrsazi']"
 >
   <nb-icon
     [options]="{ animation: { type: 'zoom' } }"
@@ -40,6 +41,7 @@
   nbButton
   status="warning"
   (click)="onEditAnalyzeSetting(rData.id)"
+  *appHasNoRole="['Shahrsazi']"
 >
   <nb-icon
     [options]="{ animation: { type: 'zoom' } }"

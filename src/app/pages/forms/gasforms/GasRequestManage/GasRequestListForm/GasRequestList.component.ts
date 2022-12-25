@@ -162,14 +162,13 @@ export class GasRequestListComponent {
     private fb: FormBuilder,
     private fbEndOrBlockRequest: FormBuilder,
     private fbStopEndOrBlockRequest: FormBuilder,
+    private fbSuspendRequest: FormBuilder,
     private fbCancelSuspendRequest: FormBuilder,
-
     private reg: RegularService,
     private dialogService: NbDialogService,
     private toastrService: NbToastrService,
     private unitStateService: UnitStateService, // private loadingService: LoadingService,
     private gasReqStateService: GasRequestStateService,
-    private fbSuspendRequest: FormBuilder,
 
   ) { }
 
@@ -663,6 +662,112 @@ export class GasRequestListComponent {
           },
         },
       };
+    }else if(this.userRole.includes("Shahrsazi")) 
+    {
+      this.settings.columns = {
+        works: {
+          title: "عملیات",
+          type: "custom",
+          width: "18%",
+          valuePrepareFunction: (cell, row) => {
+            return row;
+          },
+          renderComponent: GasReqListCustomActionsComponent,
+          onComponentInitFunction: (instance: any) => {
+            instance.startWorkLicenseHP.subscribe((row) => {
+              this.onStartWorkLicenseHP(row);
+            });
+
+            instance.deleteConfirm.subscribe((row) => {
+              this.deleteRecord(row);
+            });
+
+            instance.collectorRegistrationConfirm.subscribe((row) => {
+              this.collectorRegister(row);
+            });
+
+            instance.endOrBlockRequest.subscribe((row) => {
+              this.endOrBlockRequest(row);
+            });
+
+            instance.stopEndOrBlockRequest.subscribe((row) => {
+              this.stopEndOrBlockRequest(row);
+            });
+            instance.suspendRequest.subscribe((row) => {
+              this.suspendRequest(row);
+            });
+            instance.cancelSuspendedRequest.subscribe((row) => {
+              this.cancelSuspendedRequest(row);
+            });
+          },
+        },
+        nextPersianRoles: {
+          title: "در انتظار بررسی",
+          filter: true,
+          valuePrepareFunction(value, row, cell) {
+            if (row.nextPersianRoles) {
+              return row.nextPersianRoles;
+            }
+            return "--------";
+          },
+        },
+        lastRequestStateTypeTitle: {
+          title: "آخرین عملیات انجام شده",
+          filter: true,
+        },
+        status: {
+          title: "وضعیت",
+          filter: true,
+        },
+        area: {
+          title: "منطقه",
+          filter: true,
+        },
+        unitCount: {
+          title: "تعداد واحد",
+          filter: true,
+        },
+        approximateConsumption: {
+          title: "میزان مصرف",
+          filter: true,
+        },
+        address: {
+          title: "نشانی",
+          filter: true,
+          type: "custom",
+          renderComponent: AddressTooltipComponent,
+        },
+        totalFoundation: {
+          title: "زیربنا",
+          filter: true,
+          type: "text",
+        },
+
+        fileNumber: {
+          title: "شماره درخواست",
+          filter: true,
+        },
+        idx: {
+          title: "ردیف",
+          type: "text",
+          width: "2%",
+        
+        },
+     
+
+        checkBox: {
+          title: "انتخاب",
+          type: "custom",
+          filter: false,
+          width: "1%",
+          renderComponent: gridCheckboxForGasRequestComponent,
+          onComponentInitFunction: (instance: any) => {
+            instance.totalDefineObserver.subscribe((event) => {
+              this.totalDefineObserver(event);
+            });
+          },
+        },
+      };
     } else if (
       !this.userRole.includes("Owner") &&
       !this.userRole.includes("Pishkhan")
@@ -842,7 +947,8 @@ export class GasRequestListComponent {
           },
         },
       };
-    } else {
+    }
+     else {
       this.settings.columns = {
         works: {
           title: "عملیات",
@@ -1968,7 +2074,6 @@ cancelSuspendedRequest(row) {
     this.collectorType = '1';
   }
   selectUnitRadio(selecteItem) {
-    debugger;
     let selectedList = [];
     this.collectorCountArr.forEach(element => {
       if (element.idx !== selecteItem.idx) {

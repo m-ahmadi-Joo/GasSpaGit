@@ -19,25 +19,21 @@ export class ApiCommandCenterService extends ApiCommandCenter {
       environment.SERVER_URL = "http://localhost:52805/api";
     } else if (url.includes("gas.fceo.ir")) {
       environment.SERVER_URL = "http://gas.fceo.ir:2727/api";
-    } else if (url.includes("http://192.168.0.201")) {
+    }
+    else if (url.includes("http://192.168.0.201")) {
       environment.SERVER_URL = "http://192.168.0.201:81/api";
-    } else if (url.includes("http://192.168.0.6")) {
+    } 
+    else if (url.includes("http://192.168.0.18:83")) {
       environment.SERVER_URL = "http://192.168.0.6:82/api";
     }
-    else if (url.includes("http://192.168.0.18:83")) {
-      environment.SERVER_URL = "http://192.168.0.18:82/api";
-    }
-    else if (url.includes("http://192.168.0.06")) {
+    else if (url.includes("http://192.168.0.6:83")) {
       environment.SERVER_URL = "http://192.168.0.06:82/api";
     }
-    else if (url.includes("http://192.168.2.6:83")) {
-      environment.SERVER_URL = "http://192.168.2.06:82/api";
+    else if (url.includes("http://192.168.0.6:84")) {
+      environment.SERVER_URL = "http://192.168.0.6:200/api";
     }
-    else if (url.includes("http://192.168.0.15:83")) {
-      environment.SERVER_URL = "http://192.168.0.15:82/api";
-    }
-    else if (url.includes("http://192.168.0.15")) {
-      environment.SERVER_URL = "http://192.168.0.15:82/api";
+    else if (url.includes("http://192.168.0.6:84")) {
+      environment.SERVER_URL = "http://192.168.0.06:200/api";
     }
     else {
       environment.SERVER_URL = "http://localhost:5000/api";
@@ -572,17 +568,21 @@ export class ApiCommandCenterService extends ApiCommandCenter {
   getGasRequestList(
     page?,
     itemsPerPage?,
-    filterParams?
+    filterParams?,
+    hPRequests?
   ): Observable<PaginatedResult<any[]>> {
     const paginatedResult: PaginatedResult<any[]> = new PaginatedResult<
       any[]
     >();
 
     let params = new HttpParams();
-
+    if (hPRequests == null||hPRequests=='undefined') {
+      hPRequests = false;
+    }
     if (page != null && itemsPerPage != null) {
       params = params.append("page", page);
       params = params.append("limit", itemsPerPage);
+      params = params.append("hPRequests", hPRequests)
     }
 
     if (filterParams != null) {
@@ -2763,6 +2763,130 @@ export class ApiCommandCenterService extends ApiCommandCenter {
   }
   getDataForNewsDetail() {
     return this._newsId.asObservable();
+  }
+  //#endregion
+ //#region getAllMoreFiveUnitsList
+  getAllMoreFiveUnitsList(
+    page?,
+    itemsPerPage?,
+    filterParams?
+  ): Observable<PaginatedResult<any[]>> {
+    const paginatedResult: PaginatedResult<any[]> = new PaginatedResult<
+      any[]
+    >();
+
+    let params = new HttpParams();
+
+    if (page != null && itemsPerPage != null) {
+      params = params.append("page", page);
+      params = params.append("limit", itemsPerPage);
+    }
+
+    if (filterParams != null) {
+      params = params.append("toDate", filterParams.pFromDate);
+      params = params.append("fromDate", filterParams.pToDate);
+      params = params.append("engineerName", filterParams.payerName);
+      params = params.append("engineerIds", filterParams.payerNationalCode);
+      params = params.append("engineerName", filterParams.payType);
+      params = params.append("unitCountMin", filterParams.payReason);
+      params = params.append("unitCountMax", filterParams.trackNumber);
+      params = params.append("requestStateIds", filterParams.bankRefrence);
+      params = params.append("gasRequestFileNumber", filterParams.gasRequestFileNumber);
+    }
+
+    return this.getFromByParamsAndObserveResponse(
+      "Analyze",
+      "GetGasRequestFromAnalyze",
+      params
+    ).pipe(
+      map((response: any) => {
+        paginatedResult.result = response.body;
+        if (response.headers.get("Pagination") != null) {
+          paginatedResult.pagination = JSON.parse(
+            response.headers.get("Pagination")
+          );
+        }
+        return paginatedResult;
+      })
+    );
+  }
+  //#endregion
+  getSuppliersList(
+    page?,
+    itemsPerPage?,
+    filterParams?
+  ): Observable<PaginatedResult<any[]>> {
+    const paginatedResult: PaginatedResult<any[]> = new PaginatedResult<
+      any[]
+    >();
+
+    let params = new HttpParams();
+
+    if (page != null && itemsPerPage != null) {
+      params = params.append("page", page);
+      params = params.append("limit", itemsPerPage);
+    }
+
+    if (filterParams != null) {
+      params = params.append("firstName", filterParams.firstName);
+      params = params.append("nationalCode", filterParams.nationalCode);
+      params = params.append("lastName", filterParams.lastName);
+      params = params.append("workTown", filterParams.workTown);
+      
+    }
+
+    return this.getFromByParamsAndObserveResponse(
+      "Suppliers",
+      "GetAllSuppliers",
+      params
+    ).pipe(
+      map((response: any) => {
+        console.log("hiiiiiii");
+        console.log(response.body);
+        paginatedResult.result = response.body;
+        if (response.headers.get("Pagination") != null) {
+          paginatedResult.pagination = JSON.parse(
+            response.headers.get("Pagination")
+          );
+        }
+        return paginatedResult;
+      })
+    );
+  }
+
+   //#region getNewsUserGroup
+   getNewsUserGroupList(
+    page,
+    itemsPerPage,
+    filterParams?
+  ): Observable<PaginatedResult<any[]>> {
+    const paginatedResult: PaginatedResult<any[]> = new PaginatedResult<
+      any[]
+    >();
+
+    let params = new HttpParams();
+
+    if (page != null && itemsPerPage != null) {
+      params = params.append("page", page);
+      params = params.append("limit", itemsPerPage);
+      // params = params.append("role", role);
+    }
+    return this.getFromByParamsAndObserveResponse(
+      "News",
+      "GetAllNewsUserGroup",
+      params
+      // filterParams
+    ).pipe(
+      map((response: any) => {
+        paginatedResult.result = response.body;
+        if (response.headers.get("Pagination") != null) {
+          paginatedResult.pagination = JSON.parse(
+            response.headers.get("Pagination")
+          );
+        }
+        return paginatedResult;
+      })
+    );
   }
   //#endregion
 }

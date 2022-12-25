@@ -163,11 +163,11 @@
                         ">
                     <label for="pipingKind">نوع لوله کشی</label>
 
-                    <nb-select formControlName="pipingKind" id="pipingKind" placeholder="انتخاب نوع لوله کشی">
-                      <nb-option value="0">
+                    <nb-select formControlName="pipingKind" id="pipingKind" placeholder="انتخاب نوع لوله کشی" [disabled]="pipingKindDisable">
+                      <nb-option value="0" >
                         روکار
                       </nb-option>
-                      <nb-option value="1">
+                      <nb-option value="1" >
                         زیرکار
                       </nb-option>
                     </nb-select>
@@ -375,9 +375,9 @@
                     <nb-radio-group #rdbBuildingKind class="form-inline radio-x-inline"
                       formControlName="subscriptionType" id="subscriptionType" name="subscriptionType"
                       style="margin-top: 1.61rem">
-                      <nb-radio value="1">خانگی</nb-radio>
-                      <nb-radio value="2">عمومی</nb-radio>
-                      <nb-radio value="3">صنعتی</nb-radio>
+                      <nb-radio value="2">خانگی</nb-radio>
+                      <nb-radio value="3">عمومی</nb-radio>
+                      <nb-radio value="4">صنعتی</nb-radio>
 
                     </nb-radio-group>
 

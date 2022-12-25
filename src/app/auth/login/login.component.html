@@ -625,7 +625,20 @@
             <strong class="text-primary">کارمند دفتر گاز</strong>
           </a>
         </div>
-
+        <div
+        class="col-sm-2"
+        *ngIf="userRoles.includes('AnalyzeEmployee')"
+        (click)="goToHomePage('AnalyzeEmployee')"
+      >
+        <a>
+          <img
+            src="../../../assets/images/Icons/Login/Black&White/icons8-manager-100.png"
+            class="img-fluid"
+            alt="کارمند ارجاعات"
+          />
+          <strong class="text-primary">کارمند ارجاعات</strong>
+        </a>
+      </div>
         <div
           class="col-sm-2"
           *ngIf="userRoles.includes('SupplierHP')"
@@ -910,6 +923,21 @@
             <strong class="text-primary">کارشناس کنترل مضاعف</strong>
           </a>
         </div>
+
+        <div
+        class="col-sm-2"
+        *ngIf="userRoles.includes('Shahrsazi')"
+        (click)="goToHomePage('Shahrsazi')"
+      >
+        <a>
+          <img
+            src="../../../assets/images/Icons/Login/Black&White/icons8-spy-100.png"
+            class="img-fluid"
+            alt="کارمند راه و شهر سازی"
+          />
+          <strong class="text-primary">کارمند راه و شهر سازی</strong>
+        </a>
+      </div>
 
         <div class="clearfix"></div>
       </div>

@@ -52,16 +52,9 @@ export class AnalyzeListComponent implements OnInit {
     private customWindowService: CustomWindowServiceService,
     private fbRejection: FormBuilder,
     private persianDate: PersianDate
-  ) // public paymentService: PaymentSelectService
+  )
   {
-    // let token = "Bearer " + this.auth.getToken();
-    // const headers = new Headers({
-    //   Authorization: token
-    // });
-    // this.source = new ServerDataSource(http, {
-    //   endPoint: environment.SERVER_URL + "/Engineer",
-    //   headers: headers
-    // });
+
   }
   windowRef: NbWindowRef;
   engineersList;
@@ -100,10 +93,9 @@ export class AnalyzeListComponent implements OnInit {
   listRefferingHistory: TemplateRef<any>;
   @ViewChild("createAnalyzeList", { static: false })
   createAnalyzeList: TemplateRef<any>;
-  // @ViewChild("date", { static: false }) date: ElementRef;
-  // selectedDate;
+
   selectedId: number;
-  // selectedArea: number;
+
 
   settings = {
     hideSubHeader: true,
@@ -111,13 +103,11 @@ export class AnalyzeListComponent implements OnInit {
     actions: false,
     pager: {
       display: false,
-      // perPage: 10
     },
     columns: {
       works: {
         title: "عملیات",
         type: "custom",
-        // width: "18%",
         width: "240px",
         valuePrepareFunction: (cell, row) => {
           return row;
@@ -140,54 +130,34 @@ export class AnalyzeListComponent implements OnInit {
             this.onShowRefferingHistory(id);
           });
         },
-        //   instance.result.subscribe(row => {
-        //     this.ResultRecord(row);
-        //   });
-        // }
       },
       totalInspectionPrice: {
         title: "مبلغ کل بازرسی",
         filter: true,
-        // width: "15%",
       },
       workingInspectionTime: {
         title: "تاریخ بازرسی",
         filter: true,
-        // width: "15%",
       },
       engineerName: {
         title: "نام مهندس",
         filter: true,
-        // width: "12%",
       },
       isReferredWithTime: {
         title: "وضعیت",
         filter: true,
-        // width: "15%",
-        // width: "100px",
       },
       baseArea: {
         title: "ناحیه",
         filter: true,
-        // width: "20%",
-        // width: "200px"
       },
       rdateTime: {
         title: "تاریخ ثبت",
         filter: true,
-        // width: "10%",
       },
-
-      // date: {
-      //   title: "تاریخ درخواست",
-      //   filter: true,
-      //   // width: "200px"
-      // },
       number: {
         title: "شماره لیست",
         filter: true,
-        // width: "10%",
-        // width: "105px"
       },
     },
   };
@@ -201,9 +171,6 @@ export class AnalyzeListComponent implements OnInit {
   ngOnInit() {
     localStorage.removeItem("AnalyzeListItemFilterParams");
     this.route.data.subscribe((data) => {
-      // this.api.getFrom("Analyze", "GetAreas").subscribe((res) => {
-      //   this.areas = res;
-      // });
       Object.assign(this.areas, data["areas"]);
       this.observerGrades = data["observerGradesData"];
       Object.assign(this.collection, data["data"].result);
@@ -269,30 +236,11 @@ export class AnalyzeListComponent implements OnInit {
 
     this.datePickerConfig = this.persianDate.datePickerConfig;
 
-    // this.filterParams = JSON.parse(localStorage.getItem("AnalyzeListFilterParams"));
-    // if (this.filterParams) {
-    //   this.selectedArea = this.filterParams.selectedArea;
-    //   this.form = this.fb.group({
-    //     selectedArea: [this.filterParams.selectedArea],
-    //     fromDate: [this.filterParams.formatDate],
-    //     toDate: [this.filterParams.toDate],
-    //     listFileNumber: [this.filterParams.listFileNumber]
-    //   });
-    // } else {
-    //   this.form = this.fb.group({
-    //     selectedArea: [""],
-    //     fromDate: [""],
-    //     toDate: [""],
-    //     listFileNumber: [""]
-    //   });
-    // }
-
     this.formRejection = this.fbRejection.group({
       reason: ["", [Validators.required]],
     });
 
     this.customWindowService.close.subscribe((res) => {
-      //alert("hiii");
       this.closeRef();
     });
   }
@@ -306,7 +254,6 @@ export class AnalyzeListComponent implements OnInit {
         (res: any) => {
           console.log(res);
           if (res) {
-            // this.selectedDate = res.selectedDate;
             this.reasonNotFoundEngineer = res.reasonNotFoundEngineer;
             this.showRequests = res.reasonNotFoundEngineer ? false : true;
             this.showEngineers = res.reasonNotFoundEngineer ? false : true;

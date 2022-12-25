@@ -33,9 +33,9 @@
                     <label class="d-block" for="payTypes"> <span class="text-danger font-weight-bold">*</span>شماره
                       ملک:</label>
 
-                    <input formControlName="gasRequestId" [typeahead]="gasRequests" (change)="changeGasRequest($event)"
+                    <input formControlName="gasRequestId" [typeahead]="gasRequests|async" (change)="changeGasRequest($event)"
                       typeaheadOptionField="itemForSearch" (typeaheadOnSelect)="onSelect($event)"
-                      [typeaheadOptionsLimit]="7" [typeaheadMinLength]="0" class="form-control" class="form-control">
+                      [typeaheadOptionsLimit]="7" [typeaheadMinLength]="0" class="form-control" >
 
                     <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.gasRequestId">
                       <span class="text-danger" *ngIf="

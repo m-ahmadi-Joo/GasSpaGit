@@ -470,6 +470,7 @@ export class HeaderComponent implements OnInit {
       // this.selectedRole == "Engineer" ||
       this.selectedRole == "Owner" ||
       this.selectedRole == "GasEmployee" ||
+      this.selectedRole == "AnalyzeEmployee" ||
       this.selectedRole == "Pishkhan" ||
       this.selectedRole == "GasRuleEngineer" ||
       this.selectedRole == "GasRuleCheckerGroupOne" ||
@@ -647,6 +648,26 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  newsChangePageSize(pageSize: number) {
+    this.pagination.itemsPerPage = pageSize;
+    if (this.dialogNewsRef) {
+      this.dialogNewsRef.close();
+    }
+    this.onOpenNewsDialog();
+    // if(this.pageSizeSelect) {
+    //   this.pageSizeSelect.writeValue(pageSize);
+    // }
+  }
+
+  newsPageChanged(event) {
+    if (event <= this.pagination.totalPages) {
+      this.pagination.currentPage = event;
+      if (this.dialogNewsRef) {
+        this.dialogNewsRef.close();
+      }
+      this.onOpenNewsDialog();
+    }
+  }
   toggleSidebar(): boolean {
     this.sidebarService.toggle(false, "right");
     // this.layoutService.changeLayoutSize();
@@ -691,7 +712,7 @@ export class HeaderComponent implements OnInit {
   //     this.dialogMessagesRef.close();
   //   });
   // }
-  onOpenNewsDialog() {
+   onOpenNewsDialog() {
     this.api
       .getNewsList(
         this.pagination.currentPage,
@@ -721,5 +742,19 @@ export class HeaderComponent implements OnInit {
         }
       );
 
+  }
+  ngAfterViewInit(): void {
+    if (this.selectedRole == "Executor") {
+      if (this.warningMessages) {
+        this.showWarnings();
+      }
+    }
+  }
+  gotoDetail(value): void {
+     var url = `/pages/admin/NewsDetail/${value}`;
+    // console.log(test);
+    this.toggleDescription(value,'news')
+    window.open(url, '_blank').focus()
+    // window.open(test, '_blank') ;
   }
 }

@@ -31,7 +31,7 @@ export class GetPaymentSearchPanelInfoResolver implements Resolve<any> {
           return of(null);
         })
       );
-    } else if (role === "Admin" && !url.includes('FinancialDepartment')) {
+    } else if (role === "Admin" || role === "Shahrsazi" && !url.includes('FinancialDepartment')) {
       return this.api.getFrom("EngineerPayment", "GetPaymentSearchPanelInfo").pipe(
         catchError(error => {
           this.toastrService.danger('خطا در بازیابی اطلاعات', " ", {

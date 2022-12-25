@@ -93,6 +93,14 @@ import{gridCheckboxForEditMapComponent} from "./gasforms/Engineer/gridCheckboxFo
 import { CookieService } from 'ngx-cookie-service';
 import { DesignerResolver } from "src/app/@core/utils/DesignerResolver";
 
+import { HpGasRequestResolver } from "src/app/@core/utils/hPGasRequest-resolver";
+import { HPGasRequestListResolver } from "src/app/@core/utils/hPGasRequestList-resolver";
+import { HPGasReqListCustomActionsComponent } from "./gasforms/GasRequestManage/HPGasReqListCustomActions/HPGasReqListCustomActions.component";
+
+import { ExcuterLimitedDetailComponent } from './gasforms/ExecuterManage/excuterLimitedDetail/excuterLimitedDetail.component';
+import { SuppliersListResolver }  from "src/app/@core/utils/suppliersList-resolver";
+import { GasRequestLisForExecuterResolver } from "src/app/@core/utils/GasRequestListForExecuterList-resolver";
+
 @NgModule({
   imports: [
     ThemeModule,
@@ -115,6 +123,11 @@ import { DesignerResolver } from "src/app/@core/utils/DesignerResolver";
   ],
   declarations: [
     ...routedComponents,
+
+
+
+    ExcuterLimitedDetailComponent,
+
     // MapDialogComponent,
     // HasRoleDirective,
     // CustomTypeaheadDirective
@@ -135,7 +148,8 @@ import { DesignerResolver } from "src/app/@core/utils/DesignerResolver";
     ArchitecturalAlbumApproveCustomActionsComponent,
     HistoryEngineerAreaRatingCustomActionsComponent,
     gridCheckboxForEditMapComponent,
-    EngineerEditMapListCustomActionsComponent
+    EngineerEditMapListCustomActionsComponent,
+    HPGasReqListCustomActionsComponent
 
     // PayDetailListComponent,
     // PayDetailListCustomActionsComponent,
@@ -198,7 +212,11 @@ import { DesignerResolver } from "src/app/@core/utils/DesignerResolver";
     // EngineerPaymentService
     EngineerEditMapListResolver,
     DesignerResolver,
+    HpGasRequestResolver,
+    HPGasRequestListResolver,
+    SuppliersListResolver,
     [CookieService],
+    GasRequestLisForExecuterResolver,
   ],
   exports: [RecordMapInformationDetailComponent , AddressTooltipComponent],
 })

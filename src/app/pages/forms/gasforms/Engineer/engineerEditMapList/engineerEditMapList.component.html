@@ -78,7 +78,7 @@
       <!--  <span style="color:#3366ff">واحدها</span> -->
     </div>
     <div class="pull-left">
-      <button *appHasRole="['Admin', 'Executor', 'GasEmployee']" [disabled]="selectedPay.length === 0 " [ngStyle]="{
+      <button *appHasRole="['Admin', 'Executor', 'GasEmployee','AnalyzeEmployee']" [disabled]="selectedPay.length === 0 " [ngStyle]="{
           cursor: selectedPay.length === 0 || !hasSamePay ? 'not-allowed' : 'pointer'
         }" class="btn btn-info ml-2" style="color:#fff" (click)="totalPay($event)">
         <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="credit-card-outline">

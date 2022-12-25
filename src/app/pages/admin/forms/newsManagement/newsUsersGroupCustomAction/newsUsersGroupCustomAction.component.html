@@ -1,0 +1,33 @@
+<button
+title="حذف گروه"
+size="tiny"
+class="mb-2 mr-1"
+nbButton
+status="danger"
+(click)="onDelete(rData)"
+*appHasRole="['Admin']"
+
+>
+<nb-icon
+  [options]="{ animation: { type: 'zoom' } }"
+  class="icon-button"
+  icon="close-outline"
+>
+</nb-icon>
+</button>
+<button
+  title="مشاهده کاربران"
+  size="tiny"
+  class="mb-2 mr-1"
+  nbButton
+  status="info"
+  *appHasRole="['GasEmployee','Executor','Engineer','Owner','Admin','AnalyzeEmployee']"
+  (click)="onDetail(rData)"
+>
+  <nb-icon
+    [options]="{ animation: { type: 'zoom' } }"
+    class="alert-circle-outline"
+    icon="eye-outline"
+  >
+  </nb-icon>
+</button>

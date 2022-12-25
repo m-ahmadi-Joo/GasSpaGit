@@ -1,0 +1,220 @@
+/* @import url(https://fonts.googleapis.com/css?family=Lato:400, 300, 700); */
+
+.file-drop-area {
+    border: 1px dashed green;
+    border-radius: 3px;
+    position: relative;
+    width: 450px;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 7px 2px 0px 2px;
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
+  }
+  
+  .file-drop-area.is-active {
+    background-color: green;
+  }
+  
+  .fake-btn {
+    background-color: green;
+    border: 1px solid green;
+    border-radius: 3px;
+    padding: 8px 15px;
+    margin-right: 8px;
+    font-size: 12px;
+    color: #fff;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+  
+  .file-msg {
+    font-size: small;
+    font-weight: 300;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: calc(100% - 130px);
+    vertical-align: middle;
+  }
+  
+  .file-input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+    opacity: 0;
+  }
+  
+  .file-input:focus {
+    outline: none;
+  }
+  
+  .files-msg {
+    margin-right: 2%;
+    margin-bottom: 2px;
+  }
+  
+  .Pre-file-msg{
+    margin-right: 15px;
+  }
+  
+  
+  .img-wrapper {
+    // position: absolute;
+  
+    span {
+      position: relative;
+      left: 17.6%;
+      top: -41px;
+      cursor: pointer;
+    }
+  
+    .fa-close {
+      font-size: 16px;
+      background: red;
+      color: #fff;
+      border-radius: 50%;
+      display: inline-block;
+      padding: 2px 3px 3px 3px;
+     }
+     .svg.ng-star-inserted {
+      height: 50%;
+      width: 98%;
+    }
+  }
+  
+  table {
+    background: none;
+    border: 0;
+    box-sizing: border-box;
+    margin: 1em;
+    padding: 1em 2em;
+    box-shadow: inset 0 0 0 2px #f45e61;
+    color: #f45e61;
+    font-size: inherit;
+    font-weight: 700;
+    position: relative;
+    vertical-align: middle;
+  }
+  table::before, button::after {
+    box-sizing: inherit;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .draw {
+    transition: color 0.25s;
+  }
+  .draw::before, .draw::after {
+    border: 2px solid transparent;
+    width: 0;
+    height: 0;
+  }
+  .draw::before {
+    top: 0;
+    left: 0;
+  }
+  .draw::after {
+    bottom: 0;
+    right: 0;
+  }
+  .draw:hover {
+    color: #60daaa;
+  }
+  .draw:hover::before, .draw:hover::after {
+    width: 100%;
+    height: 100%;
+  }
+  .draw:hover::before {
+    border-top-color: #60daaa;
+    border-right-color: #60daaa;
+    transition: width 0.25s ease-out, height 0.25s ease-out 0.25s;
+  }
+  .draw:hover::after {
+    border-bottom-color: #60daaa;
+    border-left-color: #60daaa;
+    transition: border-color 0s ease-out 0.5s, width 0.25s ease-out 0.5s, height 0.25s ease-out 0.75s;
+  }
+  
+  .meet:hover {
+    color: #fbca67;
+  }
+  .meet::after {
+    top: 0;
+    left: 0;
+  }
+  .meet:hover::before {
+    border-top-color: #fbca67;
+    border-right-color: #fbca67;
+  }
+  .meet:hover::after {
+    border-bottom-color: #fbca67;
+    border-left-color: #fbca67;
+    transition: height 0.25s ease-out, width 0.25s ease-out 0.25s;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  
+  @keyframes rotate {
+    100% {
+      transform: rotate(1turn);
+    }
+  }
+  
+  .rainbow {
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 2rem;
+  
+    &::before {
+      content: "";
+      position: absolute;
+      z-index: -2;
+      left: -50%;
+      top: -50%;
+      width: 200%;
+      height: 200%;
+      background-color: #399953;
+      background-repeat: no-repeat;
+      background-size: 50% 50%, 50% 50%;
+      background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+
+      animation: rotate 4s linear infinite;
+    }
+  
+    &::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      left: 6px;
+      top: 6px;
+      width: calc(100% - 12px);
+      height: calc(100% - 12px);
+      background: white;
+      border-radius: 5px;
+      // animation: opacityChange 3s infinite alternate;
+    }
+  }
+  
+  @keyframes opacityChange {
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.5;
+    }
+  }
+  

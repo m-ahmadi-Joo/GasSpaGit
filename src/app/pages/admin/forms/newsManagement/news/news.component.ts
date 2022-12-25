@@ -22,8 +22,6 @@ import { requiredFileSize, requiredFileType } from 'src/app/@core/utils/upload-f
 import { TypeaheadMatch } from 'ngx-bootstrap';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { IDatePickerConfig } from 'ng2-jalali-date-picker';
-import { PersianDate } from 'src/app/@core/utils/persianDate';
 
 @Component({
   selector: 'ngx-news',
@@ -41,8 +39,6 @@ export class NewsComponent implements OnInit, AfterViewInit {
     private toastrService: NbToastrService,
     private fb: FormBuilder,
     private http: HttpClient,
-    private persianDate: PersianDate,
-
   ) {
   }
 
@@ -75,6 +71,9 @@ export class NewsComponent implements OnInit, AfterViewInit {
   sizeTitle: string;
   sizeTitles = [];
   userList = [];
+
+  groupList = [];
+
   selectedOption;
   userId;
   temporaryDisable = false;
@@ -93,23 +92,42 @@ export class NewsComponent implements OnInit, AfterViewInit {
   @ViewChild('text', { static: false }) input: ElementRef;
   dropdownList = [];
   dropdownSettings = {};
+  grpDropdownSettings = {};
   loadingDrpDwn = false;
+  loadingGrpDrpDwn = false;
   indices: any;
   readonly bufferSize: number = 1000;
   percentDone;
-  dateConfig: IDatePickerConfig;
-  newsExpireDate;
   imagePath;
   path;
   filePath = [];
   base;
 
   ngOnInit() {
-    this.dateConfig = this.persianDate.datePickerConfig;
 
     this.dropdownSettings = {
       singleSelection: false,
       text: "انتخاب کاربران",
+      selectAllText: 'انتخاب همه',
+      unSelectAllText: 'انتخاب هیچکدام',
+      enableSearchFilter: true,
+      searchFilterPlaceholderText: "انتخاب همه محدود شده",
+      classes: "myclass custom-class-example appearance-outline full-width size-medium shape-rectangle",
+      scroll: true,
+      lazyLoading: true,
+      badgeShowLimit: 2,
+      maxHeight: 400,
+      searchPlaceholderText: 'جستجو',
+      showCheckbox: true,
+      noDataLabel: 'موردی یافت نشد',
+      primaryKey: "id",
+      labelKey: "itemName",
+      labelText: "itemName",
+    };
+
+    this.grpDropdownSettings = {
+      singleSelection: false,
+      text: "انتخاب گروه کاربران",
       selectAllText: 'انتخاب همه',
       unSelectAllText: 'انتخاب هیچکدام',
       enableSearchFilter: true,
@@ -135,8 +153,6 @@ export class NewsComponent implements OnInit, AfterViewInit {
       console.log(data);
       Object.assign(this.roles, data['data'].roles);
 
-      // this.userList = data['data'].recieverUsers;
-
       for (let index = 0; index < data['data'].recieverUsers.length; index++) {
         const element = data['data'].recieverUsers[index];
         this.userList.push({
@@ -147,6 +163,15 @@ export class NewsComponent implements OnInit, AfterViewInit {
       }
       console.log(this.userList);
 
+      for (let index = 0; index < data['data'].groups.length; index++) {
+        const element = data['data'].groups[index];
+        this.groupList.push({
+          'id': index + 1 + ". ",
+          'idx': element.id.toString(),
+          'itemName': element.name
+        });
+      }
+      console.log(this.groupList);
 
       if (this.editMode) {
         Object.assign(this.newsInfo, data['data'].news);
@@ -154,31 +179,39 @@ export class NewsComponent implements OnInit, AfterViewInit {
       }
     })
     let getrecieverUsers: Array<string>;
+    let getRecieverGroups: Array<string>;
     if (this.editMode) {
-      if (this.newsInfo.recieverUsers.value != "") {
+      if (this.newsInfo.recieverUsers) {
         getrecieverUsers = this.userList.filter(f => this.newsInfo.recieverUsers.includes(f.idx));
 
       }
+      if (this.newsInfo.selectedGroup) {
+        getRecieverGroups = this.groupList.filter(f => this.newsInfo.selectedGroup.includes(f.idx));
+
+      }
       console.log(getrecieverUsers);
+
       this.form = this.fb.group({
         subject: [this.newsInfo.subject, [Validators.required]],
-        recieverRoles: [this.newsInfo.recieverRoles, [Validators.required]],
+        recieverRoles: [this.newsInfo.recieverRoles, []],
         text: [this.newsInfo.text, [Validators.required]],
         recieverUsers: [getrecieverUsers],
-        expireDate: [this.newsInfo.expireDate, [Validators.required]]
+        selectedGroup: [getRecieverGroups]
       })
+
       this.base = environment.SERVER_URL.split("/api")[0];
       this.newsInfo.filePath.forEach(element => {
         this.filePath.push(this.base + element);
       });
       this.imagePathEdit = this.filePath;
+
     } else {
       this.form = this.fb.group({
         subject: ['', [Validators.required]],
-        recieverRoles: ['', [Validators.required]],
+        recieverRoles: ['',[]],
         text: [, [Validators.required]],
         recieverUsers: ['', []],
-        expireDate: ['', [Validators.required]]
+        selectedGroup: ['', []],
       })
     }
 
@@ -275,26 +308,23 @@ export class NewsComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    // this.form.setValue({
-    //   subject: this.form.controls.subject.value,
-    //   recieverRoles: this.form.controls.recieverRoles.value,
-    //   text: this.form.controls.text.value,
-    //   expireDate: this.form.controls.expireDate.value,
-    //   recieverUsers: this.form.controls.recieverUsers.value.map(x => x.idx),
-    //   // NewsDocuments : this.form.controls.NewsDocuments.value
-    // });
     let getUserIds: Array<string>;
+    let getgroupIds: Array<string>;
+
     if (this.form.controls.recieverUsers.value != "") {
       getUserIds = this.form.controls.recieverUsers.value.map(x => x.idx);
     }
 
+    if (this.form.controls.selectedGroup.value != "") {
+      getgroupIds = this.form.controls.selectedGroup.value.map(x => x.idx);
+    }
+
     this.sendForm = this.fb.group({
       subject: this.form.controls.subject.value,
-      recieverRoles: [this.form.controls.recieverRoles.value],
       text: this.form.controls.text.value,
-      expireDate: this.form.controls.expireDate.value,
+      recieverRoles: [this.form.controls.recieverRoles.value],
       recieverUsers: [getUserIds],
-      // NewsDocuments : this.form.controls.NewsDocuments.value
+      selectedGroup: [getgroupIds],
     });
 
     console.log(this.form.value);
@@ -435,12 +465,7 @@ export class NewsComponent implements OnInit, AfterViewInit {
       newsType: [
         { type: 'required', news: 'نوع اخبار الزامی است.' }
       ],
-      recieverRoles: [
-        { type: 'required', news: 'نقش های دریافت کننده اخبار را انتخاب کنید.' }
-      ],
-      expireDate: [
-        { type: 'required', news: 'تاریخ انقضاء را وارد کنید' }
-      ],
+
     }
   onItemSelect(item: any) {
     console.log(item);
@@ -455,15 +480,28 @@ export class NewsComponent implements OnInit, AfterViewInit {
   onDeSelectAll(items: any) {
     console.log(items);
   }
-  fetchMore(event: any) {
-    if (event.end === this.dropdownList.length - 1) {
-      this.loadingDrpDwn = true;
-      this.api.getMoreUser("News", "GetMoreUser", this.userList.length, this.bufferSize).then(chunk => {
-        this.userList = this.userList.concat(chunk);
-        this.loadingDrpDwn = false;
-      }, () => this.loadingDrpDwn = false);
-    }
+  onGrpItemSelect(item: any) {
+    console.log(item);
+
   }
+  OnGrpItemDeSelect(item: any) {
+    console.log(item);
+  }
+  onGrpSelectAll(items: any) {
+    console.log(items);
+  }
+  onGrpDeSelectAll(items: any) {
+    console.log(items);
+  }
+  // fetchMore(event: any) {
+  //   if (event.end === this.dropdownList.length - 1) {
+  //     this.loadingDrpDwn = true;
+  //     this.api.getMoreUser("News", "GetMoreUser", this.userList.length, this.bufferSize).then(chunk => {
+  //       this.userList = this.userList.concat(chunk);
+  //       this.loadingDrpDwn = false;
+  //     }, () => this.loadingDrpDwn = false);
+  //   }
+  // }
   changeData() {
     // this.selectedItems = [];
     this.form.controls.recieverUsers.setValue([]);

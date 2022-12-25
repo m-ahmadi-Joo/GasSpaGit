@@ -14,7 +14,6 @@ export class UnitStateService {
   // set(clsName: string){
   //   this._className.next(clsName);
   // }
-
   private _property = new BehaviorSubject<string>(null);
   constructor() {
     let storedPropRes=localStorage.getItem("storedClassProp");

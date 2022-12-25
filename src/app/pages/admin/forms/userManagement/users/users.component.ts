@@ -338,7 +338,6 @@ export class UsersComponent implements OnInit {
         currentPage: this.pagination.currentPage,
         totalItems: this.pagination.totalItems
       };
-      // this.source = new LocalDataSource(data["data"].result);
       this.source = new LocalDataSource(this.collection);
       let i = 0;
       this.source.getAll().then(data => {
@@ -382,7 +381,6 @@ export class UsersComponent implements OnInit {
     });
 
     this.commandCenter.getFrom("Base", "GetTowns").subscribe(res => {
-      // console.log(res);
       this.towns = res;
     });
 
@@ -409,30 +407,6 @@ export class UsersComponent implements OnInit {
         [Validators.required, Validators.pattern(this.regService.phoneNumber)]],
         gender: [this.filterParams.gender, [Validators.required]]
       });
-
-      // this.userRegister = new FormGroup({
-      //   firstName: new FormControl(this.filterParams.firstName, [
-      //     Validators.required
-      //   ]),
-      //   lastName: new FormControl(this.filterParams.lastName, [
-      //     Validators.required
-      //   ]),
-      //   nationalID: new FormControl(this.filterParams.nationalID, [
-      //     Validators.required,
-      //     Validators.minLength(10),
-      //     nationalIDCheck
-      //   ]),
-      //   phoneNumber: new FormControl(this.filterParams.phoneNumber, [
-      //     Validators.required
-      //   ]),
-      //   gender: new FormControl(this.filterParams.gender, [
-      //     Validators.required
-      //   ]),
-      //   roleSelect: new FormControl(this.filterParams.roles, [
-      //     Validators.required
-      //   ]),
-      //   townSelect: new FormControl(this.filterParams.townIds)
-      // });
     } else {
       this.userRegister = this.fb.group({
         roleSelect: ["", [Validators.required]],
@@ -447,19 +421,6 @@ export class UsersComponent implements OnInit {
         gender: ["", [Validators.required]]
       });
 
-      // this.userRegister = new FormGroup({
-      //   firstName: new FormControl("", [Validators.required]),
-      //   lastName: new FormControl("", [Validators.required]),
-      //   nationalID: new FormControl("", [
-      //     Validators.required,
-      //     Validators.minLength(10),
-      //     nationalIDCheck
-      //   ]),
-      //   phoneNumber: new FormControl("", [Validators.required]),
-      //   gender: new FormControl("", [Validators.required]),
-      //   roleSelect: new FormControl("", [Validators.required]),
-      //   townSelect: new FormControl([""])
-      // });
     }
     this.formChangePassword = this.fbChangePassword.group({
 

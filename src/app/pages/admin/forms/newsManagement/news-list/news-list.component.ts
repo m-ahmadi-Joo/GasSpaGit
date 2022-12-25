@@ -67,10 +67,10 @@ export class NewsListComponent implements OnInit {
         title: "تاریخ ثبت",
         filter: true,
       },
-      expireDate: {
-        title: "تاریخ انقضاء",
-        filter: true,
-      },
+      // expireDate: {
+      //   title: "تاریخ انقضاء",
+      //   filter: true,
+      // },
       recieverRoles: {
         title: "نقش های مجاز",
         filter: true,

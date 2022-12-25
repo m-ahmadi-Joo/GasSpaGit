@@ -47,36 +47,36 @@ export const MENU_ITEMS_GASEMPLOYEE: NbMenuItem[] = [
       },
     ],
   },
-  {
-    title: "کارتابل مدیریت",
-    children: [
-      {
-        title: "مدیریت کاربران",
-        icon: "people-outline",
-        children: [
-          {
-            title: "کاربران",
-            link: "/pages/admin/mgn/users",
-            icon: "person-outline"
-          },
-        ]
-      },
-      {
-        title: "مدیریت عملیات سیستم",
-        link: "/pages/admin/ScheduleUpdate",
-        icon: "briefcase-outline"
-      },
-      {
-      title: "روابط عمومی",
-        icon: "inbox-outline",
-        children: [
-          {
-            title: "اخبار و اطلاعیه",
-            link: "/pages/admin/NewsList",
-            icon: "book-open-outline",
-          },
-        ]
-      },
-    ]
-  },
+  // {
+  //   title: "کارتابل مدیریت",
+  //   children: [
+  //     {
+  //       title: "مدیریت کاربران",
+  //       icon: "people-outline",
+  //       children: [
+  //         {
+  //           title: "کاربران",
+  //           link: "/pages/admin/mgn/users",
+  //           icon: "person-outline"
+  //         },
+  //       ]
+  //     },
+  //     {
+  //       title: "مدیریت عملیات سیستم",
+  //       link: "/pages/admin/ScheduleUpdate",
+  //       icon: "briefcase-outline"
+  //     },
+  //     {
+  //     title: "روابط عمومی",
+  //       icon: "inbox-outline",
+  //       children: [
+  //         {
+  //           title: "اخبار و اطلاعیه",
+  //           link: "/pages/admin/NewsList",
+  //           icon: "book-open-outline",
+  //         },
+  //       ]
+  //     },
+  //   ]
+  // },
 ];

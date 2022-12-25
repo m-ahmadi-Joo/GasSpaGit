@@ -119,9 +119,11 @@ export class RecordMapInformationComponent implements OnInit {
   isAnalyze: Boolean = false;
   analyzeListId: number = 0;
   isOld: boolean = false;
+  pipingKindDisable:boolean=false;
   @ViewChild("rdbMeterType", { static: false })
   rdbMeterType: NbRadioGroupComponent;
   ngOnInit() {
+   
     // alert(this.responseType);
     this.unitStateService.className.subscribe((x) => {
       if (x !== null) {
@@ -231,11 +233,11 @@ export class RecordMapInformationComponent implements OnInit {
               this.direction = "جنوب شرقی";
             }
 
-            if (this.response.baseSubscriptionTypeId == 1) {
+            if (this.response.baseSubscriptionTypeId == 2) {
               this.subscriptionType = "خانگی";
-            } else if (this.response.baseSubscriptionTypeId == 2) {
-              this.subscriptionType = "عمومی";
             } else if (this.response.baseSubscriptionTypeId == 3) {
+              this.subscriptionType = "عمومی";
+            } else if (this.response.baseSubscriptionTypeId == 4) {
               this.subscriptionType = "صنعتی";
             }
 
@@ -261,8 +263,8 @@ export class RecordMapInformationComponent implements OnInit {
               buildingKind: res.buildingKind.toString(),
               subscriptionType: res.baseSubscriptionTypeId.toString(),
               useTitle: res.useTitle,
-
             });
+            this.pipingKindDisable=res.pipingKindDisable;
             this.isOld = res.isOld;
 
             this.recordMapInfoFormg.controls.baseMeterTypeId.setValue(
