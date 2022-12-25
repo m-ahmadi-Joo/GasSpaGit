@@ -148,18 +148,24 @@ import {
   EngineerInfoDetailComponent,
   HistoryEngineerAreaRatingComponent,
   HistoryEngineerAreaRatingCustomActionsComponent,
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
   EngineerAreasStatusComponent,
   ControlFinalComponent,
   CompleteControlFinalComponent,
   EditMapListComponent,
   AdminAddDocumentComponent,
+<<<<<<< HEAD
    SuppliersListComponent,
    SupplierCustomActionsComponent,
    CreateSupplierComponent,
   ExcuterLimitedDetailComponent,
+=======
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
 
 } from "./gasforms";
 import { GasRequestListResolver } from "src/app/@core/utils/gasRequestList-resolver";
@@ -232,10 +238,18 @@ import { HPGasRequestFormComponent } from "./gasforms/GasRequestManage/HPGasRequ
 import { HpGasRequestResolver } from "src/app/@core/utils/hPGasRequest-resolver";
 import { HPGasRequestListResolver } from "src/app/@core/utils/hPGasRequestList-resolver";
 import { HPGasReqListCustomActionsComponent } from "./gasforms/GasRequestManage/HPGasReqListCustomActions/HPGasReqListCustomActions.component";
+<<<<<<< HEAD
 import { HPGasRequestHistoryComponent } from "./gasforms/GasRequestManage/HPGasRequestHistory/hPGasRequestHistory.component";  
 import { HPGasRequestDetailFormComponent } from "./gasforms/GasRequestManage/HPGasRequestDetailForm/hPGasRequestDetailForm.component";
 import { SuppliersListResolver } from "src/app/@core/utils/suppliersList-resolver";
 import { GasRequestLisForExecuterResolver } from "src/app/@core/utils/GasRequestListForExecuterList-resolver";
+=======
+import { ExcuterLimitedDetailComponent } from "./gasforms/ExecuterManage/excuterLimitedDetail/excuterLimitedDetail.component";
+
+import { HPGasRequestHistoryComponent } from "./gasforms/GasRequestManage/HPGasRequestHistory/hPGasRequestHistory.component";  
+import { HPGasRequestDetailFormComponent } from "./gasforms/GasRequestManage/HPGasRequestDetailForm/hPGasRequestDetailForm.component";
+import { SuppliersListResolver } from "src/app/@core/utils/suppliersList-resolver";
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
 const routes: Routes = [
   {
     // /pages/forms/*
@@ -1130,10 +1144,13 @@ const routes: Routes = [
         resolve: { data: HpGasRequestResolver },
       },
       {
+<<<<<<< HEAD
         path: "ExcuterLimitedHistory/:id",
         component: ExcuterLimitedDetailComponent,
 	},
       {
+=======
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
         path: "HPGasRequestHistory/:id",
         component: HPGasRequestHistoryComponent,
       },
@@ -1141,6 +1158,7 @@ const routes: Routes = [
         path: "HPGasRequestDetail/:id",
         component: HPGasRequestDetailFormComponent,
       },
+<<<<<<< HEAD
       {
         path: "SuppliersList",
         component: SuppliersListComponent,
@@ -1158,6 +1176,8 @@ const routes: Routes = [
         path: "CreateSupplier/:id",
         component: CreateSupplierComponent,
       },
+=======
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
     ],
   },
 ];
@@ -1334,16 +1354,21 @@ export const routedComponents = [
   gridCheckboxForEditMapComponent,
   PreUploadedDocumentsComponent,
   EditUnitInfoForGasEmployeeComponent,
-ExecutorOldGasRequestEditComponent,
-DocumentryFormForExecutorComponent,
+  ExecutorOldGasRequestEditComponent,
+  DocumentryFormForExecutorComponent,
   AdminAddDocumentComponent,
   SubmitAuditResultForOldGasRequestsFormComponent,
   ShowGasRequestDocumentsDetailComponent,
+<<<<<<< HEAD
+=======
+
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
  ExcuterLimitedDetailComponent,
   HPGasRequestListComponent,
   HPGasRequestFormComponent,
   HPGasRequestHistoryComponent,
   HPGasRequestDetailFormComponent,
+<<<<<<< HEAD
    SuppliersListComponent,
    SupplierCustomActionsComponent,
 
@@ -1351,5 +1376,12 @@ DocumentryFormForExecutorComponent,
      CreateSupplierComponent
   
   
+=======
+ ExcuterLimitedDetailComponent,
+  HPGasRequestListComponent,
+  HPGasRequestFormComponent,
+  ExcuterLimitedDetailComponent
+
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
 ];
 

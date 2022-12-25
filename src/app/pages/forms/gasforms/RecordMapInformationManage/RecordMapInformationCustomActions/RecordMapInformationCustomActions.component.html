@@ -660,7 +660,11 @@
     </nb-option>
     <nb-option *ngIf="!rData?.endOrBlockRequestId && 
     !rData?.suspendRequestId">
+<<<<<<< HEAD
       <button fullWidth nbButton status="basic" *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee', 'GasEmployeeExceptShiraz']"
+=======
+      <button fullWidth nbButton status="basic" *appHasRole="['Admin', 'GasEmployee', 'GasEmployeeExceptShiraz']"
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
         (click)="
           onSuspendRequest(
             rData?.id,
@@ -674,7 +678,11 @@
 
     <nb-option *ngIf="!rData?.endOrBlockRequestId && 
     rData?.suspendRequestId">
+<<<<<<< HEAD
       <button fullWidth nbButton status="basic" *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee', 'GasEmployeeExceptShiraz']"
+=======
+      <button fullWidth nbButton status="basic" *appHasRole="['Admin', 'GasEmployee', 'GasEmployeeExceptShiraz']"
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
         (click)="
         onCancelSuspendedRequest(
             rData?.id,

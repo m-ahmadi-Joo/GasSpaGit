@@ -2765,6 +2765,7 @@ export class ApiCommandCenterService extends ApiCommandCenter {
     return this._newsId.asObservable();
   }
   //#endregion
+<<<<<<< HEAD
  //#region getAllMoreFiveUnitsList
   getAllMoreFiveUnitsList(
     page?,
@@ -2811,6 +2812,9 @@ export class ApiCommandCenterService extends ApiCommandCenter {
     );
   }
   //#endregion
+=======
+
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
   getSuppliersList(
     page?,
     itemsPerPage?,
@@ -2853,6 +2857,7 @@ export class ApiCommandCenterService extends ApiCommandCenter {
       })
     );
   }
+<<<<<<< HEAD
 
    //#region getNewsUserGroup
    getNewsUserGroupList(
@@ -2889,4 +2894,6 @@ export class ApiCommandCenterService extends ApiCommandCenter {
     );
   }
   //#endregion
+=======
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
 }

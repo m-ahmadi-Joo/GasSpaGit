@@ -112,8 +112,11 @@ export class SubmitAuditResultFormComponent implements OnInit {
     RejectReason;
     NotConfirmedReason;
     safetyInspectionCount: number;
+<<<<<<< HEAD
     pipeType: string;
     connectionType: string;
+=======
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
 
   };
   sarInfo: {
@@ -1072,9 +1075,13 @@ export class SubmitAuditResultFormComponent implements OnInit {
       inspectionRequestId: "",
       weldCount: weldCountForEdit,
       NotConfirmedReason: this.sarForm.controls.NotConfirmedReason.value,
+<<<<<<< HEAD
       safetyInspectionCount: this.sarForm.controls.safetyInspectionCount.value,
       pipeType: this.sarForm.controls.pipeType.value,
       connectionType: this.sarForm.controls.connectionType.value
+=======
+      safetyInspectionCount: this.sarForm.controls.safetyInspectionCount.value
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
     };
     this.api
       .postTo("InspectionResult", "InspectionResultEdit", this.editInfo)

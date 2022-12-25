@@ -391,6 +391,13 @@ export class HPGasRequestFormComponent implements OnInit {
   }
 
   ngOnInit() {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
     this.route.data.subscribe((data) => {
       this.contractId = parseInt(this.route.snapshot.paramMap.get("contractId"));
       this.cities = data["data"].baseCites;
@@ -536,7 +543,15 @@ export class HPGasRequestFormComponent implements OnInit {
 
 
       });
+<<<<<<< HEAD
     } else { //edit => if (lastSection === "HPGasRequest")
+=======
+<<<<<<< HEAD
+    } else { //edit => if (lastSection === "HPGasRequest")
+=======
+    } else { //edit  if (lastSection === "HPGasRequest")
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
 
       if (
         this.userRole !== "Owner" &&
@@ -549,7 +564,10 @@ export class HPGasRequestFormComponent implements OnInit {
         this.userRole !== "GasRuleEmployeeHP" &&
         this.userRole !== "GasEmployeeHP" &&
         this.userRole !== "GasEmployee" &&
+<<<<<<< HEAD
         this.userRole !== "AnalyzeEmployee" &&
+=======
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
         this.userRole !== "GasEmployeeExceptShiraz" &&
         this.userRole !== "Executor"
       ) {
@@ -571,7 +589,10 @@ export class HPGasRequestFormComponent implements OnInit {
         this.userRole === "GasRuleEmployeeHP" ||
         this.userRole === "GasEmployeeHP" ||
         this.userRole === "GasEmployee" ||
+<<<<<<< HEAD
         this.userRole === "AnalyzeEmployee" ||
+=======
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
         this.userRole === "GasEmployeeExceptShiraz"
       ) {
         // this.commandCenter.getFrom("Base", "GetProjectKinds").subscribe(
@@ -640,7 +661,15 @@ export class HPGasRequestFormComponent implements OnInit {
                 Validators.min(1),
               ],
             ],
+<<<<<<< HEAD
             mkApartmentCount: ["", [Validators.min(1)]],
+=======
+<<<<<<< HEAD
+            mkApartmentCount: ["", [Validators.min(1)]],
+=======
+            mkApartmentCount: ["", [Validators.required, Validators.min(1)]],
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
             mkGasUsageCloseTotal: [
               null,
               [Validators.min(0.1)],
@@ -656,6 +685,10 @@ export class HPGasRequestFormComponent implements OnInit {
               "",
               [
                 Validators.pattern(this.reg.meterCount),
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
                 
                 Validators.min(1),
               ],
@@ -664,6 +697,19 @@ export class HPGasRequestFormComponent implements OnInit {
             mkArea: [""],
             mkCity: ["",] ,
             mkVillage: ["",],
+<<<<<<< HEAD
+=======
+=======
+                Validators.required,
+                Validators.min(1),
+              ],
+            ],
+            mkGasPresureType: [null, [Validators.required]],
+            mkArea: [""],
+            mkCity: ["", [Validators.required]],
+            mkVillage: ["", [Validators.required]],
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
             mkNeighborhood: [""],
             mkFullPath: [
               "",
@@ -757,10 +803,24 @@ export class HPGasRequestFormComponent implements OnInit {
               "",
               [
                 Validators.pattern(this.reg.floorCount),
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
                 Validators.min(1),
               ],
             ],
             mkApartmentCount: ["", [ Validators.min(1)]],
+<<<<<<< HEAD
+=======
+=======
+                Validators.required,
+                Validators.min(1),
+              ],
+            ],
+            mkApartmentCount: ["", [Validators.required, Validators.min(1)]],
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
             mkGasUsageCloseTotal: [null],
             mkIsColony: [false],
             mkGasUsagePerHour: [""],
@@ -780,8 +840,18 @@ export class HPGasRequestFormComponent implements OnInit {
             ],
             mkGasPresureType: [null],
             mkArea: [""],
+<<<<<<< HEAD
             mkCity: [""],
             mkVillage: [""],
+=======
+<<<<<<< HEAD
+            mkCity: [""],
+            mkVillage: [""],
+=======
+            mkCity: ["", [Validators.required]],
+            mkVillage: ["", [Validators.required]],
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
             mkNeighborhood: [""],
             mkFullPath: [
               "",
@@ -801,7 +871,14 @@ export class HPGasRequestFormComponent implements OnInit {
         }
       }
       else {
+<<<<<<< HEAD
         debugger;
+=======
+<<<<<<< HEAD
+        debugger;
+=======
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
         this.piForm = this.fb.group({
           hasMarker: [true],
           previousCounterCount: [""],
@@ -823,8 +900,21 @@ export class HPGasRequestFormComponent implements OnInit {
           mkUsageType: ["", [Validators.required]],
           mkSubscriptionType: [""],//, [Validators.required]],
           mkRenewerCode: [""],
+<<<<<<< HEAD
           establishmentLicense: [""],
           mkSubmitedPelakCode: [""],
+=======
+<<<<<<< HEAD
+          establishmentLicense: [""],
+          mkSubmitedPelakCode: [""],
+=======
+          mkSubmitedPelakCode: [
+            "",
+            [
+            ],
+          ],
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
           mkPostalCode: [
             "",
             [
@@ -866,6 +956,13 @@ export class HPGasRequestFormComponent implements OnInit {
           mkGasUsageCloseTotal: [null],
           mkIsColony: [false],
           mkGasUsagePerHour: [""],
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+          establishmentLicense: ["",],
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
           mkFoundationEachBuilding: [""],
           mkHasCentralPowerHouse: [""],
           mkIsForGarden: [false],
@@ -882,7 +979,14 @@ export class HPGasRequestFormComponent implements OnInit {
           mkGasPresureType: [null],
           mkArea: [""],
           mkCity: [""],
+<<<<<<< HEAD
           
+=======
+<<<<<<< HEAD
+          
+=======
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
           mkVillage: [""],
           mkNeighborhood: [""],
           mkFullPath: [
@@ -953,7 +1057,15 @@ export class HPGasRequestFormComponent implements OnInit {
             // this.piForm.get("mkDoHave").setValue(true);
 
             
+<<<<<<< HEAD
             //this.piForm.get("").clearValidators();
+=======
+<<<<<<< HEAD
+            //this.piForm.get("").clearValidators();
+=======
+            this.piForm.get("").clearValidators();
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
 
             this.piForm
               .get("hPBlockCount")
@@ -996,13 +1108,29 @@ export class HPGasRequestFormComponent implements OnInit {
             this.userRole.includes("HPManager") ||
             this.userRole.includes("GasRuleEmployeeHP") ||
             this.userRole.includes("GasEmployeeHP") ||
+<<<<<<< HEAD
             this.userRole.includes("GasEmployee") ||
             this.userRole.includes("AnalyzeEmployee")
           ) {
+=======
+            this.userRole.includes("GasEmployee")
+          ) {
+<<<<<<< HEAD
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
             this.piForm.patchValue({
               urban_Rural: res.urban_Rural.toString(),
               mkType: res.hpBaseBuildTypeId,
               mkUsageType: res.hpBaseUsageKindId,
+<<<<<<< HEAD
+=======
+=======
+
+            this.piForm.patchValue({
+              urban_Rural: res.urban_Rural.toString(),
+              mkType: res.baseBuildTypeId,
+              mkUsageType: res.baseUsageKindId,
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
               buildingLocation: res.buildingLocation,
               buildingWidth:
                 res.buildingWidth === true
@@ -1069,19 +1197,44 @@ export class HPGasRequestFormComponent implements OnInit {
               previousCounterCount: res.previousCounterCount,
 
               gasRequestPreCounters: res.gasRequestPreCounters,
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
               hPGasRequestBlocks: res.hpGasRequestBlocks,
               mkProjectName: res.projectName,
               establishmentLicense:res.establishmentLicense,
               hPBlockCount:res.hpBlockCount
+<<<<<<< HEAD
+=======
+=======
+              hPGasRequestBlocks: res.hPGasRequestBlocks,
+              mkProjectName: res.projectName,
+              establishmentLicense:res.establishmentLicense,
+              hPBlockCount:res.hPBlockCount
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
 
             });
             // if (res.previousCounterCount && res.previousCounterCount > 0) {
 
             //   this.onChangePreCounterCountForEdit(res.previousCounterCount, res.gasRequestPreCounters);
             // }
+<<<<<<< HEAD
             if (res.hpBlockCount && res.hpBlockCount > 0) {
 
               this.onChangeHPGasRequestBlocksForEdit(res.hpBlockCount, res.hpGasRequestBlocks);
+=======
+<<<<<<< HEAD
+            if (res.hpBlockCount && res.hpBlockCount > 0) {
+
+              this.onChangeHPGasRequestBlocksForEdit(res.hpBlockCount, res.hpGasRequestBlocks);
+=======
+            if (res.hPBlockCount && res.hPBlockCount > 0) {
+
+              this.onChangeHPGasRequestBlocksForEdit(res.hPBlockCount, res.hPBlockCount);
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
             }
             this.piForm.get("mkGasPresureType").setValue(null);
 
@@ -1163,9 +1316,19 @@ export class HPGasRequestFormComponent implements OnInit {
               previousSubscriptionNumber: res.previousSubscriptionNumber,
               previousCounterCount: res.previousCounterCount,
               mkProjectName: res.ProjectName,
+<<<<<<< HEAD
               hPBlockCount:res.hpBlockCount,
               hPGasRequestBlocks: res.hpGasRequestBlocks,
               establishmentLicense:res.establishmentLicense,
+=======
+<<<<<<< HEAD
+              hPBlockCount:res.hpBlockCount,
+              hPGasRequestBlocks: res.hpGasRequestBlocks,
+              establishmentLicense:res.establishmentLicense,
+=======
+              hPBlockCount:res.hpBlockCount
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
             });
            
             if (res.previousCounterCount && res.previousCounterCount > 0) {
@@ -1173,6 +1336,13 @@ export class HPGasRequestFormComponent implements OnInit {
               this.onChangePreCounterCountForEdit(res.previousCounterCount, res.gasRequestPreCounters);
             }
             if (res.hpBlockCount && res.hpBlockCount > 0) {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
               this.onChangeHPGasRequestBlocksForEdit(res.hpBlockCount, res.hpGasRequestBlocks);
             }
             console.log(res.urban_Rural);
@@ -1181,11 +1351,26 @@ export class HPGasRequestFormComponent implements OnInit {
               this.rdbUrban_Rural.writeValue(res.urban_Rural.toString());
             }
           }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
           if (res.baseBuildTypeId === this.residentialUsageKindId) {
             //احداث بنا
             // this.piForm
             //   .get("buildingLocation")
             //   .setValidators([Validators.required]);
+<<<<<<< HEAD
+=======
+=======
+
+          if (res.baseBuildTypeId === this.residentialUsageKindId) {
+            //احداث بنا
+            this.piForm
+              .get("buildingLocation")
+              .setValidators([Validators.required]);
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
             this.piForm.get("buildingLocation").updateValueAndValidity();
             if (
               this.userRole.includes("Admin") ||
@@ -1196,8 +1381,12 @@ export class HPGasRequestFormComponent implements OnInit {
               this.userRole.includes("HPManager") ||
               this.userRole.includes("GasRuleEmployeeHP") ||
               this.userRole.includes("GasEmployeeHP") ||
+<<<<<<< HEAD
               this.userRole.includes("GasEmployee")  ||
                this.userRole.includes("AnalyzeEmployee")
+=======
+              this.userRole.includes("GasEmployee")
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
             ) {
               this.piForm.get("isRequiredAlamakDeletion").clearValidators();
               this.piForm
@@ -1798,6 +1987,14 @@ export class HPGasRequestFormComponent implements OnInit {
     if (this.piForm.invalid) {
       return false;
     }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
     this.propertyInfo = {
       isHp: true,
       className: this.className,
@@ -1825,7 +2022,10 @@ export class HPGasRequestFormComponent implements OnInit {
           this.userRole === "GasRuleEmployeeHP" ||
           this.userRole === "GasEmployeeHP" ||
           this.userRole === "GasEmployee" ||
+<<<<<<< HEAD
           this.userRole === "AnalyzeEmployee" ||
+=======
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
           this.userRole === "GasEmployeeExceptShiraz") &&
           this.piForm.controls.mkType.value !== this.residentialUsageKindId
           ? this.piForm.controls.isRequiredAlamakDeletion.value === "1"

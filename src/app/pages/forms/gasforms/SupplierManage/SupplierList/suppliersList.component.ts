@@ -59,6 +59,11 @@ export class SuppliersListComponent {
   dialogRef: NbDialogRef<any>;
 
 
+<<<<<<< HEAD
+=======
+  @ViewChild("dialogLimited", { static: false }) dialogLimited: TemplateRef<any>;
+  dialogRefLimited: NbDialogRef<any>;
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
 
  
   lstTowns = [];
@@ -99,6 +104,7 @@ export class SuppliersListComponent {
           instance.deleteConfirm.subscribe((row) => {
             this.deleteRecord(row);
           });
+<<<<<<< HEAD
           
         },
 
@@ -107,28 +113,88 @@ export class SuppliersListComponent {
       phoneNumber: {
         title: "شماره موبایل ",
         filter: true,
+=======
+          instance.limitedConfirm.subscribe((row) => {
+            this.limitRecord(row);
+          });
+        },
+
+      },
+      // status: {
+      //   title: "وضعیت مجری",
+      //   filter: true,
+      // },
+      // totalDays: {
+      //   title: "وضعیت اعتبار پروانه",
+      //   filter: true,
+      //   valuePrepareFunction(value, row, cell) {
+      //     if (row.totalDays >= 0) {
+      //       return `معتبر (تا ${row.totalDays} روز دیگر)`
+      //     } else {
+      //       return `منقضی (${row.totalDays * -1} روز پیش)`
+      //     }
+      //   }
+      // },
+     
+      baseTownWork: {
+        title: "شهرهای محل کار",
+        filter: true,
+        // width: "200px"
+      },
+      // grade: {
+      //   title: "درجه",
+      //   filter: true,
+      //   // width: "200px"
+      // },
+      phoneNumber: {
+        title: "شماره موبایل ",
+        filter: true,
+        // width: "200px"
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
       },
       nationalID: {
         title: "کد ملی",
         filter: true,
+<<<<<<< HEAD
+=======
+        // width: "200px"
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
       },
 
       lastName: {
         title: "نام خانوادگی",
         filter: true,
+<<<<<<< HEAD
+=======
+        // width: "105px"
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
       },
       firstName: {
         title: "نام",
         filter: true,
+<<<<<<< HEAD
+=======
+        // width: "105px"
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
       },
       code: {
         title: "کد",
         filter: true,
+<<<<<<< HEAD
+=======
+        // width: "105px"
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
       },
       idx: {
         title: "ردیف",
         type: "text",
+<<<<<<< HEAD
         
+=======
+        // valuePrepareFunction(value, row, cell) {
+        //   return cell.row.index + 1;
+        // }
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
       },
     },
   };
@@ -167,21 +233,45 @@ export class SuppliersListComponent {
         firstName: [this.filterParams.firstName],
         nationalCode: [this.filterParams.nationalCode],
         lastName: [this.filterParams.lastName],
+<<<<<<< HEAD
        
         workTown: [this.filterParams.workTown],
        
       });
+=======
+        // licenseStartDate: [this.filterParams.licenseStartDate],
+        // licenseExpireDate: [this.filterParams.licenseExpireDate],
+        workTown: [this.filterParams.workTown],
+        // baseDesignerGrade: [""],
+        // isHP: [false],
+        // isLP: [false],
+      });
+      //this.form.get('workTown').setValue(this.filterParams.workTown);
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
     } else {
       this.form = this.fb.group({
         firstName: [""],
         nationalCode: [""],
         lastName: [""],
+<<<<<<< HEAD
         
         
         
       });
     }
 
+=======
+        // licenseStartDate: [""],
+        // licenseExpireDate: [""],
+        workTown: [""],
+        // baseDesignerGrade: [""],
+        // isHP: [false],
+        // isLP: [false],
+      });
+    }
+
+    // this.pageSizes.push({id: this.pagination.totalItems , display: 'همه'});
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
     this.pageSizes.push({ id: 5, display: "5" });
     this.pageSizes.push({ id: 10, display: "10" });
     this.pageSizes.push({ id: 20, display: "20" });
@@ -189,7 +279,51 @@ export class SuppliersListComponent {
     this.pageSizes.push({ id: 100, display: "100" });
 
     
+<<<<<<< HEAD
     
+=======
+    this.api
+      .getFrombyidUploader("Documents", "InputCount", this.fileName)
+      .subscribe((res: any) => {
+        if (res.body) {
+          this.inputCount = res.body;
+          this.inputCount.forEach(element => {
+            console.log(element.extentions);
+            let size: number = element.size / 1000;
+
+            if (size > 1024) {
+              this.sizeTitle = (size / 1024).toFixed(2);
+
+              this.sizeTitles.push(this.sizeTitle + "مگابایت");
+            } else {
+              this.sizeTitle = size.toFixed(2);
+              this.sizeTitles.push(this.sizeTitle + "کیلوبایت");
+            }
+            console.log(element.formControlName);
+            if (element.required == true && this.isEdit == false) {
+              this.excuterLimitedForm.addControl(
+                element.formControlName,
+
+                new FormControl("", [
+                  Validators.required,
+                  requiredFileType(element.extentions),
+                  requiredFileSize(element.size)
+                ])
+              );
+            } else {
+              this.excuterLimitedForm.addControl(
+                element.formControlName,
+
+                new FormControl("", [
+                  requiredFileType(element.extentions),
+                  requiredFileSize(element.size)
+                ])
+              );
+            }
+          });
+        }
+      });
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
   }
 
   loadList() {
@@ -251,10 +385,26 @@ export class SuppliersListComponent {
       this.loadList();
     }
   }
+<<<<<<< HEAD
  
   onSerach() {
     let err = false;
    
+=======
+  openFromStartDayPicker() {
+    this.isOpenFromStartDayPicker = true;
+    document.getElementById("serachCard").style.height = "350px";
+  }
+  onSerach() {
+    let err = false;
+    // if (
+    //   this.form.get("licenseStartDate").value >
+    //     this.form.get("licenseExpireDate").value &&
+    //   this.form.get("licenseExpireDate").value !== ""
+    // ) {
+    //   err = true;
+    // }
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
     this.filterParams = {
       workTown: this.form.controls.workTown.value,
       firstName: this.form.controls.firstName.value,
@@ -266,7 +416,26 @@ export class SuppliersListComponent {
     console.log(this.filterParams);
     this.loadList();
   }
+<<<<<<< HEAD
   
+=======
+  openFromEndtDayPicker() {
+    this.isOpenFromStartDayPicker = true;
+    document.getElementById("serachCard").style.height = "350px";
+  }
+  closeFromEndtDayPicker() {
+    this.isOpenFromStartDayPicker = false;
+    if (this.isOpenFromEndDayPicker === false) {
+      document.getElementById("serachCard").style.height = "initial";
+    }
+  }
+  closeFromStartDayPicker() {
+    this.isOpenFromStartDayPicker = false;
+    if (this.isOpenFromEndDayPicker === false) {
+      document.getElementById("serachCard").style.height = "initial";
+    }
+  }
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
   deleteRecord(row) {
     this.dialogRef = this.dialogService.open(this.dialog, {
       context: row,
@@ -317,6 +486,11 @@ export class SuppliersListComponent {
     };
 
     this.form.controls.firstName.setValue("");
+<<<<<<< HEAD
+=======
+    this.form.controls.workTown.setValue([]);
+    this.form.controls.nationalCode.setValue("");
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
     this.form.controls.nationalCode.setValue("");
     this.form.controls.lastName.setValue("");
     // // this.form.controls.licenseStartDate.setValue([]);
@@ -327,8 +501,133 @@ export class SuppliersListComponent {
     this.loadList();
   }
 
+<<<<<<< HEAD
  
   
+=======
+  limitRecord(row) {
+    this.imagePathEdit = [];
+    if (!row.isLimited) {
+      this.excuterLimitedForm.controls.excuterId.setValue("");
+      this.excuterLimitedForm.controls.comment.setValue("");
+      
+    } else {
+
+      this.excuterLimitedForm.controls.excuterId.setValue(row.id);
+      this.excuterLimitedForm.controls.comment.setValue(row.limitedComment);
+
+      this.api
+      .getById("Executers/GetFileLimitedExecuter", row.id)
+      .subscribe(res => {
+        if (res) {
+          let base = environment.SERVER_URL.split("/api")[0];
+          // this.imagePathEdit = res.body;
+          if (res.body) {
+            for (let index = 0; index < res.body.length; index++) {
+              this.imagePathEdit.push( base +res.body[index]);
+  
+            }
+          }
+        }
+      });
+    }
+    this.dialogRefLimited = this.dialogService.open(this.dialogLimited, {
+      context: row,
+      autoFocus: true,
+      hasBackdrop: true,
+      closeOnBackdropClick: false,
+      closeOnEsc: true,
+    });
+  }
+
+  confirmLimited(row) {
+    this.limitedLoading = true;
+    if (this.excuterLimitedForm.valid) {
+
+      this.sendForm = this.fb.group({
+        ExcuterId: row.id,
+        Comment: this.excuterLimitedForm.controls.comment.value,
+        IsLimited: !row.isLimited
+      });
+
+      Object.keys(this.excuterLimitedForm.controls).forEach((key) => {
+        for (
+          let index = 0;
+          index < this.excuterLimitedForm.controls[key].value.length;
+          index++
+        ) {
+          if (key == this.inputCount[0].formControlName) {
+            console.log("ok");
+            for (
+              let index = 0;
+              index < this.excuterLimitedForm.controls[key].value.length;
+              index++
+            ) {
+              console.log("ppp");
+              this.sendForm.addControl(
+                key + "_" + index,
+                new FormControl(
+                  this.excuterLimitedForm.controls[key].value[index]
+                )
+              );
+            }
+          } else {
+            this.sendForm.addControl(
+              key,
+              new FormControl(
+                this.excuterLimitedForm.controls[key].value[index]
+              )
+            );
+          }
+        }
+        console.log(this.sendForm.value);
+      });
+      this.api
+        .postTo(
+          "Executers",
+          "LimitExecuterEdit", this.toFormData(this.sendForm.value)
+        )
+        .subscribe(
+          (res: any) => {
+            if (res.ok) {
+              const message = "ثبت با موفقیت انجام شد.";
+              this.toastrService.success(message, " ", {
+                position: NbGlobalLogicalPosition.TOP_START,
+                duration: 5000,
+              });
+              // location.reload();
+              this.loadList();
+              this.dialogRefLimited.close();
+              this.limitedLoading = false;
+              this.sendForm.reset();
+              this.imagePathEdit = [];
+            }
+          },
+          (err: HttpErrorResponse) => {
+
+            if (err.error instanceof Error) {
+              console.log("Client-side error occured.");
+            } else {
+              console.log("Server-side error occured.");
+            }
+            this.dialogRefLimited.close();
+            this.limitedLoading = false;
+            this.sendForm.reset();
+            this.loadList();
+          }
+        );
+    } else {
+      const message = "اطلاعات فرم بدرستی وارد نشده";
+      return this.toastrService.success(message, " ", {
+        position: NbGlobalLogicalPosition.TOP_START,
+        duration: 5000,
+      });
+    }
+
+
+
+  }
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
   toFormData<T>(formValue: T) {
     const formData = new FormData();
 

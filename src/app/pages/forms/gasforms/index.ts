@@ -154,7 +154,10 @@ export * from "src/app/pages/forms/gasforms/RecordMapInformationManage/completeC
 export * from "./Engineer/EngineerEditMapListCustomActions/EngineerEditMapListCustomActions.component";
 export * from "src/app/pages/forms/gasforms/Engineer/engineerEditMapList/engineerEditMapList.component";
 export * from "./AdminAddDocument/adminaddDocument.component";
+<<<<<<< HEAD
 export * from  "./SupplierManage/SupplierList/suppliersList.component"
 export * from  "./SupplierManage/supplierCustomActions/SupplierCustomActions.component"
 export * from "./SupplierManage/createSupplier/createSupplier.component";
+=======
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
 export * from "./ExecuterManage/excuterLimitedDetail/excuterLimitedDetail.component";

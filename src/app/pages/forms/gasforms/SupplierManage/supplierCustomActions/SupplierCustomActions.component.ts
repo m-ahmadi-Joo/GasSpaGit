@@ -36,9 +36,16 @@ export class SupplierCustomActionsComponent implements ViewCell, OnInit {
     private reportService: ReportService
   ) { }
 
+<<<<<<< HEAD
 
   // @ViewChild("ContractDetailTemplate", { static: false })
   // contractDetailTemplate: TemplateRef<any>;
+=======
+  // @ViewChild('contentTemplate', { static: false }) contentTemplate: TemplateRef<any>;
+
+  @ViewChild("ContractDetailTemplate", { static: false })
+  contractDetailTemplate: TemplateRef<any>;
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
 
   ngOnInit() {
     //this.renderValue = this.value.toString();
@@ -51,11 +58,57 @@ export class SupplierCustomActionsComponent implements ViewCell, OnInit {
     console.log(event);
   }
 
+<<<<<<< HEAD
   
 
   
   onEditSupplier(id) {
     this.router.navigate(["/pages/forms/CreateSupplier/" + id]);
+=======
+  // onRequestConsult(id) {
+  //   this.router.navigate(["/pages/forms/ReqConsult/"+ id]);
+  // }
+
+  // onUpload(id){
+  //   this.router.navigate(["/pages/forms/df/"+ id]);
+  // }
+
+  // onLetterShahrdari(id){
+  //   this.router.navigate(["/pages/forms/cmm/"+ id]);
+  // }
+
+  // onAlamakDesignation(id){
+  //   this.router.navigate(["/pages/forms/alamakDesignation/"+ id]);
+  // }
+
+  // onAlamakDeletion(id){
+  //   this.router.navigate(["/pages/forms/alamakDeletion/"+ id]);
+  // }
+
+  onShowDetailContract() {
+    // alert(JSON.stringify(id));
+    this.windowService.open(this.contractDetailTemplate, {
+      hasBackdrop: true,
+      windowClass: "nb-window-control",
+    });
+    //this.windowService.open(PropertyInfoFormComponent, { title: `مشاهده جزئیات ملک` });
+    //this.router.navigate(["/pages/forms/ContractDetail/"+ id]);
+  }
+
+  onEditExecuter(id) {
+    this.router.navigate(["/pages/forms/CreateExecuter/" + id]);
+  }
+
+  onPrintContract(contractId) {
+    this.api
+      .getById("Report/ContractReport", contractId)
+      .subscribe((res: any) => {
+        if (res.body) {
+          console.log(res.body.fullPath);
+          this.reportService.showReport(res.body.fullPath);
+        }
+      });
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
   }
 
   // onDeleteContract(id){
@@ -66,6 +119,7 @@ export class SupplierCustomActionsComponent implements ViewCell, OnInit {
   //  }
   // }
 
+<<<<<<< HEAD
   // onDeleteContract(event) {
   //   console.log(event);
   //   this.deleteConfirm.emit(event);
@@ -73,5 +127,29 @@ export class SupplierCustomActionsComponent implements ViewCell, OnInit {
   // }
 
   
+=======
+  onDeleteContract(event) {
+    console.log(event);
+    this.deleteConfirm.emit(event);
+    //event.confirm.resolve(event.source.data);
+  }
+
+  manageRecordMapInformation(id) {
+    // this.router.navigate(["/",  "contract", id, "recordMapInformationList"]);
+    this.router.navigate([
+      "/pages/forms/Contract/" + id + "/RecordMapInformationList",
+    ]);
+  }
+
+  onChangeExecutor(contractId, type) {
+    this.unitStateService.set(type, true);
+    // localStorage.setItem('changeExecutorState','ChangeExecutor');
+    this.router.navigate(["/pages/forms/Contract/" + contractId]);
+  }
+  onLimitedExecuter(event) {
+    console.log(event);
+    this.limitedConfirm.emit(event);
+  }
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
  
 }

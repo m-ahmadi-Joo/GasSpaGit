@@ -325,7 +325,11 @@
           cursor: !(collectiveControlDocumetns.length > 0)
             ? 'not-allowed'
             : 'pointer'
+<<<<<<< HEAD
         }" *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']" nbButton status="primary" hero (click)="totalControlDocument($event)"
+=======
+        }" *appHasRole="['Admin', 'GasEmployee']" nbButton status="primary" hero (click)="totalControlDocument($event)"
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
         [disabled]="!(collectiveControlDocumetns.length > 0)">
         <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="credit-card-outline">
         </nb-icon>

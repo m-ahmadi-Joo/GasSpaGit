@@ -68,6 +68,7 @@ import {
   NewsListCustomActionsComponent,
   NewsComponent,
   UploadedDocumentsComponent,
+<<<<<<< HEAD
   MoreThanFiveUnitsComponent,
   NewsUserGroupListComponent,
   AddNewsUserGroupTabsComponent,
@@ -75,6 +76,9 @@ import {
   NewsUsersGroupCustomActionComponent,
   CreateNewsUserGroupsComponent,
   NewsUserGroupsCheckBoxComponent
+=======
+  MoreThanFiveUnitsComponent
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
 } from "./forms";
 
 import { AuthGuard } from "src/app/@core/auth/mock/authguard";
@@ -113,8 +117,11 @@ import { NewsListResolver } from "src/app/@core/utils/NewsListResolver";
 import { GetNewsInfoResolver } from "src/app/@core/utils/getNewsInfo-resolver";
 import { GetMoreFiveUnitsSearchInfoResolver } from "src/app/@core/utils/getMoreFiveUnitsSearchInfo-resolver";
 import { GetMoreFiveUnitsListResolver } from "src/app/@core/utils/getMoreFiveUnitsList-resolver";
+<<<<<<< HEAD
 import { NewsUserGroupListResolver } from "src/app/@core/utils/newsUserGroupListResolver";
 import { NewsDetailFormComponent } from "./forms/newsManagement/newsDetailForm/newsDetailForm.component";
+=======
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
 
 const routes: Routes = [
   {
@@ -491,6 +498,7 @@ const routes: Routes = [
          },
       },
       {
+<<<<<<< HEAD
         path: "NewsUserGroupsList",
         component: NewsUserGroupListComponent,
          resolve: {
@@ -498,10 +506,13 @@ const routes: Routes = [
          },
       },
       {
+=======
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
         path: "GasMoreThanFiveUnitsList",
         component: MoreThanFiveUnitsComponent,
         resolve: {
           info: GetMoreFiveUnitsSearchInfoResolver,
+<<<<<<< HEAD
           listData: GetMoreFiveUnitsListResolver,
         },
       },
@@ -529,6 +540,11 @@ const routes: Routes = [
         path: "NewsDetail/:id",
         component: NewsDetailFormComponent,
       },
+=======
+          // listData: GetMoreFiveUnitsListResolver,
+        },
+      },
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
     ],
   },
 ];
@@ -606,7 +622,10 @@ export const routerComponents = [
   NewsDetailFormComponent,
   UploadedDocumentsComponent,
   MoreThanFiveUnitsComponent,
+<<<<<<< HEAD
   NewsUserGroupListComponent,
   NewsUsersGroupCustomActionComponent,
   NewsUserGroupsCheckBoxComponent,
+=======
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
 ];

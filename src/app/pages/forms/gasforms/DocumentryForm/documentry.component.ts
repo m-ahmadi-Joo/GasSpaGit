@@ -127,6 +127,13 @@ export class DocumentryFormComponent implements OnInit {
     else if (this.requestStateType === "hPGardenDocuments" || this.requestStateType === "hPIndustrialColonyDocuments") {
       this.fileName = this.requestStateType;
       this.routerLink = '/pages/forms/HPGasReqList';
+<<<<<<< HEAD
+=======
+    }
+    else if (this.requestStateType === "hPGardenDocuments" || this.requestStateType === "hPIndustrialColonyDocuments") {
+      this.fileName = this.requestStateType;
+      this.routerLink = '/pages/forms/HPGasReqList';
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
     }
     else {
       this.fileName = "Documents";
@@ -226,8 +233,17 @@ export class DocumentryFormComponent implements OnInit {
           });
 
           //یکی کردن لیست فایل و داکیومنت ها جهت برطرف کردن مشکل داکیومنت های اختیاری
+<<<<<<< HEAD
           if (this.requestStateType === "EditUploadDocuments" || this.requestStateType === "ReUploadArchitectualAlbum" 
           || this.requestStateType === "ReuploadEngineerDesignationMap" ||this.requestStateType === "hPGardenDocuments"||this.requestStateType === "hPIndustrialColonyDocuments") {
+=======
+<<<<<<< HEAD
+          if (this.requestStateType === "EditUploadDocuments" || this.requestStateType === "ReUploadArchitectualAlbum" 
+          || this.requestStateType === "ReuploadEngineerDesignationMap" ||this.requestStateType === "hPGardenDocuments"||this.requestStateType === "hPIndustrialColonyDocuments") {
+=======
+          if (this.requestStateType === "EditUploadDocuments" || this.requestStateType === "ReUploadArchitectualAlbum" || this.requestStateType === "ReuploadEngineerDesignationMap") {
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
 
             for (let i = 0; i < this.inputCount.length; i++) {
               let filenameTmp = "";
@@ -254,9 +270,20 @@ export class DocumentryFormComponent implements OnInit {
           }
         }
       });
+<<<<<<< HEAD
     if (this.requestStateType === "EditUploadDocuments" || this.requestStateType === "ReUploadArchitectualAlbum" || this.requestStateType === "ReuploadEngineerDesignationMap"
     ||this.requestStateType === "hPGardenDocuments"||this.requestStateType === "hPIndustrialColonyDocuments") {
    
+=======
+<<<<<<< HEAD
+    if (this.requestStateType === "EditUploadDocuments" || this.requestStateType === "ReUploadArchitectualAlbum" || this.requestStateType === "ReuploadEngineerDesignationMap"
+    ||this.requestStateType === "hPGardenDocuments"||this.requestStateType === "hPIndustrialColonyDocuments") {
+   
+=======
+    if (this.requestStateType === "EditUploadDocuments" || this.requestStateType === "ReUploadArchitectualAlbum" || this.requestStateType === "ReuploadEngineerDesignationMap") {
+
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
       this.route.data.subscribe((data) => {
         console.log(data["editData"].path);
         //  data["editData"];

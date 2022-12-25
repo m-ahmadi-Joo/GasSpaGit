@@ -1,4 +1,25 @@
+<<<<<<< HEAD
 <!-- 
+=======
+<!-- <button
+  nbTooltip="چاپ قرارداد"
+  nbTooltipPlacement="top"
+  size="tiny"
+  class="mb-2 mr-1"
+  nbButton
+  status="secondary"
+  *appHasRole="['Admin', 'Owner', 'Association']"
+  (click)="onPrintContract(rData.id)"
+>
+  <nb-icon
+    [options]="{ animation: { type: 'zoom' } }"
+    class="icon-button"
+    icon="printer-outline"
+  >
+  </nb-icon>
+</button> -->
+
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
 <button
   nbTooltip="حذف"
   nbTooltipPlacement="top"
@@ -15,19 +36,31 @@
     icon="close-outline"
   >
   </nb-icon>
+<<<<<<< HEAD
 </button> -->
+=======
+</button>
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
 
 <button
   nbTooltip="ویرایش"
   nbTooltipPlacement="top"
+<<<<<<< HEAD
   *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee', 'GasEmployeeExceptShiraz']"
+=======
+  *appHasRole="['Admin', 'GasEmployee', 'GasEmployeeExceptShiraz']"
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
   [disabled]="rData.hasUnit"
   [ngStyle]="{ cursor: rData.hasUnit ? 'not-allowed' : 'pointer' }"
   size="tiny"
   class="mb-2 mr-1"
   nbButton
   status="warning"
+<<<<<<< HEAD
   (click)="onEditSupplier(rData.id)"
+=======
+  (click)="onEditExecuter(rData.id)"
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
 >
   <nb-icon
     [options]="{ animation: { type: 'zoom' } }"
@@ -38,3 +71,22 @@
 </button>
 
 
+<<<<<<< HEAD
+=======
+<button
+  nbTooltip="مشاهده جزئیات"
+  nbTooltipPlacement="top"
+  size="tiny"
+  class="mb-2 mr-1"
+  nbButton
+  status="info"
+  (click)="onHistory(rData?.id)"
+>
+  <nb-icon
+    [options]="{ animation: { type: 'zoom' } }"
+    class="alert-circle-outline"
+    icon="eye-outline"
+  >
+  </nb-icon>
+</button>
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881

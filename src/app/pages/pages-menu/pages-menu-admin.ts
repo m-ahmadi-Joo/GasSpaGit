@@ -214,6 +214,7 @@ export const MENU_ITEMS_Admin: NbMenuItem[] = [
         title:"مدیریت مناطق مهندسین",
         link: "/pages/admin/ManageEngineerAreas",
         icon: "navigation-outline",
+<<<<<<< HEAD
       },
     ],
   },
@@ -227,4 +228,20 @@ export const MENU_ITEMS_Admin: NbMenuItem[] = [
       },
     ]
   }
+=======
+      },
+      {
+        title:"گزارشات",
+        icon: "pie-chart-outline",
+        children: [
+          {
+            title:"املاک بیش از پنج واحد",
+            link: "/pages/admin/GasMoreThanFiveUnitsList",
+            icon: "list-outline",
+          }
+        ],
+      },
+    ],
+  },
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
 ];
