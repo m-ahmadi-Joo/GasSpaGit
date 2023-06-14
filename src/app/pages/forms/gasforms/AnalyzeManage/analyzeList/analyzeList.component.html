@@ -3,8 +3,450 @@
   th {
     text-align: center;
   }
-</style>
 
+  .background {
+    height: 50px;
+    width: 80%;
+  }
+
+  .head {
+    border-bottom: 3px solid #1f6a7d9c;
+    padding: 15px;
+    width: 80%;
+    z-index: 99;
+    background: white;
+    position: -webkit-sticky;
+    position: fixed;
+    height: 120px;
+    transition: 0.3s;
+    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 7px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -1px rgba(0, 0, 0, 0.2);
+  }
+
+  .text {
+    text-align: center;
+    font-size: 14px;
+    color: black;
+  }
+
+  .scrolled {
+    transition: 0.3s;
+    background: #84bcd8f8;
+    height: 80px;
+    border-bottom: 2px solid #1f6a7de1;
+  }
+
+  .text_style {
+    font-size: 30px;
+    color: white;
+  }
+
+  .custom-col-4,
+  .custom-col-6 {
+    width: 100%;
+    display: inline-block;
+  }
+
+  @media (min-width: 768px) {
+    .custom-col-6 {
+      width: 60%;
+    }
+
+    .custom-col-4 {
+      width: 40%;
+      position: sticky;
+      top: 0;
+    }
+  }
+
+  .fixed {
+    position: fixed;
+    width: 100%;
+    transition: 0.2s linear;
+    top: 67px;
+  }
+
+  .nofixed {
+    position: static;
+    transition: 0.2s linear;
+    top: -50px;
+    padding: 25px;
+  }
+
+
+  .hidden {
+    opacity: 0;
+  }
+
+  .console-container {
+    padding: 0;
+    text-align: center;
+    height: 37px;
+    /* width: 1200px; */
+    display: block;
+    color: white;
+    top: 23px;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+
+  .console-underscore {
+    display: inline-block;
+    position: relative;
+    top: -0.14em;
+    left: 10px;
+  }
+
+  .f-modal-alert .f-modal-icon {
+    border-radius: 50%;
+    border: 4px solid gray;
+    box-sizing: content-box;
+    height: 50px;
+    margin: -12px -20px auto;
+    padding: 0;
+    position: absolute;
+    width: 50px;
+  }
+
+  .f-modal-alert .f-modal-icon.f-modal-warning {
+    border-color: #f8bb86;
+  }
+
+  .f-modal-alert .f-modal-icon.f-modal-warning:before {
+    -webkit-animation: pulseWarning 2s linear infinite;
+    animation: pulseWarning 2s linear infinite;
+    background-color: #fff;
+    border-radius: 50%;
+    content: "";
+    display: inline-block;
+    height: 100%;
+    opacity: 0;
+    width: 100%;
+    position: relative;
+  }
+
+  /* .f-modal-alert .f-modal-icon.f-modal-warning:after {
+  background-color: #fff;
+  border-radius: 50%;
+  content: "";
+  display: block;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+} */
+  .f-modal-alert .f-modal-icon.f-modal-warning .f-modal-body {
+    background-color: #f8bb86;
+    border-radius: 2px;
+    height: 21px;
+    left: 50%;
+    margin-left: -2px;
+    position: absolute;
+    top: 10px;
+    width: 5px;
+    z-index: 2;
+  }
+
+  .f-modal-alert .f-modal-icon.f-modal-warning .f-modal-dot {
+    background-color: #f8bb86;
+    border-radius: 50%;
+    bottom: 10px;
+    height: 7px;
+    left: 50%;
+    margin-left: -3px;
+    position: absolute;
+    width: 7px;
+    z-index: 2;
+  }
+
+  .f-modal-alert .f-modal-icon+.f-modal-icon {
+    margin-top: 50px;
+  }
+
+
+  .animateXLeft {
+    -webkit-animation: animateXLeft 0.75s;
+    animation: animateXLeft 0.75s;
+  }
+
+  .animateXRight {
+    -webkit-animation: animateXRight 0.75s;
+    animation: animateXRight 0.75s;
+  }
+
+  .scaleWarning {
+    -webkit-animation: scaleWarning 0.75s infinite alternate;
+    animation: scaleWarning 0.75s infinite alternate;
+  }
+
+  .pulseWarningIns {
+    -webkit-animation: pulseWarningIns 0.75s infinite alternate;
+    animation: pulseWarningIns 0.75s infinite alternate;
+  }
+
+  @-webkit-keyframes rotatePlaceholder {
+
+    0%,
+    5% {
+      transform: rotate(-45deg);
+    }
+
+    100%,
+    12% {
+      transform: rotate(-405deg);
+    }
+  }
+
+  @keyframes rotatePlaceholder {
+
+    0%,
+    5% {
+      transform: rotate(-45deg);
+    }
+
+    100%,
+    12% {
+      transform: rotate(-405deg);
+    }
+  }
+
+  @-webkit-keyframes animateXLeft {
+
+    0%,
+    65% {
+      left: 82px;
+      top: 95px;
+      width: 0;
+    }
+
+    84% {
+      left: 14px;
+      top: 33px;
+      width: 47px;
+    }
+
+    100% {
+      left: 17px;
+      top: 37px;
+      width: 47px;
+    }
+  }
+
+  @keyframes animateXLeft {
+
+    0%,
+    65% {
+      left: 82px;
+      top: 95px;
+      width: 0;
+    }
+
+    84% {
+      left: 14px;
+      top: 33px;
+      width: 47px;
+    }
+
+    100% {
+      left: 17px;
+      top: 37px;
+      width: 47px;
+    }
+  }
+
+  @-webkit-keyframes animateXRight {
+
+    0%,
+    65% {
+      right: 82px;
+      top: 95px;
+      width: 0;
+    }
+
+    84% {
+      right: 14px;
+      top: 33px;
+      width: 47px;
+    }
+
+    100% {
+      right: 16px;
+      top: 37px;
+      width: 47px;
+    }
+  }
+
+  @keyframes animateXRight {
+
+    0%,
+    65% {
+      right: 82px;
+      top: 95px;
+      width: 0;
+    }
+
+    84% {
+      right: 14px;
+      top: 33px;
+      width: 47px;
+    }
+
+    100% {
+      right: 16px;
+      top: 37px;
+      width: 47px;
+    }
+  }
+
+  @-webkit-keyframes scaleWarning {
+    0% {
+      transform: scale(1);
+    }
+
+    30% {
+      transform: scale(1.02);
+    }
+
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes scaleWarning {
+    0% {
+      transform: scale(1);
+    }
+
+    30% {
+      transform: scale(1.02);
+    }
+
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  @-webkit-keyframes pulseWarning {
+    0% {
+      background-color: #fff;
+      transform: scale(1);
+      opacity: 0.5;
+    }
+
+    30% {
+      background-color: #fff;
+      transform: scale(1);
+      opacity: 0.5;
+    }
+
+    100% {
+      background-color: #f8bb86;
+      transform: scale(2);
+      opacity: 0;
+    }
+  }
+
+  @keyframes pulseWarning {
+    0% {
+      background-color: #fff;
+      transform: scale(1);
+      opacity: 0.5;
+    }
+
+    30% {
+      background-color: #fff;
+      transform: scale(1);
+      opacity: 0.5;
+    }
+
+    100% {
+      background-color: #f8bb86;
+      transform: scale(2);
+      opacity: 0;
+    }
+  }
+
+  @-webkit-keyframes pulseWarningIns {
+    0% {
+      background-color: #f8d486;
+    }
+
+    100% {
+      background-color: #f8bb86;
+    }
+  }
+
+  @keyframes pulseWarningIns {
+    0% {
+      background-color: #f8d486;
+    }
+
+    100% {
+      background-color: #f8bb86;
+    }
+  }
+
+  @media screen and (min-width: 601px) {
+    .animateText {
+      font-size: 18px;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .animateText {
+      font-size: 11px;
+      line-height: 1em !important;
+    }
+
+    .nofixed {
+      position: static;
+      transition: 0.2s linear;
+      padding: 5px;
+    }
+
+    .console-container {
+      padding: 10px;
+      text-align: justify;
+      height: 100px;
+      display: block;
+    }
+
+    .f-modal-alert {
+      display: none;
+    }
+  }
+
+  .animateText {
+    line-height: 1.75em;
+  }
+</style>
+<!-- <div class="custom-col-6 sticky" style="height: 50px; background-color: seagreen;">
+  Header A
+</div>
+
+<div class="background">
+  <div class="head">
+      <h1 class="text">HEADER</h1>
+  </div>
+</div> -->
+<nb-card id="messageInfo" class="messageInfo" style="box-shadow: 0 0 4px;" *appHasRole="['Engineer']">
+  <nb-card-body>
+    <div style="background-image: linear-gradient(to right, #598bff, #3366ff);"
+      class="nofixed">
+      <div class='console-container'>
+        <div class="f-modal-alert">
+          <div class="f-modal-icon f-modal-warning scaleWarning">
+            <span class="f-modal-body pulseWarningIns"></span>
+            <span class="f-modal-dot pulseWarningIns"></span>
+          </div>
+        </div>
+        <span id='text' class="animateText"></span>
+        <div class='console-underscore' id='console'>&#95;</div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
 <nb-card id="serachCard" style="box-shadow: 0 0 4px;">
   <nb-card-body>
     <!-- <div class="container"> -->
@@ -81,16 +523,16 @@
           <label>وضعیت لیست</label>
           <nb-select #isReferdSelect placeholder="انتخاب وضعیت" class="col-sm-2" id="isReferd"
             formControlName="isReferd">
-            <nb-option  [value]="0">
+            <nb-option [value]="0">
               ارجاع داده شده
             </nb-option>
-            <nb-option  [value]="1">
+            <nb-option [value]="1">
               ارجاع داده نشده
             </nb-option>
-            <nb-option  [value]="2">
+            <nb-option [value]="2">
               تفکیک شده
             </nb-option>
-            <nb-option  [value]="3">
+            <nb-option [value]="3">
               تفکیک نشده
             </nb-option>
           </nb-select>
@@ -125,7 +567,7 @@
     <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="arrow-ios-back-outline">
     </nb-icon>
     <div class="pull-left">
-      <button class="btn btn-info ml-2" style="color: #fff;" *appHasRole="['Admin', 'GasEmployee']"
+      <button class="btn btn-info ml-2" style="color: #fff;" *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']"
         (click)="oncreateAnalyze()">
         <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="home-outline">
         </nb-icon>
@@ -133,7 +575,7 @@
       </button>
     </div>
     <div class="pull-left">
-      <button *appHasRole="['Admin', 'GasEmployee']" (click)="analyzeListItemDeletedExcelExport()"
+      <button *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']" (click)="analyzeListItemDeletedExcelExport()"
         class="btn btn-info ml-2" style="color: #fff;">
         <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="home-outline">
         </nb-icon>

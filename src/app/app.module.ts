@@ -20,15 +20,13 @@ import { AddCsrfHeaderInterceptor } from './@core/auth/mock/addCsrfHeader.interc
 // registerLocaleData(fa,'fa');
 
 import { JwtModule } from "@auth0/angular-jwt";
-
 export function tokenGetter() {
   return localStorage.getItem("token");
 }
 
 @NgModule({
   declarations: [
-    AppComponent,
-   
+    AppComponent,   
   ],
   imports: [
     BrowserModule,

@@ -271,7 +271,7 @@ export class HeaderComponent implements OnInit {
         // //   this.dialogMessagesRef.close();
         // // }
         // console.log(localStorage.getItem("showPopupMsg"));
-        if (this.countOfUnreadNews > 0) {
+        if (this.countOfUnreadNews > 0 && localStorage.getItem("showPopupNews") === "true") {
           this.dialogNewsRef = this.dialog.open(this.dialogNews, {
             context: this.news,
             autoFocus: true,
@@ -314,7 +314,9 @@ export class HeaderComponent implements OnInit {
 
         .subscribe((res: any) => {
           this.base = environment.SERVER_URL.split("/api")[0];
-          this.userImagePath = res[0].path;
+          if ( res.length > 0) {
+            this.userImagePath = res[0].path;
+          }
           if (this.userImagePath != "" && this.userImagePath != undefined) {
             this.avatarSrc = this.base + this.userImagePath
           }
@@ -382,6 +384,7 @@ export class HeaderComponent implements OnInit {
 
         this.dialogRolesRef.close();
         localStorage.setItem('showPopupMsg', "true");
+        
         // console.log(res.body.token);
         localStorage.removeItem("token");
         localStorage.setItem("token", res.body.token);
@@ -470,6 +473,7 @@ export class HeaderComponent implements OnInit {
       // this.selectedRole == "Engineer" ||
       this.selectedRole == "Owner" ||
       this.selectedRole == "GasEmployee" ||
+      this.selectedRole == "AnalyzeEmployee" ||
       this.selectedRole == "Pishkhan" ||
       this.selectedRole == "GasRuleEngineer" ||
       this.selectedRole == "GasRuleCheckerGroupOne" ||
@@ -647,6 +651,26 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  newsChangePageSize(pageSize: number) {
+    this.pagination.itemsPerPage = pageSize;
+    if (this.dialogNewsRef) {
+      this.dialogNewsRef.close();
+    }
+    this.onOpenNewsDialog();
+    // if(this.pageSizeSelect) {
+    //   this.pageSizeSelect.writeValue(pageSize);
+    // }
+  }
+
+  newsPageChanged(event) {
+    if (event <= this.pagination.totalPages) {
+      this.pagination.currentPage = event;
+      if (this.dialogNewsRef) {
+        this.dialogNewsRef.close();
+      }
+      this.onOpenNewsDialog();
+    }
+  }
   toggleSidebar(): boolean {
     this.sidebarService.toggle(false, "right");
     // this.layoutService.changeLayoutSize();
@@ -691,7 +715,7 @@ export class HeaderComponent implements OnInit {
   //     this.dialogMessagesRef.close();
   //   });
   // }
-  onOpenNewsDialog() {
+   onOpenNewsDialog() {
     this.api
       .getNewsList(
         this.pagination.currentPage,
@@ -721,5 +745,19 @@ export class HeaderComponent implements OnInit {
         }
       );
 
+  }
+  ngAfterViewInit(): void {
+    if (this.selectedRole == "Executor") {
+      if (this.warningMessages) {
+        this.showWarnings();
+      }
+    }
+  }
+  gotoDetail(value): void {
+     var url = `/pages/admin/NewsDetail/${value}`;
+    // console.log(test);
+    this.toggleDescription(value,'news')
+    window.open(url, '_blank').focus()
+    // window.open(test, '_blank') ;
   }
 }

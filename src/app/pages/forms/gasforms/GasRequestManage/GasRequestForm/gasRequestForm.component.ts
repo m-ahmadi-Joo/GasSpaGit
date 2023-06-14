@@ -37,7 +37,7 @@ import {
   Usagekind,
   City,
   SubscriptionType,
-  Town,
+  Town, 
   Neighbourhood,
   BaseArea,
 } from "src/app/@core/models/baseInterfaces";
@@ -45,10 +45,10 @@ import { UnitStateService } from "src/app/@core/utils/unitState.service";
 // import "../../../../../../../node_modules/leaflet/dist/leaflet.css";
 import "style-loader!leaflet/dist/leaflet.css";
 import { outputs } from "@syncfusion/ej2-angular-richtexteditor/src/rich-text-editor/richtexteditor.component";
-import { HttpParams } from "@angular/common/http";
+import { HttpParams } from "@angular/common/http"; 
 // /pages/forms/pif
 @Component({
-  selector: "app-gasRequestForm",
+  selector: "app-gasRequestForm", 
   templateUrl: "./gasRequestForm.component.html",
   styleUrls: ["../../formStyle.scss"],
 })
@@ -57,6 +57,7 @@ export class GasRequestFormComponent implements OnInit {
   @ViewChild("rdbIsRequiredAlamakDeletion", { static: false })
   rdbIsRequiredAlamakDeletion: NbRadioGroupComponent;
   // @ViewChild("consumptionPerHourComplex", { static: false }) rdbConsumptionPerHourComplex: NbRadioGroupComponent;
+
   isEdit = false;
   insaturationCodeRepeatInfos = [];
   id: number = 0;
@@ -160,6 +161,132 @@ export class GasRequestFormComponent implements OnInit {
 
   editArea;
   baseArea: BaseArea;
+
+  // model = {
+  //   firstname: {
+  //     type: "text",
+  //     value: "",
+  //     label: "FirstName",
+  //     rules: {
+  //       required: true,
+  //     }
+  //   },
+  //   lastname: {
+  //     type: "text",
+  //     value: "",
+  //     label: "LastName"
+  //   },
+  //   address: {
+  //     type: "text",
+  //     value: "",
+  //     label: "Address",
+  //   },
+  //   age: {
+  //     type: "number",
+  //     value: "",
+  //     label: "age"
+  //   },
+  //   birthDay: {
+  //     type: "date",
+  //     value: "",
+  //     label: "Birthday",
+  //   },
+  //   typeBussines: {
+  //     label: "Bussines Type",
+  //     value: "premium",
+  //     type: "radio",
+  //     options: [
+  //       {
+  //         label: "Enterprise",
+  //         value: "1500",
+  //       },
+  //       {
+  //         label: "Home",
+  //         value: "6",
+  //       },
+  //       {
+  //         label: "Personal",
+  //         value: "1",
+  //       },
+  //     ],
+
+  //   },
+  //   newsletterIn: {
+  //     label: "Suscribe to newsletter",
+  //     value: "email",
+  //     type: "checkbox",
+  //   },
+  //   subscriptionType: {
+  //     label: "Suscription Type",
+  //     value: "premium",
+  //     type: "select",
+  //     options: [
+  //       {
+  //         label: "Pick one",
+  //         value: "",
+  //       },
+  //       {
+  //         label: "Premium",
+  //         value: "premium",
+  //       },
+  //       {
+  //         label: "Basic",
+  //         value: "basic",
+  //       },
+  //     ],
+  //   },
+  //   country: {
+  //     id: 'country',
+  //     label: "Country",
+  //     type: "select",
+  //     options: [
+  //       {
+  //         label: "Spain",
+  //         value: "ES"
+  //       },
+  //       {
+  //         label: "USA",
+  //         value: "US"
+  //       }
+  //     ],
+  //     provideData: [
+  //       {
+  //         label: 'Barcelona',
+  //         sourceValue: 'ES',
+  //         value: 'BCN'
+  //       },
+  //       {
+  //         label: 'Madrid',
+  //         sourceValue: 'ES',
+  //         value: 'MDN'
+  //       },
+  //       {
+  //         label: 'New York',
+  //         sourceValue: 'US',
+  //         value: 'NYC'
+  //       },
+  //       {
+  //         label: 'Cleveland',
+  //         sourceValue: 'CLV',
+  //         value: 'E'
+  //       }
+  //     ]
+
+  //   },
+  //   city: {
+  //     label: "City",
+  //     type: "select",
+  //     link: 'country',
+  //     value: "",
+  //     options: [
+  //       {
+  //         label: "Select Country First",
+  //         value: ""
+  //       }
+  //     ]
+  //   }
+  // };
+  
   constructor(
     private fb: FormBuilder,
     private commandCenter: ApiCommandCenter,
@@ -697,6 +824,7 @@ export class GasRequestFormComponent implements OnInit {
         this.userRole !== "GasRuleEmployeeHP" &&
         this.userRole !== "GasEmployeeHP" &&
         this.userRole !== "GasEmployee" &&
+        this.userRole !== "AnalyzeEmployee" &&
         this.userRole !== "GasEmployeeExceptShiraz" &&
         this.userRole !== "Executor"
       ) {
@@ -718,6 +846,7 @@ export class GasRequestFormComponent implements OnInit {
         this.userRole === "GasRuleEmployeeHP" ||
         this.userRole === "GasEmployeeHP" ||
         this.userRole === "GasEmployee" ||
+        this.userRole === "AnalyzeEmployee" ||
         this.userRole === "GasEmployeeExceptShiraz"
       ) {
         this.commandCenter.getFrom("Base", "GetProjectKinds").subscribe(
@@ -1178,7 +1307,8 @@ export class GasRequestFormComponent implements OnInit {
             this.userRole.includes("HPManager") ||
             this.userRole.includes("GasRuleEmployeeHP") ||
             this.userRole.includes("GasEmployeeHP") ||
-            this.userRole.includes("GasEmployee")
+            this.userRole.includes("GasEmployee") ||
+            this.userRole.includes("AnalyzeEmployee")
           ) {
 
             this.piForm.patchValue({
@@ -1375,7 +1505,8 @@ export class GasRequestFormComponent implements OnInit {
               this.userRole.includes("HPManager") ||
               this.userRole.includes("GasRuleEmployeeHP") ||
               this.userRole.includes("GasEmployeeHP") ||
-              this.userRole.includes("GasEmployee")
+              this.userRole.includes("GasEmployee") ||
+              this.userRole.includes("AnalyzeEmployee")
             ) {
               this.piForm.get("isRequiredAlamakDeletion").clearValidators();
               this.piForm
@@ -1395,7 +1526,8 @@ export class GasRequestFormComponent implements OnInit {
               this.userRole.includes("HPManager") ||
               this.userRole.includes("GasRuleEmployeeHP") ||
               this.userRole.includes("GasEmployeeHP") ||
-              this.userRole.includes("GasEmployee")
+              this.userRole.includes("GasEmployee") ||
+              this.userRole.includes("AnalyzeEmployee")
             ) {
               this.piForm
                 .get("isRequiredAlamakDeletion")
@@ -1956,6 +2088,7 @@ export class GasRequestFormComponent implements OnInit {
         this.userRole === "GasRuleEmployeeHP" ||
         this.userRole === "GasEmployeeHP" ||
         this.userRole === "GasEmployee" ||
+        this.userRole === "AnalyzeEmployee" ||
         this.userRole === "GasEmployeeExceptShiraz"
       ) {
         this.piForm
@@ -2009,7 +2142,7 @@ export class GasRequestFormComponent implements OnInit {
             ? true
             : false
           : null,
-      isRequiredAlamakDeletion:
+      isRequiredAlamakDeletion: 
         (this.userRole === "Admin" ||
           this.userRole === "Engineer" ||
           this.userRole === "GasRuleCheckerGroupOne" ||
@@ -2019,6 +2152,7 @@ export class GasRequestFormComponent implements OnInit {
           this.userRole === "GasRuleEmployeeHP" ||
           this.userRole === "GasEmployeeHP" ||
           this.userRole === "GasEmployee" ||
+          this.userRole === "AnalyzeEmployee" ||
           this.userRole === "GasEmployeeExceptShiraz") &&
           this.piForm.controls.mkType.value !== this.establishBuildingId
           ? this.piForm.controls.isRequiredAlamakDeletion.value === "1"
@@ -2070,6 +2204,7 @@ export class GasRequestFormComponent implements OnInit {
 
       projectName: this.piForm.controls.mkProjectName.value,
       area: this.piForm.controls.mkArea.value,
+      hasRenewerCode:this.hasRenewerCode,
     };
 
     if (this.propertyInfo.baseBuildTypeId !== this.establishBuildingId) {
@@ -2134,7 +2269,7 @@ export class GasRequestFormComponent implements OnInit {
                     position: NbGlobalLogicalPosition.TOP_START,
                     duration: 5000,
                   });
-                }
+                } 
               }
               if (this.isOldTmp) {
                 this.router.navigate([

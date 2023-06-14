@@ -2,6 +2,7 @@ import { PersianDate } from "./../../../../../@core/utils/persianDate";
 
 import {
   Component,
+  HostListener,
   OnInit,
   TemplateRef,
   ViewChild,
@@ -27,6 +28,8 @@ import { Pagination, pageSize } from "src/app/@core/models/pagination";
 import { AnalyzeListCustomActionsComponent } from "../AnalyzeListCustomActions/AnalyzeListCustomActions.component";
 import { CustomWindowServiceService } from "src/app/@core/utils/customWindowService.service";
 import { IDatePickerConfig } from "ng2-jalali-date-picker";
+import { JwtHelperService } from "@auth0/angular-jwt";
+import { Auth } from "src/app/@core/auth/services/auth";
 
 @Component({
   selector: "ngx-analyzeList",
@@ -40,6 +43,19 @@ export class AnalyzeListComponent implements OnInit {
   datePickerConfig: IDatePickerConfig;
   isSubmittedFormRejection: boolean;
   // reasonForNotFoundEngineer: any;
+  // isSticky: boolean = false;
+  // navbarfixed: boolean = false;
+  // @HostListener('window:scroll', ['$event']) onscroll() {
+  //   if (window.scrollY > 100) {
+  //     this.navbarfixed = true;
+  //   } else {
+  //     this.navbarfixed = false;
+  //   }
+  //   // this.isSticky = window.pageYOffset >= 250;
+  // }
+  // checkScroll() {
+  //   this.isSticky = window.pageYOffset >= 250;
+  // }
 
   constructor(
     private router: Router,
@@ -51,17 +67,10 @@ export class AnalyzeListComponent implements OnInit {
     private windowService: NbWindowService,
     private customWindowService: CustomWindowServiceService,
     private fbRejection: FormBuilder,
-    private persianDate: PersianDate
-  ) // public paymentService: PaymentSelectService
-  {
-    // let token = "Bearer " + this.auth.getToken();
-    // const headers = new Headers({
-    //   Authorization: token
-    // });
-    // this.source = new ServerDataSource(http, {
-    //   endPoint: environment.SERVER_URL + "/Engineer",
-    //   headers: headers
-    // });
+    private persianDate: PersianDate,
+    private auth: Auth
+  ) {
+
   }
   windowRef: NbWindowRef;
   engineersList;
@@ -100,110 +109,32 @@ export class AnalyzeListComponent implements OnInit {
   listRefferingHistory: TemplateRef<any>;
   @ViewChild("createAnalyzeList", { static: false })
   createAnalyzeList: TemplateRef<any>;
-  // @ViewChild("date", { static: false }) date: ElementRef;
-  // selectedDate;
+
   selectedId: number;
-  // selectedArea: number;
 
-  settings = {
-    hideSubHeader: true,
-    noDataMessage: ".داده یافت نشد",
-    actions: false,
-    pager: {
-      display: false,
-      // perPage: 10
-    },
-    columns: {
-      works: {
-        title: "عملیات",
-        type: "custom",
-        // width: "18%",
-        width: "240px",
-        valuePrepareFunction: (cell, row) => {
-          return row;
-        },
-        renderComponent: AnalyzeListCustomActionsComponent,
-        onComponentInitFunction: (instance: any) => {
-          instance.deleteConfirm.subscribe((row) => {
-            this.deleteRecord(row);
-          });
-          instance.rejectConfirm.subscribe((row) => {
-            this.rejectInspection(row);
-          });
-          instance.showAvailableEngineers.subscribe((id) => {
-            this.onShowAvailableEngineers(id);
-          });
-          instance.exportAvailableEngineers.subscribe((id) => {
-            this.onExportAvailableEngineers(id);
-          });
-          instance.showRefferingHistory.subscribe((id) => {
-            this.onShowRefferingHistory(id);
-          });
-        },
-        //   instance.result.subscribe(row => {
-        //     this.ResultRecord(row);
-        //   });
-        // }
-      },
-      totalInspectionPrice: {
-        title: "مبلغ کل بازرسی",
-        filter: true,
-        // width: "15%",
-      },
-      workingInspectionTime: {
-        title: "تاریخ بازرسی",
-        filter: true,
-        // width: "15%",
-      },
-      engineerName: {
-        title: "نام مهندس",
-        filter: true,
-        // width: "12%",
-      },
-      isReferredWithTime: {
-        title: "وضعیت",
-        filter: true,
-        // width: "15%",
-        // width: "100px",
-      },
-      baseArea: {
-        title: "ناحیه",
-        filter: true,
-        // width: "20%",
-        // width: "200px"
-      },
-      rdateTime: {
-        title: "تاریخ ثبت",
-        filter: true,
-        // width: "10%",
-      },
 
-      // date: {
-      //   title: "تاریخ درخواست",
-      //   filter: true,
-      //   // width: "200px"
-      // },
-      number: {
-        title: "شماره لیست",
-        filter: true,
-        // width: "10%",
-        // width: "105px"
-      },
-    },
-  };
+
   areas = [];
   id;
   showRequests = true;
   showEngineers = true;
   reasonNotFoundEngineer;
   analyzeNumber;
-
+  settings = {
+    hideSubHeader: true,
+    actions: false,
+    noDataMessage: ".داده یافت نشد",
+    pager: {
+      display: false,
+      // perPage: 7
+    },
+    columns: {},
+  };
+  userRole;
+  jwtHelper = new JwtHelperService();
   ngOnInit() {
     localStorage.removeItem("AnalyzeListItemFilterParams");
     this.route.data.subscribe((data) => {
-      // this.api.getFrom("Analyze", "GetAreas").subscribe((res) => {
-      //   this.areas = res;
-      // });
       Object.assign(this.areas, data["areas"]);
       this.observerGrades = data["observerGradesData"];
       Object.assign(this.collection, data["data"].result);
@@ -253,7 +184,7 @@ export class AnalyzeListComponent implements OnInit {
         ownerName: [""],
         executerName: [""],
         inspectionDate: [""],
-        isReferd:[""]
+        isReferd: [""]
       });
     }
 
@@ -269,32 +200,156 @@ export class AnalyzeListComponent implements OnInit {
 
     this.datePickerConfig = this.persianDate.datePickerConfig;
 
-    // this.filterParams = JSON.parse(localStorage.getItem("AnalyzeListFilterParams"));
-    // if (this.filterParams) {
-    //   this.selectedArea = this.filterParams.selectedArea;
-    //   this.form = this.fb.group({
-    //     selectedArea: [this.filterParams.selectedArea],
-    //     fromDate: [this.filterParams.formatDate],
-    //     toDate: [this.filterParams.toDate],
-    //     listFileNumber: [this.filterParams.listFileNumber]
-    //   });
-    // } else {
-    //   this.form = this.fb.group({
-    //     selectedArea: [""],
-    //     fromDate: [""],
-    //     toDate: [""],
-    //     listFileNumber: [""]
-    //   });
-    // }
-
     this.formRejection = this.fbRejection.group({
       reason: ["", [Validators.required]],
     });
 
     this.customWindowService.close.subscribe((res) => {
-      //alert("hiii");
       this.closeRef();
     });
+    let decodeToken = this.jwtHelper.decodeToken(this.auth.getToken());
+    this.userRole = decodeToken.currentRole as Array<string>;
+    if (this.userRole.includes("Engineer")) {
+      this.settings = {
+        hideSubHeader: true,
+        noDataMessage: ".داده یافت نشد",
+        actions: false,
+        pager: {
+          display: false,
+        },
+        columns: {
+          works: {
+            title: "عملیات",
+            type: "custom",
+            width: "240px",
+            valuePrepareFunction: (cell, row) => {
+              return row;
+            },
+            renderComponent: AnalyzeListCustomActionsComponent,
+            onComponentInitFunction: (instance: any) => {
+              instance.deleteConfirm.subscribe((row) => {
+                this.deleteRecord(row);
+              });
+              instance.rejectConfirm.subscribe((row) => {
+                this.rejectInspection(row);
+              });
+              instance.showAvailableEngineers.subscribe((id) => {
+                this.onShowAvailableEngineers(id);
+              });
+              instance.exportAvailableEngineers.subscribe((id) => {
+                this.onExportAvailableEngineers(id);
+              });
+              instance.showRefferingHistory.subscribe((id) => {
+                this.onShowRefferingHistory(id);
+              });
+            },
+          },
+          totalInspectionPrice: {
+            title: "مبلغ کل بازرسی",
+            filter: true,
+          },
+          engineerName: {
+            title: "تعداد",
+            filter: true,
+            valuePrepareFunction(value, row, cell) {
+              return `تعداد بازرسی (${row.analyzeItemCount}) - ثبت نتیجه نشده (${row.inspectionResultAnalyzeItemCount})`
+            },
+          },
+          workingInspectionTime: {
+            title: "تاریخ بازرسی",
+            filter: true,
+          },
+          isReferredWithTime: {
+            title: "وضعیت",
+            filter: true,
+          },
+          baseArea: {
+            title: "ناحیه",
+            filter: true,
+          },
+          rdateTime: {
+            title: "تاریخ ثبت",
+            filter: true,
+          },
+          number: {
+            title: "شماره لیست",
+            filter: true,
+          },
+        },
+      };
+    } else {
+      this.settings = {
+        hideSubHeader: true,
+        noDataMessage: ".داده یافت نشد",
+        actions: false,
+        pager: {
+          display: false,
+        },
+        columns: {
+          works: {
+            title: "عملیات",
+            type: "custom",
+            width: "240px",
+            valuePrepareFunction: (cell, row) => {
+              return row;
+            },
+            renderComponent: AnalyzeListCustomActionsComponent,
+            onComponentInitFunction: (instance: any) => {
+              instance.deleteConfirm.subscribe((row) => {
+                this.deleteRecord(row);
+              });
+              instance.rejectConfirm.subscribe((row) => {
+                this.rejectInspection(row);
+              });
+              instance.showAvailableEngineers.subscribe((id) => {
+                this.onShowAvailableEngineers(id);
+              });
+              instance.exportAvailableEngineers.subscribe((id) => {
+                this.onExportAvailableEngineers(id);
+              });
+              instance.showRefferingHistory.subscribe((id) => {
+                this.onShowRefferingHistory(id);
+              });
+            },
+          },
+          totalInspectionPrice: {
+            title: "مبلغ کل بازرسی",
+            filter: true,
+          },
+          workingInspectionTime: {
+            title: "تاریخ بازرسی",
+            filter: true,
+          },
+          engineerName: {
+            title: "نام مهندس",
+            filter: true,
+          },
+          isReferredWithTime: {
+            title: "وضعیت",
+            filter: true,
+          },
+          baseArea: {
+            title: "ناحیه",
+            filter: true,
+          },
+          rdateTime: {
+            title: "تاریخ ثبت",
+            filter: true,
+          },
+          number: {
+            title: "شماره لیست",
+            filter: true,
+          },
+        },
+      };
+    }
+
+    // function([string1, string2],target id,[color1,color2])   
+    const alertText= `مهندسان محترم لطفاً جهت انجام عملیات کنترل نقشه ، به منوی اصلاحیه نقشه مراجعه نمایید و همچنین جهت ویرایش کنترل نقشه به منوی املاک / مدیریت انشعابات گاز مراجعه نمایید `
+    setTimeout(() => {
+      this.consoleText([alertText,''], 'text',['white','tomato','rebeccapurple','lightblue']);
+    }, 500);
+
   }
 
   onShowRefferingHistory(id) {
@@ -306,7 +361,6 @@ export class AnalyzeListComponent implements OnInit {
         (res: any) => {
           console.log(res);
           if (res) {
-            // this.selectedDate = res.selectedDate;
             this.reasonNotFoundEngineer = res.reasonNotFoundEngineer;
             this.showRequests = res.reasonNotFoundEngineer ? false : true;
             this.showEngineers = res.reasonNotFoundEngineer ? false : true;
@@ -650,7 +704,7 @@ export class AnalyzeListComponent implements OnInit {
       ownerName: "",
       executerName: "",
       inspectionDate: "",
-      isReferd:""
+      isReferd: ""
     };
 
     this.form.controls.selectedArea.setValue("");
@@ -664,7 +718,7 @@ export class AnalyzeListComponent implements OnInit {
     this.form.controls.executerName.setValue("");
     this.form.controls.inspectionDate.setValue("");
     this.form.controls.isReferd.setValue("");
-    
+
     this.form.reset();
 
     this.loadList();
@@ -681,7 +735,7 @@ export class AnalyzeListComponent implements OnInit {
       ownerName: this.form.controls.ownerName.value,
       executerName: this.form.controls.executerName.value,
       inspectionDate: this.form.controls.inspectionDate.value,
-      isReferd:this.form.controls.isReferd.value,
+      isReferd: this.form.controls.isReferd.value,
     };
     console.log(this.filterParams);
     this.loadList();
@@ -736,33 +790,84 @@ export class AnalyzeListComponent implements OnInit {
 
   onExportAvailableEngineers(id) {
     this.api
-    .getFromByParamsForDownload(
-      "Analyze",
-      `GetAvailableEngineersExcelExport/${id}`,
-      null
-    )
-    .subscribe((res: any) => {
-      console.log(res.headers);
-      var contentDisposition = res.headers.get("Content-Disposition");
-      // console.log(res.headers);
-      // var filename = contentDisposition
-      //   .split(";")[1]
-      //   .split("filename")[1]
-      //   .split("=")[1]
-      //   .trim();
-      console.log(contentDisposition);
-      const downloadedFile = new Blob([res.body], { type: res.body.type });
+      .getFromByParamsForDownload(
+        "Analyze",
+        `GetAvailableEngineersExcelExport/${id}`,
+        null
+      )
+      .subscribe((res: any) => {
+        console.log(res.headers);
+        var contentDisposition = res.headers.get("Content-Disposition");
+        // console.log(res.headers);
+        // var filename = contentDisposition
+        //   .split(";")[1]
+        //   .split("filename")[1]
+        //   .split("=")[1]
+        //   .trim();
+        console.log(contentDisposition);
+        const downloadedFile = new Blob([res.body], { type: res.body.type });
 
-      const a = document.createElement("a");
-      a.setAttribute("style", "display:none;");
-      document.body.appendChild(a);
-      // a.download = res.header.filename;
-      a.href = URL.createObjectURL(downloadedFile);
-      a.target = "_blank";
-      a.click();
-      document.body.removeChild(a);
-    });
+        const a = document.createElement("a");
+        a.setAttribute("style", "display:none;");
+        document.body.appendChild(a);
+        // a.download = res.header.filename;
+        a.href = URL.createObjectURL(downloadedFile);
+        a.target = "_blank";
+        a.click();
+        document.body.removeChild(a);
+      });
   }
 
+  consoleText(words, id, colors) {
+    if (colors === undefined) colors = ['#fff'];
+    var visible = true;
+    var con = document.getElementById('console');
+    var letterCount = 1;
+    var x = 1;
+    var waiting = false;
+    var target = document.getElementById(id)
+    if (target) {
+      target.setAttribute('style', 'color:' + colors[0])
+      window.setInterval(function () {
+  
+        if (letterCount === 0 && waiting === false) {
+          waiting = true;
+          target.innerHTML = words[0].substring(0, letterCount)
+          window.setTimeout(function () {
+            var usedColor = colors.shift();
+            colors.push(usedColor);
+            var usedWord = words.shift();
+            words.push(usedWord);
+            x = 1;
+            target.setAttribute('style', 'color:' + colors[0])
+            letterCount += x;
+            waiting = false;
+          }, 250)
+        } else if (letterCount === words[0].length + 1 && waiting === false) {
+          waiting = true;
+          window.setTimeout(function () {
+            x = -1;
+            letterCount += x;
+            waiting = false;
+          }, 250)
+        } else if (waiting === false) {
+          target.innerHTML = words[0].substring(0, letterCount)
+          letterCount += x;
+        }
+      }, 120)
+      window.setInterval(function () {
+        if (visible === true) {
+          con.className = 'console-underscore hidden'
+          visible = false;
+  
+        } else {
+          con.className = 'console-underscore'
+  
+          visible = true;
+        }
+      }, 400)
+    }
+
+  }
 }
 

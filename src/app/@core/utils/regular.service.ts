@@ -51,6 +51,7 @@ export class RegularService {
   accountingCode;
   registerYear:string;
   executerCode:string;
+
   constructor() {
     this.gasRequestFileNumber = '^([0-9]{4,100})$';;
     this.bankRefrence = '^([0-9]{12})$';;
@@ -88,7 +89,8 @@ export class RegularService {
     // this.registrationPlaque= '^[0-9]+$';
     this.registrationPlaque = '^([0-9]+\/\)+[0-9]+$';
     this.floatPatern = '^\-?[0-9]+((\.|\,)[0-9]+)?$';
-    this.registerYear='^((1398|1399))|((14|15|16)([0-9]{2}))$';
+   
+    this.registerYear='^((1398|1399))|((13|14|15|16)([0-9]{2}))$';
     this.executerCode='^([0-9]-)([0-9]){4}$';
   }
 

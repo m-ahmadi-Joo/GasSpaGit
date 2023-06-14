@@ -105,8 +105,8 @@
 
       <div class="row">
         <div class="col-md-6">
-          <button [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" type="submit" nbButton
-            status="success" class="btn btn-success btn-block" [disabled]=" loading">
+          <button *appHasNoRole="['Shahrsazi']" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large"
+            type="submit" nbButton status="success" class="btn btn-success btn-block" [disabled]=" loading">
             ثبت
           </button>
         </div>
@@ -218,3 +218,185 @@
   </nb-card-body>
 
 </nb-card>
+
+<!-- <nb-card style="box-shadow: 0 0 4px">
+
+  <nb-card-header> بروز رسانی مجریان </nb-card-header>
+
+  <nb-card-body>
+    <div class="mt-3 row">
+      <form [formGroup]="executerFileUploadForm" (ngSubmit)="onFormExecuterSubmit()">
+        <div class="row col-sm-12 mb-4">
+          <div class="col-sm-12" id="title">
+            <label>
+              <span class="text-danger font-weight-bold ml-1">*</span>
+              آپلود اکسل بروز رسانی مجریان
+            </label>
+
+          </div>
+
+          <div class="col-md-5 mt-4">
+            <div class="file-drop-area">
+              <span class="fake-btn">فایل را انتخاب کنید</span>
+              <span class="Pre-file-msg" *ngIf="!executerFileInputLabel">
+                "فایل را بکشید و در اینجا رها کنید"
+              </span>
+              <span class="Pre-file-msg" *ngIf="executerFileInputLabel">
+                {{ executerFileInputLabel }}
+              </span>
+              <input
+                accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                (change)="onFileSelect($event)" #executerUploadFileInput class="file-input" type="file" multiple />
+
+              <div class="progress" *ngIf="progress">
+                <div class="progress-bar" [style.width]="progress + '%'">{{progress}}%</div>
+              </div>
+
+            </div>
+          </div>
+          <div class="col-md-2 mt-4">
+
+            <circle-progress [percent]="progress" [radius]="30" [outerStrokeWidth]="5" [innerStrokeWidth]="5"
+              [outerStrokeColor]="'#76C2AF'" [innerStrokeColor]="'#C7E596'" [animation]="true" [animationDuration]="300"
+              [space]="-5"></circle-progress>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <button *appHasNoRole="['Shahrsazi']" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large"
+              type="submit" nbButton status="success" class="btn btn-success btn-block" [disabled]=" loading">
+              ثبت
+            </button>
+          </div>
+          <div class="col-md-6">
+            <button type="button" nbButton status="warning" class="btn btn-block"
+              [routerLink]="['/pages/admin/AdminPanel']" [disabled]="loading">
+              بازگشت
+            </button>
+          </div>
+        </div>
+      </form>
+      <div class="col">
+        <nb-card accent="primary" status="info">
+          <nb-card-header>نمونه طراحی فیلد های اکسل: </nb-card-header>
+          <nb-card-body>
+            <table class="table table-wrapper-scroll-y">
+              <thead>
+                <tr>
+                  <th scope="col">نام</th>
+                  <th scope="col">نام خانوادگی</th>
+                  <th scope="col">کد ملی</th>
+                  <th scope="col">تلفن همراه</th>
+                  <th scope="col">شماره مُهر</th>
+                  <th scope="col">از تاریخ</th>
+                  <th scope="col">تا تاریخ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td title="نوع داده دریافتی">رشته : string</td>
+                  <td title="نوع داده دریافتی">رشته : string</td>
+                  <td title="نوع داده دریافتی">رشته : string</td>
+                  <td title="نوع داده دریافتی">رشته : string</td>
+                  <td title="نوع داده دریافتی">رشته : string</td>
+                  <td title="نوع داده دریافتی">رشته : string</td>
+                  <td title="نوع داده دریافتی">رشته : string</td>
+                </tr>
+              </tbody>
+            </table>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+
+    <br>
+    <nb-card *ngIf="updateResult.length > 0" id="serachCard" style="box-shadow: 0 0 4px">
+      <nb-card-body>
+        <form class="form-inline" (ngSubmit)="onSerach()" [formGroup]="searchForm">
+          <div class="row">
+            <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+              <label for="engineerOrganizationCode">
+                کد دفتر گاز:
+              </label>
+              <input formControlName="engineerOrganizationCode" size="small" fullWidth id="engineerOrganizationCode"
+                nbInput type="text" />
+              <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.engineerOrganizationCode">
+                <span class="text-danger" *ngIf="
+                searchForm.get('engineerOrganizationCode').hasError(validation.type) &&
+                    (searchForm.get('engineerOrganizationCode').dirty ||
+                    searchForm.get('engineerOrganizationCode').touched)
+                  ">{{ validation.message }}</span>
+              </div>
+            </div>
+            <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+              <label for="fullName">
+                نام مهندس:
+              </label>
+              <input formControlName="fullName" size="small" fullWidth id="fullName" nbInput type="text" />
+            </div>
+
+            <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12 ">
+              <label for="nationalCode">
+                کد ملی:
+              </label>
+
+              <input formControlName="nationalCode" size="small" fullWidth id="nationalCode" nbInput type="text" />
+
+              <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.nationalCode">
+                <span class="text-danger" *ngIf="
+                searchForm.get('nationalCode').hasError(validation.type) &&
+                  (searchForm.get('nationalCode').dirty ||
+                  searchForm.get('nationalCode').touched)
+                ">{{ validation.message }}</span>
+              </div>
+            </div>
+
+            <div class="form-group col-lg-3 col-md-3 col-sm-4 col-xs-12 float-left mt-3">
+              <button nbTooltip="بازسازی" nbTooltipPlacement="top" size="tiny" nbButton hero status="primary"
+                type="button" (click)="resetFilters()" style="margin-top: 24px;height: 50%;">
+                <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="refresh-outline">
+                </nb-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+        <br />
+      </nb-card-body>
+    </nb-card>
+    <nb-card style="height: 460px;" *ngIf="updateResult.length > 0">
+      <nb-card-body>
+        <div style="clear: both"></div>
+        <table class="table table-wrapper-scroll-y">
+          <thead>
+            <tr>
+              <th scope="col">کد مجری</th>
+              <th scope="col">نام و نام خانوادگی</th>
+              <th scope="col">تاریخ شروع</th>
+              <th scope="col">تاریخ انقضاء</th>
+              <th scope="col">ساعات</th>
+              <th scope="col">نتیجه</th>
+
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of updateResult| tableFilter: searchForm.value">
+              <td>{{ item.engineerId }}</td>
+              <td>{{ item.fullName }}</td>
+              <td>{{ item.engineerOrganizationCode }}</td>
+              <td>{{ item.areasName }}</td>
+              <td>{{ item.startWorkTime }}</td>
+              <td>{{ item.dayWorks }}</td>
+              <td>{{ item.shiftTimes }}</td>
+              <td>{{ item.result }}</td>
+            </tr>
+          </tbody>
+        </table>
+         </div> 
+      </nb-card-body>
+    </nb-card>
+  </nb-card-body>
+
+</nb-card> -->

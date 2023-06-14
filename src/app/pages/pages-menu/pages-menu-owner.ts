@@ -1,4 +1,4 @@
-import { NbMenuItem } from "@nebular/theme";
+  import { NbMenuItem } from "@nebular/theme";
 
 export const MENU_ITEMS_Owner: NbMenuItem[] = [
   {
@@ -11,6 +11,11 @@ export const MENU_ITEMS_Owner: NbMenuItem[] = [
         {
           title: "املاک",
           link: "/pages/forms/GasReqList",
+          icon: 'home-outline'
+        },
+        {
+          title: "املاک قدیمی",
+          link: "/pages/forms/OldGasReqList",
           icon: 'home-outline'
         },
         {
@@ -43,6 +48,16 @@ export const MENU_ITEMS_Owner: NbMenuItem[] = [
                   icon: "book-open-outline",
                 },
               ]
+            },
+          ]
+        },
+        {
+          title: "کارتابل فشار قوی",
+          children: [
+            {
+              title: " املاک فشار قوی",
+              link: "/pages/forms/HPGasReqList",
+              icon: 'home-outline'
             },
           ]
         }

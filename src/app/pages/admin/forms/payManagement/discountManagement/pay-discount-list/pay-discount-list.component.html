@@ -53,10 +53,10 @@
       </nb-icon>
 
       <span class="mr-1" style="color:#3366ff">تخفیف ها</span>
-    </div>
+    </div>  
 
     <div class="pull-left">
-      <button class="btn btn-info ml-2" style="color:#fff" [routerLink]="['/pages/admin/PayDiscount']">
+      <button *appHasNoRole="['Shahrsazi']" class="btn btn-info ml-2" style="color:#fff" [routerLink]="['/pages/admin/PayDiscount']">
         <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="credit-card-outline">
         </nb-icon>
         اعمال تخفیف جدید

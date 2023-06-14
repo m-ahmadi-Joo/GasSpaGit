@@ -1,0 +1,1539 @@
+<style>
+  div.fixed {
+    position: fixed;
+    z-index: 1000;
+    /* top: 100px; */
+  }
+
+  .sticky-offset {
+    top: 56px;
+  }
+
+  .form-inline>* {
+    margin: 0.45rem !important;
+  }
+
+  nb-radio-group {
+    margin-top: 0 !important;
+  }
+
+  .test {
+    display: none;
+  }
+
+  .leaflet-container {
+    height: 40rem !important;
+    max-height: 400px !important;
+  }
+
+  .prstype nb-radio /deep/ .outer-circle {
+    background-color: #fff !important;
+  }
+
+  nb-radio {
+    width: 140px !important;
+    margin-bottom: 0 !important;
+  }
+  #cityvillage{
+    margin-right: 5px!important;
+  }
+</style>
+
+
+<div class="row mb-3">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <nb-card style="box-shadow: 0 0 4px" *ngIf="isEdit">
+      <nb-card-body>
+        <nb-accordion multi>
+          <nb-accordion-item expanded>
+            <nb-accordion-item-header>
+              اطلاعات مالک
+            </nb-accordion-item-header>
+            <nb-accordion-item-body>
+              <div class="container" id="ownerInfo">
+                <h6 class="text-right" *ngIf="info.ownerGender === 1" style="margin-bottom: 30px">
+                  سرکار خانم {{ info?.ownerFullName }}
+                </h6>
+                <h6 class="text-right" *ngIf="info.ownerGender === 0" style="margin-bottom: 30px">
+                  جناب آقای {{ info?.ownerFullName }}
+                </h6>
+                <div class="col-lg-12 col-md-12 col-sm-12 form-hanging">
+                  <div class="input-group">
+                    <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+                      <label><strong>شماره درخواست </strong></label>
+                      <div class="form-group">
+                        <input type="text" readonly nbInput value="{{ reqInfo?.fileNumber }}" />
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+                      <label><strong>موبایل </strong></label>
+                      <div class="form-group">
+                        <input type="text" readonly nbInput value="{{ info?.ownerPhoneNumber }}" />
+                      </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+                      <label><strong>کدملی</strong></label>
+                      <div class="form-group form-inline">
+                        <input type="text" readonly nbInput value="{{ info?.ownerNationalCode }}" class="form-inline" />
+                      </div>
+                    </div>
+
+                    <div *ngIf="info?.ownerAddress !== null" class="col-lg-3 col-md-3 col-sm-3 form-inline">
+                      <label class="ml-0"><strong> آدرس</strong></label>
+                      <div class="form-group">
+                        <input type="text" readonly nbInput value="{{ info?.ownerAddress }}" />
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </nb-accordion-item-body>
+          </nb-accordion-item>
+
+        </nb-accordion>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<div class="row mb-3">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <form (ngSubmit)="onSubmit()" [formGroup]="piForm">
+      <nb-card>
+        <nb-card-header>مشخصات ملک فشار قوی</nb-card-header>
+        <nb-card-body>
+
+          <div>
+            <nb-card class="mb-0">
+              <nb-card-body class="p-0">
+                <div class="row mb-2">
+                  <div class="col-sm-2 mt-2 text-center">
+                    <label>
+                      <span class="text-danger font-weight-bold">*</span>
+                      نوع پروژه
+                    </label>
+                  </div>
+                  <div class="col-sm-10 ">
+                    <nb-radio-group class="form-inline radio-x-inline" formControlName="mkType" id="noskht"
+                      name="noskht" style="margin-top: 1.61rem">
+                      <nb-radio style="width: 180px !important" *ngFor="let bt of listBuildingType" [value]="bt.id">
+                        {{ bt.descp }}
+                      </nb-radio>
+                    </nb-radio-group>
+                    <div *ngIf="isSubmitted">
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.baseBuildTypeId
+                        ">
+                        <span class="text-danger" *ngIf="piForm.controls.mkType.value === ''">{{ validation.message
+                          }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+                <!-- <div class="row mb-3">
+                  <div class="col-sm-2 mt-2 text-center">
+                    <label for="buildingKind">
+                      <span class="text-danger font-weight-bold">*</span>
+
+                      نوع ساختمان</label
+                    >
+                  </div>
+                  <div class="col-sm-10">
+                    <nb-radio-group
+                      #rdbBuildingKind
+                      class="form-inline radio-x-inline"
+                      formControlName="buildingKind"
+                      id="buildingKind"
+                      name="buildingKind"
+                      style="margin-top: 1.61rem"
+                    >
+                      <nb-radio value="1">ویلایی</nb-radio>
+                      <nb-radio value="2">آپارتمانی</nb-radio>
+                    </nb-radio-group>
+
+                    <div *ngIf="isSubmitted">
+                      <div
+                        *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.buildingKind
+                        "
+                      >
+                        <span
+                          class="text-danger"
+                          *ngIf="
+                            piForm.controls.buildingKind.value === '' &&
+                            isSubmitted
+                          "
+                          >{{ validation.message }}</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+
+
+                <!-- <div class="row mb-3">
+                  <div class="col-sm-2 mt-2 text-center">
+                    <label>
+                      <span class="text-danger font-weight-bold">*</span>
+
+                      نوع اشتراک</label
+                    >
+                  </div>
+                  <div class="col-sm-10">
+                    <nb-radio-group
+                      class="form-inline radio-x-inline"
+                      formControlName="mkSubscriptionType"
+                      id="subscriptionType"
+                      name="subscriptionType"
+                      style="margin-top: 1.75rem"
+                    >
+                      >
+                      <nb-radio
+                        *ngFor="let sub of listSubscriptionTypes"
+                        [value]="sub.id"
+                      >
+                        {{ sub.title }}
+                      </nb-radio>
+                    </nb-radio-group>
+
+                    <div *ngIf="isSubmitted">
+                      <div
+                        *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.baseSubscriptionTypeId
+                        "
+                      >
+                        <span
+                          class="text-danger"
+                          *ngIf="
+                            piForm
+                              .get('mkSubscriptionType')
+                              .hasError(validation.type)
+                          "
+                          >{{ validation.message }}</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+
+                <!-- <div class="row mb-3" *ngIf="piForm.controls.mkType.value === establishBuildingId">
+                  <div class="col-sm-2 mt-2 text-center">
+                    <label class="ml-1" for="buildingLocation">
+                      <span class="text-danger font-weight-bold">*</span>
+                      موقعیت ملک</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <nb-radio-group (valueChange)="onChangeBuildingLocation($event)" class="form-inline radio-x-inline"
+                      formControlName="buildingLocation" id="buildingLocation" name="buildingLocation"
+                      style="margin-top: 1.75rem">
+                      <nb-radio value="یک بر کوچه"> یک بر کوچه </nb-radio>
+                      <nb-radio value="دو بر کوچه"> دو بر کوچه </nb-radio>
+                      <nb-radio value="سر نبش"> سر نبش </nb-radio>
+                    </nb-radio-group>
+                    <div *ngIf="isSubmitted">
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.buildingLocation
+                        ">
+                        <span class="text-danger" *ngIf="
+                            piForm
+                              .get('buildingLocation')
+                              .hasError(validation.type) &&
+                            (piForm.get('buildingLocation').dirty ||
+                              piForm.get('buildingLocation').touched)
+                          ">
+                          {{ validation.message }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+                <!-- <div class="row mb-3" *ngIf="
+                    piForm.controls.mkType.value === establishBuildingId &&
+                    piForm.controls.buildingLocation.value === 'یک بر کوچه'
+                  ">
+                  <div class="col-sm-2 mt-2 text-center">
+                    <label class="ml-1" for="buildingWidth">
+                      <span class="text-danger font-weight-bold">*</span>
+                      عرض ملک</label>
+                  </div>
+                  <div class="col-sm-10">
+                    <nb-radio-group class="form-inline radio-x-inline" formControlName="buildingWidth"
+                      id="buildingWidth" name="buildingWidth" style="margin-top: 1.75rem">
+                      <nb-radio value="0"> کمتر از 20 متر </nb-radio>
+                      <nb-radio value="1"> بیش از 20 متر </nb-radio>
+                    </nb-radio-group>
+                    <div *ngIf="isSubmitted">
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.buildingWidth
+                        ">
+                        <span class="text-danger" *ngIf="
+                            piForm
+                              .get('buildingWidth')
+                              .hasError(validation.type) &&
+                            (piForm.get('buildingWidth').dirty ||
+                              piForm.get('buildingWidth').touched)
+                          ">
+                          {{ validation.message }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+                <!-- <div class="col-lg-12 col-md-12 col-sm-12 form-inline form-hanging pr-0" *ngIf="
+                    piForm.controls.mkType.value &&
+                    piForm.controls.mkType.value !== establishBuildingId
+                  ">
+                  <div class="form-group">
+                    <label for="pcc" class="pb-0 pr-4">
+                      <span class="text-danger font-weight-bold ml-1">*</span>
+                      تعداد کنتور فعلی ساختمان
+                    </label>
+                    <input formControlName="previousCounterCount" fullWidth id="pcc" nbInput class="mr-2"
+                      style="width: 60%" type="number" (change)="onChangePreCounterCount($event)" />
+                  </div>
+                  <div *ngFor="
+                  let validation of INPUT_VALIDATION_MESSAGES.previousCounterCount
+                 ">
+                    <span class="text-danger" *ngIf="
+                    piForm
+                    .get('previousCounterCount')
+                    .hasError(validation.type) &&
+                   piForm.get('mkDoHave').value &&
+                  (piForm.get('previousCounterCount').dirty ||
+                    piForm.get('previousCounterCount').touched ||
+                    isSubmitted)
+                  ">
+                      {{ validation.message }}
+                    </span>
+                  </div>
+
+                </div> -->
+
+                <div class="row mb-3 mb-0">
+                  <div class="col-sm-2 mt-2 text-center">
+                    <span style="display: inline-block; margin-top: 5px">
+                      <span class="text-danger font-weight-bold">*</span>
+
+                      کاربری</span>
+                  </div>
+                  <!-- " -->
+                  <div class="col-lg-10 col-md-10 col-sm-10">
+                    <nb-radio-group class="form-inline radio-x-inline" formControlName="mkUsageType" id="karbari"
+                      name="karbari" style="margin-top: 1.75rem"   (valueChange)="onChangeUsageKind($event)" >
+
+                      <nb-radio style="width: 180px !important" *ngFor="let uk of listUsageKind" [value]="uk.id">
+                        {{ uk.descp }}
+                      </nb-radio>
+                    </nb-radio-group>
+
+                    <div *ngIf="isSubmitted">
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.baseUsageKindId
+                        ">
+                        <span class="text-danger" *ngIf="
+                            piForm.get('mkUsageType').hasError(validation.type)
+                          ">{{ validation.message }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+              </nb-card-body>
+            </nb-card>
+
+
+
+            <!-- 
+
+            <nb-card class="mb-0">
+              <nb-card-body class="p-0">
+                <div class="col-lg-12 col-md-8 col-sm-12 form-inline form-hanging" formArrayName="gasRequestPreCounters"
+                  *ngIf="
+                piForm.controls.mkType.value &&
+                piForm.controls.mkType.value !== establishBuildingId
+              ">
+                  <div class="input-group" *ngFor="let item of gasRequestPreCounters().controls; let cIndex = index">
+
+                    <div [formGroupName]="cIndex" class="col-lg-4 col-md-4 col-sm-6 form-inline">
+                      <label> شماره اشتراک واحد {{cIndex+1}} </label>
+                      <input formControlName="previousSubscriptionNumber" fullWidth id="ps" nbInput />
+
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.previousSubscriptionNumber
+                        ">
+                        <span class="text-danger" *ngIf="
+                        item.get('previousSubscriptionNumber')
+                        .hasError(validation.type) &&
+                      piForm.get('mkDoHave').value &&
+                      (item.get('previousSubscriptionNumber').dirty ||
+                      item.get('previousSubscriptionNumber').touched ||
+                        isSubmitted)
+                    ">
+                          {{ validation.message }}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div [formGroupName]="cIndex" class="col-lg-4 col-md-4 col-sm-6 form-inline">
+                      <label> کدپستی واحد {{cIndex+1}} </label>
+                      <input formControlName="prePostalCode" fullWidth id="ps" nbInput />
+
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.prePostalCode
+                        ">
+                        <span class="text-danger" *ngIf="
+                        item.get('prePostalCode')
+                           .hasError(validation.type) &&
+                           piForm.get('mkDoHave').value &&
+                           (item.get('prePostalCode').dirty ||
+                           item.get('prePostalCode').touched ||
+                             isSubmitted)
+                         ">
+                          {{ validation.message }}
+                        </span>
+                      </div>
+                    </div>
+
+
+
+                  </div>
+                </div>
+              </nb-card-body>
+            </nb-card>
+
+ -->
+
+
+            <nb-card class="mb-0">
+              <nb-card-body class="p-0">
+                <div class="col-lg-12 col-md-12 col-sm-12 form-inline form-hanging">
+                  <div class="input-group">
+                    <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+                      <label class="text-right">نام پروژه (در صورت وجود)</label>
+                      <input #renewerCode formControlName="mkProjectName" fullWidth id="kn" nbInput />
+
+                      <div>
+                        <span></span>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+                      <label for="ps"> پلاک ثبتی</label>
+                      <input formControlName="mkSubmitedPelakCode" fullWidth id="ps" nbInput />
+
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.registrationPlaque
+                        ">
+                        <span class="text-danger" *ngIf="
+                            piForm
+                              .get('mkSubmitedPelakCode')
+                              .hasError(validation.type) &&
+                            (piForm.get('mkSubmitedPelakCode').dirty ||
+                              piForm.get('mkSubmitedPelakCode').touched ||
+                              isSubmitted)
+                          ">{{ validation.message }}</span>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+                      <label for="kp"> کد پستی</label>
+                      <input formControlName="mkPostalCode" fullWidth id="kp" nbInput />
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.postalCode
+                        ">
+                        <span class="text-danger" *ngIf="
+                            piForm
+                              .get('mkPostalCode')
+                              .hasError(validation.type) &&
+                            (piForm.get('mkPostalCode').dirty ||
+                              piForm.get('mkPostalCode').touched ||
+                              isSubmitted)
+                          ">{{ validation.message }}</span>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+                      <label for="tz">
+                        <span class="text-danger font-weight-bold ml-1">*</span>
+
+                        زیربنای کل</label>
+                      <!-- <input
+                              formControlName="mkFoundationTotal"
+                              fullWidth
+                              id="tz"
+                              nbInput
+                              type="number"
+                              (blur)="onBlurTotalFoundation($event)"> -->
+                      <input formControlName="mkFoundationTotal" fullWidth id="tz" nbInput />
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.totalFoundation
+                        ">
+                        <span class="text-danger" *ngIf="
+                            piForm
+                              .get('mkFoundationTotal')
+                              .hasError(validation.type) &&
+                            (piForm.get('mkFoundationTotal').dirty ||
+                              piForm.get('mkFoundationTotal').touched ||
+                              isSubmitted)
+                          ">{{ validation.message }}</span>
+                      </div>
+                    </div>
+                    <!-- 
+                    <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+                      <label for="tb">
+
+                        نام بلوک</label>
+                      <input formControlName="mkBlocCount" fullWidth id="tb" nbInput />
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.blockCount
+                        ">
+                        <span class="text-danger" *ngIf="
+                            piForm
+                              .get('mkBlocCount')
+                              .hasError(validation.type) &&
+                            (piForm.get('mkBlocCount').dirty ||
+                              piForm.get('mkBlocCount').touched ||
+                              isSubmitted)
+                          ">{{ validation.message }}</span>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+                      <label for="tt">
+                        <span class="text-danger font-weight-bold ml-1">*</span>
+
+                        تعداد طبقات</label>
+                      <input formControlName="mkFloorCount" fullWidth id="tt" nbInput />
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.floorCount
+                        ">
+                        <span class="text-danger" *ngIf="
+                            piForm
+                              .get('mkFloorCount')
+                              .hasError(validation.type) &&
+                            (piForm.get('mkFloorCount').dirty ||
+                              piForm.get('mkFloorCount').touched ||
+                              isSubmitted)
+                          ">{{ validation.message }}</span>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+                      <label for="tv">
+                        <span class="text-danger font-weight-bold ml-1">*</span>
+
+                        تعداد واحد</label>
+                      <input formControlName="mkApartmentCount" fullWidth id="tv" nbInput />
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.unitCount
+                        ">
+                        <span class="text-danger" *ngIf="
+                            piForm
+                              .get('mkApartmentCount')
+                              .hasError(validation.type) &&
+                            (piForm.get('mkApartmentCount').dirty ||
+                              piForm.get('mkApartmentCount').touched ||
+                              isSubmitted)
+                          ">{{ validation.message }}</span>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+                      <label for="kontorn">
+                        <span class="text-danger font-weight-bold ml-1">*</span>
+
+                        تعداد کنتور مورد درخواست</label>
+                      <input formControlName="mkRequestCounter" fullWidth id="kontorn" nbInput />
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.meterCount
+                        ">
+                        <span class="text-danger" *ngIf="
+                            piForm
+                              .get('mkRequestCounter')
+                              .hasError(validation.type) &&
+                            (piForm.get('mkRequestCounter').dirty ||
+                              piForm.get('mkRequestCounter').touched ||
+                              isSubmitted)
+                          ">{{ validation.message }}</span>
+                      </div>
+                    </div>
+ -->
+
+
+
+                    <!-- <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+                            <label for="ms">میزان تقریبی کل مصرف</label>
+                            <input
+                              formControlName="mkGasUsageCloseTotal"
+                              fullWidth
+                              id="ms"
+                              nbInput
+                              type="number">
+                              <div *ngFor="
+                              let validation of INPUT_VALIDATION_MESSAGES.approximateConsumption
+                            ">
+                            <span class="text-danger" *ngIf="
+                                piForm
+                                  .get('mkGasUsageCloseTotal')
+                                  .hasError(validation.type) &&
+                                (piForm.get('mkGasUsageCloseTotal').dirty ||
+                                  piForm.get('mkGasUsageCloseTotal').touched)
+                              ">{{ validation.message }}</span>
+                          </div>
+                          </div> -->
+                  </div>
+                </div>
+              </nb-card-body>
+            </nb-card>
+
+            <!-- <nb-card style="background-color: #e2e4ea; padding-top: 10px" *ngIf="
+                isEdit &&
+                className !== '' &&
+                (userRole.includes('Admin') ||
+                  userRole.includes('Engineer') ||
+                  userRole.includes('GasRuleCheckerGroupOne') ||
+                  userRole.includes('GasRuleCheckerGroupTwo') ||
+                  userRole.includes('GasRuleCheckerGroupThree') ||
+                  userRole.includes('HPManager') ||
+                  userRole.includes('GasRuleEmployeeHP') ||
+                  userRole.includes('GasEmployeeHP') ||
+                  userRole.includes('GasEmployee'))
+              ">
+              <nb-card-body class="p-0">
+                <div class="input-group">
+                  <div class="col-lg-8 col-md-8 col-sm-8 form-inline">
+                    <label for="ms">
+                      <span class="text-danger font-weight-bold ml-1">*</span>
+                      میزان تقریبی کل مصرف</label>
+                    <input formControlName="mkGasUsageCloseTotal" style="width: 50%" id="ms" nbInput type="number"
+                      min="0.1" />
+                    <div *ngFor="
+                        let validation of INPUT_VALIDATION_MESSAGES.approximateConsumption
+                      ">
+                      <span class="text-danger" *ngIf="
+                          piForm
+                            .get('mkGasUsageCloseTotal')
+                            .hasError(validation.type) &&
+                          (piForm.get('mkGasUsageCloseTotal').dirty ||
+                            piForm.get('mkGasUsageCloseTotal').touched ||
+                            isSubmitted)
+                        ">{{ validation.message }}</span>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12 col-md-12 col-sm-12 form-inline">
+                    <label>
+                      <span class="text-danger font-weight-bold ml-1">*</span>
+                      نوع فشار گاز مورد درخواست</label>
+
+                    <nb-radio-group (valueChange)="onChangeGasPresureType($event)" #rdbGasPresureType
+                      formControlName="mkGasPresureType" class="prstype form-inline radio-x-inline" id="prstype"
+                      name="prstype">
+                      <nb-radio *ngFor="let pk of listProjectKinds" [value]="pk.id" [id]="pk.id">
+                        {{ pk.descp }}
+                      </nb-radio>
+                    </nb-radio-group>
+
+                    <div *ngFor="
+                        let validation of INPUT_VALIDATION_MESSAGES.baseProjectKindId
+                      ">
+                      <span class="text-danger" *ngIf="
+                          isSubmitted &&
+                          piForm
+                            .get('mkGasPresureType')
+                            .hasError(validation.type)
+                        ">{{ validation.message }}</span>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12 col-md-12 col-sm-12 form-inline form-hanging" *ngIf="
+                      isEdit &&
+                      piForm.controls.mkType.value !== establishBuildingId &&
+                      (userRole.includes('Admin') ||
+                        userRole.includes('Engineer') ||
+                        userRole.includes('GasRuleCheckerGroupOne') ||
+                        userRole.includes('GasRuleCheckerGroupTwo') ||
+                        userRole.includes('GasRuleCheckerGroupThree') ||
+                        userRole.includes('HPManager') ||
+                        userRole.includes('GasRuleEmployeeHP') ||
+                        userRole.includes('GasEmployeeHP') ||
+                        userRole.includes('GasEmployee'))
+                    ">
+                    <label class="ml-1" for="isRequiredAlamakDeletion"><span
+                        class="text-danger font-weight-bold ml-1">*</span>
+                      نیاز به جمع آوری علمک</label>
+                    <nb-radio-group #rdbIsRequiredAlamakDeletion class="prstype form-inline radio-x-inline"
+                      formControlName="isRequiredAlamakDeletion" id="isRequiredAlamakDeletion"
+                      name="isRequiredAlamakDeletion" style="margin-top: 1.75rem">
+                      <nb-radio value="1"> دارد </nb-radio>
+                      <nb-radio value="0"> ندارد </nb-radio>
+                    </nb-radio-group>
+                    <div *ngIf="isSubmitted">
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.isRequiredAlamakDeletion
+                        ">
+                        <span class="text-danger" *ngIf="
+                            piForm
+                              .get('isRequiredAlamakDeletion')
+                              .hasError(validation.type) &&
+                            (piForm.get('isRequiredAlamakDeletion').dirty ||
+                              piForm.get('isRequiredAlamakDeletion').touched)
+                          ">
+                          {{ validation.message }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </nb-card-body>
+            </nb-card> -->
+
+            <nb-card class="mb-1" *ngIf="
+            piForm.controls.mkUsageType.value &&
+            piForm.controls.mkUsageType.value === residentialUsageKindId
+          ">
+              <nb-card-body class="p-0">
+                <div class="col-lg-12 col-md-12 col-sm-12 form-inline">
+                  <div class="col-lg-12 col-md-12 col-sm-12 pr-0">
+                    <nb-checkbox formControlName="mkIsColony" [disabled]="piForm.get('mkIsForGarden').value === true">
+                      درخواست انشعاب مربوط به مجتمع های مسکونی ( مجموعه مسکونی
+                      می باشد )
+                    </nb-checkbox>
+                  </div>
+                  <!-- <div *ngIf="
+                      isEdit &&
+                      (userRole.includes('Admin') ||
+                        userRole.includes('Engineer') ||
+                        userRole.includes('GasRuleCheckerGroupOne') ||
+                        userRole.includes('GasRuleCheckerGroupTwo') ||
+                        userRole.includes('GasRuleCheckerGroupThree') ||
+                        userRole.includes('HPManager') ||
+                        userRole.includes('GasRuleEmployeeHP') ||
+                        userRole.includes('GasEmployeeHP') ||
+                        userRole.includes('GasEmployee')) &&
+                      piForm.controls.mkIsColony.value === true
+                    " class="input-group col-lg-10 col-md-10 col-sm-10">
+                    <label>
+                      <span class="text-danger font-weight-bold ml-1">*</span>
+
+                      میزان مصرف ساعتی هر مجتمع :</label>
+                    <nb-radio-group class="form-inline radio-x-inline" formControlName="mkGasUsagePerHour"
+                      id="colonyusage" name="colonyusage" style="margin-top: 1.61rem">
+                      <nb-radio style="width: 200px !important" value="1">
+                        بیشتر از 100 متر مکعب
+                      </nb-radio>
+                      <nb-radio style="width: 200px !important" value="0">
+                        کمتر از 100 متر مکعب
+                      </nb-radio>
+                    </nb-radio-group>
+                    <div *ngIf="isSubmitted">
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.consumptionPerHourComplex
+                        ">
+                        <span class="text-danger" *ngIf="piForm.controls.mkGasUsagePerHour.value === ''">{{
+                          validation.message }}</span>
+                      </div>
+                    </div>
+                  </div>
+                   -->
+                  <div class="input-group col-md-6" *ngIf="piForm.controls.mkIsColony.value === true">
+                    <label for="kn" class="ml-0">
+                      <span class="text-danger font-weight-bold ml-1">*</span>
+                      پلاک ثبتی / شماره پروانه تاسیس یا بهره برداری
+                    </label>
+                    <input #renewerCode formControlName="establishmentLicense" fullWidth id="eL" nbInput />
+                    <div *ngFor="
+                       let validation of INPUT_VALIDATION_MESSAGES.establishmentLicense
+                     ">
+
+                      <span class="text-danger" *ngIf="
+                      establishmentLicense&&
+                         piForm.get('establishmentLicense').hasError(validation.type)
+                       ">{{ validation.message }}
+                      </span>
+
+                      <!-- && (piForm.get('mkRenewerCode').dirty ||
+                 piForm.get('mkRenewerCode').touched ||
+                 isSubmitted) -->
+
+                      <!-- <span
+                       class="text-danger"
+                       *ngIf="
+                         shirazSelected &&
+                         piForm
+                           .get('mkRenewerCode')
+                           .hasError(validation.type) &&
+                         (piForm.get('mkRenewerCode').dirty ||
+                           piForm.get('mkRenewerCode').touched ||
+                           isSubmitted)
+                       "
+                       >{{ validation.message }}
+                     </span> -->
+                    </div>
+                  </div>
+                  <div *ngIf="piForm.controls.mkIsColony.value === true"
+                    class="input-group col-lg-10 col-md-10 col-sm-10">
+                    <label>
+                      <span class="text-danger font-weight-bold ml-1">*</span>
+
+                      زیربنای هر مجتمع :</label>
+                    <nb-radio-group class="form-inline radio-x-inline" formControlName="mkFoundationEachBuilding"
+                      id="colonyfond" name="colonyfond" style="margin-top: 1.61rem">
+                      <nb-radio style="width: 200px !important" value="1">بالای 3000 متر مربع</nb-radio>
+                      <nb-radio style="width: 200px !important" value="0">کمتر 3000 متر مربع</nb-radio>
+                    </nb-radio-group>
+                    <div *ngIf="isSubmitted">
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.foundationPerComplex
+                        ">
+                        <span class="text-danger" *ngIf="
+                            piForm.controls.mkFoundationEachBuilding.value ===
+                            ''
+                          ">{{ validation.message }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="piForm.controls.mkIsColony.value === true"
+                    class="input-group col-lg-10 col-md-10 col-sm-10">
+                    <label>
+                      <span class="text-danger font-weight-bold ml-1">*</span>
+
+                      دارای موتورخانه مرکزی :</label>
+                    <nb-radio-group class="form-inline radio-x-inline" formControlName="mkHasCentralPowerHouse"
+                      id="centralpowerhouse" name="centralpowerhouse" style="margin-top: 1.61rem">
+                      <nb-radio style="width: 100px !important" value="1">می باشد</nb-radio>
+                      <nb-radio style="width: 100px !important" value="0">نمی باشد</nb-radio>
+                    </nb-radio-group>
+                    <div *ngIf="isSubmitted">
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.foundationPerComplex
+                        ">
+                        <span class="text-danger" *ngIf="
+                            piForm.controls.mkFoundationEachBuilding.value ===
+                            ''
+                          ">{{ validation.message }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 form-inline">
+                  <div class="col-lg-12 col-md-12 col-sm-12 pr-0">
+                    <nb-checkbox formControlName="mkIsForGarden" [disabled]="piForm.get('mkIsColony').value === true" (valueChange)="onChangeIsColony($event)">
+                      درخواست انشعاب مربوط به محوطه مسکونی ( مجموعه مسکونی می
+                      باشد)
+                    </nb-checkbox>
+                  </div>
+                  <div class="col-lg-12 col-md-12 col-sm-12 form-inline form-hanging pr-0" *ngIf="
+                  piForm.controls.mkIsForGarden.value===true ">
+                    <div class="form-group">
+                      <label for="pcc" class="pb-0 pr-4">
+                        <span class="text-danger font-weight-bold ml-1">*</span>
+                        تعداد بلوک
+                      </label>
+                      <input formControlName="hPBlockCount" fullWidth id="pcc" nbInput class="mr-2" style="width: 60%"
+                        type="number" (change)="onChangeHPBlockCount($event)" />
+                    </div>
+                    <div *ngFor="
+                        let validation of INPUT_VALIDATION_MESSAGES.hPBlockCount
+                         ">
+                      <span class="text-danger" *ngIf="
+                          piForm
+                          .get('hPBlockCountCount')
+                          .hasError(validation.type) &&
+                        piForm.get('mkDoHave').value &&
+                        (piForm.get('hPBlockCount').dirty ||
+                          piForm.get('hPBlockCount').touched ||
+                          isSubmitted)
+                            ">
+                        {{ validation.message }}
+                      </span>
+                    </div>
+
+                  </div>
+
+                  <!-- <div *ngIf="
+                      isEdit &&
+                      (userRole.includes('Admin') ||
+                        userRole.includes('Engineer') ||
+                        userRole.includes('GasRuleCheckerGroupOne') ||
+                        userRole.includes('GasRuleCheckerGroupTwo') ||
+                        userRole.includes('GasRuleCheckerGroupThree') ||
+                        userRole.includes('HPManager') ||
+                        userRole.includes('GasRuleEmployeeHP') ||
+                        userRole.includes('GasEmployeeHP') ||
+                        userRole.includes('GasEmployee')) &&
+                      piForm.controls.mkIsForGarden.value === true
+                    " class="input-group col-lg-12 col-md-12 col-sm-12">
+                    <label>
+                      <span class="text-danger font-weight-bold ml-1">*</span>
+
+                      میزان مصرف ساعتی در محوطه مسکونی :</label>
+                    <nb-radio-group class="form-inline radio-x-inline" formControlName="mkGardenUsage" id="gardenusage"
+                      name="gardenusage" style="margin-top: 1.61rem">
+                      <nb-radio style="width: 200px !important" value="1">بیشتر از 100 متر مکعب
+                      </nb-radio>
+                      <nb-radio style="width: 200px !important" value="0">کمتر از 100 متر مکعب
+                      </nb-radio>
+                    </nb-radio-group>
+                    <div *ngIf="isSubmitted">
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.consumptionPerHourArea
+                        ">
+                        <span class="text-danger" *ngIf="
+                            piForm.controls.mkIsForGarden.value === true &&
+                            piForm.controls.mkGardenUsage.value === ''
+                          ">{{ validation.message }}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div *ngIf="
+                      isEdit &&
+                      (userRole.includes('Admin') ||
+                        userRole.includes('Engineer') ||
+                        userRole.includes('GasRuleCheckerGroupOne') ||
+                        userRole.includes('GasRuleCheckerGroupTwo') ||
+                        userRole.includes('GasRuleCheckerGroupThree') ||
+                        userRole.includes('HPManager') ||
+                        userRole.includes('GasRuleEmployeeHP') ||
+                        userRole.includes('GasEmployeeHP') ||
+                        userRole.includes('GasEmployee')) &&
+                      piForm.controls.mkUsageType.value ===
+                        industrialAgricultureId
+                    " class="input-group col-lg-12 col-md-12 col-sm-12">
+                    <label>
+                      <span class="text-danger font-weight-bold ml-1">*</span>
+
+                      میزان مصرف ساعتی پروژه صنعتی - کشاورزی :</label>
+                    <nb-radio-group class="form-inline radio-x-inline" formControlName="mkFarmLandUsage" id="farmland"
+                      name="farmland" style="margin-top: 1.61rem">
+                      <nb-radio style="width: 200px !important" value="1">بیشتر از 100 متر مکعب
+                      </nb-radio>
+                      <nb-radio style="width: 200px !important" value="0">کمتر از 100 متر مکعب
+                      </nb-radio>
+                    </nb-radio-group>
+                    <div *ngIf="isSubmitted">
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.consumptionPerHourBaseUsageKind
+                        ">
+                        <span class="text-danger" *ngIf="
+                            piForm.controls.mkUsageType.value ===
+                              industrialAgricultureId &&
+                            piForm.controls.mkFarmLandUsage.value === ''
+                          ">{{ validation.message }}</span>
+                      </div>
+                    </div>
+                  </div>
+                   -->
+                </div>
+              </nb-card-body>
+            </nb-card>
+
+            <nb-card class="mb-0">
+              <nb-card-body class="p-0">
+                <div class="col-lg-12 col-md-8 col-sm-12 form-inline form-hanging" formArrayName="hPGasRequestBlocks"
+                  *ngIf="piForm.controls.mkIsForGarden.value===true ">
+                  <div class="input-group" *ngFor="let item of hpGasRequestBlocks().controls; let cIndex = index">
+
+                    <div [formGroupName]="cIndex" class="col-lg-4 col-md-4 col-sm-6 form-inline"  *ngIf="piForm.controls.mkIsForGarden.value===true ">
+                      <label> نام بلوک {{cIndex+1}} </label>
+                      <input formControlName="name" fullWidth id="ps" nbInput />
+
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.name
+                        ">
+                        <span class="text-danger" *ngIf="
+                        item.get('name')
+                        .hasError(validation.type) &&
+                      piForm.get('mkDoHave').value &&
+                      (item.get('name').dirty ||
+                      item.get('name').touched ||
+                        isSubmitted)
+                    ">
+                          {{ validation.message }}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div [formGroupName]="cIndex" class="col-lg-2 col-md-2 col-sm-4 form-inline">
+                      <label> تعداد طبقات بلوک {{cIndex+1}} </label>
+                      <input formControlName="floorCount" fullWidth id="ps" nbInput />
+
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.floorCount
+                        ">
+                        <span class="text-danger" *ngIf="
+                        item.get('floorCount')
+                           .hasError(validation.type) &&
+                           piForm.get('mkDoHave').value &&
+                           (item.get('floorCount').dirty ||
+                           item.get('floorCount').touched ||
+                             isSubmitted)
+                         ">
+                          {{ validation.message }}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div [formGroupName]="cIndex" class="col-lg-2 col-md-2 col-sm-4 form-inline">
+                      <label> تعداد واحد بلوک {{cIndex+1}} </label>
+                      <input formControlName="unitCount" fullWidth id="ps" nbInput />
+
+                      <div *ngFor="
+                          let validation of INPUT_VALIDATION_MESSAGES.unitCount
+                        ">
+                        <span class="text-danger" *ngIf="
+                        item.get('unitCount')
+                           .hasError(validation.type) &&
+                           piForm.get('mkDoHave').value &&
+                           (item.get('unitCount').dirty ||
+                           item.get('unitCount').touched ||
+                             isSubmitted)
+                         ">
+                          {{ validation.message }}
+                        </span>
+                      </div>
+                    </div>
+
+
+
+                  </div>
+                </div>
+              </nb-card-body>
+            </nb-card>
+            <nb-card>
+              <nb-card-header>اطلاعات آدرس</nb-card-header>
+              <nb-card-body>
+                <div class="input-group form-inline">
+                  <div class="row mb-3">
+                    <div class="input-group col-md-4">
+                      <label for="city" style="margin-left: 0.45rem">
+                        <span class="text-danger font-weight-bold ml-1">*</span>
+                        شهرستان
+                      </label>
+                      <nb-select #citySelect (selectedChange)="getTown(citySelect.selected)" formControlName="mkCity"
+                        id="city" fullWidth placeholder="انتخاب شهرستان">
+                        <nb-option class="op" *ngFor="let city of cities" [value]="city.id">
+                          {{ city.title }}
+                        </nb-option>
+                      </nb-select>
+
+                      <div>
+                        <div *ngFor="
+                            let validation of INPUT_VALIDATION_MESSAGES.baseCityId
+                          ">
+                          <span class="text-danger" *ngIf="
+                              piForm.controls.mkCity.value === '' && isSubmitted
+                            ">{{ validation.message }}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div *ngIf="towns" id="cityvillage" class="input-group col-md-6">
+                      <label for="village" style="margin-left: 0.45rem">
+                        <span class="text-danger font-weight-bold ml-2">*</span>
+
+                        شهر/روستا</label>
+                      <nb-select #townSelect placeholder="انتخاب شهر - روستا" fullWidth id="village"
+                        formControlName="mkVillage" (selectedChange)="onTownChange(townSelect.selected)">
+                        <nb-option *ngFor="let tw of towns" [value]="tw.id">
+                          {{ tw.name }}
+                        </nb-option>
+                      </nb-select>
+                      <div *ngIf="isSubmitted">
+                        <div *ngFor="
+                            let validation of INPUT_VALIDATION_MESSAGES.baseTownId
+                          ">
+                          <span class="text-danger" *ngIf="
+                              piForm.controls.mkVillage.value === '' &&
+                              isSubmitted
+                            ">{{ validation.message }}</span>
+                        </div>
+                      </div>
+                    </div> 
+
+                    <!-- <div class="input-group col-md-4" *ngIf="towns && piForm.controls.mkVillage.value !== ''">
+                       <label for="village" style="margin-left: 0.45rem">
+                        <span class="text-danger font-weight-bold ml-1">*</span>
+
+                        شهری/روستایی</label>
+                      <nb-radio-group #rdbUrban_Rural class="form-inline radio-x-inline" formControlName="urban_Rural"
+                        id="urban_Rural" name="urban_Rural" style="margin-top: 1.61rem">
+                        <nb-radio style="width: 100px !important" value="1">شهری</nb-radio>
+                        <nb-radio style="width: 100px !important" value="2">روستایی</nb-radio>
+                      </nb-radio-group>
+
+
+
+                      <div *ngIf="isSubmitted">
+                        <div *ngFor="
+                            let validation of INPUT_VALIDATION_MESSAGES.urban_Rural
+                          ">
+                          <span class="text-danger" *ngIf="
+                              piForm.controls.urban_Rural.value === '' &&
+                              isSubmitted
+                            ">{{ validation.message }}</span>
+                        </div>
+                      </div>
+                    </div>
+                     -->
+                  </div>
+
+                  <!-- <div class="input-group col-md-6" *ngIf="
+                   hasRenewerCode
+                    ">
+                    <label for="kn" class="ml-0">
+                      <span class="text-danger font-weight-bold ml-1">*</span>
+                      کد نوسازی ، ساختار عددی:1-2-3-4-5-6-7
+                    </label>
+                    <input #renewerCode formControlName="mkRenewerCode" fullWidth id="kn" nbInput />
+                    <div *ngFor="
+                        let validation of INPUT_VALIDATION_MESSAGES.instaurationCode
+                      ">
+
+                      <span class="text-danger" *ngIf="
+                          hasRenewerCode&&
+                          piForm.get('mkRenewerCode').hasError(validation.type)
+                        ">{{ validation.message }}
+                      </span>
+
+                      
+                    </div>
+                  </div> -->
+
+
+                  <div class="input-group col-lg-12 col-md-12 col-sm-12">
+                    <label for="fullPath">
+                      <span class="text-danger font-weight-bold ml-1">*</span>
+
+                      آدرس دقیق و کامل</label>
+                    <textarea formControlName="mkFullPath" fullWidth id="fullPath" nbInput
+                      placeholder="آدرس دقیق و کامل" rows="5"></textarea>
+
+                    <div *ngFor="
+                        let validation of INPUT_VALIDATION_MESSAGES.address
+                      ">
+                      <span class="text-danger" *ngIf="
+                          piForm.get('mkFullPath').hasError(validation.type) &&
+                          (piForm.get('mkFullPath').dirty ||
+                            piForm.get('mkFullPath').touched ||
+                            isSubmitted)
+                        ">{{ validation.message }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <nb-card>
+                  <nb-card-header>انتخاب موقعیت جغرافیایی</nb-card-header>
+                  <nb-card-body>
+                    <div *ngIf="
+                        neighborhoods && piForm.get('urban_Rural').value == '1'
+                      " style="
+                        position: relative;
+                        top: -2px;
+                        z-index: 1000;
+                        width: 100px;
+                      ">
+                      <nb-select style="box-shadow: 0 0 3px" #neighborhoodSelect placeholder="انتخاب محله" fullWidth
+                        id="neighborhood" formControlName="mkNeighborhood" (selectedChange)="
+                          onNeighborhoodChange(neighborhoodSelect.selected)
+                        ">
+                        <nb-option *ngFor="let neighborhood of neighborhoods" [value]="neighborhood.id">
+                          {{ neighborhood.name }}
+                        </nb-option>
+                      </nb-select>
+                    </div>
+
+
+                    <div id="map">
+                      <input type="hidden" formControlName="hasMarker" />
+                    </div>
+
+                    <div class="mt-1" *ngFor="
+                        let validation of INPUT_VALIDATION_MESSAGES.hasMarker
+                      ">
+                      <span class="text-danger" *ngIf="piForm.get('hasMarker').value === false">{{ validation.message
+                        }}</span>
+                    </div>
+
+                  </nb-card-body>
+                </nb-card>
+              </nb-card-body>
+
+              <div class="row mb-3" *ngIf="
+                  isEdit &&
+                  (userRole.includes('Admin') ||
+                    userRole.includes('Engineer') ||
+                    userRole.includes('GasRuleCheckerGroupOne') ||
+                    userRole.includes('GasRuleCheckerGroupTwo') ||
+                    userRole.includes('GasRuleCheckerGroupThree') ||
+                    userRole.includes('HPManager') ||
+                    userRole.includes('GasEmployee') ||
+                    userRole.includes('AnalyzeEmployee') ||
+                    userRole.includes('GasRuleEmployeeHP') ||
+                    userRole.includes('GasEmployeeHP'))
+                ">
+                <div class="col-lg-1 col-md-1 col-sm-1"></div>
+
+                <div class="col-lg-4 col-md-4 col-sm-4 form-inline">
+                  <label for="long">
+                    <span class="text-danger font-weight-bold ml-1">*</span>
+
+                    طول جغرافیایی :</label>
+
+                  <input fullWidth #lng id="long" formControlName="mkGeoLng" nbInput placeholder="طول جغرافیایی" />
+
+
+                  <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.long">
+                    <span class="text-danger" *ngIf="
+                        piForm.get('mkGeoLng').hasError(validation.type) &&
+                        (piForm.get('mkGeoLng').dirty ||
+                          piForm.get('mkGeoLng').touched)
+                      ">{{ validation.message }}</span>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-4 form-inline">
+                  <label for="lat">
+                    <span class="text-danger font-weight-bold ml-1">*</span>
+
+                    عرض جغرافیایی :</label>
+
+
+                  <input fullWidth #lat id="lat" formControlName="mkGeoLat" nbInput placeholder="عرض جغرافیایی" />
+
+                  <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.lat">
+                    <span class="text-danger" *ngIf="
+                        piForm.get('mkGeoLat').hasError(validation.type) &&
+                        (piForm.get('mkGeoLat').dirty ||
+                          piForm.get('mkGeoLat').touched)
+                      ">{{ validation.message }}</span>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3">
+                  <a class="btn" nbButton hero status="primary" style="
+                      margin-top: 35px !important;
+                      margin-right: 0 !important;
+                    " (click)="onChangeLocation()">
+                    ویرایش مختصات جغرافیایی
+                  </a>
+                </div>
+              </div>
+
+              <div class="row mb-3" *ngIf="
+                  !userRole.includes('Admin') &&
+                  !userRole.includes('GasRuleCheckerGroupOne') &&
+                  !userRole.includes('Engineer') &&
+                  !userRole.includes('GasRuleCheckerGroupTwo') &&
+                  !userRole.includes('GasRuleCheckerGroupThree') &&
+                  !userRole.includes('HPManager') &&
+                  !userRole.includes('GasEmployee') &&
+                  !userRole.includes('AnalyzeEmployee') &&
+                  !userRole.includes('GasRuleEmployeeHP') &&
+                  !userRole.includes('GasEmployeeHP')
+                ">
+                <div class="col-lg-1 col-md-1 col-sm-1 form-inline"></div>
+                <div class="col-lg-3 col-md-4 col-sm-4 form-inline">
+                  <label for="long">
+                    <span class="text-danger font-weight-bold ml-1">*</span>
+
+                    طول جغرافیایی :</label>
+
+
+                  <input fullWidth #lng id="long" formControlName="mkGeoLng" nbInput placeholder="طول جغرافیایی" />
+
+
+
+                  <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.long">
+                    <span class="text-danger" *ngIf="
+                        piForm.get('mkGeoLng').hasError(validation.type) &&
+                        (piForm.get('mkGeoLng').dirty ||
+                          piForm.get('mkGeoLng').touched)
+                      ">{{ validation.message }}</span>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-4 form-inline">
+                  <label for="lat">
+                    <span class="text-danger font-weight-bold ml-1">*</span>
+
+                    عرض جغرافیایی :</label>
+
+
+                  <input fullWidth #lat id="lat" formControlName="mkGeoLat" nbInput placeholder="عرض جغرافیایی" />
+
+
+                  <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.lat">
+                    <span class="text-danger" *ngIf="
+                        piForm.get('mkGeoLat').hasError(validation.type) &&
+                        (piForm.get('mkGeoLat').dirty ||
+                          piForm.get('mkGeoLat').touched)
+                      ">{{ validation.message }}</span>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-3 form-inline">
+                  <a class="btn" nbButton hero status="primary" style="
+                      margin-top: 20px !important;
+                      margin-right: 0 !important;
+                    " (click)="onChangeLocation()">
+                    ثبت مختصات جغرافیایی
+                  </a>
+                  <button nbTooltip="بازسازی" nbTooltipPlacement="top" nbButton hero status="primary" type="button"
+                    (click)="resetMarker()" style="height: 39%;margin-top: 20px !important;">
+                    <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="refresh-outline">
+                    </nb-icon>
+                  </button>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12 form-inline">
+
+                </div>
+
+
+
+
+
+              </div>
+
+              <div class="row mb-3" *ngIf="
+                                !userRole.includes('GasRuleCheckerGroupOne') &&
+                                !userRole.includes('Engineer') &&
+                                !userRole.includes('GasRuleCheckerGroupTwo') &&
+                                !userRole.includes('GasRuleCheckerGroupThree') &&
+                                !userRole.includes('HPManager') &&
+                                !userRole.includes('GasEmployee') &&
+                                !userRole.includes('AnalyzeEmployee') &&
+                                !userRole.includes('GasRuleEmployeeHP') &&
+                                !userRole.includes('GasEmployeeHP')
+                                "
+                                >
+                <div class="col-lg-1 col-md-1 col-sm-1 form-inline"></div>
+                <div class="col-lg-3 col-md-4 col-sm-4 form-inline">
+                  <label for="x">
+                    <span class="text-danger font-weight-bold ml-1">*</span>
+
+                    X :</label>
+
+
+                  <input fullWidth #x id="x" formControlName="mkGeoX" nbInput placeholder="X" />
+
+                  <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.x">
+                    <span class="text-danger" *ngIf="
+                        piForm.get('mkGeoX').hasError(validation.type) &&
+                        (piForm.get('mkGeoX').dirty ||
+                          piForm.get('mkGeoX').touched)
+                      ">{{ validation.message }}</span>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-4 form-inline">
+                  <label for="y">
+                    <span class="text-danger font-weight-bold ml-1">*</span>
+
+                    Y :</label>
+
+
+                  <input fullWidth #y id="y" formControlName="mkGeoY" nbInput placeholder="Y" />
+
+                  <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.y">
+                    <span class="text-danger" *ngIf="
+                        piForm.get('mkGeoY').hasError(validation.type) &&
+                        (piForm.get('mkGeoY').dirty ||
+                          piForm.get('mkGeoY').touched)
+                      ">{{ validation.message }}</span>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-4 form-inline">
+                  <label for="zone">
+                    <span class="text-danger font-weight-bold ml-1">*</span>
+
+                    Zone :</label>
+
+
+                  <input fullWidth #zone id="zone" formControlName="mkGeoZone" nbInput placeholder="zone" />
+
+                  <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.zone">
+                    <span class="text-danger" *ngIf="
+                          piForm.get('mkGeoZone').hasError(validation.type) &&
+                          (piForm.get('mkGeoZone').dirty ||
+                            piForm.get('mkGeoZone').touched)
+                        ">{{ validation.message }}</span>
+                  </div>
+                </div>
+
+              </div>
+
+              <nb-card *ngIf="isEdit">
+                <nb-card-body>
+                  <div class="col-sm-12 col-md-12 col-lg-12">
+                    <label>مستندات آپلود شده:</label>
+                    <div class="mt-3">
+
+                      <DocumentsUploaded [id]="id" [type]="'GasRequest'"></DocumentsUploaded>
+                    </div>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+
+              <nb-card *ngIf="isEdit">
+                <nb-card-body>
+                  <div class="col-sm-12 col-md-12 col-lg-12">
+                    <label>مستندات قبلی:</label>
+                    <div class="mt-3">
+
+                      <PreDocumentsUploaded [id]="id" [type]="'GasRequest'"></PreDocumentsUploaded>
+                    </div>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+
+
+            </nb-card>
+            <nb-card *ngIf="
+                isEdit &&
+                className !== '' &&
+                (userRole.includes('Admin') ||
+                  userRole.includes('Engineer') ||
+                  userRole.includes('GasRuleCheckerGroupOne') ||
+                  userRole.includes('GasRuleCheckerGroupTwo') ||
+                  userRole.includes('GasRuleCheckerGroupThree') ||
+                  userRole.includes('HPManager') ||
+                  userRole.includes('GasRuleEmployeeHP') ||
+                  userRole.includes('GasEmployeeHP') ||
+                  userRole.includes('GasEmployee') ||
+                  userRole.includes('AnalyzeEmployee')) &&
+                className === 'ControlProjectInfo'
+              ">
+              <nb-card-body style="background-color: #e2e4ea; padding-top: 10px">
+                <nb-card>
+                  <nb-card-body>
+                    <div class="col-sm-6">
+                      <strong>مدارک پرونده مورد تایید میباشد؟</strong>
+                      <nb-radio-group class="form-inline mt-2" formControlName="gasRequestControlDocumentResult"
+                        id="colonyfond" name="colonyfond" style="margin-top: 1.61rem">
+                        <nb-radio value="true">تایید</nb-radio>
+                        <nb-radio value="false">عدم تایید</nb-radio>
+                      </nb-radio-group>
+                    </div>
+                  </nb-card-body>
+                </nb-card>
+                <nb-card>
+                  <nb-card-body>
+                    <textarea formControlName="gasRequestControlDocumentDesc" fullWidth id="fullPath" nbInput
+                      placeholder="توضیحات" rows="5"></textarea>
+                  </nb-card-body>
+                </nb-card>
+              </nb-card-body>
+            </nb-card>
+            <!--  ||
+                  
+            piForm.controls.mkType.value === '' ||
+           
+
+            (piForm.controls.mkIsColony.value === true &&
+              piForm.controls.mkFoundationEachBuilding.value === '') 
+              ||
+            (piForm.controls.mkType.value === establishBuildingId &&
+              (piForm.controls.buildingLocation.value === null ||
+                (piForm.controls.buildingLocation.value ===
+                  'یک بر کوچه' &&
+                  piForm.controls.buildingWidth.value === null))) -->
+            <div *ngIf="!isEdit" class="btn-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+              <button class="btn mr-3" nbButton status="success" style="width: 100%" type="submit" [nbSpinner]="loading"
+                nbSpinnerStatus="info" nbSpinnerSize="large" [disabled]="
+                  piForm.controls.hasMarker.value === false ||
+                  loading ||
+                  (piForm.controls.mkIsColony.value === true &&
+                    (piForm.controls.mkFoundationEachBuilding.value === ''||piForm.controls.mkHasCentralPowerHouse.value === ''||piForm.controls.establishmentLicense.value === '')) ||
+                  !piForm.valid 
+                ">
+                ثبت
+              </button>
+            </div>
+
+            <div *ngIf="
+                isEdit &&
+                (userRole.includes('Admin') ||
+                  userRole.includes('Engineer') ||
+                  userRole.includes('GasRuleCheckerGroupOne') ||
+                  userRole.includes('GasRuleCheckerGroupTwo') ||
+                  userRole.includes('GasRuleCheckerGroupThree') ||
+                  userRole.includes('HPManager') ||
+                  userRole.includes('GasRuleEmployeeHP') ||
+                  userRole.includes('GasEmployeeHP') ||
+                  userRole.includes('GasEmployee') ||
+                  userRole.includes('AnalyzeEmployee'))
+              " class="btn-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+              <button class="btn mr-3" nbButton status="success" style="width: 100%" type="submit" [nbSpinner]="loading"
+                nbSpinnerStatus="info" nbSpinnerSize="large" [disabled]="loading || !piForm.valid">
+                ویرایش
+              </button>
+            </div>
+
+
+            <div *ngIf="
+                isEdit &&
+                !userRole.includes('Admin') &&
+                !userRole.includes('Engineer') &&
+                !userRole.includes('GasRuleCheckerGroupOne') &&
+                !userRole.includes('GasRuleCheckerGroupTwo') &&
+                !userRole.includes('GasRuleCheckerGroupThree') &&
+                !userRole.includes('HPManager') &&
+                !userRole.includes('GasRuleEmployeeHP') &&
+                !userRole.includes('GasEmployeeHP') &&
+                !userRole.includes('GasEmployee') &&
+                !userRole.includes('AnalyzeEmployee')
+              " class="btn-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+              <button class="btn mr-3" nbButton status="success" style="width: 100%" type="submit" [nbSpinner]="loading"
+                nbSpinnerStatus="info" nbSpinnerSize="large" [disabled]="loading || !piForm.valid">
+                ویرایش
+              </button>
+            </div>
+
+
+            <div class="btn-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+              <button [disabled]="loading" [routerLink]="['/pages/forms/HPGasReqList']" class="btn ml-3" nbButton
+                type="button" status="info" style="width: 100%">
+                بازگشت به لیست درخواست ها
+              </button>
+            </div>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </form>
+  </div>
+</div>
+
+<ng-template #dialogPoint let-data let-ref="dialogPointRef">
+  <nb-card status="primary" style="position: relative; top: -150px; right: -150px">
+    <nb-card-header>
+      <h6 style="color: linen">ثبت/ویرایش موقعیت جغرافیایی</h6>
+    </nb-card-header>
+    <nb-card-body>
+      <div class="form-group mb-1">
+        <p class="mt-2 mb-2">آیا از محل نشانه گذاری شده جدید اطمینان دارید؟</p>
+      </div>
+    </nb-card-body>
+    <nb-card-footer>
+      <div class="row">
+        <div class="col-sm-6 pl-1">
+          <button [nbSpinner]="pointBtnLoading" [disabled]="pointBtnLoading" nbSpinnerStatus="info"
+            nbSpinnerSize="large" fullWidth nbButton hero status="success" (click)="pointRegistrationConfirm(data)">
+            بلی
+          </button>
+        </div>
+        <div class="col-sm-6 pr-1">
+          <button [disabled]="pointBtnLoading" fullWidth nbButton hero status="danger" (click)="removePoint()">
+            خیر
+          </button>
+        </div>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

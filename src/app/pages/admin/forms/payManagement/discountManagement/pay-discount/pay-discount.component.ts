@@ -247,28 +247,6 @@ export class PayDiscountComponent implements OnInit {
     // const requestUnits: Array<number> = this.payForm.get('requestUnits').value;
     // this.sendFormGroup : FormGroup;
 
-    //خودم کامنت کردم
-    // const formConfig = infoToSend.map(item => {
-    //   if (item.requestConsults || item.requestUnits) {
-    //     return {
-    //       ...item,
-    //       requestConsults: this.fb.array(item.requestConsults),
-    //       requestUnits: this.fb.array(item.requestUnits)
-    //     };
-    //   }
-    //   return item;
-    // });
-    // var requestunitsTmp = this.payForm.controls.requestUnits.value;
-    // var requestConsultstmp = this.payForm.controls.requestConsults.value;
-    // var payTypestmp = this.payForm.controls.payTypes.value;
-
-    // if (requestunitsTmp.length == 0 || requestunitsTmp == undefined)
-    //   requestunitsTmp = -1;
-
-    // if (requestConsultstmp.length == 0 || requestunitsTmp == undefined)
-    //   requestConsultstmp = -1;
-    // if (payTypestmp.length == 0 || payTypestmp == undefined)
-    //   payTypestmp = -1;
 
     this.sendFormGroup = this.fb.group({
       gasReqId: this.gasReqId,

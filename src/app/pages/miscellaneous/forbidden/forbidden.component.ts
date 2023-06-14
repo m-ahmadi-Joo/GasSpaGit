@@ -28,6 +28,7 @@ export class ForbiddenComponent {
       this.currentRole == "Engineer" ||
       this.currentRole == "Owner" ||
       this.currentRole == "GasEmployee" ||
+      this.currentRole == "AnalyzeEmployee" ||
       this.currentRole == "GasRuleEngineer" ||
       this.currentRole == "GasRuleCheckerGroupOne" ||
       this.currentRole == "GasRuleCheckerGroupTwo" ||
@@ -37,6 +38,9 @@ export class ForbiddenComponent {
     }
     else if (this.currentRole == "Admin") {
       this.router.navigate(["/pages/admin/AdminPanel"])
+    }
+    else if (this.currentRole == "GasEmployeeHP") {
+      this.router.navigate(["/pages/forms/HPGasReqList"])
     }
     else {
       this.router.navigate(["/pages/forms"]);

@@ -57,7 +57,8 @@ export class AuditRequestFormComponent implements OnInit {
   listPath;
 
   ngOnInit() {
-    if(this.currentRole !== "Admin" && this.currentRole !== "Executor") {
+    //جهت تست فشار قوی &&this.currentRole!="GasEmployeeHP" اضافه گردید
+    if(this.currentRole !== "Admin" && this.currentRole !== "Executor"&&this.currentRole!="GasEmployeeHP") {
       this.router.navigate(["/pages/403"]);
     }
 

@@ -532,13 +532,37 @@
                       userOwnerDto.get('agentName').hasError(validation.type) &&
                       (userOwnerDto.get('agentName').dirty ||
                         userOwnerDto.get('agentName').touched)
-                    "
-                    class="text-danger"
-                  >
+                    " class="text-danger">
                     {{ validation.message }}
                   </span>
                 </div>
               </div>
+
+              <div class="col-lg-3 col-md-3 col-sm-3 input-item">
+                <label class="mt-4" for="nationalID">
+                   کد ملی :</label>
+                <input [readonly]="readOnlyNationalId" [status]="
+                    userOwnerDto.get('nationalID').touched ||
+                    userOwnerDto.get('nationalID').dirty
+                      ? userOwnerDto.get('nationalID').invalid
+                        ? 'danger'
+                        : 'success'
+                      : ''
+                  " formControlName="nationalID" fullWidth id="nationalID" nbInput  (blur)="nationalIDIsExist()"
+                   />
+                <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.nationalID">
+                  <span *ngIf="
+                      userOwnerDto.get('nationalID').hasError(validation.type) &&
+                      (userOwnerDto.get('nationalID').dirty ||
+                        userOwnerDto.get('nationalID').touched)
+                    " class="text-danger">
+                    {{ validation.message }}
+                  </span>
+                </div>
+              </div>
+
+            
+
             </div>
           </div>
 
@@ -548,23 +572,14 @@
 
               آدرس :
             </label>
-            <textarea
-              formControlName="address"
-              fullWidth
-              id="address"
-              nbInput
-              rows="4"
-            ></textarea>
+            <textarea formControlName="address" fullWidth id="address" nbInput rows="4"></textarea>
 
             <div *ngFor="let validation of INPUT_VALIDATION_MESSAGES.address">
-              <span
-                *ngIf="
+              <span *ngIf="
                   userOwnerDto.get('address').hasError(validation.type) &&
                   (userOwnerDto.get('address').dirty ||
                     userOwnerDto.get('address').touched)
-                "
-                class="text-danger"
-              >
+                " class="text-danger">
                 {{ validation.message }}
               </span>
             </div>
@@ -583,12 +598,7 @@
           </div> -->
 
           <div class="btn-group col-lg-12 col-md-12 col-sm-12 mt-2">
-            <button
-              nbButton
-              [nbSpinner]="loading"
-              nbSpinnerStatus="info"
-              nbSpinnerSize="large"
-              [disabled]="
+            <button nbButton [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large" [disabled]="
                 loading ||
                 InvalidYear ||
                 InvalidMonth ||
@@ -596,12 +606,7 @@
                 userOwnerDto.invalid ||
                 (userOwnerDto.get('ownerKind').value === '1' &&
                   userOwnerDto.get('economicCode').value === '')
-              "
-              status="primary"
-              class="owner-btn btn"
-              style="width: 100%"
-              type="submit"
-            >
+              " status="primary" class="owner-btn btn" style="width: 100%" type="submit">
               ویرایش اطلاعات
             </button>
           </div>
@@ -610,5 +615,31 @@
     </nb-card>
   </div>
 </div>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card status="danger" accent="danger">
+    <nb-card-header>
+      <h4 style="color: linen">هشدار</h4>
+    </nb-card-header>
+    <nb-card-body>
+      <h6>کدملی وارد شده در سیستم وجود دارد آیا می خواهید ادامه دهید؟</h6>
+    </nb-card-body>
+    <nb-card-footer>
+      <div class="row">
+        <div class="col-sm-6">
+          <button [disabled]="loadingDelete" [nbSpinner]="loadingDelete" nbSpinnerStatus="info" nbSpinnerSize="large"
+            fullWidth nbButton hero status="danger" (click)="setConfirmContinue()">
+            بلی
+          </button>
+        </div>
+        <div class="col-sm-6">
+          <button [disabled]="loadingDelete" fullWidth nbButton hero status="primary" (click)="rejectContiue()">
+            انصراف
+          </button>
+        </div>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
 
 <!-- Latest -->

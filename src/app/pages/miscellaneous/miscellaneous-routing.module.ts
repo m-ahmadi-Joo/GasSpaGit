@@ -4,6 +4,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { MiscellaneousComponent } from "./miscellaneous.component";
 import { NotFoundComponent } from "./not-found/not-found.component";
 import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { ForbiddenHPComponent } from './forbiddenHP/forbiddenHP.component';
 
 const routes: Routes = [
   {
@@ -28,4 +29,4 @@ const routes: Routes = [
 })
 export class MiscellaneousRoutingModule {}
 
-export const routedComponents = [MiscellaneousComponent, NotFoundComponent, ForbiddenComponent];
+export const routedComponents = [MiscellaneousComponent, NotFoundComponent, ForbiddenComponent,ForbiddenHPComponent];

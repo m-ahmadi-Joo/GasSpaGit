@@ -16,6 +16,11 @@ export const MENU_ITEMS_GASEMPLOYEE: NbMenuItem[] = [
         icon: 'home-outline'
       },
       {
+        title: "املاک قدیمی",
+        link: "/pages/forms/OldGasReqList",
+        icon: 'home-outline'
+      },
+      {
         title: "جوشکاران",
         link: "/pages/forms/WeldersList",
         icon: 'people-outline'
@@ -45,38 +50,43 @@ export const MENU_ITEMS_GASEMPLOYEE: NbMenuItem[] = [
         link: "/pages/forms/EngineerList",
         icon: 'people-outline'
       },
+          {
+            title: "نقشه های اسکن شده",
+            link: "/pages/forms/ScanDocumentList",
+            icon: 'map-outline'
+          },
     ],
   },
-  {
-    title: "کارتابل مدیریت",
-    children: [
-      {
-        title: "مدیریت کاربران",
-        icon: "people-outline",
-        children: [
-          {
-            title: "کاربران",
-            link: "/pages/admin/mgn/users",
-            icon: "person-outline"
-          },
-        ]
-      },
-      {
-        title: "مدیریت عملیات سیستم",
-        link: "/pages/admin/ScheduleUpdate",
-        icon: "briefcase-outline"
-      },
-      {
-      title: "روابط عمومی",
-        icon: "inbox-outline",
-        children: [
-          {
-            title: "اخبار و اطلاعیه",
-            link: "/pages/admin/NewsList",
-            icon: "book-open-outline",
-          },
-        ]
-      },
-    ]
-  },
+  // {
+  //   title: "کارتابل مدیریت",
+  //   children: [
+  //     {
+  //       title: "مدیریت کاربران",
+  //       icon: "people-outline",
+  //       children: [
+  //         {
+  //           title: "کاربران",
+  //           link: "/pages/admin/mgn/users",
+  //           icon: "person-outline"
+  //         },
+  //       ]
+  //     },
+  //     {
+  //       title: "مدیریت عملیات سیستم",
+  //       link: "/pages/admin/ScheduleUpdate",
+  //       icon: "briefcase-outline"
+  //     },
+  //     {
+  //     title: "روابط عمومی",
+  //       icon: "inbox-outline",
+  //       children: [
+  //         {
+  //           title: "اخبار و اطلاعیه",
+  //           link: "/pages/admin/NewsList",
+  //           icon: "book-open-outline",
+  //         },
+  //       ]
+  //     },
+  //   ]
+  // },
 ];

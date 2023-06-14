@@ -1,0 +1,343 @@
+<style>
+  .row {
+    width: 100%;
+  }
+
+  .col-sm-4 {
+    vertical-align: top;
+  }
+
+  button {
+    padding: 0.555rem 0.225rem;
+  }
+
+  .alert p {
+    font-size: 0.879rem;
+  }
+</style>
+<style>
+  .pagination /deep/ .ngx-pagination .current {
+    background: lightseagreen;
+  }
+
+  .pagination /deep/ pagination-template {
+    width: 100% !important;
+  }
+
+  .pagination {
+    text-align: center !important;
+  }
+
+  dp-date-picker /deep/ .dp-input-container .dp-picker-input {
+    width: 220px !important;
+    border-radius: 0.25rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+    padding: 0.4375rem 1.125rem;
+    background-color: #f7f9fc;
+    border-color: #edf1f7;
+    border-style: solid;
+    border-width: 1px;
+    color: #1a2138;
+    /* -webkit-appearance: none; */
+    transition-duration: 0.15s;
+    transition-property: border, background-color, color, box-shadow;
+    transition-timing-function: ease-in;
+    font-family: IRANSansWeb;
+    overflow: visible;
+  }
+
+  dp-date-picker /deep/button.dp-calendar-nav-left::before {
+    transform: rotate(52deg) !important;
+  }
+
+  dp-date-picker /deep/button.dp-calendar-nav-right::before {
+    transform: rotate(224deg) !important;
+  }
+
+  dp-date-picker /deep/ .dp-nav-btns-container
+
+  /* dp-calendar-nav /deep/ .dp-nav-btns-container */
+    {
+    direction: rtl !important;
+  }
+
+  nb-select.pageSizeSelect /deep/ .select-button {
+    min-width: 8rem !important;
+  }
+
+  nb-select.workStatus /deep/ .select-button {
+    /* width:100%;
+          min-width: 19rem !important;
+          max-width: 22rem !important; */
+    padding: 0.3rem 1.125rem !important;
+  }
+
+  nb-accordion nb-accordion-item-body /deep/ .item-body {
+    padding: 0 !important;
+  }
+
+  /* nb-accordion nb-accordion-item-body /deep/ .map-position {
+    position: relative;
+    top: 0;
+    right: 0;
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px 0;
+  } */
+
+  .col-lg-3.col-md-3.col-sm-6.col-xs-12,
+  .col-lg-2.col-md-2.col-sm-6.col-xs-12 {
+    padding: 7px;
+  }
+
+  p {
+    text-align: justify;
+    text-justify: inter-word;
+    line-height: 1.8;
+    font-size: 1rem;
+    /* margin: 0 20px 15px 20px; */
+  }
+</style>
+<nb-card class="card-inside-tab">
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-12 mb-4">
+        <div [formGroup]="userRegister">
+          <div class="row">
+            <div class="col-sm-4">
+              <label>نام</label>
+              <input formControlName="firstName" fullWidth id="fName" nbInput type="text" />
+              <div *ngFor="let validation of INPUT_Validation_Message.firstName">
+                <span class="text-danger" *ngIf="
+                    userRegister.get('firstName').hasError(validation.type) &&
+                    (userRegister.get('firstName').dirty ||
+                      userRegister.get('firstName').touched)
+                  ">{{ validation.message }}</span>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <label>نام خانوادگی</label>
+              <input formControlName="lastName" fullWidth id="lName" nbInput type="text" />
+              <div *ngFor="let validation of INPUT_Validation_Message.lastName">
+                <span class="text-danger" *ngIf="
+                    userRegister.get('lastName').hasError(validation.type) &&
+                    (userRegister.get('lastName').dirty ||
+                      userRegister.get('lastName').touched)
+                  ">{{ validation.message }}</span>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <label>کد ملی</label>
+              <input [status]="
+                  userRegister.get('nationalID').touched ||
+                  userRegister.get('nationalID').dirty
+                    ? userRegister.get('nationalID').invalid
+                      ? 'danger'
+                      : 'success'
+                    : ''
+                " formControlName="nationalID" fullWidth id="nId" nbInput type="text" />
+
+              <div *ngFor="let validation of INPUT_Validation_Message.nationalID">
+                <span class="text-danger" *ngIf="
+                    userRegister.get('nationalID').hasError(validation.type) &&
+                    (userRegister.get('nationalID').dirty ||
+                      userRegister.get('nationalID').touched)
+                  ">
+                  {{ validation.message }}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="row d-block mt-4">
+            <div class="col-sm-4">
+              <div>
+                <label> جنسیت</label>
+                <nb-radio-group class="form-inline radio-x-inline" formControlName="gender" id="rbgGender"
+                  name="rbgGender">
+                  <nb-radio value="0">
+                    مرد
+                  </nb-radio>
+                  <nb-radio value="1">
+                    زن
+                  </nb-radio>
+                </nb-radio-group>
+                <div *ngFor="let validation of INPUT_Validation_Message.gender">
+                  <span class="text-danger" *ngIf="
+                      userRegister.get('gender').hasError(validation.type) &&
+                      (userRegister.get('gender').dirty ||
+                        userRegister.get('gender').touched)
+                    ">{{ validation.message }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <label>تلفن همراه</label>
+              <input formControlName="phoneNumber" fullWidth id="mobile" nbInput type="text"
+                placeholder="تلفن همراه به همراه صفر ابتدا" />
+              <div *ngFor="let validation of INPUT_Validation_Message.phoneNumber">
+                <span class="text-danger" *ngIf="
+                    userRegister.get('phoneNumber').hasError(validation.type) &&
+                    (userRegister.get('phoneNumber').dirty ||
+                      userRegister.get('phoneNumber').touched)
+                  ">{{ validation.message }}
+                </span>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <label>
+                نقش مرتبط
+              </label>
+              <nb-select multiple #selectedRole formControlName="roleSelect" id="roleSelect" fullWidth
+                placeholder="--انتخاب کنید--">
+                <nb-option *ngFor="let role of roleList" [value]="role.name">
+                  {{ role.persianName }}
+                </nb-option>
+              </nb-select>
+            </div>
+          </div>
+          <div class="row d-block" *ngIf="showTowns">
+            <div class="col-sm-4 float-left">
+              <label>
+                شهر محل کار
+              </label>
+              <nb-select formControlName="townSelect" multiple fullWidth #selectedTown placeholder="--انتخاب کنید--">
+                <nb-option *ngFor="let town of towns" [value]="town.townId">
+                  {{ town.townName }}
+                </nb-option>
+              </nb-select>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="row d-block">
+            <div class="col-sm-8">
+              <div class="alert alert-info p-2 mt-2">
+                <p class="text-justify mb-0" style="line-height: 1.8">
+                  برای <strong>ثبت گروه جدید</strong> از این قسمت می تواند کاربر مورد نظرتان را پیدا کرده
+                  <strong>سپس با انتخاب تیک در قسمت آخرین سطر از جدول کاربر مورد نظرتان را به گروه اضافه کنید</strong>،
+                  <strong>و بعد از انتخاب کاربر یا کاربران می توانید نام گروه را وارد کرده </strong>،
+                  <strong>بر روی دکمه ثبت کلیک کنید </strong>و گروه جدیدی به گروه کاربران اخبار افزوده می شود
+                </p>
+              </div>
+            </div>
+            <div class="col-sm-7 pl-0" *ngIf="showTowns">
+
+            </div>
+            <div class="col-sm-5">
+              <div class="w-100 text-left pl-2">
+                <a class="p-2 btn half-width-btn mx-2" (click)="onSerach()" nbButton status="info" [nbSpinner]="loading"
+                  nbSpinnerStatus="info" nbSpinnerSize="large">
+                  <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button ml-1" icon="search-outline">
+                  </nb-icon>
+                  جستجو
+                </a>
+
+                <a [disabled]="loading" class="p-2 btn" nbButton status="primary" (click)="resetForms()">
+                  <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button ml-1" icon="refresh-outline">
+                  </nb-icon>
+                  بازسازی
+                </a>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12 mt-4">
+        <form class="" [formGroup]="userGroupRegister">
+          <span class="text-danger font-weight-bold ml-1">*</span>
+          <label class="">نام گروه :</label>
+          <input type="text" id="groupName" placeholder="نام گروه خود را وارد کنید" formControlName="groupName"
+            nbInput />
+          <div *ngFor="let validation of INPUT_Validation_Message.groupName">
+            <span class="text-danger" *ngIf="
+            userGroupRegister.get('groupName').hasError(validation.type) &&
+                  (userGroupRegister.get('groupName').dirty ||
+                  userGroupRegister.get('groupName').touched)
+                ">{{ validation.message }}</span>
+          </div>
+        </form>
+        <div class="table-wrapper w-100">
+          <ng2-smart-table [settings]="settings" [source]="source | paginate: pagingConfig"  id="table"
+           (userRowSelect)="onUserRowSelect($event)" style="direction:ltr"></ng2-smart-table>
+        </div>
+
+        <span *ngFor="let item of collection | paginate: pagingConfig"></span>
+
+        <nb-card>
+          <nb-card-body>
+            <div class="row">
+              <div class="input-group">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 form-inline pull-left">
+                  <span for="pageSize" style="margin-left: 0.45rem;">
+                    تعداد رکورد:
+                  </span>
+                  <nb-select [selected]="pagination.itemsPerPage"
+                    style="margin: 0;display: inline-block;width: 100px !important;" status="info" #pageSizeSelect
+                    class="pageSizeSelect" (selectedChange)="changePageSize(pageSizeSelect.selected)" id="pageSize"
+                    placeholder="انتخاب ...">
+                    <nb-option *ngFor="let p of pageSizes" [value]="p.id">
+                      {{ p.display }}
+                    </nb-option>
+                  </nb-select>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                  <div class="d-flex justify-content-center">
+                    <pagination-controls class="pagination" (pageChange)="pageChanged($event)" previousLabel=""
+                      nextLabel="">
+                    </pagination-controls>
+                  </div>
+                </div>
+
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6 form-inline pull-right">
+                  <span for="pageNumber" style="margin-left: 0.45rem;">
+                    شماره صفحه:
+                  </span>
+                  <input [value]="pagination.currentPage" style="width:30%" #pageNumber size="tiny" id="pageNumber"
+                    nbInput type="number" min="1" max="pagination.totalPages"
+                    (keydown.enter)="pageChanged(pageNumber.value)" />
+                </div>
+              </div>
+            </div>
+
+
+          </nb-card-body>
+        </nb-card>
+
+      
+        <nb-card [size]="'medium'" *ngIf="selectedRows.length > 0">
+          <nb-card-header>لیست انتخابی کاربران</nb-card-header>
+          <nb-list>
+            <nb-list-item *ngFor="let selected of selectedRows">
+              {{ selected.firstName }} {{ selected.lastName }}
+
+            </nb-list-item>
+          </nb-list>
+        </nb-card>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+<nb-card >
+  <nb-card-body>
+    <form (ngSubmit)="submitGroup()" [formGroup]="userGroupRegister">
+      <div class="btn-group col-lg-6 col-md-6 col-sm-6">
+        <button class="btn appearance-filled btn-disabled size-medium status-success shape-rectangle transitions"
+          nbbutton="" nbspinnersize="large" nbspinnerstatus="info"
+          [disabled]="loading || !userGroupRegister.valid" status="success" style="width: 100%;"
+           tabindex="-1"> ثبت 
+          </button>
+      </div>
+      <div class="btn-group col-lg-6 col-md-6 col-sm-6">
+        <button
+          class="btn appearance-filled size-medium status-danger shape-rectangle transitions" nbbutton=""
+          status="danger" style="width: 100%;" type="button"  tabindex="0" (click)="cancle()"> انصراف 
+        </button>
+      </div>
+    </form>
+     
+  </nb-card-body>
+</nb-card>

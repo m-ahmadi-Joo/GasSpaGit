@@ -28,8 +28,7 @@
         <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
           <label>انتخاب شهر محل کار:</label>
           <!-- style="box-shadow: 0 0 3px" -->
-          <nb-select multiple  placeholder="انتخاب شهر" fullWidth
-            id="neighborhood" formControlName="workTown">
+          <nb-select multiple placeholder="انتخاب شهر" fullWidth id="neighborhood" formControlName="workTown">
             <nb-option *ngFor="let town of lstTowns" [value]="town.townId">
               {{ town.townName }}
             </nb-option>
@@ -103,7 +102,7 @@
     <span class="mr-1" style="color: #3366ff;">مجریان</span>
 
     <div class="pull-left">
-      <button class="ml-1" nbButton status="primary" hero *appHasRole="['GasEmployee','Admin']"
+      <button class="ml-1" nbButton status="primary" hero *appHasRole="['GasEmployee','AnalyzeEmployee','Admin']"
         [routerLink]="['/pages/forms/CreateExecuter']">
         <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="people-outline">
         </nb-icon>
@@ -180,5 +179,86 @@
         </div>
       </div>
     </nb-card-footer>
+  </nb-card>
+</ng-template>
+<ng-template #dialogLimited let-data let-ref="dialogRefLimited">
+  <nb-card size="medium" status="info" accent="info">
+    <nb-card-header>
+      <h6 *ngIf="!data.isLimited">محدود سازی مجری {{ data.firstName }} {{ data.lastName }} {{ data.code }}</h6>
+      <h6 *ngIf="data.isLimited">حذف محدودیت مجری {{ data.fileNumber }}</h6>
+
+    </nb-card-header>
+    <nb-card-body>
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <form [formGroup]="excuterLimitedForm" (ngSubmit)="confirmLimited(data)">
+            <nb-card>
+              <nb-card-body>
+                <div class="row mt-2 mb-3 mb-0">
+                  <label for="file">مستندات :</label>
+                    <div *ngFor="let a of inputCount; let i = index">
+                      <strong class="mb-2" style="color: rgb(0, 68, 255); display:block; font-size: 11px;"> حداکثر حجم
+                        {{sizeTitles[i]}} - فرمت ها ({{a.extentions}}) </strong>
+                      <app-uploader [formControlName]="a.formControlName" [filePath]="imagePathEdit"
+                        [fileExtentions]="a.extentions" [className]="imagePathEdit" [fileSize]="a.size">
+                      </app-uploader>
+                    </div>
+                </div>
+                <div class="row mt-2 mb-3 mb-0">
+                  <div class="col-sm-4 mt-2">
+                    <span style="display: inline-block">
+                      <span class="text-danger font-weight-bold">*</span>
+                      توضیحات:
+                    </span>
+                  </div>
+
+                  <div class="col-sm-8">
+                    <textarea formControlName="comment" fullWidth id="comment" nbInput
+                      placeholder="توضیحات" rows="5"></textarea>
+
+                    <div *ngFor="
+                        let validation of INPUT_VALIDATION_Limited.comment
+                      ">
+                      <span class="text-danger" *ngIf="
+                      excuterLimitedForm
+                            .get('comment')
+                            .hasError(validation.type) &&
+                          (excuterLimitedForm.get('comment')
+                            .dirty ||
+                            excuterLimitedForm.get('comment')
+                              .touched)
+                        ">{{ validation.message }}</span>
+                    </div>
+                  </div>
+                </div>
+              </nb-card-body>
+            </nb-card>
+
+            <nb-card-footer>
+              <div class="row">
+                <div class="col-sm-6 pl-1" *ngIf="!data.isLimited">
+                  <button [nbSpinner]="limitedLoading" [disabled]="limitedLoading || excuterLimitedForm.invalid"
+                    nbSpinnerStatus="info" nbSpinnerSize="large" fullWidth nbButton hero status="success" type="submit">
+                    ایجاد محدودیت
+                  </button>
+                </div>
+                <div class="col-sm-6 pl-1" *ngIf="data.isLimited">
+                  <button [nbSpinner]="limitedLoading" [disabled]="limitedLoading || excuterLimitedForm.invalid"
+                    nbSpinnerStatus="info" nbSpinnerSize="large" fullWidth nbButton hero status="success" type="submit">
+                    عدم محدودیت
+                  </button>
+                </div>
+                <div class="col-sm-6 pr-1">
+                  <button [disabled]="limitedLoading" fullWidth nbButton hero status="danger"
+                    (click)="dialogRefLimited.close()">
+                    انصراف
+                  </button>
+                </div>
+              </div>
+            </nb-card-footer>
+          </form>
+        </div>
+      </div>
+    </nb-card-body>
   </nb-card>
 </ng-template>

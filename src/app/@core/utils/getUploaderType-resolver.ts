@@ -14,7 +14,7 @@ export class UploaderTypeResolver implements Resolve<any> {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     return this.api.getFrom("Documents", "GetUploaderType")
       // .subscribe(
-      //   (res: any) => {
+      //   (res: any) => { 
       //     console.log(res)
       //     if(res) {
       //       this.gasRequest = res.gasRequests;

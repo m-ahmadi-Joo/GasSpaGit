@@ -573,7 +573,9 @@
             (typeaheadOnSelect)="onSelect($event)"
             [typeaheadOptionsLimit]="7"
             [typeaheadMinLength]="0"
+            (typeaheadDisable)="true"
             class="form-control"
+            [disabled]="true"
             style="width: 98%"
           />
         </div>
@@ -759,7 +761,7 @@
                 status="primary"
                 style="width: 100%"
                 type="button"
-                *appHasRole="['Admin', 'GasEmployee']"
+                *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']"
                 (click)="sendForm.reset()"
               >
                 جدید
@@ -772,7 +774,7 @@
                 status="primary"
                 style="width: 100%"
                 type="button"
-                *appHasRole="['Admin', 'GasEmployee', 'Association']"
+                *appHasRole="['Admin', 'GasEmployee', 'Association','AnalyzeEmployee']"
                 [routerLink]="['/pages/forms/CreateExecuter']"
               >
                 جدید

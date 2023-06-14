@@ -11,6 +11,11 @@ export const MENU_ITEMS_GASEMPLOYEEEXCEPTSHIRAZ: NbMenuItem[] = [
             icon: 'home-outline'
           },
           {
+            title: "املاک قدیمی",
+            link: "/pages/forms/OldGasReqList",
+            icon: 'home-outline'
+          },
+          {
             title: "ارجاعات",
             link: "/pages/forms/AnalyzeList",
             icon: "file-text-outline"
@@ -29,6 +34,11 @@ export const MENU_ITEMS_GASEMPLOYEEEXCEPTSHIRAZ: NbMenuItem[] = [
             title: "مجریان",
             link: "/pages/forms/ExecutersList",
             icon: 'people-outline'
+          },
+          {
+            title: "نقشه های اسکن شده",
+            link: "/pages/forms/ScanDocumentList",
+            icon: 'map-outline'
           },
         ]
   },

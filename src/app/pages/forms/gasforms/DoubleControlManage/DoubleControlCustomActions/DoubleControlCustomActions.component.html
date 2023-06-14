@@ -78,7 +78,7 @@
       fullWidth
       nbButton
       status="primary"
-      *appHasRole="['Admin', 'Executor', 'Owner', 'Engineer', 'GasEmployee']"
+      *appHasRole="['Admin', 'Executor', 'Owner', 'Engineer', 'GasEmployee', 'DoubleControlExpert','AnalyzeEmployee', 'Shahrsazi']"
       (click)="onHistory(rData.id)"
     >
       مشاهده سوابق
@@ -92,7 +92,7 @@
       fullWidth
       nbButton
       status="primary"
-      *appHasRole="['Admin', 'GasEmployee']"
+      *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']"
       (click)="manageRecordMapInformation(rData.id)"
     >
       تعیین ناظر
@@ -122,7 +122,7 @@
       fullWidth
       nbButton
       status="primary"
-      *appHasRole="['Admin', 'GasEmployee']"
+      *appHasRole="['Admin', 'GasEmployee', 'DoubleControlExpert','AnalyzeEmployee']"
       (click)="doubleControlResult(rData.id)"
     >
       نتیجه کنترل مضاعف
@@ -151,7 +151,7 @@
       fullWidth
       nbButton
       status="primary"
-      *appHasRole="['Admin', 'Engineer', 'GasEmployee']"
+      *appHasRole="['Admin', 'Engineer', 'GasEmployee', 'DoubleControlExpert','AnalyzeEmployee', 'Shahrsazi']"
       (click)="onGasRequestDetail(rData.gasReqId)"
     >
       مشاهده جزئیات ملک
@@ -163,7 +163,7 @@
       fullWidth
       nbButton
       status="primary"
-      *appHasRole="['Admin', 'Engineer', 'GasEmployee']"
+      *appHasRole="['Admin', 'Engineer', 'GasEmployee','AnalyzeEmployee']"
       (click)="onReformDoubleControlResult(rData.id)"
     >
       ثبت نتیجه اصلاحات

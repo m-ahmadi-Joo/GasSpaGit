@@ -14,6 +14,11 @@ export const MENU_ITEMS_Executor: NbMenuItem[] = [
         icon: "home-outline"
       },
       {
+        title: "املاک قدیمی",
+        link: "/pages/forms/OldGasReqList",
+        icon: 'home-outline'
+      },
+      {
         title: "سرویس های دوره ای",
         link: "/pages/forms/PeriodicVisitsList",
         icon: 'edit-2-outline'

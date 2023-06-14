@@ -34,7 +34,7 @@ import {
   NbSelectModule,
   NbChatModule,
   NbTooltipModule,
-  NbCalendarKitModule, NbIconModule, NbWindowsContainerComponent,
+  NbCalendarKitModule, NbIconModule,
   NbBadgeModule,
 } from '@nebular/theme';
 

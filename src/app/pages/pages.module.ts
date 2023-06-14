@@ -5,6 +5,7 @@ import { PagesComponent } from './pages.component';
 import { PagesRoutingModule } from './pages-routing.module';
 
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
+
 // import { SharedModule } from './shared/shared.module';
 
 
@@ -20,7 +21,8 @@ const PAGES_COMPONENTS = [
     MiscellaneousModule,
   ],
   declarations: [
-    ...PAGES_COMPONENTS,
+    PAGES_COMPONENTS,
+   
   ],
 })
 export class PagesModule {

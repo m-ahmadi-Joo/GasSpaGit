@@ -67,4 +67,11 @@ export * from './newsManagement/news/news.component';
 export * from './newsManagement/news-list/news-list.component';
 export * from './newsManagement/newsListCustomActions/newsListCustomActions.component';
 export * from './UploadedDocuments/UploadedDocuments.component';
-
+export * from './reports/gasRequestUnits/moreThanFiveUnits.component';
+export * from './newsManagement/NewsUserGroupsList/newsUserGroup-list.component';
+export * from './newsManagement/newsUsersGroups/addNewsUserGroupsByExcel/addNewsUserGroupsByExcel.component';
+export * from './newsManagement/newsUsersGroupCustomAction/newsUsersGroupCustomAction.component';
+export * from './newsManagement/newsUsersGroups/addNewsUserGroup/addNewsUserGroupTabs.component';
+export * from './newsManagement/newsUsersGroups/createNewsUserGroups/createNewsUserGroups.component';
+export * from './newsManagement/newsUsersGroups/addNewsUserGroup.module';
+export * from './newsManagement/newsUsersGroups/newsUserGroupsCheckBox/newsUserGroupsCheckBox.component';

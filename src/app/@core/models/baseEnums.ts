@@ -64,4 +64,19 @@ export enum PersianMonths {
 //   Industrial = 1
 // }
 
+export enum WorkFlowItems {
+  'GasStoveWithOutOven' = 1,
+  'GasStoveWithOven' = 2,
+  'GroundWaterHeater' = 3,
+  'WallWaterHeater' = 4,
+  'HomeMadeRiceCooker' = 5,
+  'HouseholdHeater' = 6,
+  'CommercialHeater' = 7,
+  'Lighting' = 8,
+  'FirePlace' = 9,
+  'Package' = 10,
+  'Torch' = 11,
+  'CommercialGrill' = 12
+}
+
 //

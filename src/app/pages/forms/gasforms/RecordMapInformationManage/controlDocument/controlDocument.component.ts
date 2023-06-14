@@ -73,6 +73,7 @@ export class ControlDocumentComponent implements OnInit {
       this.currentRole !== "Admin" &&
       this.currentRole !== "Engineer" &&
       this.currentRole !== "GasEmployee" &&
+      this.currentRole !== "AnalyzeEmployee" &&
       this.currentRole !== "GasEmployeeExceptShiraz"
     ) {
       this.router.navigate(["/pages/403"]);

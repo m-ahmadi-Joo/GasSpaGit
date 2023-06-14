@@ -164,9 +164,15 @@
                         <td width="15%">
                           {{ step?.unitStateTime }}
                         </td>
-                        <td width="21%">
+                        <td width="21%" *ngIf="step?.suspendRegistrarInfo == null">
                           {{ step?.registrarInfo }}
                           <span *ngIf="step?.registrarInfo == null">
+                            ثبت سیستم
+                          </span>
+                        </td>
+                        <td *ngIf="step?.suspendRegistrarInfo != null" width="21%">
+                          {{ step?.suspendRegistrarInfo }}
+                          <span *ngIf="step?.suspendRegistrarInfo == null">
                             ثبت سیستم
                           </span>
                         </td>
@@ -177,23 +183,37 @@
                               <span class="ml-2 font-weight-bold text-danger">
                                 مسدود شده</span>
                               <!-- <br /> -->
-                              <p class="text-justify mb-0">
+                              <p class="text-justify mb-0" *ngIf="step?.closeComment">
                                 <span class="font-weight-bold">توضیحات : </span>
                                 {{ step?.closeComment }}
                               </p>
                             </div>
 
                           </div>
-                          <div *ngIf="step?.unCloseComment !== null">
-                            <div *ngIf="step?.unCloseResult === true">
-                              <span class="font-weight-bold">نتیجه انسداد : </span>
+                          <div *ngIf="step?.suspendCloseComment !== null">
+                            <div *ngIf="step?.suspendCloseResult === true">
+                              <span class="font-weight-bold">نتیجه تعلیق : </span>
+                              <span class="ml-2 font-weight-bold text-danger">
+                                معلق شده</span>
+                              <!-- <br /> -->
+                              <p class=" mb-0" *ngIf="step?.suspendCloseComment">
+                                <span class="font-weight-bold text-justify">توضیحات : </span>
+                                {{ step?.suspendCloseComment }}
+                              </p>
+                            </div>
+
+                          </div>
+
+                          <div *ngIf="step?.suspendUnCloseComment !== null">
+                            <div *ngIf="step?.suspendUnCloseResult === true">
+                              <span class="font-weight-bold">نتیجه تعلیق : </span>
                               <span class="ml-2 font-weight-bold text-success">
-                              فعال سازی
+                                فعال سازی
                               </span>
                               <!-- <br /> -->
-                              <p class="text-justify mb-0">
+                              <p class="text-justify mb-0" *ngIf="step?.suspendUnCloseComment">
                                 <span class="font-weight-bold">توضیحات : </span>
-                                {{ step?.unCloseComment }}
+                                {{ step?.suspendUnCloseComment }}
                               </p>
                             </div>
 
@@ -204,7 +224,7 @@
                               <span class="ml-2 font-weight-bold text-success">
                                 تایید</span>
                               <!-- <br /> -->
-                              <p class="text-justify mb-0">
+                              <p class="text-justify mb-0" *ngIf="step?.comment">
                                 <span class="font-weight-bold">توضیحات : </span>
                                 {{ step?.comment }}
                               </p>
@@ -218,7 +238,7 @@
                                 <span class="font-weight-bold">به دلیل : </span>
                                 {{ step?.inspectionRejectionReason }}
                               </p>
-                              <p class="text-justify mb-0">
+                              <p class="text-justify mb-0" *ngIf="step?.comment">
                                 <span class="font-weight-bold">توضیحات : </span>
                                 {{ step?.comment }}
                               </p>
@@ -265,7 +285,7 @@
                                 تایید
                               </span>
                               <br />
-                              <p class="text-justify mb-0">
+                              <p class="text-justify mb-0" *ngIf="step?.controlConfirmComment">
                                 <span class="font-weight-bold">توضیحات : </span>
                                 {{ step?.controlConfirmComment }}
                               </p>
@@ -276,7 +296,7 @@
                                 عدم تایید
                               </span>
                               <br />
-                              <p class="text-justify mb-0">
+                              <p class="text-justify mb-0" *ngIf="step?.controlConfirmComment">
                                 <span class="font-weight-bold">توضیحات : </span>
                                 {{ step?.controlConfirmComment }}
                               </p>
@@ -292,7 +312,7 @@
                                 تایید
                               </span>
                               <br />
-                              <p class="text-justify mb-0">
+                              <p class="text-justify mb-0" *ngIf="step?.controlConfirmInspectionPreExecutionComment">
                                 <span class="font-weight-bold">توضیحات : </span>
                                 {{
                                 step?.controlConfirmInspectionPreExecutionComment
@@ -307,7 +327,7 @@
                                 عدم تایید
                               </span>
                               <br />
-                              <p class="text-justify mb-0">
+                              <p class="text-justify mb-0" *ngIf="step?.controlConfirmInspectionPreExecutionComment">
                                 <span class="font-weight-bold">توضیحات : </span>
                                 {{
                                 step?.controlConfirmInspectionPreExecutionComment
@@ -334,20 +354,20 @@
                               </span>
                             </div>
                             <br />
-                            <p class="text-justify mb-0">
+                            <p class="text-justify mb-0" *ngIf="step?.controlConfirmInspectionFirstStageComment">
                               <span class="font-weight-bold">توضیحات : </span>
                               {{ step?.controlConfirmInspectionFirstStageComment }}
                             </p>
                           </div>
 
-                          <div *ngIf="step?.controlConfirmInspectionFinal != null">
+                          <div *ngIf="step?.controlConfirmInspectionFinal !== null">
                             <div *ngIf="step?.controlConfirmInspectionFinal === true">
                               <span class="font-weight-bold"> نتیجه : </span>
                               <span class="text-success font-weight-bold">
                                 تایید
                               </span>
                               <br />
-                              <p class="text-justify mb-0">
+                              <p class="text-justify mb-0" *ngIf="step?.controlConfirmInspectionFinalComment !== null">
                                 <span class="font-weight-bold">توضیحات : </span>
                                 {{ step?.controlConfirmInspectionFinalComment }}
                               </p>
@@ -358,7 +378,7 @@
                                 عدم تایید
                               </span>
                               <br />
-                              <p class="text-justify mb-0">
+                              <p class="text-justify mb-0" *ngIf="step?.controlConfirmInspectionFinalComment !== null">
                                 <span class="font-weight-bold">توضیحات : </span>
                                 {{ step?.controlConfirmInspectionFinalComment }}
                               </p>
@@ -376,6 +396,13 @@
                             <span class="font-weight-bold">
                               {{ step?.observer }}
                             </span>
+
+                          </div>
+                          <div *ngIf="step?.observer != null">
+                            <span class="font-weight-bold"> تاریخ بازرسی : </span>
+                            <span class="font-weight-bold">
+                              {{ step?.workInspectionDate }}
+                            </span>
                           </div>
                           <div *ngIf="step?.welder != null">
                             <span class="font-weight-bold"> جوشکار : </span>
@@ -383,7 +410,7 @@
                               {{ step?.welder }}
                             </span>
                           </div>
-                          
+
                           <div *ngIf="step?.unClosedUser != null">
                             <span class="font-weight-bold"> رفع انسداد کننده : </span>
                             <span class="font-weight-bold">
@@ -401,6 +428,15 @@
                             <span class="font-weight-bold">
                               {{ step?.inspectionWeldCount }}
                             </span>
+                          </div>
+                          <div
+                            *ngIf="step?.engineerEditChangeslist != ''&&step?.engineerEditChangeslist !=null&&step?.engineerEditChangeslist.length>0">
+                            <span class="font-weight-bold"> تغییرات مهندس : </span>
+                            <div *ngFor="let change of step?.engineerEditChangeslist">
+                              <span class="font-weight-bold">
+                                {{ change }}
+                              </span>
+                            </div>
                           </div>
                         </td>
                       </tr>

@@ -9,6 +9,7 @@ import { JwtHelperService } from "@auth0/angular-jwt";
 import * as jwt_decode from "jwt-decode";
 import { environment } from "src/environments/environment";
 import { ApiCommandCenter } from "../../api/services/apiCommandCenter";
+import { NbMenuService } from "@nebular/theme";
 
 @Injectable()
 export class AuthService extends Auth {
@@ -26,51 +27,195 @@ export class AuthService extends Auth {
   };
   // jwtHelper = new JwtHelperService();
   decodeToken: any;
+  private eventSubject: Subject<boolean> = new Subject<boolean>();
 
+  public readonly statusChanged$: Observable<boolean> = this.eventSubject.asObservable();
+
+  private loggedIn = false;
   constructor(
     private http: HttpClient,
     private router: Router,
     private urlProvider: ApiUrlProvider,
     // private api: ApiCommandCenter,
-    public jwtHelper: JwtHelperService
+    public jwtHelper: JwtHelperService,
+    private menuService: NbMenuService,
   ) {
+
     super();
+
     this.token = this.getToken();
     // console.log(this.token)
     this.decodeToken = this.jwtHelper.decodeToken(this.token);
+    // if (this.token) {
+    //         this.selectedRole = this.decodeToken.currentRole;
+    //         const getUrl = this.getPathToDashboard();
+    //         window.location.href = getUrl;
+    //       }
+    window.onstorage = () => { //
+      {
+        let loggedIn = sessionStorage.getItem('accessToken') !== null;
 
+        if (localStorage.getItem('signOut')) {
+          window.onstorage = () => { //
+            {
+              let loggedIn = sessionStorage.getItem('accessToken') !== null;
+
+              if (localStorage.getItem('signOut')) {
+                loggedIn = false;
+              }
+
+              if (this.loggedIn !== loggedIn)//Don't trigger event if no change
+              {
+                this.loggedIn = loggedIn;
+                this.eventSubject.next(loggedIn);
+              }
+            };
+          }
+          loggedIn = false;
+        }
+
+        if (this.loggedIn !== loggedIn)//Don't trigger event if no change
+        {
+          this.loggedIn = loggedIn;
+          this.eventSubject.next(loggedIn);
+        }
+      };
+    }
     let url = window.location.origin;
 
     if (url.includes("http://localhost:4200")) {
       environment.SERVER_URL = "http://localhost:52805/api";
     } else if (url.includes("gas.fceo.ir")) {
       environment.SERVER_URL = "http://gas.fceo.ir:2727/api";
-    } else if (url.includes("http://192.168.0.201")) {
+    }
+    else if (url.includes("http://192.168.0.201")) {
       environment.SERVER_URL = "http://192.168.0.201:81/api";
-    } else if (url.includes("http://192.168.0.6")) {
-      environment.SERVER_URL = "http://192.168.0.6:82/api";
     }
     else if (url.includes("http://192.168.0.18:83")) {
       environment.SERVER_URL = "http://192.168.0.18:82/api";
     }
-    else if (url.includes("http://192.168.0.06:83")) {
+    else if (url.includes("http://192.168.0.6:83")) {
       environment.SERVER_URL = "http://192.168.0.06:82/api";
     }
-    else if (url.includes("http://192.168.2.06:83")) {
-      environment.SERVER_URL = "http://192.168.2.06:82/api";
+    else if (url.includes("http://192.168.0.6:84")) {
+      environment.SERVER_URL = "http://192.168.0.6:200/api";
     }
-    else if (url.includes("http://192.168.2.6:83")) {
-      environment.SERVER_URL = "http://192.168.2.06:82/api";
+    else if (url.includes("http://192.168.0.6:84")) {
+      environment.SERVER_URL = "http://192.168.0.06:200/api";
     }
-    else if (url.includes("http://192.168.0.15:83")) {
-      environment.SERVER_URL = "http://192.168.0.15:82/api";
+    else if (url.includes("http://192.168.0.06:84")) {
+      environment.SERVER_URL = "http://192.168.0.6:200/api";
     }
     else {
       environment.SERVER_URL = "http://localhost:5000/api";
     }
-  }
+    //  var loginUrl = url + "/auth/login";
+    //   if (loginUrl.includes(url + "/auth/login")) {
+    //     console.log(loginUrl.includes(url + "/auth/login"));
+    //     this.token = localStorage.getItem("token");
+    //     if (this.token) {
+    //       this.selectedRole = this.decodeToken.currentRole;
+    //       const getUrl = this.getPathToDashboard();
+    //       window.location.href = getUrl;
+    //     }
+    //   }
 
+    // window.addEventListener("storage", (event) => {
+    //   if (event.storageArea != localStorage) return;
+    //   if (event.key === "auth._token.local") {
+    //     location.reload();
+    //   }
+    // });
+
+  }
+  //   mounted() {
+  //     const tokenKey = '_token.local';
+
+  //     window.addEventListener('storage', (event) => {
+  //       if (event.storageArea !== localStorage) {
+  //         return;
+  //       }
+  //       if (event.key === `auth.${tokenKey}`) {
+  //         location.reload();
+  //       }
+  //     });
+
+  //     this.$router.beforeEach((to, from, next) => {
+  //       const authToken = this.$auth.$storage.getUniversal(tokenKey);
+  //       if (!authToken) {
+  //           location.reload();
+  //       }
+  //       next();
+  //     });
+  // }
+  private getPathToDashboard() {
+    let path = "";
+    if (this.selectedRole == "Association") {
+      path = "/pages/forms/ContractList";
+    } else if (this.selectedRole == "Admin") {
+      path = "/pages/admin/AdminPanel";
+    } else if (this.selectedRole == "Engineer") {
+      path = "/pages/forms/AnalyzeList";
+    } else if (
+      this.selectedRole == "Executor" ||
+      // this.selectedRole == "Engineer" ||
+      this.selectedRole == "Owner" ||
+      this.selectedRole == "GasEmployee" ||
+      this.selectedRole == "AnalyzeEmployee" ||
+      this.selectedRole == "Pishkhan" ||
+      this.selectedRole == "GasRuleEngineer" ||
+      this.selectedRole == "GasRuleCheckerGroupOne" ||
+      this.selectedRole == "GasRuleCheckerGroupTwo" ||
+      this.selectedRole == "GasRuleCheckerGroupThree" ||
+      this.selectedRole == "GasEmployeeHP" ||
+      this.selectedRole == "GasRuleEmployeeHP" ||
+      this.selectedRole == "HPManager" ||
+      this.selectedRole == "SupplierHP" ||
+      this.selectedRole == "SupervisorHP" ||
+      this.selectedRole == "TechnicalInspectorHP" ||
+      this.selectedRole == "TechnicalInspectionManagerHP" ||
+      this.selectedRole == "DoubleControlExpert" ||
+      this.selectedRole == "GasCompany"
+    ) {
+      path = "/pages/forms/GasReqList";
+    } else {
+      path = "/pages/forms";
+    }
+
+    return path;
+  }
   loginConfirmed(roleSelected: string, userId: any): Observable<object> {
+
+    window.onstorage = () => { //
+      {
+        let loggedIn = sessionStorage.getItem('accessToken') !== null;
+
+        if (localStorage.getItem('signOut')) {
+          window.onstorage = () => { //
+            {
+              let loggedIn = sessionStorage.getItem('accessToken') !== null;
+
+              if (localStorage.getItem('signOut')) {
+                loggedIn = false;
+              }
+
+              if (this.loggedIn !== loggedIn)//Don't trigger event if no change
+              {
+                this.loggedIn = loggedIn;
+                this.eventSubject.next(loggedIn);
+              }
+            };
+          }
+          loggedIn = false;
+        }
+
+        if (this.loggedIn !== loggedIn)//Don't trigger event if no change
+        {
+          this.loggedIn = loggedIn;
+          this.eventSubject.next(loggedIn);
+        }
+      };
+    }
     this.baseUrl = this.urlProvider.getUrl("auth", "loginConfirmed");
     // let headers = new Headers();
     let headers = new Headers({
@@ -79,11 +224,14 @@ export class AuthService extends Auth {
       'Expires': '0'
     });
     headers.append("Content-Type", "application/json");
+
     return this.http.get(this.baseUrl, {
       params: new HttpParams()
         .set("roleSelected", roleSelected)
         .set("userId", userId),
+        
     });
+    
   }
 
   signupUser(userData: any): Observable<object> {
@@ -97,12 +245,17 @@ export class AuthService extends Auth {
   }
 
   loginUser(username: string, password: string) {
+    //Do your business to login and obtain a token before here...
+
+
     const data = {
       userName: username,
       password: password,
     };
     this.baseUrl = this.urlProvider.getUrl("auth", "login");
     const antiforgeryUrl = this.urlProvider.getUrl("auth", "antiforgery");
+    localStorage.removeItem('signOut');//clear flag in local storage
+    sessionStorage.setItem('accessToken', 'token');//save token in session storage
     return this.http.post(this.baseUrl, data);
     // .pipe(
     //    map((res: any) => {
@@ -120,21 +273,26 @@ export class AuthService extends Auth {
 
   getToken(): string {
     this.token = this.jwtHelper.tokenGetter();
-    if (!this.token)
+    if (!this.token) {
       this.token = localStorage.getItem("token");
+    }
     return this.token;
   }
 
   logoutUser() {
+    sessionStorage.removeItem('accessToken'); //Remove token from session
     localStorage.removeItem("token");
     this.decodeToken = null;
     this.state.isAuth = false;
     this.user = null;
     this.token = null;
     localStorage.clear();
+    localStorage.setItem('signOut', 'true'); //trigger flag
     this.router.navigate(["/auth/login"]);
   }
-
+  public isLoggedIn() {
+    return this.loggedIn;
+  }
   isAuthenticated() {
     // return true;
     // return (this.jwtHelper.isTokenExpired(this.token) || this.token === null) ? false : true;
@@ -162,6 +320,10 @@ export class AuthService extends Auth {
 
   isUserExists(userName: string): Observable<object> {
     const url = this.urlProvider.getUrl("auth", "isUserExist?UserName=");
+    return this.http.get(url + userName);
+  }
+  isUserExistForOldGas(userName: string): Observable<object> {
+    const url = this.urlProvider.getUrl("auth", "isUserExistForOldGas?UserName=");
     return this.http.get(url + userName);
   }
 
@@ -227,6 +389,7 @@ export class AuthService extends Auth {
       selectedRole == "Engineer" ||
       selectedRole == "Owner" ||
       selectedRole == "GasEmployee" ||
+      selectedRole == "AnalyzeEmployee" ||
       selectedRole == "Pishkhan" ||
       selectedRole == "GasRuleEngineer" ||
       selectedRole == "GasRuleCheckerGroupOne" ||

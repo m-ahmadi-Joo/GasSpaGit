@@ -37,6 +37,7 @@
   size="tiny"
   class="mb-2 mr-1"
   nbButton
+  *appHasNoRole="['Shahrsazi']"
   status="warning"
   [disabled]="rData.isPaid"
   (click)="onEdit(rData.consultRequestId)"
@@ -55,7 +56,7 @@
   class="mb-2 mr-1"
   nbButton
   status="info"
-  *appHasRole="['Executor', 'Owner', 'Admin', 'ConsultManager']"
+  *appHasRole="['Executor', 'Owner', 'Admin', 'ConsultManager', 'Shahrsazi']"
   (click)="onPayRequestConsultDetail(rData.consultRequestId)"
 >
   <nb-icon
@@ -72,7 +73,7 @@
       fullWidth
       nbButton
       status="primary"
-      *appHasRole="['Engineer', 'Executor', 'Owner', 'Admin', 'GasEmployee']"
+      *appHasRole="['Engineer', 'Executor', 'Owner', 'Admin', 'GasEmployee','AnalyzeEmployee', 'Shahrsazi']"
       (click)="onHistory()"
     >
       مشاهده سوابق مشاوره
@@ -97,7 +98,7 @@
     *ngIf="rData.lastStateType.includes('ManualDefineObserverConsult')"
   >
     <button
-      *appHasRole="['Admin', 'GasEmployee', 'GasEmployeeHP']"
+      *appHasRole="['Admin', 'GasEmployee', 'GasEmployeeHP','AnalyzeEmployee']"
       fullWidth
       nbButton
       status="success"
@@ -118,7 +119,7 @@
       fullWidth
       nbButton
       status="primary"
-      *appHasRole="['Executor', 'Owner', 'Admin', 'GasEmployee']"
+      *appHasRole="['Executor', 'Owner', 'Admin', 'GasEmployee','AnalyzeEmployee']"
       (click)="onPayRequestConsult(rData.consultRequestId)"
     >
       پرداخت هزینه

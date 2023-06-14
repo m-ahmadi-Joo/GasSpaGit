@@ -37,6 +37,9 @@ export class RecordMapInformationCustomActionsComponent
   @Output() rejectConfirm: EventEmitter<any> = new EventEmitter();
   @Output() stopEndOrBlockRequest: EventEmitter<any> = new EventEmitter();
   @Output() endOrBlockRequest: EventEmitter<any> = new EventEmitter();
+  @Output() suspendRequest: EventEmitter<any> = new EventEmitter();
+  @Output() cancelSuspendedRequest: EventEmitter<any> = new EventEmitter();
+
   collctiveDefineObserver: DefineOberverSelect[] = [];
 
   constructor(
@@ -175,7 +178,7 @@ export class RecordMapInformationCustomActionsComponent
         this.contractId +
         "/RecordMapInformation/" +
         id +
-        "/ControlDocument/" + "IsEdit/" 
+        "/ControlDocument/" + "IsEdit/"
       ]);
     }
     // this.router.navigate([
@@ -257,10 +260,13 @@ export class RecordMapInformationCustomActionsComponent
     ]);
   }
   onHistory(requestUnitId) {
-    this.windowService.open(this.RecordMapInformationHistory, {
-      hasBackdrop: true,
-      windowClass: "nb-window-control"
-    });
+    setTimeout(() => {                           // <<<---using ()=> syntax
+      this.windowService.open(this.RecordMapInformationHistory, {
+        hasBackdrop: true,
+        windowClass: "nb-window-control",
+      });
+    }, 50);
+
     //this.router.navigate(['/pages/forms/Contract/'+this.contractId+'/RecordMapInformationHistory/'+ id ]);
   }
 
@@ -489,5 +495,11 @@ export class RecordMapInformationCustomActionsComponent
   onStopEndOrBlockRequest() {
     this.stopEndOrBlockRequest.emit(this.rowData);
   }
+  onSuspendRequest() {
+    this.suspendRequest.emit(this.rowData);
+  }
 
+  onCancelSuspendedRequest() {
+    this.cancelSuspendedRequest.emit(this.rowData);
+  }
 }

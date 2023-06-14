@@ -114,6 +114,11 @@ export const MENU_ITEMS_Engineer_WithCollaboration: NbMenuItem[] = [
         icon: "home-outline",
       },
       {
+        title: "املاک قدیمی",
+        link: "/pages/forms/OldGasReqList",
+        icon: 'home-outline'
+      },
+      {
         title: "اصلاحیه نقشه",
         link: "/pages/forms/EngineerEditMapList",
         icon: "map-outline",

@@ -109,6 +109,7 @@ export class CreateWelderComponent implements OnInit {
     if (
       this.currentRole !== "Admin" &&
       this.currentRole !== "GasEmployee" &&
+      this.currentRole !== "AnalyzeEmployee" &&
       this.currentRole !== "Association" &&
       this.currentRole !== "GasEmployeeExceptShiraz"
     ) {

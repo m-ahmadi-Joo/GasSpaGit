@@ -126,3 +126,9 @@ export interface Chart {
 //   load : boolean,
 //   type: string
 // }
+import { TypeModel } from "src/app/@core/models/staticTypeModel";
+
+
+export interface WorkFlowGasAppliances {
+   gasAppliancesType: TypeModel[];
+}

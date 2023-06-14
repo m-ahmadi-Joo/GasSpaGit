@@ -68,6 +68,13 @@ import {
   NewsListCustomActionsComponent,
   NewsComponent,
   UploadedDocumentsComponent,
+  MoreThanFiveUnitsComponent,
+  NewsUserGroupListComponent,
+  AddNewsUserGroupTabsComponent,
+  AddNewsUserGroupsByExcelComponent,
+  NewsUsersGroupCustomActionComponent,
+  CreateNewsUserGroupsComponent,
+  NewsUserGroupsCheckBoxComponent
 } from "./forms";
 
 import { AuthGuard } from "src/app/@core/auth/mock/authguard";
@@ -104,6 +111,10 @@ import { SendSmsListResolver } from "src/app/@core/utils/sendSmsList-resolver";
 import { GetTableWorksFilterResolver } from "src/app/@core/utils/getTableWorksFilter-resolver";
 import { NewsListResolver } from "src/app/@core/utils/NewsListResolver";
 import { GetNewsInfoResolver } from "src/app/@core/utils/getNewsInfo-resolver";
+import { GetMoreFiveUnitsSearchInfoResolver } from "src/app/@core/utils/getMoreFiveUnitsSearchInfo-resolver";
+import { GetMoreFiveUnitsListResolver } from "src/app/@core/utils/getMoreFiveUnitsList-resolver";
+import { NewsUserGroupListResolver } from "src/app/@core/utils/newsUserGroupListResolver";
+import { NewsDetailFormComponent } from "./forms/newsManagement/newsDetailForm/newsDetailForm.component";
 
 const routes: Routes = [
   {
@@ -479,6 +490,45 @@ const routes: Routes = [
            data: GetNewsInfoResolver,
          },
       },
+      {
+        path: "NewsUserGroupsList",
+        component: NewsUserGroupListComponent,
+         resolve: {
+           listdata: NewsUserGroupListResolver,
+         },
+      },
+      {
+        path: "GasMoreThanFiveUnitsList",
+        component: MoreThanFiveUnitsComponent,
+        resolve: {
+          info: GetMoreFiveUnitsSearchInfoResolver,
+          listData: GetMoreFiveUnitsListResolver,
+        },
+      },
+      {
+        path: "AddNewsUserGroups",
+        component: AddNewsUserGroupTabsComponent,
+        children: [
+          {
+            path: "byExcel",
+            component: AddNewsUserGroupsByExcelComponent,
+
+          },
+          {
+            path: "byUsersAndRole",
+            component: CreateNewsUserGroupsComponent,
+            resolve: { data: UsersListResolver },
+          },
+        ],
+      },
+      {
+        path: "NewsUserGroupsCheckBox",
+        component: NewsUserGroupsCheckBoxComponent,
+      },
+      {
+        path: "NewsDetail/:id",
+        component: NewsDetailFormComponent,
+      },
     ],
   },
 ];
@@ -553,5 +603,10 @@ export const routerComponents = [
   NewsListComponent,
   NewsListCustomActionsComponent,
   NewsComponent,
+  NewsDetailFormComponent,
   UploadedDocumentsComponent,
+  MoreThanFiveUnitsComponent,
+  NewsUserGroupListComponent,
+  NewsUsersGroupCustomActionComponent,
+  NewsUserGroupsCheckBoxComponent,
 ];

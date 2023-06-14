@@ -7,14 +7,13 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { UsersListResolver } from 'src/app/@core/utils/usersList-resolver';
 
-
 @NgModule({
   imports: [
     UmgnRoutingModule,
     NbRouteTabsetModule,
     ThemeModule,
     Ng2SmartTableModule,
-    NgxPaginationModule
+    NgxPaginationModule,
   ],
   exports: [
   ],

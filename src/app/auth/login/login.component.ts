@@ -15,7 +15,6 @@ import {
   NbDialogRef
 } from "@nebular/theme";
 import { JwtHelperService } from "@auth0/angular-jwt";
-
 // /auth/login
 @Component({
   // tslint:disable-next-line:component-selector
@@ -32,7 +31,7 @@ export class LoginComponent implements OnInit {
     username: new FormControl("", [Validators.required]),
     password: new FormControl("", [Validators.required])
   });
-  roles=[];
+  roles = [];
   userIdRes;
   authenticating = false;
   isAuthorized = true;
@@ -51,6 +50,7 @@ export class LoginComponent implements OnInit {
   token;
   rePassChange;
   warningMessages = [];
+  loggedIn: boolean = false;
   constructor(
     private authService: Auth,
     private router: Router,
@@ -63,7 +63,9 @@ export class LoginComponent implements OnInit {
   @ViewChild("dialogRoles", { static: false }) dialogRoles: TemplateRef<any>;
   @ViewChild('dialogResetPass', { static: false }) dialogResetPass: TemplateRef<any>;
   @ViewChild('dialogExecuterList', { static: false }) dialogExecuterList: TemplateRef<any>;
-  ngOnInit() { }
+  ngOnInit() {
+    
+  }
 
   onRegister() {
     this.router.navigate(["/auth/reg"], { relativeTo: this.route });
@@ -81,22 +83,31 @@ export class LoginComponent implements OnInit {
         this.authenticating = false;
         this.isAuthorized = true;
 
+
         localStorage.setItem("token", res.token);
+        //localStorage.setItem("isAuthorized", this.isAuthorized == true ? "true" : "false");
         this.decodeToken = this.jwtHelper.decodeToken(this.auth.getToken());
 
         this.currentRole = this.decodeToken.currentRole as string;
-        if(this.currentRole === "Executor") {
-          if(res.executorLicenseTotalDays > 0) {
+        this.auth.statusChanged$.subscribe(isLoggedIn => {
+          //Do whatever you want
+          this.loggedIn = isLoggedIn;
+          console.log(isLoggedIn)
+          this.authService.logoutUser();
+          //location.reload() ;
+        });
+        if (this.currentRole === "Executor") {
+          if (res.executorLicenseTotalDays > 0) {
             if (res.executorLicenseTotalDays < 365) {
               this.warningMessages.push(`تا انقضای پروانه اعتبار شما، تنها ${res.executorLicenseTotalDays} روز باقی مانده است.`);
-              localStorage.setItem('warningMessages' , JSON.stringify(this.warningMessages));
+              localStorage.setItem('warningMessages', JSON.stringify(this.warningMessages));
             }
           } else {
             this.warningMessages.push(`پروانه اعتبار شما منقضی شده است، لطفا نسبت به تمدید آن اقدام فرمایید.`);
-            localStorage.setItem('warningMessages' , JSON.stringify(this.warningMessages));
+            localStorage.setItem('warningMessages', JSON.stringify(this.warningMessages));
           }
         }
-        if(this.currentRole ==="Engineer") {
+        if (this.currentRole === "Engineer") {
           this.pushWarningMessagesForEngineer(res.unRecorderdInspectionResults);
         }
         this.navigateToDashboard();
@@ -105,6 +116,7 @@ export class LoginComponent implements OnInit {
   }
 
   private navigateToDashboard() {
+    
     if (this.currentRole == "Association") {
       this.router.navigate(["/pages/forms/ContractList"]);
     }
@@ -113,12 +125,12 @@ export class LoginComponent implements OnInit {
       // this.currentRole == "Engineer" ||
       this.currentRole == "Owner" ||
       this.currentRole == "GasEmployee" ||
+      this.currentRole == "AnalyzeEmployee" ||
       this.currentRole == "Pishkhan" ||
       this.currentRole == "GasRuleEngineer" ||
       this.currentRole == "GasRuleCheckerGroupOne" ||
       this.currentRole == "GasRuleCheckerGroupTwo" ||
       this.currentRole == "GasRuleCheckerGroupThree" ||
-      this.currentRole == "GasEmployeeHP" ||
       this.currentRole == "GasRuleEmployeeHP" ||
       this.currentRole == "HPManager" ||
       this.currentRole == "SupplierHP" ||
@@ -126,10 +138,13 @@ export class LoginComponent implements OnInit {
       this.currentRole == "TechnicalInspectorHP" ||
       this.currentRole == "TechnicalInspectionManagerHP" ||
       this.currentRole == "GasEmployeeExceptShiraz" ||
-      this.currentRole == "DoubleControlExpert"||
+      this.currentRole == "DoubleControlExpert" ||
       this.currentRole == "GasCompany"
-      ) {
+    ) {
       this.router.navigate(["/pages/forms/GasReqList"]);
+    }
+    else if (this.currentRole == "GasEmployeeHP") {
+      this.router.navigate(["/pages/forms/HPGasReqList"]);
     }
     else if (this.currentRole == "Engineer") {
       this.router.navigate(["/pages/forms/AnalyzeList"])
@@ -139,6 +154,9 @@ export class LoginComponent implements OnInit {
     }
     else if (this.currentRole == "ConsultManager") {
       this.router.navigate(["/pages/forms/ConsultList"])
+    }
+    else if (this.currentRole == "Shahrsazi") {
+      this.router.navigate(["/pages/admin/AdminPanel"])
     }
     else {
       this.router.navigate(["/pages/forms"]);
@@ -231,7 +249,7 @@ export class LoginComponent implements OnInit {
             //   this.authenticating = false;
             //   this.isAuthorized = true;
             //   this.token = this.token;
-              localStorage.setItem("token", this.token);
+            localStorage.setItem("token", this.token);
 
             //   this.decodeToken = this.jwtHelper.decodeToken(this.auth.getToken());
             //   this.decodeToken = this.jwtHelper.decodeToken(this.token);
@@ -239,7 +257,7 @@ export class LoginComponent implements OnInit {
             //   console.log(this.currentRole);
 
 
-              this.navigateToDashboard();
+            this.navigateToDashboard();
 
 
 
@@ -294,15 +312,14 @@ export class LoginComponent implements OnInit {
     localStorage.removeItem("warningMessages");
     let keys = Object.keys(localStorage);
     keys.forEach(key => {
-     console.log(key)
-     if(key.includes('FilterParams') || key.includes('Pagination')) {
-           localStorage.removeItem(key);
-     }
-   });
- }
+      console.log(key)
+      if (key.includes('FilterParams') || key.includes('Pagination')) {
+        localStorage.removeItem(key);
+      }
+    });
+  }
 
-  executerList()
-  {
+  executerList() {
     this.dialogExecuterListRef = this.dialogService.open(this.dialogExecuterList, {
 
       autoFocus: false,
@@ -315,9 +332,8 @@ export class LoginComponent implements OnInit {
   submit() {
     localStorage.removeItem("ExecutorListFilterParams");
     localStorage.removeItem("ExecutorListPagination");
-    if(localStorage.getItem("token")!=null||localStorage.getItem("token")!=undefined)
-    {
-      localStorage.removeItem("token")!=undefined
+    if (localStorage.getItem("token") != null || localStorage.getItem("token") != undefined) {
+      localStorage.removeItem("token") != undefined
     }
     if (this.userLoginDto.valid) {
       const user = {
@@ -333,18 +349,18 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('showPopupMsg', "true");
           if (this.userRoles.length == 1) {
             if (res.token !== null) {
-              if(this.userRoles[0] === "Executor") {
-                if(res.executorLicenseTotalDays > 0) {
+              if (this.userRoles[0] === "Executor") {
+                if (res.executorLicenseTotalDays > 0) {
                   if (res.executorLicenseTotalDays < 365) {
                     this.warningMessages.push(`تا انقضای پروانه اعتبار شما، تنها ${res.executorLicenseTotalDays} روز باقی مانده است.`);
-                    localStorage.setItem('warningMessages' , JSON.stringify(this.warningMessages));
+                    localStorage.setItem('warningMessages', JSON.stringify(this.warningMessages));
                   }
                 } else {
                   this.warningMessages.push(`پروانه اعتبار شما منقضی شده است، لطفا نسبت به تمدید آن اقدام فرمایید.`);
-                  localStorage.setItem('warningMessages' , JSON.stringify(this.warningMessages));
+                  localStorage.setItem('warningMessages', JSON.stringify(this.warningMessages));
                 }
               }
-              if(this.userRoles[0] === "Engineer") {
+              if (this.userRoles[0] === "Engineer") {
                 this.pushWarningMessagesForEngineer(res.unRecorderdInspectionResults);
               }
               this.authenticating = false;
@@ -361,7 +377,7 @@ export class LoginComponent implements OnInit {
                   this.navigateToDashboard();
                 }
                 else {
-                  this.token=res.token;
+                  this.token = res.token;
                   this.dialogResetPassRef = this.dialogService.open(this.dialogResetPass, {
 
                     autoFocus: false,
@@ -462,18 +478,18 @@ export class LoginComponent implements OnInit {
   }
 
   pushWarningMessagesForEngineer(unRecorderdInspectionResults) {
-    if(unRecorderdInspectionResults.length > 0) {
+    if (unRecorderdInspectionResults.length > 0) {
       unRecorderdInspectionResults.forEach(element => {
-        if(element.listNumber === null) {
+        if (element.listNumber === null) {
           element.listNumber = "";
         }
-        if(element.isRejectedDeadLine) {
-            this.warningMessages.push(`مهلت ثبت جواب در 12 بامداد ${element.deadline} برای ${element.requestStateTypeTitle} واحد <span dir='ltr'>${element.unitNumber}</span> در لیست ${element.listNumber} تمام شده است، لطفا هر چه سریع تر نسبت به ثبت نتیجه بازرسی اقدام فرمایید.`);
+        if (element.isRejectedDeadLine) {
+          this.warningMessages.push(`مهلت ثبت جواب در 12 بامداد ${element.deadline} برای ${element.requestStateTypeTitle} واحد <span dir='ltr'>${element.unitNumber}</span> در لیست ${element.listNumber} تمام شده است، لطفا هر چه سریع تر نسبت به ثبت نتیجه بازرسی اقدام فرمایید.`);
         } else {
           this.warningMessages.push(`جهت ثبت جواب ${element.requestStateTypeTitle} واحد <span dir='ltr'>${element.unitNumber}</span> در لیست ${element.listNumber} تنها تا 12 بامداد ${element.deadline} فرصت دارید.`);
         }
       });
-      localStorage.setItem('warningMessages' , JSON.stringify(this.warningMessages));
+      localStorage.setItem('warningMessages', JSON.stringify(this.warningMessages));
     }
   }
 }

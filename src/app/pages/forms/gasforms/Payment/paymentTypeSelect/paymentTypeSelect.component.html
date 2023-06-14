@@ -208,9 +208,10 @@
 
             <nb-card *ngIf="!disableOnlineTejaratPay && !hasProblem && !isFree">
               <nb-card-body
-                *appHasRole="['Admin', 'Owner', 'Executor','GasEmployee','GasEmployeeHP', 'GasRuleEmployeeHP']">
+                *appHasRole="['Admin', 'Owner', 'Executor','GasEmployee','AnalyzeEmployee','GasEmployeeHP', 'GasRuleEmployeeHP']">
                 <div class="col-lg-12 col-md-12 col-sm-12" style="text-align: center">
                   <button class="btn" nbButton type="submit" status="default" [nbSpinner]="loadingTejaratPay"
+                  
                     nbSpinnerStatus="info" nbSpinnerSize="large"
                     [disabled]="loadingPayBankReciept || loadingPayShematic || loadingTejaratPay || perviousReqRunnig">
                     <div>
@@ -310,7 +311,7 @@
               </div>
             </div>
 
-            <div class="row" *appHasRole="['GasEmployee']">
+            <div class="row" *appHasRole="['GasEmployee','AnalyzeEmployee']">
               <div class="col-lg-4 col-md-4 col-sm-4">
                 <button class="btn" nbButton fullWidth status="info" type="button" (click)="onShowBankAccountInfo()"
                   [disabled]="loadingPayBankReciept || loadingPayShematic || loadingTejaratPay">

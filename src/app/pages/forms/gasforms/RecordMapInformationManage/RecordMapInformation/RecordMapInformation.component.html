@@ -16,6 +16,182 @@
   }
 </style>
 
+<!--#region main  -->
+<style>
+  .table__header {
+    /*width: 100%;*/
+    height: 10%;
+    background-color: #fff4;
+    padding: .8rem 1rem;
+
+  }
+
+  .table__body {
+    /*width: 100%;*/
+    max-height: calc(89%- .8rem);
+    background-color: #fffb;
+    margin: .8rem auto;
+    border-radius: .6rem;
+    overflow: auto;
+  }
+
+  .table__foot {
+    /*width: 100%;*/
+    max-height: calc(89%- .8rem);
+    background-color: #fffb;
+    margin: .8rem auto;
+    border-radius: .6rem;
+    overflow: auto;
+  }
+
+  .table__body::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+
+  .table__body::-webkit-scrollbar-thumb {
+    border-radius: .5rem;
+    background-color: #0004;
+    visibility: hidden;
+
+  }
+
+  .table__body:hover::-webkit-scrollbar-thumb {
+
+    visibility: visible;
+
+  }
+
+  main.table {
+    width: 72vw;
+    height: auto;
+    background-color: #fff5;
+
+    /* backdrop-filter: blur(7px); */
+    box-shadow: 0 .4rem .08rem #0005;
+    border-radius: .8rem;
+    overflow: hidden;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  table,
+  td,
+  th {
+    border-collapse: collapse;
+    padding: 1rem;
+    text-align: right;
+  }
+
+  td label {
+    margin-top: .5rem;
+    vertical-align: middle;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+    padding: 0.4375rem 1.125rem;
+  }
+
+  thead th {
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: #d5d1defe;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: #0000000b;
+
+  }
+
+  tbody tr:hover {
+    background-color: #fff6;
+  }
+
+  @media(max-width: 1000px) {
+    td:not(:first-of-type) {
+      min-width: 12.1rem;
+    }
+  }
+
+  @media(max-width: 1000px) {
+    .col-md-5 {
+      max-height: 100;
+    }
+
+    td:not(:first-of-type) {
+      min-width: 12.1rem;
+    }
+  }
+
+  .blink {
+    background-color: #f7f9fc;
+    animation: blink 1s steps(1, end) infinite;
+  }
+
+  .accordion-item-header-expanded {
+    background-color: #ffffff;
+    animation: blink 1s steps(1, end) forwards;
+  }
+
+  @keyframes blink {
+    0% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+
+  }
+
+  .tbl-span {
+    display: inline-block;
+    width: 6em;
+    position: relative;
+    top: -4em;
+  }
+
+  bdi {
+    display: inline-block;
+    width: 6em;
+    margin-right: .9em;
+    padding-top: 4.9em;
+  }
+
+  .bdi-label {
+    float: right;
+    padding: 2px 34px 0px 0px;
+  }
+
+  /* input:invalid {
+    background-color: #ffdddd;
+  }
+
+  form:invalid {
+    border: 5px solid #ffdddd;
+  }
+
+  input:valid {
+    background-color: #ddffdd;
+  }
+
+  form:valid {
+    border: 5px solid #ddffdd;
+  }
+
+  input:required {
+    border-color: #800000;
+    border-width: 3px;
+  } */
+</style>
+<!---#Endregion main  -->
 <div class="row">
   <div class="col-lg-12 col-md-12 col-sm-12">
     <form (ngSubmit)="onSubmit()" [formGroup]="recordMapInfoFormg">
@@ -32,7 +208,9 @@
               <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
                 <div class="input-group">
                   <div class="col-lg-2 col-md-2 col-sm-2 ">
+                    <span class="text-danger font-weight-bold">*</span>&nbsp;&nbsp;
                     <label for="floorNumber">شماره طبقه</label>
+
                     <input class="d-block" formControlName="floorNumber" fullWidth id="floorNumber" nbInput min="0"
                       [readOnly]="
                             responseType == 'MapRevisionResultInspectionPreExecution' ||
@@ -57,7 +235,9 @@
                   </div>
 
                   <div class="col-lg-2 col-md-2 col-sm-2 ">
+                    <span class="text-danger font-weight-bold">*</span>&nbsp;&nbsp;
                     <label for="unitNumber">شماره واحد</label>
+
                     <input formControlName="unitNumber" fullWidth id="unitNumber" nbInput min="0" [readOnly]="
                           responseType == 'MapRevisionResultInspectionPreExecution' ||
                           responseType == 'ReMapRevisionResultInspectionPreExecution' ||
@@ -163,7 +343,8 @@
                         ">
                     <label for="pipingKind">نوع لوله کشی</label>
 
-                    <nb-select formControlName="pipingKind" id="pipingKind" placeholder="انتخاب نوع لوله کشی">
+                    <nb-select formControlName="pipingKind" id="pipingKind" placeholder="انتخاب نوع لوله کشی"
+                      [disabled]="pipingKindDisable">
                       <nb-option value="0">
                         روکار
                       </nb-option>
@@ -217,9 +398,11 @@
               <div class="col-lg-12 col-md-12 col-sm-12 mb-5">
                 <div class="input-group">
                   <div class="col-lg-4 col-md-4 col-sm-4 ">
-                    <label class="d-block" for="utilization">مصرف</label>
+                    <span class="d-inline text-danger font-weight-bold">*</span>&nbsp;&nbsp;
+                    <label for="utilization">مصرف</label>
+
                     <input formControlName="utilization" fullWidth style="width: 91% !important" id="utilization"
-                      nbInput type="number" min="0.1" max="160" (blur)="getMeterKind()" [readOnly]="
+                      nbInput type="number" step=".01" min="0.1" max="160" (blur)="getMeterKind()" [readOnly]="
                           responseType == 'MapRevisionResultInspectionPreExecution' ||
                           responseType == 'ReMapRevisionResultInspectionPreExecution' ||
                           responseType == 'MapRevisionResultInspectionOfTheFirstStage' ||
@@ -240,46 +423,14 @@
                     </div>
                   </div>
 
-                  <!-- <div class="col-lg-2 col-md-2 col-sm-2 ">
-                        <label for="collectorCount">تعداد کلکتور</label>
-                        <input
-                          formControlName="collectorCount"
-                          fullWidth
-                          id="collectorCount"
-                          nbInput
-                          min="0"
-                          [readOnly]="
-                          responseType == 'MapRevisionResultInspectionPreExecution' ||
-                          responseType == 'ReMapRevisionResultInspectionPreExecution' ||
-                          responseType == 'MapRevisionResultInspectionOfTheFirstStage' ||
-                          responseType == 'ReMapRevisionResultInspectionOfTheFirstStage' ||
-                          responseType == 'MapRevisionResultInspectionFinal' ||
-                          responseType == 'ReMapRevisionResultInspectionFinal'
-                          "
-                        />
-                        <div
-                          *ngFor="
-                            let validation of INPUT_VALIDATION_MESSAGES.collectorCount
-                          "
-                        >
-                          <span
-                            class="text-danger"
-                            *ngIf="
-                              recordMapInfoFormg
-                                .get('collectorCount')
-                                .hasError(validation.type) &&
-                              (recordMapInfoFormg.get('collectorCount').dirty ||
-                                recordMapInfoFormg.get('collectorCount').touched)
-                            "
-                            >{{ validation.message }}</span
-                          >
-                        </div>
-                      </div> -->
+                 
 
                   <div class="col-lg-4 col-md-4 col-sm-4 ">
-                    <label class="d-block" for="fondation">زیربنا</label>
-                    <input formControlName="fondation" id="fondation" nbInput type="number" min="0" max="5000"
-                      (blur)="getMeterKind()" [readOnly]="
+                    <span class="d-inline text-danger font-weight-bold">*</span>&nbsp;&nbsp;
+                    <label for="fondation">زیربنا</label>
+
+                    <input class="d-block" formControlName="fondation" id="fondation" nbInput type="number" min="0"
+                      max="5000" (blur)="getMeterKind()" [readOnly]="
                           responseType == 'MapRevisionResultInspectionPreExecution' ||
                           responseType == 'ReMapRevisionResultInspectionPreExecution' ||
                           responseType == 'MapRevisionResultInspectionOfTheFirstStage' ||
@@ -303,7 +454,7 @@
 
                   <div class="col-lg-4 col-md-4 col-sm-4 ">
                     <label for="applianceCount">تعداد وسیله گازسوز</label>
-                    <input formControlName="applianceCount" fullWidth id="applianceCount" nbInput type="number" min="0"
+                    <input formControlName="applianceCount" id="applianceCount" nbInput type="number" min="0"
                       [readOnly]="
                           responseType == 'MapRevisionResultInspectionPreExecution' ||
                           responseType == 'ReMapRevisionResultInspectionPreExecution' ||
@@ -375,9 +526,9 @@
                     <nb-radio-group #rdbBuildingKind class="form-inline radio-x-inline"
                       formControlName="subscriptionType" id="subscriptionType" name="subscriptionType"
                       style="margin-top: 1.61rem">
-                      <nb-radio value="1">خانگی</nb-radio>
-                      <nb-radio value="2">عمومی</nb-radio>
-                      <nb-radio value="3">صنعتی</nb-radio>
+                      <nb-radio value="2">خانگی</nb-radio>
+                      <nb-radio value="3">عمومی</nb-radio>
+                      <nb-radio value="4">صنعتی</nb-radio>
 
                     </nb-radio-group>
 
@@ -431,6 +582,40 @@
               </div>
 
 
+              <!--#region نوع پنجره-->
+              <div class="col-lg-12 col-md-12 col-sm-12 mb-4">
+                <div class="row mb-3">
+                  <div class="col-sm-2 mt-2 text-center">
+                    <label>
+                      <span class="text-danger font-weight-bold">*</span>
+                      نوع پنجره
+                    </label>
+                  </div>
+                  <div class="col-sm-10">
+                    <nb-radio-group formControlName="windowKind" id="windowKind" name="windowKind"
+                      style="margin-top: 1.75rem">
+                      <nb-radio value="1">با درز معمولی</nb-radio>
+                      <nb-radio value="2">با درز هوابند لاستیکی
+                      </nb-radio>
+                    </nb-radio-group>
+
+                    <div *ngIf="isSubmitted">
+                      <div *ngFor="
+                              let validation of INPUT_VALIDATION_MESSAGES.windowKind
+                            ">
+                        <span class="text-danger" *ngIf="
+                              recordMapInfoFormg
+                                  .get('windowKind')
+                                  .hasError(validation.type)
+                              ">{{ validation.message }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!--#end region -->
+
               <div class="col-lg-12 col-md-12 col-sm-12 mb-5">
                 <div class="input-group">
                   <div class="col-lg-12 col-md-12 col-sm-12">
@@ -440,18 +625,204 @@
                   </div>
                 </div>
               </div>
+              <!--#region main  -->
+              <!-- <pre> {{recordMapInfoFormg?.value | json}} </pre> -->
+              <!-- <pre> {{recordMapInfoFormg?.workFlowGasAppliances?.value | json}} </pre> -->
 
-              <div class="input-group mb-5 mx-3" *ngIf="(isEditByEngineer=== false)">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                  <label for="file">نقشه لوله کشی:</label>
+              <nb-accordion multi class="mb-3">
+                <!-- <nb-accordion-item expanded> -->
+                <nb-accordion-item>
+                  <nb-accordion-item-header aria-expanded="isEdit" class="blink text-info">
+                    وسایل گاز سوز
+                  </nb-accordion-item-header>
+                  <nb-accordion-item-body>
+                    <main class="table">
+                      <section class="table__body">
+                        <table>
+                          <thead>
+                            <tr>
+                              <th>نوع وسیله گاز سوز</th>
+                              <th>تعداد</th>
+                              <th>مصرف</th>
+                              <th>جمع مصرف</th>
+                            </tr>
+                          </thead>
+                          <tbody formArrayName="workFlowGasAppliances">
+                            <!--#region tr   اجاق گاز بدون فر -->
 
-                  <div *ngFor="let a of inputCount; let i = index">
-                    <strong class="mb-2" style="color: rgb(0, 68, 255); display:block; font-size: 11px;"> حداکثر حجم
-                      {{sizeTitles[i]}} - فرمت ها ({{a.extentions}}) </strong>
-                    <app-uploader [formControlName]="a.formControlName" [progress]="progress" [filePath]="imagePath"
-                      [fileExtentions]="a.extentions" [fileSize]="a.size" [className]="responseType">
-                    </app-uploader>
+                            <tr
+                              *ngFor="let appliances of recordMapInfoFormg.get('workFlowGasAppliances')['controls']; let idx = index"
+                              [formGroupName]="idx">
+                              <!-- <pre> {{appliances?.title?.value | json}} </pre> -->
+                              <td>
+                                <label for="{{title}}" style="display:block;clear:both;float: right;">
+                                  <input formControlName="title" id="title-{{idx}}" nbInput type="text" readonly
+                                    hidden />
+                                  {{appliancesType[idx].title}}
+                                  <span class="tbl-span"
+                                    style="float: left;height: 0.9rem !important;font-size: 0.6rem;">
+                                    <bdi>{{appliancesType[idx].Abbreviation}}</bdi>
+                                  </span>
+                                </label>
+                                <input formControlName="className" id="className-{{idx}}" nbInput type="text"
+                                  value="className" hidden />
+                              </td>
+                              <td>
+                                <input formControlName="count" id="count-{{idx}}" nbInput type="number" min="0" step="1"
+                                  max="100" />
+                                <!-- {{ getValidity(idx) }} -->
+                              </td>
+                              <td>
+                                <input formControlName="amount" id="amount-{{idx}}" nbInput type="number" step=".01"
+                                  min="0.0" max="300" />
+                              </td>
+                              <td>
+                                <strong>
+                                  <label class=" label text-info">
+                                    <input formControlName="total" fullWidth id="total-{{idx}}" nbInput
+                                      [ngModel]="calculateTotal()" />
+                                  </label>
+                                </strong>
+                              </td>
+
+                            </tr>
+                            <!--#endregion -->
+                          </tbody>
+
+                          <tfoot class="table__foot">
+                            <tr>
+                              <th id="total" colspan="3">
+                                <label class="bdi-label" for="">
+                                  <span class="d-inline text-danger font-weight-bold">*</span>&nbsp;&nbsp;
+                                  جمع مصرف :
+                                </label>
+                                <span class="tbl-span" style="float: left;height: 0.9rem !important;font-size: 1.6rem;">
+                                  <bdi>&#13221; /h</bdi>
+                                </span>
+                              </th>
+                              <th>
+                                <input formControlName="totalConsumption" fullWidth id="totalConsumption" nbInput
+                                  type="number" min="0.0" step=".01" />
+                              </th>
+                              <div *ngFor="
+                            let validation of INPUT_VALIDATION_MESSAGES.totalConsumption
+                          ">
+                                <span class="text-danger" *ngIf="
+                              recordMapInfoFormg
+                                .get('totalConsumption')
+                                .hasError(validation.type) &&
+                              (recordMapInfoFormg.get('totalConsumption').dirty ||
+                                recordMapInfoFormg.get('totalConsumption').touched)
+                            ">{{ validation.message }}</span>
+                              </div>
+                            </tr>
+                            <tr>
+                              <th id="total" colspan="3">
+                                <label class="bdi-label" for="">
+                                  <span class="d-inline text-danger font-weight-bold">*</span>&nbsp;&nbsp;
+
+                                  مصرف اشتراک پذیری :
+                                </label>
+                                <span class="tbl-span" style="float: left;height: 0.9rem !important;font-size: 1.6rem;">
+                                  <bdi>&#13221; /h</bdi>
+                                </span>
+
+                              </th>
+                              <th>
+                                <input formControlName="consumingShareability" fullWidth id="consumingShareability"
+                                  nbInput type="number" min="0.0" step=".01" />
+                              </th>
+
+                              <div *ngFor="
+                              let validation of INPUT_VALIDATION_MESSAGES.consumingShareability
+                            ">
+                                <span class="text-danger" *ngIf="
+                                recordMapInfoFormg
+                                  .get('consumingShareability')
+                                  .hasError(validation.type) &&
+                                (recordMapInfoFormg.get('consumingShareability').dirty ||
+                                  recordMapInfoFormg.get('consumingShareability').touched)
+                              ">{{ validation.message }}</span>
+                              </div>
+
+                            </tr>
+                            <tr>
+                              <th id="total" colspan="3">
+                                <label class="bdi-label" for="">
+                                  <span class="d-inline text-danger font-weight-bold">*</span>&nbsp;&nbsp;
+                                  طولانی ترین مسیر :
+                                </label>
+                                <span class="tbl-span" style="float: left;height: 0.9rem !important;font-size: 1.6rem;">
+                                  <bdi>m</bdi>
+                                </span>
+
+                              </th>
+                              <th>
+                                <input formControlName="longestRoute" fullWidth id="longestRoute" nbInput type="number"
+                                  min="0.0" step=".01" />
+                              </th>
+
+                              <div *ngFor="
+                              let validation of INPUT_VALIDATION_MESSAGES.longestRoute
+                            ">
+                                <span class="text-danger" *ngIf="
+                                recordMapInfoFormg
+                                  .get('longestRoute')
+                                  .hasError(validation.type) &&
+                                (recordMapInfoFormg.get('longestRoute').dirty ||
+                                  recordMapInfoFormg.get('longestRoute').touched)
+                              ">{{ validation.message }}</span>
+                              </div>
+                            </tr>
+                          </tfoot>
+                        </table>
+
+                      </section>
+                    </main>
+                  </nb-accordion-item-body>
+                </nb-accordion-item>
+
+              </nb-accordion>
+
+
+              <!--#endregion -->
+
+              <div *ngIf="inputCount?.length <=1">
+                <div class="input-group mb-5 mx-3" *ngIf="(isEditByEngineer=== false)">
+                  <div class="col-lg-12 col-md-12 col-sm-12">
+                    <label for="file">نقشه لوله کشی:</label>
+
+                    <div *ngFor="let a of inputCount; let i = index">
+                      <strong class="mb-2" style="color: rgb(0, 68, 255); display:block; font-size: 11px;"> حداکثر حجم
+                        {{sizeTitles[i]}} - فرمت ها ({{a.extentions}}) </strong>
+                      <app-uploader [ShowControl]="true" [formControlName]="a.formControlName" [progress]="progress"
+                        [filePath]="imagePath" [fileExtentions]="a.extentions" [fileSize]="a.size"
+                        [className]="responseType">
+                      </app-uploader>
+                    </div>
                   </div>
+
+
+                </div>
+              </div>
+              <div class="container mb-5">
+                <div class="container-fluid" *ngIf="inputCount?.length > 1">
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 mb-5" *ngFor="let a of inputCount; let i = index">
+                      <label for="file" *ngIf="i===0">{{a.title}} لوله کشی</label>
+                      <label for="file" *ngIf="i > 0">{{a.title}}</label>
+
+                      <div class="col-lg-12 col-md-12 col-sm-12">
+                        <strong class="mb-2" style="color: rgb(0, 68, 255); display:block; font-size: 11px;"> حداکثر حجم
+                          {{sizeTitles[i]}} - فرمت ها ({{a.extentions}}) </strong>
+                        <app-uploader [formControlName]="a.formControlName" [progress]="progress" [filePath]="imagePath"
+                          [fileExtentions]="a.extentions" [fileSize]="a.size" [className]="responseType">
+                        </app-uploader>
+                      </div>
+                    </div>
+
+                  </div>
+
                 </div>
               </div>
 
@@ -491,8 +862,8 @@
                           recordMapInfoFormg.get('baseMeterTypeId').value === '' ||
                           recordMapInfoFormg.get('pipingKind').value === '' ||
                           recordMapInfoFormg.get('buildingKind').value === '' ||
-                          recordMapInfoFormg.get('subscriptionType').value === ''                        "
-                  [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="large">
+                          recordMapInfoFormg.get('subscriptionType').value === ''   " [nbSpinner]="loading"
+                  nbSpinnerStatus="info" nbSpinnerSize="large">
                   ثبت
                 </button>
               </div>

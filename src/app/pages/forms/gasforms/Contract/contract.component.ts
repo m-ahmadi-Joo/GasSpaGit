@@ -28,6 +28,9 @@ import { UnitStateService } from "src/app/@core/utils/unitState.service";
 import { ReportService } from "src/app/@core/utils/report.service";
 import { Auth } from "src/app/@core/auth/services/auth";
 import { IDatePickerConfig } from "ng2-jalali-date-picker";
+import { PersianDate } from 'src/app/@core/utils/persianDate';
+
+
 
 interface contractData {
   comment: string;
@@ -47,13 +50,14 @@ interface contractData {
   unitCount: number;
   associationNumber: string;
 }
-
+//  node_modules/angular-4-multiselect-dropdown-scroll/themes/default.theme.css
 // /pages/forms/cgmf
 @Component({
   // tslint:disable-next-line:component-selector
   selector: "app-contract",
   templateUrl: "./contract.component.html",
-  styleUrls: ["../formStyle.scss"],
+  styleUrls: ['../formStyle.scss', '../../../../../../node_modules/angular-4-multiselect-dropdown-scroll/themes/default.theme.css', './contract.component.scss']
+  // /pages/forms/cgmf'],
 })
 export class ContractComponent implements OnInit {
   isSubmited = false;
@@ -77,7 +81,6 @@ export class ContractComponent implements OnInit {
   selectedDesigner;
   sendForm: FormGroup;
   gasRequestId;
-  isEdit = false;
   contractId: number = 0;
   contractNumber: string;
   isShowDateError = false;
@@ -101,6 +104,14 @@ export class ContractComponent implements OnInit {
   currentRole: string;
   executerList = [];
   test = [];
+  datePickerConfig: IDatePickerConfig;
+  designerList = [];
+  dropdownList = [];
+  readonly bufferSize: number = 1000;
+  loadingDrpDwn = true;
+  dropdownSettings = {};
+  isEdit = false;
+  isChangeExecutor = false;
   // gasMeterCollection: GasMeterCollection;
   constructor(
     private fb: FormBuilder,
@@ -114,6 +125,8 @@ export class ContractComponent implements OnInit {
     private unitStateService: UnitStateService,
     private reportService: ReportService,
     private auth: Auth,
+    private persianDate: PersianDate,
+
 
   ) {
     this.currentRole = this.auth.getCurrentRole();
@@ -122,64 +135,37 @@ export class ContractComponent implements OnInit {
       this.requestStateType = x;
     });
 
-    // let currentUrl = this.router.url;
-    // this.lastSection = currentUrl.substring(currentUrl.lastIndexOf("/") + 1);
-    // this.contractId = parseInt(this.lastSection);
-
-    // this.requestStateType = this.lastSection;
 
     console.log(this.requestStateType);
   }
   ngAfterViewInit(): void {
-    // if (this.requestStateType == "ChangeExecutor") {
-    //   // alert(this.contractId);
-    //   //commment for change executer
-    //   // this.route.data.subscribe((data) => {
-    //   //   this.states = data["contract"];
-    //   // });
-    //   // this.api
-    //   //   .getById("Contract/GetAllExecutersForChangeExecuter", this.contractId)
-    //   //   .subscribe((res) => {
-    //   //     this.states = res.body;
-    //   //   });
-    // }
-    // // else if (this.requestStateType == "ContractHP") {
-    // //   this.gasRequestId = this.route.snapshot.paramMap.get("id");
-    // //   this.api.getFrom("Contract", "GetAllExecuters").subscribe((res) => {
-    // //     this.states = res;
-    // //   });
-    // //   // this.api
-    // //   //   .getFrom("GasRequest/" + this.gasRequestId, null)
-    // //   //   .subscribe((res) => {
-    // //   //     this.states = res;
-    // //   //     console.log(res);
-    // //   //     this.cgmForm.controls.gasRequestSelect.clearValidators();
-    // //   //     this.cgmForm.controls.gasRequestSelect.clearValidators();
-    // //   //   });
-    // //     this.route.data.subscribe((data) => {
-    // //       this.states = data["contract"];
-    // //       this.cgmForm.controls.gasRequestSelect.clearValidators();
-    // //       this.cgmForm.controls.gasRequestSelect.clearValidators();
-    // //     });
-
-    // //   // this.lastSection = "ContractHP";
-    // // }
-    // else {
-    //   // this.api.getFrom("Contract", "GetAllExecuters").subscribe((res) => {
-    //   //   this.states = res;
-    //   // });
-    //   //comment for Edit
-
-    // this.api.getFrom("GasRequest", "GetAllGasRequest").subscribe((res) => {
-    //   this.gasStates = res;
-    //   console.log(res);
-    // });
-
-
-
+    
   }
 
   ngOnInit() {
+    this.dropdownSettings = {
+      singleSelection: true,
+      text: "انتخاب طراح",
+      selectAllText: 'انتخاب همه',
+      unSelectAllText: 'انتخاب هیچکدام',
+      enableSearchFilter: true,
+      searchFilterPlaceholderText: "انتخاب همه محدود شده",
+      classes: "myclass custom-class-example appearance-outline full-width size-medium shape-rectangle",
+      scroll: true,
+      lazyLoading: true,
+      badgeShowLimit: 2,
+      maxHeight: 400,
+      searchPlaceholderText: 'جستجو',
+      showCheckbox: true,
+      noDataLabel: 'موردی یافت نشد',
+      primaryKey: "id",
+      labelKey: "itemName",
+      labelText: "itemName",
+      searchBy: ['itemName']
+    };
+
+    this.datePickerConfig = this.persianDate.datePickerConfig;
+
     this.unitStateService.className.subscribe((x) => {
       this.requestStateType = x;
     });
@@ -190,22 +176,14 @@ export class ContractComponent implements OnInit {
       this.router.navigate(["/pages/403"]);
     }
 
-    this.route.data.subscribe((data) => {
-      this.states = data["contract"];
-    });
-
 
     this.route.data.subscribe((data) => {
       this.gasStates = data["data"];
     });
-
     this.route.data.subscribe((data) => {
-      this.designers = data["designer"];
-
+      this.states = data["contract"];
     });
 
-    // this.dateConfig = this.persianDate.datePickerConfig;
-    // this.dateConfig.min = moment();
 
     {
       this.cgmForm = this.fb.group({
@@ -275,31 +253,31 @@ export class ContractComponent implements OnInit {
     ) {
       console.log("Contract Page");
     } else {
-      if (this.requestStateType === "ChangeExecutor") {
-        this.isEdit = false;
-      } else {
+      if (this.requestStateType === "EditContract") {
         this.isEdit = true;
+      } else if (this.requestStateType === "ChangeExecutor") {
+        this.isChangeExecutor = true;
       }
 
       this.contractId = Number(this.route.snapshot.paramMap.get("id"));
-      // this.http
-      //   .get<contractData>(
-      //     environment.SERVER_URL + "/Contract/" + this.contractId
-      //   )
-      //   .subscribe((res: contractData) => {
       this.route.data.subscribe((edit) => {
+
         let res: contractData = edit["edit"];
+        this.gasRequestId = res.gasRequestId;
+        this.contractNumber = res.number;
 
-        if (res) {
-          console.log(res);
+        this.designerId = res.designerId;
 
+
+         
+        if (res || this.isChangeExecutor === true || this.isEdit === true) {
+
+
+    
           this.designerType = res.designerType;
 
           var startDate = res.startDate;
-          // moment(res.startDate, "YYYY-MM-DD");
           var endDate = res.endDate;
-
-          // moment(res.endDate, "YYYY-MM-DD");
           this.filePath = res.filePath;
           console.log(this.filePath);
           console.log(res.endDate);
@@ -327,113 +305,47 @@ export class ContractComponent implements OnInit {
             }
           }
 
-          this.gasRequestId = res.gasRequestId;
-          this.contractNumber = res.number;
 
-          this.designerId = res.designerId;
-          if (this.requestStateType !== "ChangeExecutor") {
+
+          this.designers = [];
+          this.route.data.subscribe((data) => {
+            this.designers = data["designer"];
+
+          });
+
+       
+          if (this.designerType == 'executer') {
             this.api
-              .getFrom("Contract", "GetAllExecuters/" + this.gasRequestId)
+              .getFrom("Contract", "GetAllExecutersAsDesigner/" + this.gasRequestId)
               .subscribe((res: any) => {
                 if (res) {
-                  this.states = res;
-                  console.log(res);
-                  console.log(this.test);
+                  console.log(res)
+                  this.designers = res;
+                  this.setDesignerList(this.designers);
+                  this.findAndSetDesigner();
                 }
                 (err) => { };
               });
-
-            if (this.designerType == 'executer') {
-              this.api
-                .getFrom("Contract", "GetAllExecutersAsDesigner/" + this.gasRequestId)
-                .subscribe((res: any) => {
-                  if (res) {
-                    this.designers = res;
-                    this.findAndSetDesigner();
-
-                  }
-                  (err) => { };
-                });
-
-            }
-            else {
-
-              this.api
-                .getFrom("Contract", "GetEngineersAsDesigner/" + this.gasRequestId)
-                .subscribe((res: any) => {
-                  if (res) {
-                    this.designers = res;
-                    this.findAndSetDesigner();
-
-                  }
-                  (err) => { };
-                });
-            }
-
-
-
-
-
-
-          }// if (this.requestStateType !== "ChangeExecutor") {
-
-          if (this.requestStateType == "ChangeExecutor") {
-
-            this.api
-              .getFrom("Contract", "GetAllExecuters/" + this.gasRequestId)
-              .subscribe((res: any) => {
-                if (res) {
-                  this.states = res;
-                  console.log(res);
-                  console.log(this.test);
-                }
-                (err) => { };
-              });
-
-            if (this.designerType == 'executer') {
-              this.api
-                .getFrom("Contract", "GetAllExecutersAsDesigner/" + this.gasRequestId)
-                .subscribe((res: any) => {
-                  if (res) {
-                    this.designers = res;
-
-                  }
-                  (err) => { };
-                });
-
-            }
-            else {
-
-              this.api
-                .getFrom("Contract", "GetEngineersAsDesigner/" + this.gasRequestId)
-                .subscribe((res: any) => {
-                  if (res) {
-                    this.designers = res;
-
-                  }
-                  (err) => { };
-                });
-            }
-
-
-
           }
+          else {
+            this.api
+              .getFrom("Contract", "GetEngineersAsDesigner/" + this.gasRequestId)
+              .subscribe((res: any) => {
+                if (res) {
+                  this.designers = res;
+                  this.setDesignerList(this.designers);
+                  this.findAndSetDesigner();
+                }
+                (err) => { };
+              });
+          }
+
           this.api
             .getById("GasRequest/GetAllGasRequestForEditWithUserArea", this.gasRequestId)
             .subscribe((response: any) => {
               if (response) {
                 this.gasStates = response.body;
                 console.log(this.gasStates);
-                // this.api
-                // .getFrom("Contract", "GetAllExecuters/" + this.gasRequestId)
-                // .subscribe((res: any) => {
-                //   if (res.ok) {
-                //     this.states = res;
-                //      this.executerId = res.id;
-                //   }
-                //   (err) => {};
-                // });
-
                 if (this.gasStates && this.states) {
                   console.log(this.gasRequestId);
                   console.log(this.gasStates);
@@ -443,19 +355,11 @@ export class ContractComponent implements OnInit {
                   );
 
                   console.log(gasReq);
-
-
-                  if (this.requestStateType !== "ChangeExecutor") {
-                    var executer = this.states.find(
-                      (x) => x.executerId == res.baseExecuterId
-                    );
-                    console.log(executer);
-                    this.executerId = executer.id;
-
-
-
-
-                  }
+                  var executer = this.states.find(
+                    (x) => x.executerId == res.baseExecuterId
+                  );
+                  console.log(executer);
+                  this.executerId = executer.id;
                   console.log(res.persianStartDate);
 
                   var t = moment(res.persianStartDate, "YYYY/MM/DD").locale(
@@ -478,35 +382,32 @@ export class ContractComponent implements OnInit {
 
                     unitCount: res.unitCount,
                     associationNumber: res.associationNumber,
-                    // dateStart: moment(res.persianStartDate, "jYYYY,jMM,jDD"),
-                    // dateEnd: moment(res.persianEndDate, "jYYYY,jMM,jDD"),
 
-                    // dateStart: moment(res.persianStartDate, 'YYYY/MM/DD').locale('fa').format('jYYYY-jMM-jDD'),
-
-                    // dateStart: t.format("jYYYY-jMM-jDD"),
-                    // endDate: t.format("jYYYY-jMM-jDD"),
                     desc: res.comment,
                     gasRequestSelect: gasReq.fileNumber,
 
-                    // executerSelect: executer.fullName,
+
                     contractCost: res.contractCost,
                   });
-
-                  if (this.requestStateType != "ChangeExecutor") {
-                    // this.cgmForm.setValue({
-                    //   executerSelect: executer.fullName
-                    // });
-
-                    this.cgmForm.controls.executerSelect.setValue(
-                      executer.fullName
-                    );
+                  // if (this.requestStateType != "ChangeExecutor") {
 
 
+                  this.cgmForm.controls.executerSelect.setValue(
+                    executer.fullName
+                  );
 
+                  if (this.isEdit === true || this.isChangeExecutor === true) {
+                    var selectedDesigner = this.designerList.filter(f => f.idx == this.selectedDesigner.userId);
                     this.cgmForm.controls.designerSelect.setValue(
-                      this.selectedDesigner.id
+                      selectedDesigner
                     );
                   }
+
+
+                  // this.cgmForm.controls.designerSelect.setValue(
+                  //   this.selectedDesigner.id
+                  // );
+                  //}
 
                   this.cgmForm.controls.dateStart.clearValidators();
                   this.cgmForm.controls["dateStart"].setValidators([
@@ -525,28 +426,13 @@ export class ContractComponent implements OnInit {
                   if (this.requestStateType == "ChangeExecutor") {
                     this.cgmForm.get("gasRequestSelect").disable();
                   }
+
                 }
               }
             });
         }
       });
     }
-
-
-    // this.route.data.subscribe((data) => {
-    //   this.states = data["contract"];
-    // });
-
-
-    // this.route.data.subscribe((data) => {
-    //   this.gasStates = data["data"];
-    // });
-
-    // this.route.data.subscribe((data) => {
-    //   this.designers = data["designer"];
-
-    // });
-
 
   }
 
@@ -598,9 +484,11 @@ export class ContractComponent implements OnInit {
   onSelectDesigner(event)//: TypeaheadMatch): void {
   {
     //مشخصات طراح را بعد از انتخاب در جدول روبروی آن می آورد
+
     this.selectedDesigner = this.designers.find(
       (x) => x.userId == event
     );
+
 
     this.designerSelectedOption = Array.of(this.selectedDesigner);
     this.designerId = event;
@@ -630,6 +518,7 @@ export class ContractComponent implements OnInit {
 
           if (res) {
             this.states = res;
+
           }
         },
         (err) => {
@@ -643,15 +532,7 @@ export class ContractComponent implements OnInit {
 
   reset() {
     location.reload();
-    // this.cgmForm.reset();
-    // this.isEdit = false;
 
-    // this.cgmForm.controls.dateEnd.setValue(null);
-    // this.cgmForm.controls.dateEnd.reset();
-    // this.cgmForm.controls.dateStart.reset();
-    // this.selectedOption = null;
-
-    // this.selectedOptionGas = null;
   }
   manage(val: any): void {
     this.isSubmited = true;
@@ -659,29 +540,11 @@ export class ContractComponent implements OnInit {
       return;
     } else {
       this.cgmFormInfo = {
-        // EndDate: new Date(
-        //   moment
-        //     .from(this.cgmForm.controls.dateEnd.value, "fa", "YYYY/MM/DD")
-        //     .format("YYYY-MM-DD")
-        // ),
 
-        // StartDate: new Date(
-        //   moment
-        //     .from(this.cgmForm.controls.dateStart.value, "fa", "YYYY/MM/DD")
-        //     .format("YYYY-MM-DD")
-        // ),
         EndDate: this.cgmForm.controls.dateStart.value,
-        //  new Date(
-        //   this.persianDate.convertPersianToGeorgian(
-        //     this.cgmForm.controls.dateEnd.value
-        //   )
-        // ),
+
         StartDate: this.cgmForm.controls.dateStart.value,
-        //  new Date(
-        //   this.persianDate.convertPersianToGeorgian(
-        //     this.cgmForm.controls.dateStart.value
-        //   )
-        // ),
+
         ContractCost: this.cgmForm.controls.contractCost.value,
         Comment: this.cgmForm.controls.desc.value,
         BaseExecuterId: this.executerId,
@@ -692,27 +555,16 @@ export class ContractComponent implements OnInit {
 
       };
 
-      console.log(this.cgmFormInfo.StartDate);
+
 
       var EndDate = this.cgmForm.controls.dateEnd.value;
       var StartDate = this.cgmForm.controls.dateStart.value;
-      // var EndDate = new Date(
-      //   this.persianDate.convertPersianToGeorgian(
-      //     this.cgmForm.controls.dateEnd.value
-      //   )
-      // );
-      // var StartDate = new Date(
-      //   this.persianDate.convertPersianToGeorgian(
-      //     this.cgmForm.controls.dateStart.value
-      //   )
-      // );
+
       this.sendForm = this.fb.group({
         EndDate: this.cgmForm.controls.dateEnd.value,
-        //  this.datepipe.transform(EndDate, "yyyy/MM/dd"),
-        //  new Date(this.persianDate.convertPersianToGeorgian(this.cgmForm.controls.dateEnd.value)),
+
         StartDate: this.cgmForm.controls.dateStart.value,
-        // this.datepipe.transform(StartDate, "yyyy/MM/dd"),
-        // new Date(this.persianDate.convertPersianToGeorgian(this.cgmForm.controls.dateStart.value)),
+
         ContractCost: this.cgmForm.controls.contractCost.value,
         Comment: this.cgmForm.controls.desc.value,
         BaseExecuterId: this.executerId,
@@ -738,7 +590,7 @@ export class ContractComponent implements OnInit {
               index < this.cgmForm.controls[key].value.length;
               index++
             ) {
-              console.log("ppp");
+
               this.sendForm.addControl(
                 key + "_" + index,
                 new FormControl(this.cgmForm.controls[key].value[index])
@@ -746,16 +598,10 @@ export class ContractComponent implements OnInit {
             }
           } else {
             if (key == "date") {
-              // var time = new Date(
-              //   moment
-              //     .from(this.cgmForm.controls.date.value, "fa", "YYYY/MM/DD")
-              //     .format("YYYY/MM/DD")
-              // );
-              // var finalTime = this.datepipe.transform(time, "yyyy/MM/dd");
+
               this.sendForm.addControl(
                 "ForDate",
 
-                // new FormControl(finalTime)
                 this.cgmForm.controls.date.value
               );
             } else {
@@ -766,10 +612,10 @@ export class ContractComponent implements OnInit {
             }
           }
         }
-        console.log(this.sendForm.value);
+
       });
 
-      console.log(this.lastSection);
+
 
       if (
         this.contractId === 0 ||
@@ -779,7 +625,6 @@ export class ContractComponent implements OnInit {
         if (this.requestStateType == "ChangeExecutor") {
           this.sendForm.get("Id").setValue(this.contractId);
         }
-        debugger;
         this.api
           .postTo("Contract", "", this.toFormData(this.sendForm.value))
           .subscribe(
@@ -796,7 +641,6 @@ export class ContractComponent implements OnInit {
                   this.router.navigate(["/pages/forms/ContractList"]);
                 } else {
                   this.router.navigate(["/pages/forms/ContractList"]);
-                  // this.router.navigate(["/pages/forms/GasReqList"]);
                 }
               }
             },
@@ -818,45 +662,9 @@ export class ContractComponent implements OnInit {
         this.router.navigate(["/pages/forms/GasReqList"]);
       } else {
         console.log("Navigate To PUT Method");
-        console.log(this.contractId);
-        console.log(this.sendForm.value);
+
         this.sendForm.get("Id").setValue(this.contractId);
-        // this.cgmFormInfo = {
-        //   EndDate: new Date(
-        //     moment
-        //       .from(this.cgmForm.controls.dateEnd.value, "fa", "YYYY/MM/DD")
-        //       .format("YYYY-MM-DD")
-        //   ),
 
-        //   StartDate: new Date(
-        //     moment
-        //       .from(this.cgmForm.controls.dateStart.value, "fa", "YYYY/MM/DD")
-        //       .format("YYYY-MM-DD")
-        //   ),
-        //   ContractCost: this.cgmForm.controls.contractCost.value,
-        //   Comment: this.cgmForm.controls.desc.value,
-        //   BaseExecuterId: this.executerId,
-        //   GASRequestId: this.gasRequestId,
-        //   Id: this.contractId,
-        //   Number: this.contractNumber
-        // };
-
-        // this.cgmFormInfo.StartDate = this.cgmForm.controls.dateStart.value;
-        // this.cgmFormInfo.EndDate = this.cgmForm.controls.dateEnd.value;
-
-        // this.cgmFormInfo.StartDate = new Date(
-        //   moment
-        //     .from(this.cgmForm.controls.dateStart.value, "fa", "YYYY/MM/DD")
-        //     .format("YYYY-MM-DD"));
-
-        // this.cgmFormInfo.EndDate = new Date(
-        //   moment
-        //     .from(this.cgmForm.controls.dateEnd.value, "fa", "YYYY/MM/DD")
-        //     .format("YYYY-MM-DD")
-        // );
-
-        console.log(this.cgmFormInfo.StartDate);
-        console.log(this.cgmFormInfo.EndDate);
 
         this.http
           .put(
@@ -965,7 +773,7 @@ export class ContractComponent implements OnInit {
 
 
   changeDesignerTypeCallAPi() {
-  
+
     if (this.gasRequestId === undefined || this.gasRequestId === "") {
 
       this.api
@@ -975,12 +783,14 @@ export class ContractComponent implements OnInit {
             console.log(res.status);
             if (res) {
               this.designers = res;
+              this.setDesignerList(this.designers);
             }
           },
           (err) => {
             this.designers = [];
           }
         );
+
     }
     else if (this.designerType === 'executer') {
       this.api
@@ -990,6 +800,7 @@ export class ContractComponent implements OnInit {
             console.log(res.status);
             if (res) {
               this.designers = res;
+              this.setDesignerList(this.designers);
             }
           },
           (err) => {
@@ -1005,6 +816,8 @@ export class ContractComponent implements OnInit {
             console.log(res.status);
             if (res) {
               this.designers = res;
+              this.setDesignerList(this.designers);
+
             }
           },
           (err) => {
@@ -1013,22 +826,52 @@ export class ContractComponent implements OnInit {
         );
     }
 
-    // this.selectedOptionTmp=this.designers[0].id;
+
   }
 
   onChangeDesignerType(event) {
     console.log(event)
     this.designerType = event;
-
+    this.cgmForm.controls.designerSelect.setValue([]);
     this.changeDesignerTypeCallAPi();
   }
 
   findAndSetDesigner() {
-    this.selectedDesigner = this.designers.find(
+    this.selectedDesigner = this.designers.find( // this.baseDesignerList.find(
       (x) => x.userId == this.designerId
     );
-    this.designerId = this.selectedDesigner.id;
+    if (this.selectedDesigner) {
+      this.designerId = this.selectedDesigner.id;
+    }
+  }
+
+
+  onItemSelect(item: any) {
+    console.log(item);
 
   }
+  OnItemDeSelect(item: any) {
+    console.log(item);
+  }
+  onSelectAll(items: any) {
+    console.log(items);
+  }
+  onDeSelectAll(items: any) {
+    console.log(items);
+  }
+  setDesignerList(designers) {
+    this.designerList = [];
+    for (let index = 0; index < designers.length; index++) {
+      const element = designers[index];
+      this.designerList.push({
+        'id': index + 1 + ". ",
+        'idx': element.id,
+        'itemName': element.fullName
+      });
+    }
+   
+  }
+
+ 
 
 }

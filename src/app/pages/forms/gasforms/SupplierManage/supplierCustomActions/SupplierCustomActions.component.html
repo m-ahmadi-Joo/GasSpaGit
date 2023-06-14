@@ -1,0 +1,40 @@
+<!-- 
+<button
+  nbTooltip="حذف"
+  nbTooltipPlacement="top"
+  size="tiny"
+  class="mb-2 mr-1"
+  nbButton
+  status="danger"
+  (click)="onDeleteContract(rData)"
+  *appHasRole="['Admin', 'GasEmployee']"
+>
+  <nb-icon
+    [options]="{ animation: { type: 'zoom' } }"
+    class="icon-button"
+    icon="close-outline"
+  >
+  </nb-icon>
+</button> -->
+
+<button
+  nbTooltip="ویرایش"
+  nbTooltipPlacement="top"
+  *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee', 'GasEmployeeExceptShiraz']"
+  [disabled]="rData.hasUnit"
+  [ngStyle]="{ cursor: rData.hasUnit ? 'not-allowed' : 'pointer' }"
+  size="tiny"
+  class="mb-2 mr-1"
+  nbButton
+  status="warning"
+  (click)="onEditSupplier(rData.id)"
+>
+  <nb-icon
+    [options]="{ animation: { type: 'zoom' } }"
+    class="icon-button"
+    icon="edit-2-outline"
+  >
+  </nb-icon>
+</button>
+
+

@@ -1,6 +1,6 @@
-import { Component, OnInit } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { NbGlobalLogicalPosition, NbToastrService } from "@nebular/theme";
+import { Component, EventEmitter, OnInit, Output, TemplateRef, ViewChild } from "@angular/core";
+import { AbstractControl, FormControl, FormGroup, Validators } from "@angular/forms";
+import { NbDialogRef, NbDialogService, NbGlobalLogicalPosition, NbToastrService } from "@nebular/theme";
 import { ActivatedRoute,Router } from "@angular/router";
 import { PersianDate } from "src/app/@core/utils/persianDate";
 import { IDatePickerConfig } from "ng2-jalali-date-picker";
@@ -8,8 +8,65 @@ import { TypeaheadMatch } from "ngx-bootstrap/typeahead/public_api";
 import { formatDate } from "@angular/common";
 import { RegularService } from "src/app/@core/utils/regular.service";
 import { ApiCommandCenter } from "src/app/@core/api/services/apiCommandCenter";
+import { GetUserRolesService } from "src/app/@core/utils/getUserRoles.service";
+import { Auth } from "src/app/@core/auth/services/auth";
 
 // /pages/forms/mif
+function nationalIDCheck(
+  control: AbstractControl
+): { [s: string]: boolean } | null {
+  if (control.value === "") {
+    return null;
+  }
+
+  if (control.value === "0000000000") {
+    return null;
+  }
+  const cval = String(control.value);
+  const L = cval.length;
+
+  const codelen = /^\d{10}$/;
+  if (
+    control.value === "1111111111" ||
+    control.value === "2222222222" ||
+    control.value === "3333333333" ||
+    control.value === "4444444444" ||
+    control.value === "5555555555" ||
+    control.value === "6666666666" ||
+    control.value === "7777777777" ||
+    control.value === "8888888888" ||
+    control.value === "9999999999"
+  ) {
+    return { natnalid: true };
+  }
+  if (!String(control.value).match(codelen)) {
+    return { natnalid: true };
+  }
+  let val = control.value;
+  if (L < 8 || parseInt(control.value, 10) === 0) {
+    return { natnalid: true };
+  }
+
+  val = ("0000" + control.value).substring(L + 4 - 10);
+
+  if (parseInt(val.substr(3, 6), 10) === 0) {
+    return { natnalid: true };
+  }
+
+  const c = parseInt(val.substr(9, 1), 10);
+  let s = 0;
+  for (let i = 0; i < 9; i++) {
+    s += parseInt(val.substr(i, 1), 10) * (10 - i);
+  }
+
+  s = s % 11;
+
+  if ((s < 2 && c === s) || (s >= 2 && c === 11 - s)) {
+    return null;
+  } else {
+    return { natnalid: true };
+  }
+}
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -51,10 +108,15 @@ export class EditOwnerComponent implements OnInit {
     tel: number;
     nationalID;
     phoneNumber;
+    isOld;
   };
   isOldTmp:boolean;
+  readOnlyNationalId:boolean=true;
   gasReqIdTmp:number;
 contractId;
+continueForRepeaedNationalId=true;
+dialogRef: NbDialogRef<any>;
+@ViewChild("dialog", { static: false }) dialog: TemplateRef<any>;
   INPUT_VALIDATION_MESSAGES = {
     lastName: [
       { type: "minLength", message: "نام خانوادگی باید حداقل 3 کاراکتر باشد" },
@@ -119,15 +181,21 @@ contractId;
     bYear: [{ type: "required", message: "سال تولد را تعیین کنید." }],
     bMonth: [{ type: "required", message: "ماه تولد را تعیین کنید." }],
     bDay: [{ type: "required", message: "روز تولد را تعیین کنید." }],
+    nationalID: [
+      { type: "required", message: "فیلد کد ملی الزامی است" },
+      { type: "natnalid", message: "کد ملی را به صورت صحیح وارد کنید" }
+    ]
   };
-
   constructor(
     private toastrService: NbToastrService,
     private router: Router,
-    private persianDate: PersianDate,
+    private persianDate: PersianDate, 
     private regService: RegularService,
     private api: ApiCommandCenter,
-    private route: ActivatedRoute
+    private userRoles: GetUserRolesService,
+    private route: ActivatedRoute,
+    private authService: Auth,
+    private dialogService: NbDialogService,
   ) {
     this.currentDate = formatDate(new Date(), "yyyy/MM/dd", "en");
   }
@@ -168,7 +236,7 @@ contractId;
     this.currentDate = this.persianDate.convertGeorgianToPersian(
       this.currentDate
     ); 
- 
+    let userRoles = this.userRoles.GetRoles();
     this.gasrequestId = this.route.snapshot.params['id'];
     this.contractId=this.route.snapshot.params['contractId']
     var splitted = this.currentDate.split("-", 3);
@@ -186,6 +254,9 @@ if(this.gasrequestId!=null)
     this.userOwnerDto.controls.agentName.setValue(res.agentName);
     this.userOwnerDto.controls.fatherName.setValue(res.fatherName);
     this.userOwnerDto.controls.ownerKind.setValue(res.ownerKind.toString());
+    this.isOldTmp=res.isOld;
+    this.readOnlyNationalId=!res.isOld;
+    // let roleNames = this.userRoles.toString().split(",");
     if (res.ownerKind.toString() === "1") {
       this.userOwnerDto.get("tel").setValidators([Validators.required]);
       this.userOwnerDto.controls.tel.updateValueAndValidity();
@@ -203,6 +274,7 @@ if(this.gasrequestId!=null)
     this.userOwnerDto.controls.address.setValue(res.address);
     this.userId = res.userId;
     this.nationalID = res.nationalID;
+    this.userOwnerDto.controls.nationalID.setValue(res.nationalID);
     this.phoneNumber = res.phoneNumber;
     let birthDate = res.birthdate.split("-");
 
@@ -255,6 +327,8 @@ if(this.gasrequestId!=null)
 else{
     this.api.getFrom("Base", "GetUserEdit").subscribe((res: any) => {
       console.log(res);
+      this.readOnlyNationalId=!res.isOld;
+      this.isOldTmp=res.isOld;
       this.userOwnerDto.controls.agentName.setValue(res.agentName);
       this.userOwnerDto.controls.fatherName.setValue(res.fatherName);
       this.userOwnerDto.controls.ownerKind.setValue(res.ownerKind.toString());
@@ -273,6 +347,7 @@ else{
       this.userOwnerDto.controls.lastName.setValue(res.lastName);
       this.userOwnerDto.controls.tel.setValue(res.tel);
       this.userOwnerDto.controls.address.setValue(res.address);
+      this.userOwnerDto.controls.nationalID.setValue(res.nationalID)
       this.userId = res.userId;
       this.nationalID = res.nationalID;
       this.phoneNumber = res.phoneNumber;
@@ -345,7 +420,14 @@ else{
   onSubmit() {
     // TODO: National ID get from local storage ?
     // TODO: Phone Number get from local storage ?
-
+    if(this.readOnlyNationalId==false&&!this.continueForRepeaedNationalId)
+    {
+      this.toastrService.danger("کد ملی تکراری می باشد", " ", {
+        position: NbGlobalLogicalPosition.TOP_START,
+        duration: 5000,
+      });
+      return;
+    }
     switch (this.userOwnerDto.controls.bMonth.value) {
       case "فروردین (01)":
         this.userOwnerDto.controls.bMonth.setValue(1);
@@ -414,12 +496,15 @@ else{
         // bDay: this.userOwnerDto.controls.bDay.value,
 
         userId: this.userId,
-        nationalID: this.nationalID,
+        // nationalID: this.nationalID,
+        nationalID: this.userOwnerDto.controls.nationalID.value,
         phoneNumber: this.phoneNumber,
         gender: this.userOwnerDto.controls.gender.value,
         firstName: this.userOwnerDto.controls.firstName.value,
         lastName: this.userOwnerDto.controls.lastName.value,
         tel: this.userOwnerDto.controls.tel.value,
+        isOld:this.isOldTmp
+        
       };
     } else {
       this.miInfo = {
@@ -439,12 +524,14 @@ else{
         // bDay: this.userOwnerDto.controls.bDay.value,
 
         userId: this.userId,
-        nationalID: this.nationalID,
+        // nationalID: this.nationalID,
+        nationalID:this.userOwnerDto.controls.nationalID.value,
         phoneNumber: this.phoneNumber,
         gender: this.userOwnerDto.controls.gender.value,
         firstName: this.userOwnerDto.controls.firstName.value,
         lastName: this.userOwnerDto.controls.lastName.value,
         tel: this.userOwnerDto.controls.tel.value,
+        isOld:this.isOldTmp
       };
     }
 
@@ -454,7 +541,7 @@ else{
         (res) => {
           if (res.ok == true) {
             this.isOldTmp=res.isOld;
-            this.gasReqIdTmp=res.gasReqId;
+           // this.gasReqIdTmp=res.gasReqId;
             const message = "ثبت با موفقیت انجام شد.";
             this.toastrService.success(message, " ", {
               position: NbGlobalLogicalPosition.TOP_START,
@@ -463,13 +550,12 @@ else{
             if(res.body){
 
               this.isOldTmp=res.body.isOld;
-              this.gasReqIdTmp=res.body.gasReqId;
+             //this.gasReqIdTmp=res.body.gasReqId;
             }
-           
-            if(this.isOldTmp)
+            if(this.isOldTmp&&!this.userRoles.GetRoles().includes("Owner"))
             {
               this.router.navigate([
-                "/pages/forms/ExecutorOldGasRequestEdit/" + this.gasReqIdTmp+"/contractId/"+this.contractId,
+                "/pages/forms/ExecutorOldGasRequestEdit/" + this.gasrequestId+"/contractId/"+this.contractId,
               ]);
             }
             else
@@ -532,6 +618,11 @@ else{
       bYear: new FormControl(""),
       bMonth: new FormControl(""),
       bDay: new FormControl(""),
+      nationalID: new FormControl("", [
+        Validators.required,
+        Validators.minLength(10),
+        nationalIDCheck
+      ]),
     });
     this.setFormValues(); // If Values Exists
   }
@@ -587,6 +678,58 @@ else{
     } else {
       this.InvalidDay = false;
     }
+  }
+
+  confirmConitnueEdit() {
+    this.dialogRef = this.dialogService.open(this.dialog, {
+      // context: row,
+      autoFocus: true,
+      hasBackdrop: true,
+      closeOnBackdropClick: false,
+      closeOnEsc: true,
+    });
+  }
+  nationalIDIsExist() {
+    if (
+      this.userOwnerDto.controls.nationalID.value === null ||
+      this.userOwnerDto.controls.nationalID.value === ""||this.readOnlyNationalId==true
+    ) {
+      return;
+    } else {
+     
+      this.loading = true;
+       let userName = this.userOwnerDto.controls.nationalID.value;
+      if (userName != "") {
+        this.authService.isUserExistForOldGas(userName).subscribe(
+          (res: any) => {
+            console.log(res);
+             this.loading = false;
+            if(res.isExist)
+            {
+              this.confirmConitnueEdit();
+            }
+          },
+          async err => {
+            this.loading = false;
+            console.log(err);
+           
+           
+            // await delay(5000);
+            // this.router.navigate(["/auth/PasswordRecovery"]);
+          }
+        );
+      }
+    }
+  }
+  setConfirmContinue(){
+
+    this.continueForRepeaedNationalId=true;
+    this.dialogRef.close();
+  }
+  rejectContiue(){
+    this.continueForRepeaedNationalId=false;
+    this.dialogRef.close();
+
   }
 }
 

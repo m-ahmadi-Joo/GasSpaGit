@@ -4,6 +4,8 @@ import { NbSidebarService } from "@nebular/theme";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { Auth } from "../@core/auth/services/auth";
 import { MENU_ITEMS_GASEMPLOYEE } from "./pages-menu/pages-menu-gasEmployee";
+import { MENU_ITEMS_AnalyzeEmployee } from "./pages-menu/pages-menu-analyzeEmployee";
+
 import { MENU_ITEMS_Association } from "./pages-menu/pages-menu-association";
 import { MENU_ITEMS_Admin } from "./pages-menu/pages-menu-admin";
 import { MENU_ITEMS_Owner } from "./pages-menu/pages-menu-Owner";
@@ -23,6 +25,8 @@ import { MENU_ITEMS_GASEMPLOYEEEXCEPTSHIRAZ } from "./pages-menu/pages-menu-gasE
 import { UnitStateService } from "../@core/utils/unitState.service";
 import { MENU_ITEMS_DoubleControlExpert } from "./pages-menu/pages-menu-DoubleControlExpert";
 import { MENU_ITEMS_GasCompany } from "./pages-menu/pages-menu-gasCompany";
+import { MENU_ITEMS_GASEMPLOYEEHP } from "./pages-menu/pages-menu-gasEmployeeHP";
+import { MENU_ITEMS_Shahrsazi } from "./pages-menu/pages-menu-roadUrbanDevelopment";
 @Component({
   // tslint:disable-next-line:component-selector
   selector: "ngx-pages",
@@ -98,6 +102,12 @@ export class PagesComponent implements OnInit {
     } else if (this.userRole === "GasEmployee") {
       this.menu = MENU_ITEMS_GASEMPLOYEE;
     }
+    else if (this.userRole === "AnalyzeEmployee") {
+      this.menu = MENU_ITEMS_AnalyzeEmployee;
+    }
+    else if (this.userRole === "Shahrsazi") {
+      this.menu = MENU_ITEMS_Shahrsazi;
+    }
     // else if(this.userRoles.includes("GasRuleCheckerGroupOne"))
     // {
     //   this.menu = MENU_ITEMS_GasRuleCheckerGroupOne;
@@ -124,7 +134,11 @@ export class PagesComponent implements OnInit {
       this.menu = MENU_ITEMS_DoubleControlExpert;
     }else if (this.userRole === "GasCompany") {
       this.menu = MENU_ITEMS_GasCompany;
-    } else {
+    }
+    else if (this.userRole === "GasEmployeeHP") {
+      this.menu = MENU_ITEMS_GASEMPLOYEEHP;
+    }
+    else {
       // alert("no role");
     }
 

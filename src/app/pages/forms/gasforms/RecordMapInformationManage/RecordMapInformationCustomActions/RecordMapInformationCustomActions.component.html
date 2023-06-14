@@ -52,7 +52,7 @@
     </nb-option>
 
     <nb-option *ngIf="rData.nextStateType.includes('ControlDocuments')">
-      <button *appHasRole="['Admin', 'GasEmployee', 'GasEmployeeExceptShiraz']" fullWidth status="success" nbButton
+      <button *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee', 'GasEmployeeExceptShiraz']" fullWidth status="success" nbButton
         (click)="onControlDocuments(rData.requestUnitId, 'ControlDocuments',rData.gasReqId)">
         کنترل مدارک
       </button>
@@ -68,7 +68,16 @@
         ویرایش اطلاعات توسط مجری
       </button>
     </nb-option>
-
+    <nb-option *ngIf="rData.nextStateType.includes('ReInsertRecordMapInformation')">
+      <button *appHasRole="['Admin', 'Engineer']" fullWidth status="success" nbButton (click)="
+          onReInsertRecordMapInformation(
+            rData.requestUnitId,
+            'ReInsertRecordMapInformation'
+          )
+        ">
+        ویرایش اطلاعات توسط طراح
+      </button>
+    </nb-option>
     <nb-option *ngIf="rData.nextStateType.includes('RequestInspectionPreExecution')">
       <button *appHasRole="['Admin', 'Executor']" fullWidth status="primary" nbButton (click)="
           onRequestInspection(
@@ -92,7 +101,7 @@
     </nb-option>
 
     <nb-option *ngIf="rData.nextStateType.includes('PayRequestInspectionPreExecution')">
-      <button *appHasRole="['Admin', 'Executor', 'GasEmployee', 'GasEmployeeExceptShiraz']" fullWidth nbButton
+      <button *appHasRole="['Admin', 'Executor', 'GasEmployee','AnalyzeEmployee', 'GasEmployeeExceptShiraz']" fullWidth nbButton
         status="primary" (click)="
           onPayRequestInspection(
             rData.requestUnitId,
@@ -104,7 +113,7 @@
     </nb-option>
 
     <nb-option *ngIf="rData.nextStateType.includes('PayRequestReInspectionPreExecution')">
-      <button *appHasRole="['Admin', 'Executor', 'GasEmployee', 'GasEmployeeExceptShiraz']" fullWidth nbButton
+      <button *appHasRole="['Admin', 'Executor', 'GasEmployee','AnalyzeEmployee', 'GasEmployeeExceptShiraz']" fullWidth nbButton
         status="primary" (click)="
           onPayRequestInspection(
             rData.requestUnitId,
@@ -126,7 +135,7 @@
       </button>
     </nb-option>
     <nb-option *ngIf="rData.nextStateType.includes('PaySafetyInspectionRequest')">
-      <button *appHasRole="['Admin', 'Executor', 'GasEmployee', 'GasEmployeeExceptShiraz']" fullWidth nbButton
+      <button *appHasRole="['Admin', 'Executor', 'GasEmployee','AnalyzeEmployee', 'GasEmployeeExceptShiraz']" fullWidth nbButton
         status="primary" (click)="
           onPayRequestInspection(
             rData.requestUnitId,
@@ -257,7 +266,7 @@
     <nb-option *ngIf="
         rData.nextStateType.includes('PayRequestInspectionOfTheFirstStage')
       ">
-      <button *appHasRole="['Admin', 'Executor', 'GasEmployee', 'GasEmployeeExceptShiraz']" fullWidth nbButton
+      <button *appHasRole="['Admin', 'Executor', 'GasEmployee','AnalyzeEmployee', 'GasEmployeeExceptShiraz']" fullWidth nbButton
         status="primary" (click)="
           onPayRequestInspection(
             rData.requestUnitId,
@@ -271,7 +280,7 @@
     <nb-option *ngIf="
         rData.nextStateType.includes('PayReRequestInspectionOfTheFirstStage')
       ">
-      <button *appHasRole="['Admin', 'Executor', 'GasEmployee', 'GasEmployeeExceptShiraz']" fullWidth nbButton
+      <button *appHasRole="['Admin', 'Executor', 'GasEmployee','AnalyzeEmployee', 'GasEmployeeExceptShiraz']" fullWidth nbButton
         status="primary" (click)="
           onPayRequestInspection(
             rData.requestUnitId,
@@ -343,7 +352,7 @@
           'PayMapRevisionResultInspectionOfTheFirstStage'
         )
       ">
-      <button *appHasRole="['Admin', 'Executor', 'GasEmployee', 'GasEmployeeExceptShiraz']" fullWidth nbButton
+      <button *appHasRole="['Admin', 'Executor', 'GasEmployee','AnalyzeEmployee', 'GasEmployeeExceptShiraz']" fullWidth nbButton
         status="primary" (click)="
           onPayRequestInspection(
             rData.requestUnitId,
@@ -393,7 +402,7 @@
     </nb-option>
 
     <nb-option *ngIf="rData.nextStateType.includes('PayRequestInspectionFinal')">
-      <button *appHasRole="['Admin', 'Executor', 'GasEmployee', 'GasEmployeeExceptShiraz']" fullWidth nbButton
+      <button *appHasRole="['Admin', 'Executor', 'GasEmployee','AnalyzeEmployee', 'GasEmployeeExceptShiraz']" fullWidth nbButton
         status="warning" (click)="
           onPayRequestInspection(
             rData.requestUnitId,
@@ -405,7 +414,7 @@
     </nb-option>
 
     <nb-option *ngIf="rData.nextStateType.includes('PayRequestReInspectionFinal')">
-      <button *appHasRole="['Admin', 'Executor', 'GasEmployee', 'GasEmployeeExceptShiraz']" fullWidth nbButton
+      <button *appHasRole="['Admin', 'Executor', 'GasEmployee','AnalyzeEmployee', 'GasEmployeeExceptShiraz']" fullWidth nbButton
         status="warning" (click)="
           onPayRequestInspection(
             rData.requestUnitId,
@@ -430,7 +439,7 @@
     <nb-option *ngIf="
         rData.nextStateType.includes('PayMapRevisionResultInspectionFinal')
       ">
-      <button *appHasRole="['Admin', 'Executor', 'GasEmployee', 'GasEmployeeExceptShiraz']" fullWidth nbButton
+      <button *appHasRole="['Admin', 'Executor', 'GasEmployee','AnalyzeEmployee', 'GasEmployeeExceptShiraz']" fullWidth nbButton
         status="warning" (click)="
           onPayRequestInspection(
             rData.requestUnitId,
@@ -477,7 +486,7 @@
     </nb-option>
 
     <nb-option *ngIf="rData.nextStateType.includes('WorkFlowForm')">
-      <button *appHasRole="['Admin', 'Pishkhan', 'GasEmployee', 'GasEmployeeExceptShiraz']" fullWidth nbButton
+      <button *appHasRole="['Admin', 'Pishkhan', 'GasEmployee','AnalyzeEmployee', 'GasEmployeeExceptShiraz']" fullWidth nbButton
         (click)="onUnitWorkFlow(rData.requestUnitId)" status="warning">
         فرم گردان شرکت گاز
       </button>
@@ -504,7 +513,7 @@
 
 
     <nb-option *ngIf="rData?.nextStateType?.includes('ControlFinal')">
-      <button fullWidth status="success" *appHasRole="['Admin','GasEmployee','GasEmployeeExceptShiraz']" nbButton
+      <button fullWidth status="success" *appHasRole="['Admin','GasEmployee','AnalyzeEmployee','GasEmployeeExceptShiraz']" nbButton
         (click)="OnControlFinal(rData.requestUnitId)">
         کنترل نهایی
       </button>
@@ -526,14 +535,14 @@
     </nb-option>
 
     <nb-option *ngIf="rData?.nextStateType?.includes('RequestInspectionSixMonth')">
-      <button fullWidth nbButton status="success" *appHasRole="['Admin', 'GasEmployee','Executor']"
+      <button fullWidth nbButton status="success" *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee','Executor']"
         (click)="onRequestInspection(rData.requestUnitId, 'RequestInspectionSixMonth')">
         درخواست بازرسی شش ماه گذشته
       </button>
     </nb-option>
 
     <nb-option *ngIf="rData.nextStateType.includes('RequestReInspectionSixMonth')">
-      <button *appHasRole="['Admin', 'GasEmployee','Executor']" fullWidth nbButton status="primary" (click)="
+      <button *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee','Executor']" fullWidth nbButton status="primary" (click)="
           onRequestInspection(rData.requestUnitId, 'RequestReInspectionSixMonth')
         ">
         درخواست بازرسی مجدد شش ماه گذشته  
@@ -541,7 +550,7 @@
     </nb-option>
     
     <nb-option *ngIf="rData.nextStateType.includes('PayRequestInspectionSixMonth')">
-      <button *appHasRole="['Admin', 'GasEmployee','Executor']" fullWidth nbButton status="primary" (click)="
+      <button *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee','Executor']" fullWidth nbButton status="primary" (click)="
           onPayRequestInspection(
             rData.requestUnitId,
             'PayRequestInspectionSixMonth'
@@ -551,7 +560,7 @@
       </button>
     </nb-option>
     <nb-option *ngIf="rData.nextStateType.includes('PayRequestReInspectionSixMonth')">
-      <button *appHasRole="['Admin', 'GasEmployee','Executor']" fullWidth nbButton status="primary" (click)="
+      <button *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee','Executor']" fullWidth nbButton status="primary" (click)="
           onPayRequestInspection(
             rData.requestUnitId,
             'PayRequestReInspectionSixMonth'
@@ -561,7 +570,7 @@
       </button>
     </nb-option>
     <nb-option *ngIf="rData.nextStateType.includes('RequestMapRevisionInspectionSixMonth')">
-      <button *appHasRole="['Admin', 'GasEmployee','Executor']" fullWidth nbButton status="primary" (click)="
+      <button *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee','Executor']" fullWidth nbButton status="primary" (click)="
           onRequestInspection(
             rData.requestUnitId,
             'RequestMapRevisionInspectionSixMonth'
@@ -572,7 +581,7 @@
     </nb-option>
 
     <nb-option *ngIf="rData.nextStateType.includes('MapRevisionResultInspectionSixMonth')">
-      <button *appHasRole="['Admin', 'GasEmployee','Executor']" fullWidth nbButton status="default" (click)="
+      <button *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee','Executor']" fullWidth nbButton status="default" (click)="
           onReInsertRecordMapInformation(
             rData.requestUnitId,
             'MapRevisionResultInspectionSixMonth'
@@ -585,7 +594,7 @@
     <nb-option *ngIf="
     rData.nextStateType.includes('PayMapRevisionResultInspectionSixMonth')
   ">
-  <button *appHasRole="['Admin', 'Executor', 'GasEmployee', 'GasEmployeeExceptShiraz']" fullWidth nbButton
+  <button *appHasRole="['Admin', 'Executor', 'GasEmployee','AnalyzeEmployee', 'GasEmployeeExceptShiraz']" fullWidth nbButton
     status="warning" (click)="
       onPayRequestInspection(
         rData.requestUnitId,
@@ -638,16 +647,43 @@
     </nb-option>
 
     <nb-option *ngIf="!rData?.endOrBlockRequestId">
-      <button fullWidth nbButton status="danger" *appHasRole="['Admin', 'GasEmployee']"
+      <button fullWidth nbButton status="danger" *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']"
         (click)="onEndOrBlockRequest(rData)">
         غیر فعال سازی
       </button>
     </nb-option>
     <nb-option *ngIf="rData?.endOrBlockRequestId">
-      <button fullWidth nbButton status="success" *appHasRole="['Admin', 'GasEmployee']"
+      <button fullWidth nbButton status="success" *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']"
         (click)="onStopEndOrBlockRequest()">
         فعال سازی
       </button>
+    </nb-option>
+    <nb-option *ngIf="!rData?.endOrBlockRequestId && 
+    !rData?.suspendRequestId">
+      <button fullWidth nbButton status="basic" *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee', 'GasEmployeeExceptShiraz']"
+        (click)="
+          onSuspendRequest(
+            rData?.id,
+            'SuspendRequest',
+            rData?.contractId
+          )
+        ">
+        تعلیق
+            </button>
+    </nb-option>
+
+    <nb-option *ngIf="!rData?.endOrBlockRequestId && 
+    rData?.suspendRequestId">
+      <button fullWidth nbButton status="basic" *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee', 'GasEmployeeExceptShiraz']"
+        (click)="
+        onCancelSuspendedRequest(
+            rData?.id,
+            'UnSuspendRequest',
+            rData?.contractId
+          )
+        ">
+        عدم تعلیق
+            </button>
     </nb-option>
   </nb-select>
 </div>

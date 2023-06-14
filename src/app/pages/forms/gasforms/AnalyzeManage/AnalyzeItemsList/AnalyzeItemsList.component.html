@@ -24,8 +24,9 @@
     </div>
     <div class="pull-left">
       <!-- style="box-shadow: 0 0 3px" -->
-      <nb-select placeholder="انتخاب بازرسی" fullWidth (selectedChange)="onInspectionResult($event)">
-        <!-- <nb-option [value]=" ">هیچ کدام</nb-option> -->
+      <nb-select placeholder="انتخاب بازرسی" fullWidth (selectedChange)="onInspectionResult($event)" 
+      [(selected)]="selectedItems" >
+        <nb-option [value]=" ">هیچ کدام</nb-option>
         <nb-option *ngFor="let inspection of inspections" [value]="inspection.className">
           {{ inspection.title }}
         </nb-option>
@@ -40,7 +41,7 @@
 
     <div class="row w-100 addToList-wrapper">
       <div class="w-100 text-left ml-0">
-        <button *appHasRole="['Admin', 'GasEmployee']" (click)="oncreateAnalyzeItem()" class="btn btn-info"
+        <button *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']" (click)="oncreateAnalyzeItem()" class="btn btn-info"
           style="color: #fff;">
           <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="plus-circle-outline">
           </nb-icon>

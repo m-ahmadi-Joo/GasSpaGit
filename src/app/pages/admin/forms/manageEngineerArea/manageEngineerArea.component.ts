@@ -29,9 +29,20 @@ export class ManageEngineerAreaComponent implements OnInit {
   fileInputLabel: string;
   progress: number;
   loading = false;
-  updateResult: any = [] ;
+  updateResult: any = [];
   source: LocalDataSource;
   collection = [];
+
+  //#region 
+  @ViewChild('executerUploadFileInput', { static: false }) executerUploadFileInput: ElementRef;
+  executerFileUploadForm: FormGroup;
+  executerFileInputLabel: string;
+  executerProgress: number;
+  executerLoading = false;
+  executerUpdateResult: any = [];
+  executerSource: LocalDataSource;
+  executerCollection = [];
+  ////#endregion
   constructor(
     private http: HttpClient,
     private formBuilder: FormBuilder,
@@ -64,6 +75,11 @@ export class ManageEngineerAreaComponent implements OnInit {
     this.fileUploadForm = this.formBuilder.group({
       myfile: ['']
     });
+
+    this.executerFileUploadForm = this.formBuilder.group({
+      myfile: ['']
+    });
+
     this.searchForm = this.fb.group({
       fullName: [""],
       nationalCode: ["", [Validators.pattern(this.reg.nationalCode)]],
@@ -100,83 +116,83 @@ export class ManageEngineerAreaComponent implements OnInit {
       return false;
     }
 
-    
+
 
     const formData = new FormData();
     this.progress = 1;
-    formData.append("file",  this.fileUploadForm.get('myfile').value);
-    
+    formData.append("file", this.fileUploadForm.get('myfile').value);
+
     this.http.post(
       environment.SERVER_URL + "/Engineer/PostEngineerAreaExcel",
       formData,
-            {
-              reportProgress: true,
-              observe: "events",
-            }
+      {
+        reportProgress: true,
+        observe: "events",
+      }
     )
-    .pipe(
-      uploadProgress((progress) => (this.progress = progress,this.loading = true)),
-      toResponseBody()
-    )
-    .subscribe((res : any) => {
-        if(res !== null || res != undefined) {
+      .pipe(
+        uploadProgress((progress) => (this.progress = progress, this.loading = true)),
+        toResponseBody()
+      )
+      .subscribe((res: any) => {
+        if (res !== null || res != undefined) {
           this.updateResult = [];
-            this.loading = false;
-            console.log(res);
-            this.progress = 0;
-            res.data.forEach(element => {
+          this.loading = false;
+          console.log(res);
+          this.progress = 0;
+          res.data.forEach(element => {
             this.updateResult.push(element);
           });
           // this.pagination = res["pagination"];
-      // console.log(this.pagination);
-      // this.pagingConfig = {
-      //   itemsPerPage: this.pagination.itemsPerPage,
-      //   currentPage: this.pagination.currentPage,
-      //   totalItems: this.pagination.totalItems,
-      // };
+          // console.log(this.pagination);
+          // this.pagingConfig = {
+          //   itemsPerPage: this.pagination.itemsPerPage,
+          //   currentPage: this.pagination.currentPage,
+          //   totalItems: this.pagination.totalItems,
+          // };
         }
         this.loading = false;
       },
-      (err) => {
-        this.updateResult = err;
-        this.loading = false;
-        console.log(err.error);
-        console.log(err.data);
-      }
-    )
-    catchError((err: any) => {
+        (err) => {
+          this.updateResult = err;
           this.loading = false;
-          this.progress = null;
-          alert(err.message);
-          return throwError(err.message);
-        })
+          console.log(err.error);
+          console.log(err.data);
+        }
+      )
+    catchError((err: any) => {
+      this.loading = false;
+      this.progress = null;
+      alert(err.message);
+      return throwError(err.message);
+    })
 
-  
-        // this.route.data.subscribe((data) => {
-        //   Object.assign(this.collection, data["data"].result);
-        //   this.pagination = data["data"].pagination;
-        //   // console.log(this.pagination);
-        //   this.pagingConfig = {
-        //     itemsPerPage: this.pagination.itemsPerPage,
-        //     currentPage: this.pagination.currentPage,
-        //     totalItems: this.pagination.totalItems,
-        //   };
-        //   this.source = new LocalDataSource(data["data"].result);
-        //   let i = 0;
-        //   this.source.getAll().then((data) => {
-        //     data.forEach((element) => {
-        //       if (element.lat.toString().includes("/")) {
-        //         element.lat = element.lat.toString().replace("/", ".");
-        //         element.long = element.long.toString().replace("/", ".");
-        //       }
-        //       // this.addMarker(element.lat, element.long, element.fileNumber);
-        //       i++;
-        //        element.idx = this.getRowIndex(i);
-        //       data.push(element);
-        //       console.log(element);
-        //     });
-        //   });
-        // });
+
+    // this.route.data.subscribe((data) => {
+    //   Object.assign(this.collection, data["data"].result);
+    //   this.pagination = data["data"].pagination;
+    //   // console.log(this.pagination);
+    //   this.pagingConfig = {
+    //     itemsPerPage: this.pagination.itemsPerPage,
+    //     currentPage: this.pagination.currentPage,
+    //     totalItems: this.pagination.totalItems,
+    //   };
+    //   this.source = new LocalDataSource(data["data"].result);
+    //   let i = 0;
+    //   this.source.getAll().then((data) => {
+    //     data.forEach((element) => {
+    //       if (element.lat.toString().includes("/")) {
+    //         element.lat = element.lat.toString().replace("/", ".");
+    //         element.long = element.long.toString().replace("/", ".");
+    //       }
+    //       // this.addMarker(element.lat, element.long, element.fileNumber);
+    //       i++;
+    //        element.idx = this.getRowIndex(i);
+    //       data.push(element);
+    //       console.log(element);
+    //     });
+    //   });
+    // });
 
     // this.api.postTo(
     //   "Admin",
@@ -248,4 +264,60 @@ export class ManageEngineerAreaComponent implements OnInit {
       }
     });
   }
+
+
+  //#region UpdateExecuterFromExcelFile
+  onFormExecuterSubmit() {
+
+    if (!this.executerFileUploadForm.get('myfile').value) {
+      alert('فایل مورد نظر را انتخاب کنید');
+      return false;
+    }
+
+
+
+    const formData = new FormData();
+    this.progress = 1;
+    formData.append("file", this.executerFileUploadForm.get('myfile').value);
+
+    this.http.post(
+      environment.SERVER_URL + "/Excuter/UpdateExcuterFromExcel",
+      formData,
+      {
+        reportProgress: true,
+        observe: "events",
+      }
+    )
+      .pipe(
+        uploadProgress((progress) => (this.progress = progress, this.loading = true)),
+        toResponseBody()
+      )
+      .subscribe((res: any) => {
+        if (res !== null || res != undefined) {
+          this.executerUpdateResult = [];
+          this.executerLoading = false;
+          console.log(res);
+          this.executerProgress = 0;
+          res.data.forEach(element => {
+            this.executerUpdateResult.push(element);
+          });
+        }
+        this.executerLoading = false;
+      },
+        (err) => {
+          this.executerUpdateResult = err;
+          this.executerLoading = false;
+          console.log(err.error);
+          console.log(err.data);
+        }
+      )
+    catchError((err: any) => {
+      this.loading = false;
+      this.progress = null;
+      alert(err.message);
+      return throwError(err.message);
+    })
+  }
+
+  //#endregion
 }

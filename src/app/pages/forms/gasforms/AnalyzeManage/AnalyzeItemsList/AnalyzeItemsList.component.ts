@@ -214,7 +214,8 @@ recordMapInfoForm: [{
     }
   };
   inspectionType;
-  analyzeListId
+  analyzeListId;
+  selectedItems;
   ngOnInit() {
     localStorage.removeItem("showCollectorWelding");
     this.analyzeListId = parseInt(this.route.snapshot.paramMap.get("id"));
@@ -849,7 +850,7 @@ recordMapInfoForm: [{
       // observerType: "",
       // baseObserverGrade: ""
     };
-
+    this.selectedItems = " ";
     this.form.controls.inspectionResult.setValue("");
     // this.form.controls.nationalCode.setValue("");
     // this.form.controls.membershipNumber.setValue("");

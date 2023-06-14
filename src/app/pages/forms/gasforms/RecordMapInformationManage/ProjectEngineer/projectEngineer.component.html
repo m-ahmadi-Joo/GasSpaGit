@@ -166,7 +166,7 @@
 
               </div>
 
-              <div class="col-md-2 mt-4" *appHasRole="['Admin', 'GasEmployee']">
+              <div class="col-md-2 mt-4" *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']">
                   <button type="button" nbButton class="btn" status ="success"
                   [nbSpinner]="loadingSelectEngineer"
                   nbSpinnerStatus="info"
@@ -175,7 +175,7 @@
                   (click)="selectEngineer()">انتخاب مهندس</button>
               </div>
 
-              <div class="col-md-2 mt-4 mr-1" *appHasRole="['Admin', 'GasEmployee']">
+              <div class="col-md-2 mt-4 mr-1" *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']">
                   <button
                   type="button"
                   class="btn"

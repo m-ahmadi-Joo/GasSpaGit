@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { PagesComponent } from './pages.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
 import { ForbiddenComponent } from './miscellaneous/forbidden/forbidden.component';
+import { ForbiddenHPComponent } from './miscellaneous/forbiddenHP/forbiddenHP.component';
 import { AuthGuard } from '../@core/auth/mock/authguard';
 
 const routes: Routes = [{
@@ -24,6 +25,10 @@ const routes: Routes = [{
     path: '',
     redirectTo: 'forms',
     pathMatch: 'full',
+  },
+  {
+    path: 'forbiddenHP',
+    component: ForbiddenHPComponent,
   },
     {
     path: '403',

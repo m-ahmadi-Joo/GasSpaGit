@@ -48,7 +48,7 @@ import {
 //   DatePickerDirective,
 // } from "ng2-jalali-date-picker";
 import { DefineOberverSelect } from "src/app/@core/utils/collectiveDefineObserver.service";
-// import { LayoutDirectionSwitcherComponent } from "src/app/@theme/components";
+// import { LLbzRwX15FRFtzR8iZpzjHrXZfBGq3Kdxn } from "src/app/@theme/components";
 import { UnitStateService } from "src/app/@core/utils/unitState.service";
 import {
   ControlDocumentSelect,
@@ -162,14 +162,13 @@ export class GasRequestListComponent {
     private fb: FormBuilder,
     private fbEndOrBlockRequest: FormBuilder,
     private fbStopEndOrBlockRequest: FormBuilder,
+    private fbSuspendRequest: FormBuilder,
     private fbCancelSuspendRequest: FormBuilder,
-
     private reg: RegularService,
     private dialogService: NbDialogService,
     private toastrService: NbToastrService,
     private unitStateService: UnitStateService, // private loadingService: LoadingService,
     private gasReqStateService: GasRequestStateService,
-    private fbSuspendRequest: FormBuilder,
 
   ) { }
 
@@ -460,6 +459,11 @@ export class GasRequestListComponent {
           filter: true,
           type: "text",
         },
+        ownerFullName: {
+          title: "نام مالک",
+          filter: true,
+          width: "11%",
+        },
         fileNumber: {
           title: "شماره درخواست",
           filter: true,
@@ -663,6 +667,112 @@ export class GasRequestListComponent {
           },
         },
       };
+    }else if(this.userRole.includes("Shahrsazi")) 
+    {
+      this.settings.columns = {
+        works: {
+          title: "عملیات",
+          type: "custom",
+          width: "18%",
+          valuePrepareFunction: (cell, row) => {
+            return row;
+          },
+          renderComponent: GasReqListCustomActionsComponent,
+          onComponentInitFunction: (instance: any) => {
+            instance.startWorkLicenseHP.subscribe((row) => {
+              this.onStartWorkLicenseHP(row);
+            });
+
+            instance.deleteConfirm.subscribe((row) => {
+              this.deleteRecord(row);
+            });
+
+            instance.collectorRegistrationConfirm.subscribe((row) => {
+              this.collectorRegister(row);
+            });
+
+            instance.endOrBlockRequest.subscribe((row) => {
+              this.endOrBlockRequest(row);
+            });
+
+            instance.stopEndOrBlockRequest.subscribe((row) => {
+              this.stopEndOrBlockRequest(row);
+            });
+            instance.suspendRequest.subscribe((row) => {
+              this.suspendRequest(row);
+            });
+            instance.cancelSuspendedRequest.subscribe((row) => {
+              this.cancelSuspendedRequest(row);
+            });
+          },
+        },
+        nextPersianRoles: {
+          title: "در انتظار بررسی",
+          filter: true,
+          valuePrepareFunction(value, row, cell) {
+            if (row.nextPersianRoles) {
+              return row.nextPersianRoles;
+            }
+            return "--------";
+          },
+        },
+        lastRequestStateTypeTitle: {
+          title: "آخرین عملیات انجام شده",
+          filter: true,
+        },
+        status: {
+          title: "وضعیت",
+          filter: true,
+        },
+        area: {
+          title: "منطقه",
+          filter: true,
+        },
+        unitCount: {
+          title: "تعداد واحد",
+          filter: true,
+        },
+        approximateConsumption: {
+          title: "میزان مصرف",
+          filter: true,
+        },
+        address: {
+          title: "نشانی",
+          filter: true,
+          type: "custom",
+          renderComponent: AddressTooltipComponent,
+        },
+        totalFoundation: {
+          title: "زیربنا",
+          filter: true,
+          type: "text",
+        },
+
+        fileNumber: {
+          title: "شماره درخواست",
+          filter: true,
+        },
+        idx: {
+          title: "ردیف",
+          type: "text",
+          width: "2%",
+        
+        },
+     
+
+        checkBox: {
+          title: "انتخاب",
+          type: "custom",
+          filter: false,
+          width: "1%",
+          renderComponent: gridCheckboxForGasRequestComponent,
+          onComponentInitFunction: (instance: any) => {
+            instance.totalDefineObserver.subscribe((event) => {
+              this.totalDefineObserver(event);
+            });
+          },
+        },
+      };
     } else if (
       !this.userRole.includes("Owner") &&
       !this.userRole.includes("Pishkhan")
@@ -768,7 +878,7 @@ export class GasRequestListComponent {
               return row.executerPhoneNumber;
             }
             return "--------";
-          },
+          }, 
         },
         executerName: {
           title: "نام مجری",
@@ -842,7 +952,8 @@ export class GasRequestListComponent {
           },
         },
       };
-    } else {
+    }
+     else {
       this.settings.columns = {
         works: {
           title: "عملیات",
@@ -1725,7 +1836,7 @@ export class GasRequestListComponent {
     return;
   }
 
-  suspendRequestConfirm(suspendRequestId) {
+  suspendRequestConfirm(suspendRequestId, entityName) {
     if (this.formSuspendRequest.valid) {
       this.isSubmitedSuspendRequest = true;
       this.suspendRequestLoading = true;
@@ -1837,7 +1948,7 @@ cancelSuspendedRequest(row) {
   }
 
   ifLeapYear(inputYear) {
-    var kabise: number[] = [1399, 1403, 1412, 1416, 1420, 1424, 1428, 1432, 1436, 1445, 1449, 1453, 1457, 1461, 1465, 1469, 1478, 1482, 1486
+    var kabise: number[] = [1370,1375,1379,1383,1387,1391,1395,1399, 1403, 1412, 1416, 1420, 1424, 1428, 1432, 1436, 1445, 1449, 1453, 1457, 1461, 1465, 1469, 1478, 1482, 1486
       , 1490, 1494, 1498];
 
 
@@ -1968,7 +2079,6 @@ cancelSuspendedRequest(row) {
     this.collectorType = '1';
   }
   selectUnitRadio(selecteItem) {
-    debugger;
     let selectedList = [];
     this.collectorCountArr.forEach(element => {
       if (element.idx !== selecteItem.idx) {

@@ -39,7 +39,7 @@ export class ScheduleUpdateComponent implements OnInit {
   ngOnInit() {
     this.currentRole = this.auth.getCurrentRole();
     console.log(this.currentRole);
-    if (this.currentRole !== "Admin" && this.currentRole !== "GasEmployee") {
+    if (this.currentRole !== "Admin" && this.currentRole !== "GasEmployee" && this.currentRole !== "AnalyzeEmployee") {
       this.router.navigate(["/pages/403"]);
     }
 

@@ -8,6 +8,9 @@
     color: #c50c1e !important;
 
   }
+  .ng-select .ng-clear-wrapper {
+    display: none;
+}
 </style>
 
 <form [formGroup]="cgmForm" (ngSubmit)="manage(cgmForm.value)">
@@ -210,8 +213,8 @@
                   <label>
                     نام طراح:
                   </label>
-                  <nb-radio-group (valueChange)="onChangeDesignerType($event)"  class="form-inline radio-x-inline"
-                    formControlName="designerType"  name="designerType" style="margin-top: 1.61rem">
+                  <nb-radio-group (valueChange)="onChangeDesignerType($event)" class="form-inline radio-x-inline"
+                    formControlName="designerType" name="designerType" style="margin-top: 1.61rem">
                     <nb-radio [value]="'executer'">
                       مجری
                     </nb-radio>
@@ -219,16 +222,26 @@
                       مهندس
                     </nb-radio>
                   </nb-radio-group>
-
+<!-- 
                   <nb-select #dSelect formControlName="designerSelect"   (selectedChange)="onSelectDesigner(dSelect.selected)"  fullWidth placeholder="انتخاب طراح">
                     <nb-option  click *ngFor="let d of designers" [value]="d.id">
                       {{ d.fullName }}
                     </nb-option>
+ 
+                  </nb-select> -->
 
-                  </nb-select>
+
+       
+
+                  <angular2-multiselect [data]="designerList" [settings]="dropdownSettings" [loading]="loadingDrpDwn"
+                    (onSelect)="onSelectDesigner($event.idx)" (onDeSelect)="OnItemDeSelect($event.idx)"
+                    (onSelectAll)="onSelectAll($event.idx)" (onDeSelectAll)="onDeSelectAll($event.idx)"
+                    formControlName="designerSelect"></angular2-multiselect>
+
+                  
 
 
-                </div>
+                </div> 
                 <div class="col-md-1"></div>
                 <div *ngFor="
                     let validation of INPUT_VALIDATION_MESSAGES.designerSelect
@@ -272,6 +285,7 @@
               <div class="row" *ngIf="requestStateType != 'ContractHP'">
                 <div class="col-sm-5 col-md-5 col-lg-5 mt-3">
                   <label>تعداد واحد:</label>
+
                   <input fullWidth type="number" nbInput id="kn" [readOnly]="requestStateType === 'ChangeExecutor'"
                     style="width: 355px;" formControlName="unitCount" min="0" />
                 </div>

@@ -260,6 +260,7 @@ export class UploaderComponent implements ControlValueAccessor {
         this.urls.push(e.target.result);
       };
       reader.readAsDataURL(this.file[index]);
+      this.test = this.file[index].name;
 
       // const reader = new FileReader();
       // reader.onload = e => this.imageSrc=reader.result;
@@ -274,7 +275,6 @@ export class UploaderComponent implements ControlValueAccessor {
     // clear file input
     console.log(this.filePath);
     console.log(this.className);
-
     this.host.nativeElement.value = "";
     this.file = null;
   }

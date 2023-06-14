@@ -9,7 +9,7 @@ import { LeafletModule } from "@asymmetrik/ngx-leaflet";
 // import { NgxUploaderModule } from "ngx-uploader";
 import { Ng2SmartTableModule } from "ng2-smart-table";
 import { NgbTimepickerModule } from "@ng-bootstrap/ng-bootstrap";
-import{PdfJsViewerModule} from "ng2-pdfjs-viewer"
+import { PdfJsViewerModule } from "ng2-pdfjs-viewer"
 import {
   GasReqListCustomActionsComponent,
   ContractListCustomActionsComponent,
@@ -27,7 +27,7 @@ import {
   // CreateAnalyzeListComponent,
 } from "./gasforms";
 import { TypeaheadModule } from "ngx-bootstrap/typeahead";
-import { NgxMaskModule} from "ngx-mask";
+import { NgxMaskModule } from "ngx-mask";
 import { NgxPaginationModule } from "ngx-pagination";
 import { GasRequestListResolver } from "../../@core/utils/gasRequestList-resolver";
 import { ContractListResolver } from "../../@core/utils/contractList-resolver";
@@ -72,14 +72,14 @@ import { GasRequestLisForContractResolver } from "src/app/@core/utils/GasRequest
 import { ContractResolver } from "src/app/@core/utils/contract-resolver";
 import { GetAllTownsResolver } from "src/app/@core/utils/getAllTowns-resolver";
 import { GetTableWorksFilterResolver } from "src/app/@core/utils/getTableWorksFilter-resolver";
-import { EditOwnerPhoneNumberResolver } from "src/app/@core/utils/EditOwnerPhoneNumber-resolver";
+import { EditOwnerPhoneNumberResolver } from "src/app/@core/utils/editOwnerPhoneNumber-resolver";
 import { EnginnerVacationListForEngineerResolver } from "src/app/@core/utils/engineerVacationListForEngineer-resolver";
 import { GetAllAvailableEngineersResolver } from "src/app/@core/utils/getAllAvailableEngineers-resolver";
 import { InspectionResultMultiSelectResolver } from "src/app/@core/utils/inspectionResultMultiSelect-resolver";
 import { ControlEstimationOfConsumptionHpResolver } from 'src/app/@core/utils/controlEstimationOfConsumptionHp-resolver';
 import { DocumentryFormEditResolver } from 'src/app/@core/utils/documentryFormEdit-resolver';
 import { EditContractResolver } from 'src/app/@core/utils/editContract-resolver';
-import { GetEngineerAreaRatingHistoryResolver } from 'src/app/@core/utils/GetEngineerAreaRatingHistory-resolver';
+import { GetEngineerAreaRatingHistoryResolver } from 'src/app/@core/utils/getEngineerAreaRatingHistory-resolver';
 // import { SharedModule } from '../shared/shared.module';
 // import { PayDetailListComponent, PayDetailListCustomActionsComponent, PaySalaryRecieptListComponent, PaySalaryRecieptListCustomActionsComponent } from '../admin/forms';
 import { PinchZoomModule } from 'ngx-pinch-zoom';
@@ -89,9 +89,22 @@ import { EditMapListComponent } from './gasforms/Engineer/engineerEditMapList/en
 import { EngineerEditMapListCustomActionsComponent } from './gasforms/Engineer/EngineerEditMapListCustomActions/EngineerEditMapListCustomActions.component';
 import { RecordMapInformationHistoryEditMapComponent } from './gasforms/Engineer/RecordMapInformationHistoryEditMap/RecordMapInformationHistoryEditMap.component';
 import { EngineerEditMapListResolver } from "src/app/@core/utils/EngineerEditMapList-resolver";
-import{gridCheckboxForEditMapComponent} from "./gasforms/Engineer/gridCheckboxForEditMap/gridCheckboxForEditMap.component";
+import { gridCheckboxForEditMapComponent } from "./gasforms/Engineer/gridCheckboxForEditMap/gridCheckboxForEditMap.component";
 import { CookieService } from 'ngx-cookie-service';
 import { DesignerResolver } from "src/app/@core/utils/DesignerResolver";
+
+import { HpGasRequestResolver } from "src/app/@core/utils/hPGasRequest-resolver";
+import { HPGasRequestListResolver } from "src/app/@core/utils/hPGasRequestList-resolver";
+import { HPGasReqListCustomActionsComponent } from "./gasforms/GasRequestManage/HPGasReqListCustomActions/HPGasReqListCustomActions.component";
+
+import { ExcuterLimitedDetailComponent } from './gasforms/ExecuterManage/excuterLimitedDetail/excuterLimitedDetail.component';
+import { SuppliersListResolver } from "src/app/@core/utils/suppliersList-resolver";
+import { AngularMultiSelectModule } from 'angular-4-multiselect-dropdown-scroll';
+import { ScanDocumentListResolver } from "src/app/@core/utils/scanDocumentList-resolver";
+import { GasRequestLisForExecuterResolver } from "src/app/@core/utils/GasRequestListForExecuterList-resolver";
+import { ScanDocumentListCustomActionsComponent } from "./gasforms";
+import { OldGasRequestListComponent } from "./gasforms/GasRequestManage/OldGasRequestListForm/oldGasRequestList.component";
+import { OldGasRequestListResolver } from "src/app/@core/utils/oldGasRequestList-resolver";
 
 @NgModule({
   imports: [
@@ -110,14 +123,14 @@ import { DesignerResolver } from "src/app/@core/utils/DesignerResolver";
     DirectivesModule,
     AngularDualListBoxModule,
     PinchZoomModule,
-    PdfJsViewerModule
+    PdfJsViewerModule,
+    AngularMultiSelectModule,
+    //NumberDirective
     // SharedModule,
   ],
   declarations: [
     ...routedComponents,
-    // MapDialogComponent,
-    // HasRoleDirective,
-    // CustomTypeaheadDirective
+    ExcuterLimitedDetailComponent,
   ],
   entryComponents: [
     // MapDialogComponent,
@@ -135,12 +148,9 @@ import { DesignerResolver } from "src/app/@core/utils/DesignerResolver";
     ArchitecturalAlbumApproveCustomActionsComponent,
     HistoryEngineerAreaRatingCustomActionsComponent,
     gridCheckboxForEditMapComponent,
-    EngineerEditMapListCustomActionsComponent
-
-    // PayDetailListComponent,
-    // PayDetailListCustomActionsComponent,
-    // PaySalaryRecieptListComponent,
-    // PaySalaryRecieptListCustomActionsComponent,
+    EngineerEditMapListCustomActionsComponent,
+    HPGasReqListCustomActionsComponent,
+    ScanDocumentListCustomActionsComponent
   ],
   providers: [
     GasRequestListResolver,
@@ -198,8 +208,17 @@ import { DesignerResolver } from "src/app/@core/utils/DesignerResolver";
     // EngineerPaymentService
     EngineerEditMapListResolver,
     DesignerResolver,
+    HpGasRequestResolver,
+    HPGasRequestListResolver,
+    SuppliersListResolver,
     [CookieService],
+    GasRequestLisForExecuterResolver,
+    ScanDocumentListResolver,
+    OldGasRequestListComponent ,
+    OldGasRequestListResolver,
+    
+    // OldAndNewGasRequestTabsComponent,
   ],
-  exports: [RecordMapInformationDetailComponent , AddressTooltipComponent],
+  exports: [RecordMapInformationDetailComponent, AddressTooltipComponent],
 })
-export class FormsModule {}
+export class FormsModule { }

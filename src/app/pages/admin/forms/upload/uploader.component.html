@@ -1,3 +1,8 @@
+<style>
+  .col-md-5 {
+  max-width: 100% !important;
+}
+</style>
 <strong
   *ngIf="invalidExtention"
   class="mb-2"
@@ -13,7 +18,9 @@
   حجم فایل غیر مجاز میباشد
 </strong>
 <div class="row">
-  <div class="col-md-5"  *ngIf="ShowControl">
+  <div
+  [ngClass]="{'ShowControl': true, ' ': 'col-md-5'}" 
+   *ngIf="ShowControl">
     <div class="file-drop-area">
       <span class="fake-btn">فایل را انتخاب کنید</span>
       <span class="Pre-file-msg">{{

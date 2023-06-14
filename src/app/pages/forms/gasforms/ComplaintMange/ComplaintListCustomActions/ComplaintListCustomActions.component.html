@@ -56,7 +56,7 @@
   class="mb-2 mr-1"
   nbButton
   status="info"
-  *appHasRole="['GasEmployee','Executor','Engineer','Owner','Admin']"
+  *appHasRole="['GasEmployee','Executor','Engineer','Owner','Admin','AnalyzeEmployee']"
   (click)="onComplaintDetail(rData.id)"
 >
   <nb-icon
@@ -74,7 +74,7 @@
         fullWidth
         nbButton
         status="success"
-        *appHasRole="['GasEmployee','Admin']"
+        *appHasRole="['GasEmployee','Admin','AnalyzeEmployee']"
         (click)="onComplaintCheck(rData.id)"
       >
           بررسی شکایت
@@ -86,7 +86,7 @@
       fullWidth
       nbButton
       status="success"
-      *appHasRole="['GasEmployee','Admin']"
+      *appHasRole="['GasEmployee','Admin','AnalyzeEmployee']"
       (click)="onComplaintMeetingResult(rData.id)"
     >
        ثبت نتیجه جلسه
@@ -98,7 +98,7 @@
         fullWidth
         nbButton
         status="success"
-        *appHasRole="['GasEmployee','Admin']"
+        *appHasRole="['GasEmployee','Admin','AnalyzeEmployee']"
         (click)="onComplaintReplySupervision(rData.id)"
       >
       دریافت جواب از نظارت عالی
@@ -110,7 +110,7 @@
           fullWidth
           nbButton
           status="success"
-          *appHasRole="['GasEmployee','Admin']"
+          *appHasRole="['GasEmployee','Admin','AnalyzeEmployee']"
           (click)="onComplaintFinalCheck(rData.id)"
         >
         بررسی پرونده و صدور حکم

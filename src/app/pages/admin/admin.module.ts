@@ -14,7 +14,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 // import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { AdminRoutingModule, routerComponents } from './admin-routing.module';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { UmgnModule, EngineerPaymentListCustomActionsComponent, EngineerRejectionListCustomActionsComponent, ScheduleConfigListCustomActionsComponent, UsersCustomActionComponent, PaySalaryRecieptListComponent, EngineerPaymentComponent, PayTransactionListCustomActionsComponent, SmsBodyTooltipComponent } from './forms';
+import { UmgnModule, EngineerPaymentListCustomActionsComponent, EngineerRejectionListCustomActionsComponent, ScheduleConfigListCustomActionsComponent, UsersCustomActionComponent, PaySalaryRecieptListComponent, EngineerPaymentComponent, PayTransactionListCustomActionsComponent, SmsBodyTooltipComponent, NewsUsersGroupCustomActionComponent, addNewsUserGroupModule } from './forms';
 // import { AngularFileUploaderModule } from 'angular-file-uploader';
 // import { NgxUploaderModule } from 'ngx-uploader';
 import {  NbDialogModule } from '@nebular/theme';
@@ -76,7 +76,10 @@ import { NewsListResolver } from 'src/app/@core/utils/NewsListResolver';
 import { GetNewsInfoResolver } from 'src/app/@core/utils/getNewsInfo-resolver';
 import { NewsListCustomActionsComponent } from './forms/newsManagement/newsListCustomActions/newsListCustomActions.component';
 import { AngularMultiSelectModule } from 'angular-4-multiselect-dropdown-scroll';
-import { NewsDetailFormComponent } from './forms/newsManagement/newsDetailForm/newsDetailForm.component';
+import { GetMoreFiveUnitsListResolver } from "src/app/@core/utils/getMoreFiveUnitsList-resolver";
+import { GetMoreFiveUnitsSearchInfoResolver } from 'src/app/@core/utils/getMoreFiveUnitsSearchInfo-resolver';
+import { NewsUserGroupListResolver } from "src/app/@core/utils/newsUserGroupListResolver";
+import { SearchPipe } from './search.pipe';
 
 @NgModule({
   imports: [
@@ -116,13 +119,14 @@ import { NewsDetailFormComponent } from './forms/newsManagement/newsDetailForm/n
       showBackground: false
     }),
     AngularMultiSelectModule,
+    addNewsUserGroupModule ,
   ],
   declarations: [
     ...routerComponents,
     EnumToArrayPipe,
-    ManageEngineerAreaComponent,
     TableFilterPipe,
-    NewsDetailFormComponent,
+    SearchPipe,
+    
   ],
   entryComponents: [
     // MapDialogComponent,
@@ -140,7 +144,8 @@ import { NewsDetailFormComponent } from './forms/newsManagement/newsDetailForm/n
     PayTransactionListCustomActionsComponent,
     PayWithdrawalListCustomActionsComponent,
     SmsBodyTooltipComponent,
-    NewsListCustomActionsComponent
+    NewsListCustomActionsComponent,
+    NewsUsersGroupCustomActionComponent,
   ],
   providers: [
     EngineerPaymentAggregationInfoResolver,
@@ -178,7 +183,10 @@ import { NewsDetailFormComponent } from './forms/newsManagement/newsDetailForm/n
     SendSmsListResolver,
     NewsListResolver,
     GetNewsInfoResolver,
-    
+    GetMoreFiveUnitsSearchInfoResolver,
+    GetMoreFiveUnitsListResolver,
+   NewsUserGroupListResolver,
+
     // PersianDate
   ],
   // exports: [  EngineerPaymentComponent, PayDetailListComponent , PayDetailListCustomActionsComponent,

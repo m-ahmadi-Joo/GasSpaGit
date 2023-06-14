@@ -17,6 +17,7 @@ export abstract class Auth {
   abstract isAuthenticated();
 
   abstract isUserExists(userName: string): Observable<object>;
+  abstract isUserExistForOldGas(userName: string): Observable<object>;
 
   abstract verifyUserCompleted(user: object): Observable<object>;
 

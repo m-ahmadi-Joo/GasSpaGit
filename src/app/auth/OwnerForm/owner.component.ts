@@ -146,10 +146,12 @@ export class MalekInfoFormComponent implements OnInit {
     bDay: [{ type: "required", message: "روز تولد را تعیین کنید." }],
     postalCode: [
       // { type: "required", message: "کد پستی را وارد کنید" },
-    {
-      type: "pattern",
-      message: "کد پستی رابه صورتصحیح وارد کنید",
-    },],
+      {
+        type: "pattern",
+        message: "کد پستی رابه صورتصحیح وارد کنید",
+      },],
+    requestKind: [{ type: "required", message: "نوع درخواست را مشخص کنید" }],
+
   };
 
   constructor(
@@ -361,7 +363,11 @@ export class MalekInfoFormComponent implements OnInit {
           localStorage.setItem("token", this.finalResult.token);
 
           // this.router.navigate(["/pages/forms/GasReqList"]);
-          this.router.navigate(["/pages/forms/GasRequest"]);
+          if (this.userOwnerDto.get("requestKind").value == "0")
+            this.router.navigate(["/pages/forms/GasRequest"]);
+          else
+            this.router.navigate(["/pages/forms/HPGasRequest"]);
+
 
         },
         (err) => {
@@ -389,6 +395,7 @@ export class MalekInfoFormComponent implements OnInit {
         Validators.pattern(this.regService.nameReg),
       ]),
       ownerKind: new FormControl("0", [Validators.required]),
+      requestKind: new FormControl("0", [Validators.required]),
       economicCode: new FormControl("", []),
       gender: new FormControl("0", [Validators.required]),
       firstName: new FormControl("", [

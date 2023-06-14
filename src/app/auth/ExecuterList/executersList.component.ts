@@ -50,7 +50,7 @@ export class ExecutersListComponent {
   };
 
   observerGrades;
-  lstTowns = [];
+  lstTowns  
   settings = {
     hideSubHeader: true,
     noDataMessage: ".داده یافت نشد",

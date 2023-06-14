@@ -36,28 +36,6 @@
 </style>
 
 <nb-card class="card-inside-tab">
-  <!-- <nb-card-header style="padding-bottom:25px">
-    <span class="pull-right" style="padding-top: 7px">
-      <button (click)="onToggleUserList()" nbButton hero status="primary">
-        <span style="position: relative;top:2px;left:2px">لیست کاربران</span>
-        <nb-icon *ngIf="!showList" icon="arrow-ios-downward-outline">
-        </nb-icon>
-        <nb-icon *ngIf="showList" icon="arrow-ios-upward-outline">
-        </nb-icon>
-      </button>
-    </span>
-    <span class="pull-left">
-
-      <button (click)="onToggleUserRole()" nbButton hero status="success">
-  <span style="position: relative;top:2px;left:2px">تعریف کاربر جدید</span>
-        <nb-icon *ngIf="!showForm" icon="arrow-ios-downward-outline">
-        </nb-icon>
-        <nb-icon *ngIf="showForm" icon="arrow-ios-upward-outline">
-        </nb-icon>
-      </button>
-    </span>
-    <span class="clearfix"></span>
-  </nb-card-header> -->
   <nb-card-body>
     <div class="row">
       <div class="col-sm-12 mb-4">
@@ -146,14 +124,7 @@
               <label>
                 نقش مرتبط
               </label>
-              <!-- <nb-select
-                formControlName="roleSelect"
-                multiple
-                fullWidth
-                #selectedRole
-                (selectedChange) = "onRoleSelected($event)"
-                placeholder="--انتخاب کنید--"
-              > -->
+     
               <nb-select multiple #selectedRole formControlName="roleSelect" id="roleSelect" fullWidth
                 placeholder="--انتخاب کنید--">
                 <nb-option *ngFor="let role of roleList" [value]="role.name">
@@ -195,21 +166,7 @@
               <div class="w-100 text-left pl-2">
 
 
-                <!-- <button
-                  class="btn"
-                  nbButton
-                  status="success"
-                  [nbSpinner]="loading"
-                  nbSpinnerStatus="info"
-                  nbSpinnerSize="large"
-                  [disabled]="loading || !userRegister.valid ||
-                  !(
-                  (userRegister.get('roleSelect').value === 'GasEmployee')
-                  || (userRegister.get('roleSelect').value === 'Pishkhan')
-                  || (userRegister.get('roleSelect').value === 'Association')
-                  )"
-                  type="submit"
-                > -->
+              
 
                 <button class="p-2 btn" nbButton status="success" [nbSpinner]="loading" nbSpinnerStatus="info"
                   nbSpinnerSize="large" [disabled]="loading || !userRegister.valid" type="submit">
@@ -237,16 +194,7 @@
           </div>
         </form>
 
-        <!-- <button
-                  class="btn half-width-btn mr-3"
-                  (click) = "onSerach()"
-                  nbButton
-                  status="primary"
-                  [nbSpinner]="loading"
-                  nbSpinnerStatus="info"
-                  nbSpinnerSize="large">
-                  جستجو
-                </button> -->
+       
       </div>
 
       <div class="col-sm-12 mt-4">
@@ -298,37 +246,12 @@
         </nb-card>
       </div>
 
-      <!-- <div class="col-sm-12" *ngIf="user">
-            <app-userDetail
-              *ngIf="dismiss"
-              [selectedUser]="user"
-              (dissmiss)="onDismiss()"
-            ></app-userDetail>
-          </div> -->
     </div>
 
-    <!-- <div class="row d-block mt-5">
-      <div class="col-md-12">
-        <nb-card class="own-scroll">
-          <nb-card-body>
-            <nb-list nbInfiniteList [threshold]="500">
-              <nb-list-item
-                *ngFor="let user of usersian"
-                (click)="onSelectUser(user.id)"
-              >
-                <span>{{ user.firstName }} {{ user.lastName }}</span>
-              </nb-list-item>
-            </nb-list>
-          </nb-card-body>
-        </nb-card>
-      </div>
-    </div> -->
+
   </nb-card-body>
 </nb-card>
 
-<!--
-{{ userRegister.value | json }} <br />
-{{ userRegister.status | json }} -->
 
 
 <ng-template #dialog let-data let-ref="dialogRef">

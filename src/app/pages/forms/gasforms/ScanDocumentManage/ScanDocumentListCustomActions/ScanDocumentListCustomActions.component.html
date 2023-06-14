@@ -1,0 +1,21 @@
+
+
+
+<button nbTooltip="دانلود" nbTooltipPlacement="top" 
+  [ngStyle]="{cursor: rData.hasUnit ? 'not-allowed' : 'pointer'}" size="tiny" class="mb-2 mr-1" nbButton
+  status="warning"  (click)="download(rData.path)">
+  <nb-icon [options]="{ animation: { type: 'zoom' } }" class="icon-button" icon="download-outline">
+  </nb-icon>
+</button>
+
+<!-- <button nbTooltip="مشاهده جزئیات" nbTooltipPlacement="top" size="tiny" class="mb-2 mr-1" nbButton status="info"
+  (click)="onShowDetailScanDocument()">
+  <nb-icon [options]="{ animation: { type: 'zoom' } }" class="alert-circle-outline" icon="eye-outline">
+  </nb-icon>
+</button> -->
+
+
+<!-- 
+<ng-template #ScanDocumentDetailTemplate let-data>
+  <app-scanDocumentDetail [id]="rData.id"></app-scanDocumentDetail>
+</ng-template> -->

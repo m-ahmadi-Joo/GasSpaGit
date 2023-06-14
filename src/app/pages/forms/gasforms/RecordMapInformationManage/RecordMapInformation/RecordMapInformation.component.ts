@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import {
   FormGroup,
   FormBuilder,
   Validators,
   FormControl,
+  FormArray,
 } from "@angular/forms";
 import { ApiCommandCenter } from "../../../../../@core/api/services/apiCommandCenter";
 import { Router, ActivatedRoute } from "@angular/router";
@@ -19,7 +20,7 @@ import {
   HttpResponse,
   HttpParams,
 } from "@angular/common/http";
-import { retry, tap, filter, map } from "rxjs/operators";
+import { tap, filter, map } from "rxjs/operators";
 // import { HttpParams, HttpEvent, HttpResponse } from "@angular/common/http";
 import { UnitStateService } from "src/app/@core/utils/unitState.service";
 import { pipe } from "rxjs";
@@ -28,12 +29,8 @@ import {
   requiredFileSize,
 } from "src/app/@core/utils/upload-file-validators";
 import { environment } from "src/environments/environment";
-import { SubscriptionType } from "src/app/@core/models/baseInterfaces";
-import { parse } from "querystring";
 import { Location } from '@angular/common';
-
-
-
+import { RegularService } from "src/app/@core/utils/regular.service";
 export function uploadProgress<T>(cb: (progress: number) => void) {
   return tap((event: HttpEvent<T>) => {
     if (event.type === HttpEventType.UploadProgress) {
@@ -72,8 +69,11 @@ export class RecordMapInformationComponent implements OnInit {
     requestUnitId: number;
     buildingKind: number;
     subscriptionType: number;
+    windowKind: number;
     useTitle: string;
-    // collectorCount: number;
+    totalConsumption: number;
+    consumingShareability: number;
+    longestRoute: number;
   };
   listMeterKinds;
   pipingKind;
@@ -81,7 +81,9 @@ export class RecordMapInformationComponent implements OnInit {
   response;
   buildingKind;
   subscriptionType;
-
+  windowKind;
+  value = '';
+  counter = 0;
   constructor(
     private fb: FormBuilder,
     private commandCenter: ApiCommandCenter,
@@ -89,7 +91,11 @@ export class RecordMapInformationComponent implements OnInit {
     private toastrService: NbToastrService,
     private route: ActivatedRoute,
     private unitStateService: UnitStateService,
-    private _location: Location
+    private _location: Location,
+    private el: ElementRef,
+    private regService: RegularService,
+    private cd: ChangeDetectorRef
+
   ) { }
   responseType;
   isSubmitted: boolean = false;
@@ -119,10 +125,28 @@ export class RecordMapInformationComponent implements OnInit {
   isAnalyze: Boolean = false;
   analyzeListId: number = 0;
   isOld: boolean = false;
+  pipingKindDisable: boolean = false;
   @ViewChild("rdbMeterType", { static: false })
   rdbMeterType: NbRadioGroupComponent;
+
+  appliancesType: any = [
+    { count: 0, amount: 0, id: 1, title: 'اجاق گاز بدون فر', className: 'GasStoveWithOutOven', abbreviation: 'SGC' },
+    { count: 0, amount: 0, id: 2, title: 'اجاق گاز با فر', className: 'GasStoveWithOven', abbreviation: 'GC' },
+    { count: 0, amount: 0, id: 3, title: 'آبگرمکن زمینی', className: 'GroundWaterHeater', abbreviation: 'WH' },
+    { count: 0, amount: 0, id: 4, title: 'آبگرمکن دیواری', className: 'WallWaterHeater', abbreviation: 'WWH' },
+    { count: 0, amount: 0, id: 5, title: 'پلوپز خانگی', className: 'HomeMadeRiceCooker', abbreviation: 'RC' },
+    { count: 0, amount: 0, id: 6, title: 'بخاری خانگی', className: 'HouseholdHeater', abbreviation: 'H' },
+    { count: 0, amount: 0, id: 7, title: 'بخاری تجاری', className: 'CommercialHeater', abbreviation: 'FH' },
+    { count: 0, amount: 0, id: 8, title: 'روشنایی', className: 'Lighting', abbreviation: 'LI' },
+    { count: 0, amount: 0, id: 9, title: 'شومینه', className: 'FirePlace', abbreviation: 'SH' },
+    { count: 0, amount: 0, id: 10, title: 'پکیج', className: 'Package', abbreviation: 'PU' },
+    { count: 0, amount: 0, id: 11, title: 'مشعل', className: 'Torch', abbreviation: 'B' },
+    { count: 0, amount: 0, id: 12, title: 'کباب پز تجاری', className: 'CommercialGrill', abbreviation: 'BC' },
+  ];
+
   ngOnInit() {
     // alert(this.responseType);
+    console.log(this.appliancesType);
     this.unitStateService.className.subscribe((x) => {
       if (x !== null) {
         if (x.includes("\\")) {
@@ -147,6 +171,15 @@ export class RecordMapInformationComponent implements OnInit {
         console.log(err);
       }
     );
+
+    // this.commandCenter.getFrom("Base", "GetStaticType").subscribe(
+    //   (res) => {
+    //     this.gasAppliancesType = res["data"];
+    //   },
+    //   (err) => {
+    //     console.log(err);
+    //   }
+    // );
 
     let currentUrl = this.router.url;
     let lastSection = currentUrl.substring(currentUrl.lastIndexOf("/") + 1);
@@ -231,11 +264,11 @@ export class RecordMapInformationComponent implements OnInit {
               this.direction = "جنوب شرقی";
             }
 
-            if (this.response.baseSubscriptionTypeId == 1) {
+            if (this.response.baseSubscriptionTypeId == 2) {
               this.subscriptionType = "خانگی";
-            } else if (this.response.baseSubscriptionTypeId == 2) {
-              this.subscriptionType = "عمومی";
             } else if (this.response.baseSubscriptionTypeId == 3) {
+              this.subscriptionType = "عمومی";
+            } else if (this.response.baseSubscriptionTypeId == 4) {
               this.subscriptionType = "صنعتی";
             }
 
@@ -245,6 +278,12 @@ export class RecordMapInformationComponent implements OnInit {
               this.buildingKind = "عمومی ";
             } else if (this.response.buildingKind == 3) {
               this.buildingKind = "خاص";
+            }
+
+            if (this.response.windowKind == 1) {
+              this.windowKind = "با درز معمولی";
+            } else if (this.response.windowKind == 2) {
+              this.windowKind = "با درز هوابند لاستیکی  ";
             }
 
             this.recordMapInfoFormg.patchValue({
@@ -260,9 +299,25 @@ export class RecordMapInformationComponent implements OnInit {
               description: res.description,
               buildingKind: res.buildingKind.toString(),
               subscriptionType: res.baseSubscriptionTypeId.toString(),
-              useTitle: res.useTitle,
 
+              useTitle: res.useTitle,
+              totalConsumption: res.totalConsumption,
+              consumingShareability: res.consumingShareability,
+              longestRoute: res.longestRoute,
             });
+
+            if (res.workFlowGasAppliances) {
+              this.recordMapInfoFormg.patchValue({
+                workFlowGasAppliances: res.workFlowGasAppliances,
+              })
+            }
+
+            if (res.windowKindId) {
+              this.recordMapInfoFormg.patchValue({
+                windowKind: res.windowKindId.toString(),
+              })
+            }
+            this.pipingKindDisable = res.pipingKindDisable;
             this.isOld = res.isOld;
 
             this.recordMapInfoFormg.controls.baseMeterTypeId.setValue(
@@ -315,18 +370,38 @@ export class RecordMapInformationComponent implements OnInit {
       buildingKind: ["", Validators.required],
       subscriptionType: ["", Validators.required],
       useTitle: [""],
+      windowKind: ["", [Validators.required]],
+      totalConsumption: ["",
+        [Validators.required, Validators.min(0.1), Validators.max(160)]
+      ],
+      consumingShareability: ["",
+        [Validators.required, Validators.min(0.1), Validators.max(160)]
+      ],
+      longestRoute: ["",
+        [Validators.required, Validators.min(0), Validators.max(1000)]
+      ],
+      workFlowGasAppliances: this.fb.array([])
     });
     console.log(this.filePath);
 
+    this.fill_appliances_form(this.appliancesType);
+    let isReqCrooky;
     this.fileName = "RecordMapInformation";
     this.commandCenter
       .getFrombyidUploader("Documents", "InputCount", this.fileName)
       .subscribe((res) => {
         if (res.body) {
           this.inputCount = res.body;
+          
           this.inputCount.forEach((element) => {
             let size: number = element.size / 1000;
-
+            if (this.inputCount.length > 1 && element === this.inputCount[1]) {
+              if (this.isEdit) {
+                isReqCrooky = false;
+              }else{
+                isReqCrooky = true;
+              }
+            }
             if (size > 1024) {
               this.sizeTitle = (size / 1024).toFixed(2);
 
@@ -338,15 +413,27 @@ export class RecordMapInformationComponent implements OnInit {
             if (element.required == true && this.mapNeeded == true) {
               // if (!this.isEdit) {
               console.log(this.isEdit);
-              this.recordMapInfoFormg.addControl(
-                element.formControlName,
+              if (isReqCrooky === undefined || isReqCrooky === true) {
+                this.recordMapInfoFormg.addControl(
+                  element.formControlName,
 
-                new FormControl("", [
-                  Validators.required,
-                  requiredFileType(element.extentions),
-                  requiredFileSize(element.size),
-                ])
-              );
+                  new FormControl("", [
+                    Validators.required,
+                    requiredFileType(element.extentions),
+                    requiredFileSize(element.size),
+                  ])
+                );
+                
+              } else {
+                
+                this.recordMapInfoFormg.addControl(
+                  element.formControlName,
+                  new FormControl("", [
+                    requiredFileType(element.extentions),
+                    requiredFileSize(element.size),
+                  ])
+                );
+              }
             } else {
               this.recordMapInfoFormg.addControl(
                 element.formControlName,
@@ -360,7 +447,79 @@ export class RecordMapInformationComponent implements OnInit {
           });
         }
       });
+
+    setTimeout(() => { this.getMeterKind(); }, 1000);
+
   }
+  get formArray() { return <FormArray>this.recordMapInfoFormg.get('workFlowGasAppliances'); }
+
+  fill_appliances_form(form_list) {
+    for (let i = 0; i < form_list.length; i++) {
+      if (this.formArray.length < form_list.length) {
+        this.addForm();
+      }
+
+      this.formArray.at(i).patchValue({
+        id: form_list[i].id,
+        title: form_list[i].title,
+        className: form_list[i].className,
+        count: form_list[i].count,
+        amount: form_list[i].amount,
+        total: (form_list[i].count * form_list[i].amount, 0).toFixed(2),
+      });
+    }
+  }
+
+  addForm() {
+    const control = <FormArray>this.recordMapInfoFormg.controls['workFlowGasAppliances'];
+    for (let index = 0; index < this.appliancesType.length; index++) {
+      const el = this.appliancesType[index];
+      control.push(
+        this.fb.group({
+          id: this.fb.control(el.id),
+          title: this.fb.control(el.title).disable(),
+          className: this.fb.control(el.className).disable(),
+          count: this.fb.control(0).setValidators([Validators.min(0), Validators.max(100), Validators.pattern(this.regService.numberPatern),]),
+          amount: this.fb.control(0).setValidators([Validators.min(0.1), Validators.max(160)]),
+          total: this.fb.control((el.count * el.amount).toFixed(2)).disable(),
+        })
+      );
+    }
+
+  }
+  calculateTotal() {
+    let rows = this.recordMapInfoFormg.get('workFlowGasAppliances')['controls'] as FormArray;
+    for (let i = 0; i < rows.length; i++) {
+      rows.at(i).patchValue({ total: (rows[i].controls.count.value * rows[i].controls.amount.value).toFixed(2) }, 0);
+    }
+
+  }
+
+  // private scrollToFirstInvalidControl() {
+  //   let form = document.getElementById('recordMapInfoFormg'); // <-- your formID
+  //   let firstInvalidControl = form.getElementsByClassName('ng-invalid')[0];
+  //   firstInvalidControl.scrollIntoView();
+  //   (firstInvalidControl as HTMLElement).focus();
+  // }
+  // public findInvalidControls() {
+  //   const invalid = [];
+  //   const controls = this.recordMapInfoFormg.controls;
+  //   for (const name in controls) {
+  //     if (controls[name].invalid) {
+  //       invalid.push(name);
+  //     }
+  //   }
+  //   console.log(invalid);
+  //   return invalid;
+  // }
+  // private scrollToFirstInvalidControl() {
+  //   const firstInvalidControl: HTMLElement = this.el.nativeElement.querySelector(
+  //     "form .ng-invalid"
+  //   );
+
+  //   firstInvalidControl.focus(); //without smooth behavior
+  // }
+
   stringIsNumber(s) {
     var x = +s; // made cast obvious for demonstration
     return x.toString() === s;
@@ -421,6 +580,18 @@ export class RecordMapInformationComponent implements OnInit {
     buildingKind: [
       { type: "required", message: "نوع ساختمان را مشخص نمایید." },
     ],
+    windowKind: [
+      { type: "required", message: "نوع پنجره را مشخص نمایید." },
+    ],
+    totalConsumption: [
+      { type: "required", message: "جمع مصرف را مشخص نمایید." },
+    ],
+    consumingShareability: [
+      { type: "required", message: "مصرف اشتراک پذیری را مشخص نمایید." },
+    ],
+    longestRoute: [
+      { type: "required", message: "طولانی ترین مسیر را مشخص نمایید." },
+    ],
   };
 
   getMeterKind() {
@@ -471,6 +642,11 @@ export class RecordMapInformationComponent implements OnInit {
   }
 
   onSubmit() {
+    this.getMeterKind();
+
+    let infoToSend = this.recordMapInfoFormg.value;
+    infoToSend.workFlowGasAppliances = this.recordMapInfoFormg.get('workFlowGasAppliances').value;
+
     this.sendForm = this.fb.group({
       baseMeterTypeId: this.recordMapInfoFormg.controls.baseMeterTypeId.value,
       floorNumber: this.recordMapInfoFormg.controls.floorNumber.value,
@@ -484,44 +660,27 @@ export class RecordMapInformationComponent implements OnInit {
       description: this.recordMapInfoFormg.controls.description.value,
       className: this.responseType,
       baseSubscriptionTypeId: this.recordMapInfoFormg.controls.subscriptionType.value,
+      windowKindId: this.recordMapInfoFormg.controls.windowKind.value,
       buildingKind: this.recordMapInfoFormg.controls.buildingKind.value,
       useTitle: this.recordMapInfoFormg.controls.useTitle.value,
-
-
+      totalConsumption: this.recordMapInfoFormg.controls.totalConsumption.value,
+      consumingShareability: this.recordMapInfoFormg.controls.consumingShareability.value,
+      longestRoute: this.recordMapInfoFormg.controls.longestRoute.value,
+      //workFlowGasAppliances: this.recordMapInfoFormg.get('workFlowGasAppliances').value,
     });
 
     this.isSubmitted = true;
     console.log(this.recordMapInfoFormg.value);
 
+
     if (this.recordMapInfoFormg.invalid) {
       return false;
     } else if (this.recordMapInfoFormg.valid) {
-      // this.recordMapInfoForm = {
-      //   applianceCount: this.recordMapInfoFormg.controls.applianceCount.value,
-      //   baseMeterTypeId: this.recordMapInfoFormg.controls.baseMeterTypeId.value,
-      //   direction: this.recordMapInfoFormg.controls.direction.value,
-      //   floorNumber: this.recordMapInfoFormg.controls.floorNumber.value,
-      //   pipingKind: this.recordMapInfoFormg.controls.pipingKind.value,
-      //   fondation: this.recordMapInfoFormg.controls.fondation.value,
-      //   utilization: this.recordMapInfoFormg.controls.utilization.value,
-      //   description: this.recordMapInfoFormg.controls.description.value,
-      //   requestUnitId: this.id
-      // };
+
 
       if (this.isEdit) {
         this.unitStateService.clearStorage();
         console.log(this.inputCount);
-        // this.putForm = this.fb.group({
-        //   BaseMeterTypeId: this.recordMapInfoFormg.controls.baseMeterTypeId
-        //     .value,
-        //   FloorNumber: this.recordMapInfoFormg.controls.floorNumber.value,
-        //   Direction: this.recordMapInfoFormg.controls.direction.value,
-        //   Utilization: this.recordMapInfoFormg.controls.utilization.value,
-        //   Fondation: this.recordMapInfoFormg.controls.fondation.value,
-        //   PipingKind: this.recordMapInfoFormg.controls.pipingKind.value,
-        //   ApplianceCount: this.recordMapInfoFormg.controls.applianceCount.value,
-        //   Description: this.recordMapInfoFormg.controls.description.value
-        // });
 
         Object.keys(this.recordMapInfoFormg.controls).forEach((key) => {
           if (this.recordMapInfoFormg.controls[key].value != null) {
@@ -530,41 +689,44 @@ export class RecordMapInformationComponent implements OnInit {
               index < this.recordMapInfoFormg.controls[key].value.length;
               index++
             ) {
-              console.log(key);
-              console.log(this.inputCount[0].formControlName);
-              if (key === this.inputCount[0].formControlName) {
-                console.log("ok");
+              if (key == this.inputCount[0].formControlName || key == this.inputCount[1].formControlName) {
                 for (
-                  let i = 0;
-                  i < this.recordMapInfoFormg.controls[key].value.length;
-                  i++
+                  let index = 0;
+                  index < this.recordMapInfoFormg.controls[key].value.length ? this.recordMapInfoFormg.controls[key].value : false;
+                  index++
                 ) {
                   console.log("ppp");
                   this.sendForm.addControl(
-                    key + "_" + i,
-                    new FormControl(
-                      this.recordMapInfoFormg.controls[key].value[i]
-                    )
+                    key + "_" + index,
+                    new FormControl(this.recordMapInfoFormg.controls[key].value[index])
                   );
                 }
-              } else {
-                this.sendForm.addControl(
-                  key,
-                  new FormControl(
-                    this.recordMapInfoFormg.controls[key].value[index]
-                  )
-                );
               }
             }
           }
+          console.log(this.sendForm.value);
         });
+        let data = toFormData(this.sendForm.value);
+
+        for (let i = 0; i < infoToSend.workFlowGasAppliances.length; i++) {
+
+          const keyPrefix = "workFlowGasAppliances[" + i.toString() + "].";
+          data.append(keyPrefix + "id", infoToSend.workFlowGasAppliances[i].id);
+          data.append(keyPrefix + "title", infoToSend.workFlowGasAppliances[i].title);
+          data.append(keyPrefix + "className", infoToSend.workFlowGasAppliances[i].className);
+          data.append(keyPrefix + "count", infoToSend.workFlowGasAppliances[i].count);
+          data.append(keyPrefix + "amount", infoToSend.workFlowGasAppliances[i].amount);
+          data.append(keyPrefix + "total", infoToSend.workFlowGasAppliances[i].total);
+
+        }
+
 
         if (this.isOld) {
           this.commandCenter
             .putTo(
               "Contract/" + this.contarctId + "/RecordMapInformation/UploadOldRequestUnitMap/" + this.id,
               null,
-              toFormData(this.sendForm.value)
+              data
               // this.recordMapInfoForm
             )
             .subscribe(
@@ -572,7 +734,7 @@ export class RecordMapInformationComponent implements OnInit {
                 this.loading = true;
                 console.log(JSON.stringify(res));
                 if (res.ok == true) {
-            
+
                   const message = "ویرایش با موفقیت انجام شد.";
                   this.toastrService.primary(message, " ", {
                     position: NbGlobalLogicalPosition.TOP_START,
@@ -583,11 +745,11 @@ export class RecordMapInformationComponent implements OnInit {
                   if (this.isAnalyze) {
                     this._location.back();
                   } else {
-                
+
                     if (res.body) {
                       this.gasReqId = res.body.gasReqId;
-                      this.router.navigate([  
-                        "/pages/forms/ExecutorOldGasRequestEdit/" + this.gasReqId+"/contractId/"+this.contarctId
+                      this.router.navigate([
+                        "/pages/forms/ExecutorOldGasRequestEdit/" + this.gasReqId + "/contractId/" + this.contarctId
                       ]);
                     }
                   }
@@ -609,12 +771,14 @@ export class RecordMapInformationComponent implements OnInit {
             );
         }
         else {
+
+          console.log(data);
+
           this.commandCenter
             .putTo(
               "Contract/" + this.contarctId + "/RecordMapInformation/" + this.id,
               null,
-              toFormData(this.sendForm.value)
-              // this.recordMapInfoForm
+              data
             )
             .subscribe(
               (res) => {
@@ -655,46 +819,50 @@ export class RecordMapInformationComponent implements OnInit {
             );
         }
       } else {
-        console.log(this.inputCount);
 
         Object.keys(this.recordMapInfoFormg.controls).forEach((key) => {
-          for (
-            let index = 0;
-            index < this.recordMapInfoFormg.controls[key].value.length;
-            index++
-          ) {
-            if (key == this.inputCount[0].formControlName) {
-              console.log("ok");
-              for (
-                let index = 0;
-                index < this.recordMapInfoFormg.controls[key].value.length;
-                index++
-              ) {
-                console.log("ppp");
-                this.sendForm.addControl(
-                  key + "_" + index,
-                  new FormControl(
-                    this.recordMapInfoFormg.controls[key].value[index]
-                  )
-                );
+          if (this.recordMapInfoFormg.controls[key].value != null) {
+            for (
+              let index = 0;
+              index < this.recordMapInfoFormg.controls[key].value.length;
+              index++
+            ) {
+              if (key == this.inputCount[0].formControlName || key == this.inputCount[1].formControlName) {
+                for (
+                  let index = 0;
+                  index < this.recordMapInfoFormg.controls[key].value.length;
+                  index++
+                ) {
+                  console.log("ppp");
+                  this.sendForm.addControl(
+                    key + "_" + index,
+                    new FormControl(this.recordMapInfoFormg.controls[key].value[index])
+                  );
+                }
               }
-            } else {
-              this.sendForm.addControl(
-                key,
-                new FormControl(
-                  this.recordMapInfoFormg.controls[key].value[index]
-                )
-              );
             }
           }
           console.log(this.sendForm.value);
         });
-        console.log(this.sendForm.value);
+        let data = toFormData(this.sendForm.value);
+
+        for (let i = 0; i < infoToSend.workFlowGasAppliances.length; i++) {
+
+          const keyPrefix = "workFlowGasAppliances[" + i.toString() + "].";
+          data.append(keyPrefix + "id", infoToSend.workFlowGasAppliances[i].id);
+          data.append(keyPrefix + "title", infoToSend.workFlowGasAppliances[i].title);
+          data.append(keyPrefix + "className", infoToSend.workFlowGasAppliances[i].className);
+          data.append(keyPrefix + "count", infoToSend.workFlowGasAppliances[i].count);
+          data.append(keyPrefix + "amount", infoToSend.workFlowGasAppliances[i].amount);
+          data.append(keyPrefix + "total", infoToSend.workFlowGasAppliances[i].total);
+
+        }
+
         this.commandCenter
           .postTo(
             "Contract/" + this.contarctId + "/RecordMapInformation",
             null,
-            toFormData(this.sendForm.value)
+            data
             // this.recordMapInfoForm
           )
           .subscribe(
@@ -738,16 +906,17 @@ export class RecordMapInformationComponent implements OnInit {
     }
   }
 
+
   // ngOnDestroy(): void {
   //   this.unitStateService.clearStorage();
   // }
   cancle() {
     if (this.isAnalyze) {
       this._location.back();
-    } 
+    }
     if (this.isOld) {
       this._location.back();
-    }else {
+    } else {
       this.router.navigate([
         "/pages/forms/Contract/" +
         this.contarctId +
@@ -756,12 +925,17 @@ export class RecordMapInformationComponent implements OnInit {
     }
 
   }
+
+  onChange(event) {
+    this.value = event;
+    this.counter = this.counter + 1;
+    this.cd.detectChanges();
+  }
+
+  getValidity(i) {
+    return (<FormArray>this.recordMapInfoFormg.get('workFlowGasAppliances')).controls[i].invalid;
+  }
 }
-//export function markAllAsDirty(form: FormGroup) {
-//   for (const control of Object.keys(form.controls)) {
-//     form.controls[control].markAsDirty();
-//   }
-// }
 
 function toFormData<T>(formValue: T) {
   const formData = new FormData();
@@ -773,3 +947,11 @@ function toFormData<T>(formValue: T) {
 
   return formData;
 }
+
+function isNumberKey(evt) {
+  var charCode = (evt.which) ? evt.which : evt.keyCode
+  if (charCode > 31 && (charCode < 48 || charCode > 57))
+    return false;
+  return true;
+}
+

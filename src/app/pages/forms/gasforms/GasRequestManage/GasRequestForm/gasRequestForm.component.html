@@ -110,7 +110,8 @@
                 userRole.includes('HPManager') ||
                 userRole.includes('GasRuleEmployeeHP') ||
                 userRole.includes('GasEmployeeHP') ||
-                userRole.includes('GasEmployee')) &&
+                userRole.includes('GasEmployee') ||
+                userRole.includes('AnalyzeEmployee')) &&
               insaturationCodeRepeatInfos?.length > 0
             ">
             <nb-card-body>
@@ -253,7 +254,8 @@
                     </div>
                   </div>
                 </div> -->
-
+                
+                
                 <div class="row mb-3" *ngIf="piForm.controls.mkType.value === establishBuildingId">
                   <div class="col-sm-2 mt-2 text-center">
                     <label class="ml-1" for="buildingLocation">
@@ -672,7 +674,8 @@
                   userRole.includes('HPManager') ||
                   userRole.includes('GasRuleEmployeeHP') ||
                   userRole.includes('GasEmployeeHP') ||
-                  userRole.includes('GasEmployee'))
+                  userRole.includes('GasEmployee') ||
+                  userRole.includes('AnalyzeEmployee'))
               ">
               <nb-card-body class="p-0">
                 <div class="input-group">
@@ -732,7 +735,8 @@
                         userRole.includes('HPManager') ||
                         userRole.includes('GasRuleEmployeeHP') ||
                         userRole.includes('GasEmployeeHP') ||
-                        userRole.includes('GasEmployee'))
+                        userRole.includes('GasEmployee') ||
+                        userRole.includes('AnalyzeEmployee'))
                     ">
                     <label class="ml-1" for="isRequiredAlamakDeletion"><span
                         class="text-danger font-weight-bold ml-1">*</span>
@@ -781,7 +785,8 @@
                         userRole.includes('HPManager') ||
                         userRole.includes('GasRuleEmployeeHP') ||
                         userRole.includes('GasEmployeeHP') ||
-                        userRole.includes('GasEmployee')) &&
+                        userRole.includes('GasEmployee')  ||
+                        userRole.includes('AnalyzeEmployee'))&&
                       piForm.controls.mkIsColony.value === true
                     " class="input-group col-lg-10 col-md-10 col-sm-10">
                     <label>
@@ -848,7 +853,8 @@
                         userRole.includes('HPManager') ||
                         userRole.includes('GasRuleEmployeeHP') ||
                         userRole.includes('GasEmployeeHP') ||
-                        userRole.includes('GasEmployee')) &&
+                        userRole.includes('GasEmployee') ||
+                        userRole.includes('AnalyzeEmployee')) &&
                       piForm.controls.mkIsForGarden.value === true
                     " class="input-group col-lg-12 col-md-12 col-sm-12">
                     <label>
@@ -884,7 +890,8 @@
                         userRole.includes('HPManager') ||
                         userRole.includes('GasRuleEmployeeHP') ||
                         userRole.includes('GasEmployeeHP') ||
-                        userRole.includes('GasEmployee')) &&
+                        userRole.includes('GasEmployee')  ||
+                        userRole.includes('AnalyzeEmployee')) &&
                       piForm.controls.mkUsageType.value ===
                         industrialAgricultureId
                     " class="input-group col-lg-12 col-md-12 col-sm-12">
@@ -1148,6 +1155,7 @@
                     userRole.includes('GasRuleCheckerGroupThree') ||
                     userRole.includes('HPManager') ||
                     userRole.includes('GasEmployee') ||
+                    userRole.includes('AnalyzeEmployee') ||
                     userRole.includes('GasRuleEmployeeHP') ||
                     userRole.includes('GasEmployeeHP'))
                 ">
@@ -1232,6 +1240,7 @@
                   !userRole.includes('GasRuleCheckerGroupThree') &&
                   !userRole.includes('HPManager') &&
                   !userRole.includes('GasEmployee') &&
+                  !userRole.includes('AnalyzeEmployee') &&
                   !userRole.includes('GasRuleEmployeeHP') &&
                   !userRole.includes('GasEmployeeHP')
                 ">
@@ -1328,6 +1337,7 @@
 !userRole.includes('GasRuleCheckerGroupThree') &&
 !userRole.includes('HPManager') &&
 !userRole.includes('GasEmployee') &&
+!userRole.includes('AnalyzeEmployee') &&
 !userRole.includes('GasRuleEmployeeHP') &&
 !userRole.includes('GasEmployeeHP')
 ">
@@ -1439,7 +1449,9 @@
                   userRole.includes('HPManager') ||
                   userRole.includes('GasRuleEmployeeHP') ||
                   userRole.includes('GasEmployeeHP') ||
-                  userRole.includes('GasEmployee')) &&
+                  userRole.includes('GasEmployee') ||
+                  userRole.includes('AnalyzeEmployee'))
+                   &&
                 className === 'ControlProjectInfo'
               ">
               <nb-card-body style="background-color: #e2e4ea; padding-top: 10px">
@@ -1501,7 +1513,8 @@
                   userRole.includes('HPManager') ||
                   userRole.includes('GasRuleEmployeeHP') ||
                   userRole.includes('GasEmployeeHP') ||
-                  userRole.includes('GasEmployee'))
+                  userRole.includes('GasEmployee') ||
+                  userRole.includes('AnalyzeEmployee'))
               " class="btn-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
               <button class="btn mr-3" nbButton status="success" style="width: 100%" type="submit" [nbSpinner]="loading"
                 nbSpinnerStatus="info" nbSpinnerSize="large" [disabled]="loading || !piForm.valid">
@@ -1547,7 +1560,8 @@
                 !userRole.includes('HPManager') &&
                 !userRole.includes('GasRuleEmployeeHP') &&
                 !userRole.includes('GasEmployeeHP') &&
-                !userRole.includes('GasEmployee')
+                !userRole.includes('GasEmployee') &&
+                !userRole.includes('AnalyzeEmployee')
               " class="btn-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
               <button class="btn mr-3" nbButton status="success" style="width: 100%" type="submit" [nbSpinner]="loading"
                 nbSpinnerStatus="info" nbSpinnerSize="large" [disabled]="loading || !piForm.valid">

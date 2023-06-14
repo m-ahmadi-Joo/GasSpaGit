@@ -24,7 +24,7 @@
   nbButton
   status="danger"
   (click)="onDeleteContract(rData)"
-  *appHasRole="['Admin', 'GasEmployee']"
+  *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']"
 >
   <nb-icon
     [options]="{ animation: { type: 'zoom' } }"
@@ -37,7 +37,7 @@
 <button
   nbTooltip="ویرایش"
   nbTooltipPlacement="top"
-  *appHasRole="['Admin', 'GasEmployee', 'GasEmployeeExceptShiraz']"
+  *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee', 'GasEmployeeExceptShiraz']"
   [disabled]="rData.hasUnit"
   [ngStyle]="{ cursor: rData.hasUnit ? 'not-allowed' : 'pointer' }"
   size="tiny"
@@ -53,7 +53,46 @@
   >
   </nb-icon>
 </button>
-<!--
+
+<button
+  nbTooltip="ایجاد محدودیت"
+  nbTooltipPlacement="top"
+  *appHasRole="['Admin']"
+  [disabled]="rData.hasUnit || rData.isLimited"
+  [ngStyle]="{ cursor: rData.hasUnit ? 'not-allowed' : 'pointer', display : rData.isLimited ? 'none' : 'inline-block' }"
+  size="tiny"
+  class="mb-2 mr-1"
+  nbButton
+  status="info"
+  (click)="onLimitedExecuter(rData)"
+>
+  <nb-icon
+    [options]="{ animation: { type: 'zoom' } }"
+    class="icon-button"
+    icon="person-done-outline"
+  >
+  </nb-icon>
+</button>
+<button
+  nbTooltip="حذف محدودیت"
+  nbTooltipPlacement="top"
+  *appHasRole="['Admin']"
+   [disabled]="rData.hasUnit || !rData.isLimited"
+  [ngStyle]="{ cursor: rData.hasUnit ? 'not-allowed' : 'pointer', display : !rData.isLimited ? 'none' : 'inline-block'  }"
+  size="tiny"
+  class="mb-2 mr-1"
+  nbButton
+  status="info"
+  (click)="onLimitedExecuter(rData)"
+>
+  <nb-icon
+    [options]="{ animation: { type: 'zoom' } }"
+    class="icon-button"
+    icon="person-delete-outline"
+  >
+  </nb-icon>
+</button>
+
 <button
   nbTooltip="مشاهده جزئیات"
   nbTooltipPlacement="top"
@@ -61,7 +100,8 @@
   class="mb-2 mr-1"
   nbButton
   status="info"
-  (click)="onShowDetailContract()"
+  [disabled]="rData.hasUnit"
+  (click)="onHistory(rData?.id)"
 >
   <nb-icon
     [options]="{ animation: { type: 'zoom' } }"
@@ -69,4 +109,7 @@
     icon="eye-outline"
   >
   </nb-icon>
-</button> -->
+</button>
+<ng-template #ExcuterLimitedHistory let-data>
+  <app-excuterLimitedDetail [id]="rData?.id"></app-excuterLimitedDetail>
+</ng-template>

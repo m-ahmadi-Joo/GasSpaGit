@@ -9,7 +9,12 @@ export const MENU_ITEMS_GasCompany: NbMenuItem[] = [
         title: "املاک",
         link: "/pages/forms/GasReqList",
         icon: "home-outline"
-      }
+      },
+      {
+        title: "املاک قدیمی",
+        link: "/pages/forms/OldGasReqList",
+        icon: 'home-outline'
+      },
     ]
   },
   {

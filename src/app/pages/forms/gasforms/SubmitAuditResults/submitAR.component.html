@@ -162,7 +162,7 @@
                   </div>
                 </div>
 
-                <div *ngIf="ResultInspectionWeldingNotConfirmed"  class="row w-100">
+                <div *ngIf="ResultInspectionWeldingNotConfirmed" class="row w-100">
                   <hr class="w-100" />
                   <label>
                     <span class="text-danger font-weight-bold">*</span>
@@ -171,9 +171,9 @@
                   <div class="col-sm-10">
                     <nb-radio-group class="form-inline radio-x-inline" formControlName="NotConfirmedReason"
                       id="NotConfirmedReason" name="NotConfirmedReason" style="margin-top: 1.75rem">
-                      <nb-radio value="1"  [checked]="NotConfirmedForEdit=== 1"  >عدم مهارت جوشکار</nb-radio>
-                      <nb-radio value="2"  [checked]="NotConfirmedForEdit === 2" >تعداد سرجوش</nb-radio>
-                      <nb-radio value="3"  [checked]="NotConfirmedForEdit === 3" >معیوب بودن جوش</nb-radio>
+                      <nb-radio value="1" [checked]="NotConfirmedForEdit=== 1">عدم مهارت جوشکار</nb-radio>
+                      <nb-radio value="2" [checked]="NotConfirmedForEdit === 2">تعداد سرجوش</nb-radio>
+                      <nb-radio value="3" [checked]="NotConfirmedForEdit === 3">معیوب بودن جوش</nb-radio>
                     </nb-radio-group>
                     <div *ngIf="isSubmitted">
                       <div *ngFor="
@@ -344,7 +344,7 @@
                       </div>
                     </div>
                   </div>
-                  
+
 
 
 
@@ -354,31 +354,33 @@
                   (inspectionType == 'ChangeResultInspectionPreExecution' &&
                     displaySafety)
                 ">
-                <div *ngIf="weldingSafetyIsShow && sarForm.get('safetyInspection').value === 'true'">
-                  <label for="safetyInspection">تعداد بازرسی ایمنی</label>
-                  <input class="form-inline pr-3" type="number" formControlName="safetyInspectionCount" id="safetyInspectionCount" fullWidth  nbInput min="1" *ngIf="this.checkAnalyze !== 'View'"/>
+                    <div *ngIf="weldingSafetyIsShow && sarForm.get('safetyInspection').value === 'true'">
+                      <label for="safetyInspection">تعداد بازرسی ایمنی</label>
+                      <input class="form-inline pr-3" type="number" formControlName="safetyInspectionCount"
+                        id="safetyInspectionCount" fullWidth nbInput min="1" *ngIf="this.checkAnalyze !== 'View'" />
 
-                    
-                  <div *ngIf="this.checkAnalyze === 'View'">
-                    <p class="text-success" *ngIf="
+
+                      <div *ngIf="this.checkAnalyze === 'View'">
+                        <p class="text-success" *ngIf="
                         sarForm.get('safetyInspection').value === 'true'
                       ">
-                      دارد
-                    </p>
-                    <p class="text-danger" *ngIf="
+                          دارد
+                        </p>
+                        <p class="text-danger" *ngIf="
                         sarForm.get('safetyInspection').value === 'false'
                       ">
-                      ندارد
-                    </p>
+                          ندارد
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
 
-              
+
                   <div class="col-lg-3 col-md-3 col-sm-3" *ngIf="!showCollectorWelding">
                     <div>
                       <label for="isCollectorInspectionWelding">نیاز به بازرسی جوش کلکتوری</label>
-                      <nb-radio-group *ngIf="this.checkAnalyze !== 'View'" class="form-inline pr-3"
+                      <nb-radio-group *ngIf="this.checkAnalyze !== 'View'"
+                        (valueChange)="onChangeCheckCollector($event)" class="form-inline pr-3"
                         formControlName="isCollectorInspectionWelding" id="isCollectorInspectionWelding"
                         name="isCollectorInspectionWelding">
                         <nb-radio value="true">
@@ -418,23 +420,24 @@
                     (inspectionType === 'ResultInspectionPreExecution' ||
                       inspectionType === 'ResultReInspectionPreExecution' ||
                       inspectionType === 'ChangeResultInspectionPreExecution') &&
-                     this.checkAnalyze !== 'View' && showtypeofConsumables">
+                     showtypeofConsumables">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                       <label for="typeofConsumables"> نوع مصالح مصرفی :
                       </label>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 form-inline mt-4 mr-5">
                       <label> لوله :
-                        <input formControlName="pipeType" size="large" id="pipeType" class="mr-4 dotted" nbInput />
+                        <input formControlName="pipeType" size="large" id="pipeType" class="mr-4 dotted" nbInput
+                          [readonly]="this.checkAnalyze == 'View'" />
                       </label>
                       <label> اتصالات :
                         <input formControlName="connectionType" size="large" id="connectionType" class="mr-4 dotted"
-                          nbInput />
+                          nbInput [readonly]="this.checkAnalyze == 'View'" />
                       </label>
                     </div>
-
                   </div>
                 </div>
+
                 <div class="row w-100" *ngIf="
                     (inspectionType == 'ResultInspectionWelding' ||
                       inspectionType == 'ResultInspectionCollectorWelding') &&
@@ -502,6 +505,113 @@
                   </div>
                 </div>
 
+
+
+                <!--#region WorkFlowInspectionResults  -->
+
+                <div class="row mt-2 mb-2 w-100">
+                  <div *ngIf="
+    (inspectionType === 'ResultInspectionPreExecution' ||
+      inspectionType === 'ResultReInspectionPreExecution' ||
+      inspectionType === 'ChangeResultInspectionPreExecution')">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                      <label for="supervisorEngineeringInspectionTheory"> نظریه بازرسی مهندسی ناظر :
+                      </label>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 form-inline mt-4 mr-5">
+                      <label> ملک علمک :
+                        <div class="d-flex">
+                          <nb-radio-group *ngIf="this.checkAnalyze !== 'View'"
+                            class="form-inline pr-3"
+                            formControlName="haveAlamak" id="haveAlamak" name="haveAlamak">
+                            <nb-radio value="true" style="margin:0 !important">
+                              دارد
+                            </nb-radio>
+                            <nb-radio value="false" style="margin:0 !important">
+                              ندارد ؟
+                            </nb-radio>
+                          </nb-radio-group>
+
+                        </div>
+                      </label>
+
+                      <label> نیاز به استعلام شرکت گاز :
+                        <div class="d-flex">
+                          <nb-radio-group *ngIf="this.checkAnalyze !== 'View'"
+                            class="form-inline pr-3"
+                            formControlName="needInquiry" id="needInquiry" name="needInquiry">
+                            <nb-radio value="true" style="margin:0 !important">
+                              دارد
+                            </nb-radio>
+                            <nb-radio value="false" style="margin:0 !important">
+                              ندارد
+                            </nb-radio>
+                          </nb-radio-group>
+                        </div>
+                      </label>
+                      <label> نحوه تامین هوا و محل نصب دریچه و ابعاد آن و ترسیم در نقشه مورد تایید :
+                        <div class="d-flex">
+                          <nb-radio-group *ngIf="this.checkAnalyze !== 'View'"
+                             class="form-inline pr-3"
+                            formControlName="mapApproved" id="mapApproved" name="mapApproved">
+                            <nb-radio value="true" style="margin:0 !important">
+                              می باشد
+                            </nb-radio>
+                            <nb-radio value="false" style="margin:0 !important">
+                              نمی باشد
+                            </nb-radio>
+                          </nb-radio-group>
+                        </div>
+                      </label>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 form-inline mt-4 mr-5">
+                      <label> تطابق نقشه گاز با نقشه معماری مصوب موارد مرتبط با گاز رسانی :
+                        <div class="d-flex">
+                          <nb-radio-group *ngIf="this.checkAnalyze !== 'View'"
+                             class="form-inline pr-3"
+                            formControlName="itMatches" id="itMatches" name="itMatches">
+                            <nb-radio value="true" style="margin:0 !important">
+                              دارد
+                            </nb-radio>
+                            <nb-radio value="false" style="margin:0 !important">
+                              ندارد
+                            </nb-radio>
+                          </nb-radio-group>
+                        </div>
+                      </label>
+
+                      <label> نصب دستگاه اعلام خطر نشت گاز در موتور خانه لازم :
+                        <div class="d-flex">
+                          <nb-radio-group *ngIf="this.checkAnalyze !== 'View'"
+                             class="form-inline pr-3"
+                            formControlName="needInstallMachine" id="needInstallMachine" name="needInstallMachine">
+                            <nb-radio value="true" style="margin:0 !important">
+                              دارد
+                            </nb-radio>
+                            <nb-radio value="false" style="margin:0 !important">
+                              ندارد
+                            </nb-radio>
+                          </nb-radio-group>
+                        </div>
+                      </label>
+                      <label> نصب شیر حساس به زلزله و شیر قطع جریان گاز اضافی لازم :
+                        <div class="d-flex">
+                          <nb-radio-group *ngIf="this.checkAnalyze !== 'View'"
+                             class="form-inline pr-3"
+                            formControlName="needExtraGas" id="needExtraGas" name="needExtraGas">
+                            <nb-radio value="true" style="margin:0 !important">
+                              دارد
+                            </nb-radio>
+                            <nb-radio value="false" style="margin:0 !important">
+                              ندارد
+                            </nb-radio>
+                          </nb-radio-group>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <!--#endregion -->
                 <!-- <div class="row pt-1">
                    <div class="col-lg-4 col-md-4 col-sm-4">
                   <label class="d-block">موقعیت فعلی</label>
