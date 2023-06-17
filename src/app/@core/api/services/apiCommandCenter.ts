@@ -363,60 +363,49 @@ export abstract class ApiCommandCenter {
   abstract getByClassName(controller: string, action: string, data: string);
   //#endregion
 
-    //#region getNewsList
+  //#region getNewsList
   abstract getNewsList(
     page,
     itemsPerPage,
     filterParams?
   ): Observable<PaginatedResult<any[]>>;
   //#endregion
-  
-    //#region GetMoreUser
-    abstract getMoreUser(controller: string, action: string, skip: number, bufferSize : number);
-    //#endregio
-//#region GetMoreUser
-    abstract setDataForNewsDetail(id);
-    abstract getDataForNewsDetail();
-    //#endregio
-<<<<<<< HEAD
-   //#region GetMoreFiveUnitsListResolver
-=======
-<<<<<<< HEAD
-   //#region GetMoreFiveUnitsListResolver
-=======
 
-    //#region GetMoreFiveUnitsListResolver
->>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
->>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
-    abstract getAllMoreFiveUnitsList(
-      page?,
-      itemsPerPage?,
-      filterParams?
-    ): Observable<PaginatedResult<any[]>>;
-        //#endregio
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
-    abstract getSuppliersList(
-      page?,
-      itemsPerPage?,
-      filterParams?
-    ): Observable<PaginatedResult<any[]>>;
+  //#region GetMoreUser
+  abstract getMoreUser(controller: string, action: string, skip: number, bufferSize: number);
+  //#endregio
+  //#region GetMoreUser
+  abstract setDataForNewsDetail(id);
+  abstract getDataForNewsDetail();
+  //#endregion
+  //#region GetMoreFiveUnitsListResolver
 
-        //#region getNewsList
+  abstract getAllMoreFiveUnitsList(
+    page?,
+    itemsPerPage?,
+    filterParams?
+  ): Observable<PaginatedResult<any[]>>;
+  //#endregio
+
+  abstract getSuppliersList(
+    page?,
+    itemsPerPage?,
+    filterParams?
+  ): Observable<PaginatedResult<any[]>>;
+
+  //#region getNewsList
   abstract getNewsUserGroupList(
     page,
     itemsPerPage,
     filterParams?
   ): Observable<PaginatedResult<any[]>>;
   //#endregion
-<<<<<<< HEAD
-   abstract getScanDocumentList(
-      page?,
-      itemsPerPage?,
-      filterParams?
-    ): Observable<PaginatedResult<any[]>>;
+
+  abstract getScanDocumentList(
+    page?,
+    itemsPerPage?,
+    filterParams?
+  ): Observable<PaginatedResult<any[]>>;
 
   //#region OldGasRequests
   abstract getOldGasRequestList(
@@ -426,8 +415,5 @@ export abstract class ApiCommandCenter {
     hPRequests?
   ): Observable<PaginatedResult<any[]>>;
   //#end region
-=======
-=======
->>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
->>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
+
 }
