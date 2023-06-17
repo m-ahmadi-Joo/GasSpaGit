@@ -68,6 +68,10 @@ import {
   NewsListCustomActionsComponent,
   NewsComponent,
   UploadedDocumentsComponent,
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
   MoreThanFiveUnitsComponent,
   NewsUserGroupListComponent,
   AddNewsUserGroupTabsComponent,
@@ -75,6 +79,12 @@ import {
   NewsUsersGroupCustomActionComponent,
   CreateNewsUserGroupsComponent,
   NewsUserGroupsCheckBoxComponent
+<<<<<<< HEAD
+=======
+=======
+  MoreThanFiveUnitsComponent
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
 } from "./forms";
 
 import { AuthGuard } from "src/app/@core/auth/mock/authguard";
@@ -113,8 +123,16 @@ import { NewsListResolver } from "src/app/@core/utils/NewsListResolver";
 import { GetNewsInfoResolver } from "src/app/@core/utils/getNewsInfo-resolver";
 import { GetMoreFiveUnitsSearchInfoResolver } from "src/app/@core/utils/getMoreFiveUnitsSearchInfo-resolver";
 import { GetMoreFiveUnitsListResolver } from "src/app/@core/utils/getMoreFiveUnitsList-resolver";
+<<<<<<< HEAD
 import { NewsUserGroupListResolver } from "src/app/@core/utils/newsUserGroupListResolver";
 import { NewsDetailFormComponent } from "./forms/newsManagement/newsDetailForm/newsDetailForm.component";
+=======
+<<<<<<< HEAD
+import { NewsUserGroupListResolver } from "src/app/@core/utils/newsUserGroupListResolver";
+import { NewsDetailFormComponent } from "./forms/newsManagement/newsDetailForm/newsDetailForm.component";
+=======
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
 
 const routes: Routes = [
   {
@@ -491,6 +509,10 @@ const routes: Routes = [
          },
       },
       {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
         path: "NewsUserGroupsList",
         component: NewsUserGroupListComponent,
          resolve: {
@@ -498,10 +520,19 @@ const routes: Routes = [
          },
       },
       {
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
         path: "GasMoreThanFiveUnitsList",
         component: MoreThanFiveUnitsComponent,
         resolve: {
           info: GetMoreFiveUnitsSearchInfoResolver,
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
           listData: GetMoreFiveUnitsListResolver,
         },
       },
@@ -529,6 +560,14 @@ const routes: Routes = [
         path: "NewsDetail/:id",
         component: NewsDetailFormComponent,
       },
+<<<<<<< HEAD
+=======
+=======
+          // listData: GetMoreFiveUnitsListResolver,
+        },
+      },
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
     ],
   },
 ];
@@ -606,7 +645,16 @@ export const routerComponents = [
   NewsDetailFormComponent,
   UploadedDocumentsComponent,
   MoreThanFiveUnitsComponent,
+<<<<<<< HEAD
   NewsUserGroupListComponent,
   NewsUsersGroupCustomActionComponent,
   NewsUserGroupsCheckBoxComponent,
+=======
+<<<<<<< HEAD
+  NewsUserGroupListComponent,
+  NewsUsersGroupCustomActionComponent,
+  NewsUserGroupsCheckBoxComponent,
+=======
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
 ];

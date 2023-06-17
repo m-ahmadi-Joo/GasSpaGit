@@ -3,27 +3,106 @@
     <!-- <div class="container"> -->
     <form class="form-inline" (ngSubmit)="onSerach()" [formGroup]="form">
       <div class="row">
+<<<<<<< HEAD
         <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
+=======
+<<<<<<< HEAD
+        <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
+=======
+        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
           <label for="engineerName">
             نام :
           </label>
           <input formControlName="firstName" fullWidth nbInput />
         </div>
+<<<<<<< HEAD
         <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
+=======
+<<<<<<< HEAD
+        <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
+=======
+        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
           <label for="membershipNumber">
             نام خانوادگی :
           </label>
 
           <input formControlName="lastName" size="small" fullWidth id="lastName" nbInput />
         </div>
+<<<<<<< HEAD
         <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
+=======
+<<<<<<< HEAD
+        <div class="form-group col-lg-3 col-md-3 col-sm-6 col-xs-12">
+=======
+        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
           <label for="nationalCode">
             کد ملی:
           </label>
 
           <input formControlName="nationalCode" size="small" fullWidth id="nationalCode" nbInput type="number" />
         </div>
+<<<<<<< HEAD
         <div class="form-group col-lg-2 col-md-2 col-sm-3 col-xs-12 "
+=======
+<<<<<<< HEAD
+        <div class="form-group col-lg-2 col-md-2 col-sm-3 col-xs-12 "
+=======
+      </div>
+      <div class="row mb-0">
+        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+          <label>انتخاب شهر محل کار:</label>
+          <!-- style="box-shadow: 0 0 3px" -->
+          <nb-select multiple placeholder="انتخاب شهر" fullWidth id="neighborhood" formControlName="workTown">
+            <nb-option *ngFor="let town of lstTowns" [value]="town.townId">
+              {{ town.townName }}
+            </nb-option>
+          </nb-select>
+        </div>
+        <!-- <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+          <label for="fromDateStart">
+            تاریخ شروع پروانه:
+          </label>
+
+          <dp-date-picker
+            name="ds"
+            id="ds"
+            nbInput
+            dir="rtl"
+            mode="day"
+            theme="dp-material"
+            formControlName="licenseStartDate"
+            [config]="datePickerConfig"
+            (open)="openFromStartDayPicker()"
+            (close)="closeFromStartDayPicker()"
+          ></dp-date-picker>
+        </div>
+        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
+          <label for="fromDateStart">
+            تاریخ پایان پروانه:
+          </label>
+
+          <dp-date-picker
+            name="de"
+            id="de"
+            nbInput
+            dir="rtl"
+            mode="day"
+            theme="dp-material"
+            formControlName="licenseExpireDate"
+            [config]="datePickerConfig"
+            (open)="openFromEndtDayPicker()"
+            (close)="closeFromEndtDayPicker()"
+          ></dp-date-picker>
+        </div> -->
+        <div class="form-group col-lg-3 col-md-3 col-sm-4 col-xs-12 "
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
           style="margin-bottom: -40px; margin-top: -31px; margin-right: 64px !important;">
           <button nbTooltip="جستجو" nbTooltipPlacement="top" nbButton hero size="tiny" status="info" type="submit"
             class="ml-1" style="margin-top: 15px;">
@@ -38,10 +117,25 @@
           </button>
         </div>
       </div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
     </form>
     <br />
 
 
+<<<<<<< HEAD
+=======
+=======
+
+
+    </form>
+    <br />
+
+    <!-- </div> -->
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
   </nb-card-body>
 </nb-card>
 
@@ -50,11 +144,25 @@
     <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="arrow-ios-back-outline">
     </nb-icon>
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
     <span class="mr-1" style="color: #3366ff;">تامین کنندگان فشارقوی</span>
 
     <div class="pull-left">
       <button class="ml-1" nbButton status="primary" hero *appHasRole="['GasEmployee','Admin','AnalyzeEmployee']"
         [routerLink]="['/pages/forms/CreateSupplier']">
+<<<<<<< HEAD
+=======
+=======
+    <span class="mr-1" style="color: #3366ff;">تامین کنندگان</span>
+
+    <div class="pull-left">
+      <button class="ml-1" nbButton status="primary" hero *appHasRole="['GasEmployee','Admin']"
+        [routerLink]="['/pages/forms/CreateExecuter']">
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
         <nb-icon [options]="{ animation: { type: 'pulse' } }" class="icon-button" icon="people-outline">
         </nb-icon>
         ثبت تامین کننده
@@ -132,3 +240,90 @@
     </nb-card-footer>
   </nb-card>
 </ng-template>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+<ng-template #dialogLimited let-data let-ref="dialogRefLimited">
+  <nb-card size="medium" status="info" accent="info">
+    <nb-card-header>
+      <h6 *ngIf="!data.isLimited">محدود سازی مجری {{ data.firstName }} {{ data.lastName }} {{ data.code }}</h6>
+      <h6 *ngIf="data.isLimited">حذف محدودیت مجری {{ data.fileNumber }}</h6>
+
+    </nb-card-header>
+    <nb-card-body>
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <form [formGroup]="excuterLimitedForm" (ngSubmit)="confirmLimited(data)">
+            <nb-card>
+              <nb-card-body>
+                <div class="row mt-2 mb-3 mb-0">
+                  <label for="file">مستندات :</label>
+                    <div *ngFor="let a of inputCount; let i = index">
+                      <strong class="mb-2" style="color: rgb(0, 68, 255); display:block; font-size: 11px;"> حداکثر حجم
+                        {{sizeTitles[i]}} - فرمت ها ({{a.extentions}}) </strong>
+                      <app-uploader [formControlName]="a.formControlName" [filePath]="imagePathEdit"
+                        [fileExtentions]="a.extentions" [className]="imagePathEdit" [fileSize]="a.size">
+                      </app-uploader>
+                    </div>
+                </div>
+                <div class="row mt-2 mb-3 mb-0">
+                  <div class="col-sm-4 mt-2">
+                    <span style="display: inline-block">
+                      <span class="text-danger font-weight-bold">*</span>
+                      توضیحات:
+                    </span>
+                  </div>
+
+                  <div class="col-sm-8">
+                    <textarea formControlName="comment" fullWidth id="comment" nbInput
+                      placeholder="توضیحات" rows="5"></textarea>
+
+                    <div *ngFor="
+                        let validation of INPUT_VALIDATION_Limited.comment
+                      ">
+                      <span class="text-danger" *ngIf="
+                      excuterLimitedForm
+                            .get('comment')
+                            .hasError(validation.type) &&
+                          (excuterLimitedForm.get('comment')
+                            .dirty ||
+                            excuterLimitedForm.get('comment')
+                              .touched)
+                        ">{{ validation.message }}</span>
+                    </div>
+                  </div>
+                </div>
+              </nb-card-body>
+            </nb-card>
+
+            <nb-card-footer>
+              <div class="row">
+                <div class="col-sm-6 pl-1" *ngIf="!data.isLimited">
+                  <button [nbSpinner]="limitedLoading" [disabled]="limitedLoading || excuterLimitedForm.invalid"
+                    nbSpinnerStatus="info" nbSpinnerSize="large" fullWidth nbButton hero status="success" type="submit">
+                    ایجاد محدودیت
+                  </button>
+                </div>
+                <div class="col-sm-6 pl-1" *ngIf="data.isLimited">
+                  <button [nbSpinner]="limitedLoading" [disabled]="limitedLoading || excuterLimitedForm.invalid"
+                    nbSpinnerStatus="info" nbSpinnerSize="large" fullWidth nbButton hero status="success" type="submit">
+                    عدم محدودیت
+                  </button>
+                </div>
+                <div class="col-sm-6 pr-1">
+                  <button [disabled]="limitedLoading" fullWidth nbButton hero status="danger"
+                    (click)="dialogRefLimited.close()">
+                    انصراف
+                  </button>
+                </div>
+              </div>
+            </nb-card-footer>
+          </form>
+        </div>
+      </div>
+    </nb-card-body>
+  </nb-card>
+</ng-template>
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe

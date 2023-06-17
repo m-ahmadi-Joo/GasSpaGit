@@ -143,7 +143,12 @@ export class LoginComponent implements OnInit {
     ) {
       this.router.navigate(["/pages/forms/GasReqList"]);
     }
+<<<<<<< HEAD
     else if (this.currentRole == "GasEmployeeHP") {
+=======
+    else if (this.currentRole == "GasEmployeeHP" )
+    {
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
       this.router.navigate(["/pages/forms/HPGasReqList"]);
     }
     else if (this.currentRole == "Engineer") {

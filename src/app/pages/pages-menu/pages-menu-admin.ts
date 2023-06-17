@@ -60,7 +60,11 @@ export const MENU_ITEMS_Admin: NbMenuItem[] = [
         icon: "people-outline",
       },
       {
+<<<<<<< HEAD
         title: "تامین کنندگان ",
+=======
+        title: "تامین کنندگان قطعات فشارقوی",
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
         link: "/pages/forms/SuppliersList",
         icon: "people-outline",
       },
@@ -219,6 +223,10 @@ export const MENU_ITEMS_Admin: NbMenuItem[] = [
         title:"مدیریت مناطق مهندسین",
         link: "/pages/admin/ManageEngineerAreas",
         icon: "navigation-outline",
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
       },
     ],
   },
@@ -232,4 +240,23 @@ export const MENU_ITEMS_Admin: NbMenuItem[] = [
       },
     ]
   }
+<<<<<<< HEAD
+=======
+=======
+      },
+      {
+        title:"گزارشات",
+        icon: "pie-chart-outline",
+        children: [
+          {
+            title:"املاک بیش از پنج واحد",
+            link: "/pages/admin/GasMoreThanFiveUnitsList",
+            icon: "list-outline",
+          }
+        ],
+      },
+    ],
+  },
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
 ];

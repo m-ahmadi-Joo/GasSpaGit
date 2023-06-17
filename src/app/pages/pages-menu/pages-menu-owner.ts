@@ -51,6 +51,10 @@ export const MENU_ITEMS_Owner: NbMenuItem[] = [
             },
           ]
         },
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
         {
           title: "کارتابل فشار قوی",
           children: [
@@ -61,4 +65,16 @@ export const MENU_ITEMS_Owner: NbMenuItem[] = [
             },
           ]
         }
+=======
+        // {
+        //   title: "کارتابل فشار قوی",
+        //   children: [
+        //     {
+        //       title: " املاک فشار قوی",
+        //       link: "/pages/forms/HPGasReqList",
+        //       icon: 'home-outline'
+        //     },
+        //   ]
+        // }
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
 ];

@@ -25,7 +25,10 @@ import { MENU_ITEMS_GASEMPLOYEEEXCEPTSHIRAZ } from "./pages-menu/pages-menu-gasE
 import { UnitStateService } from "../@core/utils/unitState.service";
 import { MENU_ITEMS_DoubleControlExpert } from "./pages-menu/pages-menu-DoubleControlExpert";
 import { MENU_ITEMS_GasCompany } from "./pages-menu/pages-menu-gasCompany";
+<<<<<<< HEAD
 import { MENU_ITEMS_GASEMPLOYEEHP } from "./pages-menu/pages-menu-gasEmployeeHP";
+=======
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
 import { MENU_ITEMS_Shahrsazi } from "./pages-menu/pages-menu-roadUrbanDevelopment";
 @Component({
   // tslint:disable-next-line:component-selector

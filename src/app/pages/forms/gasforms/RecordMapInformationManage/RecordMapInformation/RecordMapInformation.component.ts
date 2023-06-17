@@ -125,7 +125,7 @@ export class RecordMapInformationComponent implements OnInit {
   isAnalyze: Boolean = false;
   analyzeListId: number = 0;
   isOld: boolean = false;
-  pipingKindDisable: boolean = false;
+  pipingKindDisable:boolean=false;
   @ViewChild("rdbMeterType", { static: false })
   rdbMeterType: NbRadioGroupComponent;
 
@@ -145,6 +145,7 @@ export class RecordMapInformationComponent implements OnInit {
   ];
 
   ngOnInit() {
+   
     // alert(this.responseType);
     console.log(this.appliancesType);
     this.unitStateService.className.subscribe((x) => {
@@ -299,25 +300,9 @@ export class RecordMapInformationComponent implements OnInit {
               description: res.description,
               buildingKind: res.buildingKind.toString(),
               subscriptionType: res.baseSubscriptionTypeId.toString(),
-
               useTitle: res.useTitle,
-              totalConsumption: res.totalConsumption,
-              consumingShareability: res.consumingShareability,
-              longestRoute: res.longestRoute,
+
             });
-
-            if (res.workFlowGasAppliances) {
-              this.recordMapInfoFormg.patchValue({
-                workFlowGasAppliances: res.workFlowGasAppliances,
-              })
-            }
-
-            if (res.windowKindId) {
-              this.recordMapInfoFormg.patchValue({
-                windowKind: res.windowKindId.toString(),
-              })
-            }
-            this.pipingKindDisable = res.pipingKindDisable;
             this.isOld = res.isOld;
 
             this.recordMapInfoFormg.controls.baseMeterTypeId.setValue(

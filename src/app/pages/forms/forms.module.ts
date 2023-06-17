@@ -92,6 +92,29 @@ import { EngineerEditMapListResolver } from "src/app/@core/utils/EngineerEditMap
 import { gridCheckboxForEditMapComponent } from "./gasforms/Engineer/gridCheckboxForEditMap/gridCheckboxForEditMap.component";
 import { CookieService } from 'ngx-cookie-service';
 import { DesignerResolver } from "src/app/@core/utils/DesignerResolver";
+<<<<<<< HEAD
+import { HpGasRequestResolver } from "src/app/@core/utils/hPGasRequest-resolver";
+import { HPGasRequestListResolver } from "src/app/@core/utils/hPGasRequestList-resolver";
+import { HPGasReqListCustomActionsComponent } from "./gasforms/GasRequestManage/HPGasReqListCustomActions/HPGasReqListCustomActions.component";
+import { ExcuterLimitedDetailComponent } from './gasforms/ExecuterManage/excuterLimitedDetail/excuterLimitedDetail.component';
+import { SuppliersListResolver }  from "src/app/@core/utils/suppliersList-resolver";
+=======
+<<<<<<< HEAD
+import { HpGasRequestResolver } from "src/app/@core/utils/hPGasRequest-resolver";
+import { HPGasRequestListResolver } from "src/app/@core/utils/hPGasRequestList-resolver";
+import { HPGasReqListCustomActionsComponent } from "./gasforms/GasRequestManage/HPGasReqListCustomActions/HPGasReqListCustomActions.component";
+=======
+>>>>>>> 69f69b506d8086eb8cfad661c01bd65bc1f7bfdf
+import { ExcuterLimitedDetailComponent } from './gasforms/ExecuterManage/excuterLimitedDetail/excuterLimitedDetail.component';
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
+
+import { HpGasRequestResolver } from "src/app/@core/utils/hPGasRequest-resolver";
+import { HPGasRequestListResolver } from "src/app/@core/utils/hPGasRequestList-resolver";
+import { HPGasReqListCustomActionsComponent } from "./gasforms/GasRequestManage/HPGasReqListCustomActions/HPGasReqListCustomActions.component";
+
+import { ExcuterLimitedDetailComponent } from './gasforms/ExecuterManage/excuterLimitedDetail/excuterLimitedDetail.component';
+import { SuppliersListResolver }  from "src/app/@core/utils/suppliersList-resolver";
+import { GasRequestLisForExecuterResolver } from "src/app/@core/utils/GasRequestListForExecuterList-resolver";
 
 import { HpGasRequestResolver } from "src/app/@core/utils/hPGasRequest-resolver";
 import { HPGasRequestListResolver } from "src/app/@core/utils/hPGasRequestList-resolver";
@@ -130,7 +153,30 @@ import { OldGasRequestListResolver } from "src/app/@core/utils/oldGasRequestList
   ],
   declarations: [
     ...routedComponents,
+<<<<<<< HEAD
     ExcuterLimitedDetailComponent,
+=======
+<<<<<<< HEAD
+
+
+
+    ExcuterLimitedDetailComponent,
+
+=======
+<<<<<<< HEAD
+
+=======
+<<<<<<< HEAD
+
+=======
+    ExcuterLimitedDetailComponent,
+>>>>>>> 69f69b506d8086eb8cfad661c01bd65bc1f7bfdf
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
+    // MapDialogComponent,
+    // HasRoleDirective,
+    // CustomTypeaheadDirective
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
   ],
   entryComponents: [
     // MapDialogComponent,
@@ -149,8 +195,17 @@ import { OldGasRequestListResolver } from "src/app/@core/utils/oldGasRequestList
     HistoryEngineerAreaRatingCustomActionsComponent,
     gridCheckboxForEditMapComponent,
     EngineerEditMapListCustomActionsComponent,
+<<<<<<< HEAD
     HPGasReqListCustomActionsComponent,
     ScanDocumentListCustomActionsComponent
+=======
+    HPGasReqListCustomActionsComponent
+
+    // PayDetailListComponent,
+    // PayDetailListCustomActionsComponent,
+    // PaySalaryRecieptListComponent,
+    // PaySalaryRecieptListCustomActionsComponent,
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
   ],
   providers: [
     GasRequestListResolver,
@@ -210,6 +265,7 @@ import { OldGasRequestListResolver } from "src/app/@core/utils/oldGasRequestList
     DesignerResolver,
     HpGasRequestResolver,
     HPGasRequestListResolver,
+<<<<<<< HEAD
     SuppliersListResolver,
     [CookieService],
     GasRequestLisForExecuterResolver,
@@ -218,6 +274,18 @@ import { OldGasRequestListResolver } from "src/app/@core/utils/oldGasRequestList
     OldGasRequestListResolver,
     
     // OldAndNewGasRequestTabsComponent,
+=======
+<<<<<<< HEAD
+    SuppliersListResolver,
+=======
+<<<<<<< HEAD
+    SuppliersListResolver,
+=======
+>>>>>>> a269bfa71fc54170ae9e52028a2a610af2476ecc
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
+    [CookieService],
+    GasRequestLisForExecuterResolver,
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
   ],
   exports: [RecordMapInformationDetailComponent, AddressTooltipComponent],
 })

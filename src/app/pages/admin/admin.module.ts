@@ -76,11 +76,20 @@ import { NewsListResolver } from 'src/app/@core/utils/NewsListResolver';
 import { GetNewsInfoResolver } from 'src/app/@core/utils/getNewsInfo-resolver';
 import { NewsListCustomActionsComponent } from './forms/newsManagement/newsListCustomActions/newsListCustomActions.component';
 import { AngularMultiSelectModule } from 'angular-4-multiselect-dropdown-scroll';
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
 import { GetMoreFiveUnitsListResolver } from "src/app/@core/utils/getMoreFiveUnitsList-resolver";
 import { GetMoreFiveUnitsSearchInfoResolver } from 'src/app/@core/utils/getMoreFiveUnitsSearchInfo-resolver';
 import { NewsUserGroupListResolver } from "src/app/@core/utils/newsUserGroupListResolver";
 import { SearchPipe } from './search.pipe';
 
+=======
+import { NewsDetailFormComponent } from './forms/newsManagement/newsDetailForm/newsDetailForm.component';
+import { GetMoreFiveUnitsListResolver } from "src/app/@core/utils/getMoreFiveUnitsList-resolver";
+import { GetMoreFiveUnitsSearchInfoResolver } from 'src/app/@core/utils/getMoreFiveUnitsSearchInfo-resolver';
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
 @NgModule({
   imports: [
     ThemeModule,
@@ -184,9 +193,19 @@ import { SearchPipe } from './search.pipe';
     NewsListResolver,
     GetNewsInfoResolver,
     GetMoreFiveUnitsSearchInfoResolver,
+<<<<<<< HEAD
     GetMoreFiveUnitsListResolver,
    NewsUserGroupListResolver,
 
+=======
+<<<<<<< HEAD
+    GetMoreFiveUnitsListResolver,
+   NewsUserGroupListResolver,
+
+=======
+    GetMoreFiveUnitsListResolver
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
     // PersianDate
   ],
   // exports: [  EngineerPaymentComponent, PayDetailListComponent , PayDetailListCustomActionsComponent,

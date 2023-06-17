@@ -148,20 +148,35 @@ import {
   EngineerInfoDetailComponent,
   HistoryEngineerAreaRatingComponent,
   HistoryEngineerAreaRatingCustomActionsComponent,
+<<<<<<< HEAD
 
 
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
   EngineerAreasStatusComponent,
   ControlFinalComponent,
   CompleteControlFinalComponent,
   EditMapListComponent,
   AdminAddDocumentComponent,
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
    SuppliersListComponent,
    SupplierCustomActionsComponent,
    CreateSupplierComponent,
   ExcuterLimitedDetailComponent,
+<<<<<<< HEAD
  ScanDocumentListComponent
 ,ScanDocumentListCustomActionsComponent
+=======
+=======
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
 
 } from "./gasforms";
 import { GasRequestListResolver } from "src/app/@core/utils/gasRequestList-resolver";
@@ -234,6 +249,7 @@ import { HPGasRequestFormComponent } from "./gasforms/GasRequestManage/HPGasRequ
 import { HpGasRequestResolver } from "src/app/@core/utils/hPGasRequest-resolver";
 import { HPGasRequestListResolver } from "src/app/@core/utils/hPGasRequestList-resolver";
 import { HPGasReqListCustomActionsComponent } from "./gasforms/GasRequestManage/HPGasReqListCustomActions/HPGasReqListCustomActions.component";
+<<<<<<< HEAD
 import { HPGasRequestHistoryComponent } from "./gasforms/GasRequestManage/HPGasRequestHistory/hPGasRequestHistory.component";  
 import { HPGasRequestDetailFormComponent } from "./gasforms/GasRequestManage/HPGasRequestDetailForm/hPGasRequestDetailForm.component";
 import { SuppliersListResolver } from "src/app/@core/utils/suppliersList-resolver";
@@ -243,6 +259,20 @@ import { OldGasRequestListComponent } from "./gasforms/GasRequestManage/OldGasRe
 import { OldGasRequestListResolver } from "src/app/@core/utils/oldGasRequestList-resolver";
 
 // import { OldAndNewGasRequestTabsComponent } from "./gasforms/GasRequestManage/OldAndNewGasRequestListForm/oldAndNewGasRequestTabs.component";
+=======
+<<<<<<< HEAD
+import { HPGasRequestHistoryComponent } from "./gasforms/GasRequestManage/HPGasRequestHistory/hPGasRequestHistory.component";  
+import { HPGasRequestDetailFormComponent } from "./gasforms/GasRequestManage/HPGasRequestDetailForm/hPGasRequestDetailForm.component";
+import { SuppliersListResolver } from "src/app/@core/utils/suppliersList-resolver";
+import { GasRequestLisForExecuterResolver } from "src/app/@core/utils/GasRequestListForExecuterList-resolver";
+=======
+import { ExcuterLimitedDetailComponent } from "./gasforms/ExecuterManage/excuterLimitedDetail/excuterLimitedDetail.component";
+
+import { HPGasRequestHistoryComponent } from "./gasforms/GasRequestManage/HPGasRequestHistory/hPGasRequestHistory.component";  
+import { HPGasRequestDetailFormComponent } from "./gasforms/GasRequestManage/HPGasRequestDetailForm/hPGasRequestDetailForm.component";
+import { SuppliersListResolver } from "src/app/@core/utils/suppliersList-resolver";
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
 const routes: Routes = [
   {
     // /pages/forms/*
@@ -388,17 +418,28 @@ const routes: Routes = [
         resolve: {
           data: GasRequestLisForContractResolver,
           contract: ContractResolver,
+<<<<<<< HEAD
           //  designer: DesignerResolver,
+=======
+          designer: DesignerResolver,
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
         },
       },
       {
         path: "Contract/:id",
         component: ContractComponent,
         resolve: {
+<<<<<<< HEAD
          // data: GasRequestLisForContractResolver,
            designer: DesignerResolver,//���� ���� �� �� ����
            contract: ContractResolver,//���� ������ �� ���� ������ � ���� ����� ����
           edit: EditContractResolver //������ �������
+=======
+          data: GasRequestLisForContractResolver,
+          designer: DesignerResolver,
+          contract: ContractResolver,
+          edit: EditContractResolver
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
         },
       },
       {
@@ -1137,10 +1178,19 @@ const routes: Routes = [
         resolve: { data: HpGasRequestResolver },
       },
       {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
         path: "ExcuterLimitedHistory/:id",
         component: ExcuterLimitedDetailComponent,
 	},
       {
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
         path: "HPGasRequestHistory/:id",
         component: HPGasRequestHistoryComponent,
       },
@@ -1148,6 +1198,10 @@ const routes: Routes = [
         path: "HPGasRequestDetail/:id",
         component: HPGasRequestDetailFormComponent,
       },
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
       {
         path: "SuppliersList",
         component: SuppliersListComponent,
@@ -1165,6 +1219,7 @@ const routes: Routes = [
         path: "CreateSupplier/:id",
         component: CreateSupplierComponent,
       },
+<<<<<<< HEAD
       {
         path: "ScanDocumentList",
         component: ScanDocumentListComponent,
@@ -1204,6 +1259,10 @@ const routes: Routes = [
           areas: GetAllAreasResolver,
           towns: GetAllTownsResolver, },
       },
+=======
+=======
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
     ],
   },
 ];
@@ -1380,11 +1439,12 @@ export const routedComponents = [
   gridCheckboxForEditMapComponent,
   PreUploadedDocumentsComponent,
   EditUnitInfoForGasEmployeeComponent,
-ExecutorOldGasRequestEditComponent,
-DocumentryFormForExecutorComponent,
+  ExecutorOldGasRequestEditComponent,
+  DocumentryFormForExecutorComponent,
   AdminAddDocumentComponent,
   SubmitAuditResultForOldGasRequestsFormComponent,
   ShowGasRequestDocumentsDetailComponent,
+<<<<<<< HEAD
  ExcuterLimitedDetailComponent,
   HPGasRequestListComponent,
   HPGasRequestFormComponent,
@@ -1400,5 +1460,31 @@ DocumentryFormForExecutorComponent,
   ScanDocumentListCustomActionsComponent,
     // OldAndNewGasRequestTabsComponent,
     OldGasRequestListComponent
+=======
+<<<<<<< HEAD
+=======
+
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
+ ExcuterLimitedDetailComponent,
+  HPGasRequestListComponent,
+  HPGasRequestFormComponent,
+  HPGasRequestHistoryComponent,
+  HPGasRequestDetailFormComponent,
+<<<<<<< HEAD
+   SuppliersListComponent,
+   SupplierCustomActionsComponent,
+
+   ExcuterLimitedDetailComponent,
+     CreateSupplierComponent
+  
+  
+=======
+ ExcuterLimitedDetailComponent,
+  HPGasRequestListComponent,
+  HPGasRequestFormComponent,
+  ExcuterLimitedDetailComponent
+
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
 ];
 

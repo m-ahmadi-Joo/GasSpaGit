@@ -12,10 +12,9 @@ import { RegularService } from "src/app/@core/utils/regular.service";
 import { DatePipe } from "@angular/common";
 import { Auth } from "src/app/@core/auth/services/auth";
 import { TypeaheadMatch } from "ngx-bootstrap";
-import { HttpClient } from "@angular/common/http";
-import { CATCH_ERROR_VAR } from "@angular/compiler/src/output/abstract_emitter";
-import { catchError, debounceTime, map } from "rxjs/operators";
-import { Observable, Observer, throwError } from "rxjs";
+import { IDatePickerConfig } from 'ng2-jalali-date-picker';
+import { PersianDate } from 'src/app/@core/utils/persianDate';
+
 
 function nationalIDCheck(
   control: AbstractControl
@@ -90,7 +89,9 @@ export class CreateExecuterComponent implements OnInit {
     public datepipe: DatePipe,
     public regularService: RegularService,
     private auth: Auth,
-    private http: HttpClient
+    private persianDate: PersianDate,
+
+   
   ) {
     this.currentRole = this.auth.getCurrentRole();
   }
@@ -143,7 +144,6 @@ export class CreateExecuterComponent implements OnInit {
     if (
       this.currentRole !== "Admin" &&
       this.currentRole !== "GasEmployee" &&
-      this.currentRole !== "AnalyzeEmployee" &&
       this.currentRole !== "Association" &&
       this.currentRole !== "GasEmployeeExceptShiraz"
     ) {
@@ -157,47 +157,10 @@ export class CreateExecuterComponent implements OnInit {
     this.route.data.subscribe((data) => {
       this.towns = data["data"];
     });
-
-    this.route.data.subscribe((data) => {
-      this.gasStates = data["gasRequestData"];
-      console.log(this.gasStates);
-    }),
-    catchError(err => {
-      // Handle errors here
-      console.log(err);
-      return throwError(err);
-    }); 
-
-    // this.api.getFrom("GasRequest" , "GetAllGasRequest").subscribe((res) => {
-    //   console.log(res);
-    //   return  this.gasStates = res;
-    // }),
-    // catchError(err => {
-    //   // Handle errors here
-    //   console.log(err);
-    //   return throwError(err);
-    // });
-
-    // this.api.getFrom("GasRequest" , "GetAllGasRequest").pipe(
-    //   map(res => {
-    //     // Transform res here
-    //     if (res) {
-    //       this.loading = true;
-    //       console.log(res);
-    //       this.gasStates = res;
-    //       // this.loading = false;
-    //       return true;
-    //     }else {
-    //       this.loading = false;
-    //       return false;
-    //     }
-    //   }),
-    //   catchError(err => {
-    //     // Handle errors here
-    //     console.log(err);
-    //     return throwError(err);
-    //   })
-    // );
+    this.api.getFrom("GasRequest", "GetAllGasRequest").subscribe((res) => {
+      this.gasStates = res;
+      console.log(res);
+    });
     this.executerId = this.route.snapshot.paramMap.get("id");
 
     if (this.executerId != null) {

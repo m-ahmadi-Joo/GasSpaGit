@@ -380,7 +380,12 @@
                     <div>
                       <label for="isCollectorInspectionWelding">نیاز به بازرسی جوش کلکتوری</label>
                       <nb-radio-group *ngIf="this.checkAnalyze !== 'View'"
+<<<<<<< HEAD
                         (valueChange)="onChangeCheckCollector($event)" class="form-inline pr-3"
+=======
+                      (valueChange)="onChangeCheckCollector($event)"
+                       class="form-inline pr-3"
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
                         formControlName="isCollectorInspectionWelding" id="isCollectorInspectionWelding"
                         name="isCollectorInspectionWelding">
                         <nb-radio value="true">
@@ -427,12 +432,19 @@
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12 form-inline mt-4 mr-5">
                       <label> لوله :
+<<<<<<< HEAD
                         <input formControlName="pipeType" size="large" id="pipeType" class="mr-4 dotted" nbInput
                           [readonly]="this.checkAnalyze == 'View'" />
                       </label>
                       <label> اتصالات :
                         <input formControlName="connectionType" size="large" id="connectionType" class="mr-4 dotted"
                           nbInput [readonly]="this.checkAnalyze == 'View'" />
+=======
+                        <input  formControlName="pipeType" size="large" id="pipeType" class="mr-4 dotted" nbInput [readonly]="this.checkAnalyze == 'View'" />
+                      </label>
+                      <label> اتصالات :
+                        <input formControlName="connectionType" size="large" id="connectionType" class="mr-4 dotted" nbInput  [readonly]="this.checkAnalyze == 'View'"/>
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
                       </label>
                     </div>
                   </div>

@@ -30,7 +30,10 @@ import { Auth } from "src/app/@core/auth/services/auth";
 import { IDatePickerConfig } from "ng2-jalali-date-picker";
 import { PersianDate } from 'src/app/@core/utils/persianDate';
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
 
 interface contractData {
   comment: string;
@@ -105,6 +108,7 @@ export class ContractComponent implements OnInit {
   executerList = [];
   test = [];
   datePickerConfig: IDatePickerConfig;
+<<<<<<< HEAD
   designerList = [];
   dropdownList = [];
   readonly bufferSize: number = 1000;
@@ -112,6 +116,8 @@ export class ContractComponent implements OnInit {
   dropdownSettings = {};
   isEdit = false;
   isChangeExecutor = false;
+=======
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
   // gasMeterCollection: GasMeterCollection;
   constructor(
     private fb: FormBuilder,
@@ -143,6 +149,7 @@ export class ContractComponent implements OnInit {
   }
 
   ngOnInit() {
+<<<<<<< HEAD
     this.dropdownSettings = {
       singleSelection: true,
       text: "انتخاب طراح",
@@ -164,6 +171,8 @@ export class ContractComponent implements OnInit {
       searchBy: ['itemName']
     };
 
+=======
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
     this.datePickerConfig = this.persianDate.datePickerConfig;
 
     this.unitStateService.className.subscribe((x) => {
@@ -266,7 +275,11 @@ export class ContractComponent implements OnInit {
         this.gasRequestId = res.gasRequestId;
         this.contractNumber = res.number;
 
+<<<<<<< HEAD
         this.designerId = res.designerId;
+=======
+        if (res) {
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
 
 
          

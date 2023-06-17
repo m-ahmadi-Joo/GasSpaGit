@@ -87,10 +87,22 @@ export class AuthService extends Auth {
       environment.SERVER_URL = "http://localhost:52805/api";
     } else if (url.includes("gas.fceo.ir")) {
       environment.SERVER_URL = "http://gas.fceo.ir:2727/api";
+<<<<<<< HEAD
     }
     else if (url.includes("http://192.168.0.201")) {
       environment.SERVER_URL = "http://192.168.0.201:81/api";
+=======
+<<<<<<< HEAD
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
     }
+    else if (url.includes("http://192.168.0.201")) {
+      environment.SERVER_URL = "http://192.168.0.201:81/api";
+=======
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
+    }
+    else if (url.includes("http://192.168.0.201")) {
+      environment.SERVER_URL = "http://192.168.0.201:81/api";
+    } 
     else if (url.includes("http://192.168.0.18:83")) {
       environment.SERVER_URL = "http://192.168.0.18:82/api";
     }

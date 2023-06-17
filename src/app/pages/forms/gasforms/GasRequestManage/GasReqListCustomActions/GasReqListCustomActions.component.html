@@ -1,5 +1,9 @@
 <div>
+<<<<<<< HEAD
   <button id="danger-{{rData.id}}" nbTooltip="حذف" nbTooltipPlacement="top" size="tiny" class="mb-2 mr-1" nbButton *appHasRole="['Admin']"
+=======
+  <button nbTooltip="حذف" nbTooltipPlacement="top" size="tiny" class="mb-2 mr-1" nbButton *appHasRole="['Admin']"
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
     status="danger" (click)="onDeleteGasRequest(rData)">
     <nb-icon [options]="{ animation: { type: 'zoom' } }" class="icon-button" icon="close-outline">
     </nb-icon>
@@ -7,7 +11,11 @@
 
   <!-- <button nbButton (click)="open(dialog)">Open Dialog</button> -->
 
+<<<<<<< HEAD
   <button id="warning-{{rData.id}}" [disabled]="rData?.hasAproveArchitectualAlbum === true" nbTooltip="ویرایش" nbTooltipPlacement="top"
+=======
+  <button [disabled]="rData?.hasAproveArchitectualAlbum === true" nbTooltip="ویرایش" nbTooltipPlacement="top"
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
     size="tiny" class="mb-2 mr-1" nbButton *appHasRole="['Admin', 'GasEmployeeHP', 'GasEmployee','AnalyzeEmployee','Owner']"
     status="warning" (click)="onEditGasRequest(rData?.id, '')">
     <nb-icon [options]="{ animation: { type: 'zoom' } }" class="icon-button" icon="edit-2-outline">
@@ -388,8 +396,12 @@
           'AnalyzeEmployee',
           'GasEmployeeExceptShiraz',
           'GasCompany',
+<<<<<<< HEAD
           'Shahrsazi',
           'DoubleControlExpert'
+=======
+          'Shahrsazi'
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
 
         ]" status="primary" (click)="onNavigateToRecordMapInformationListAsGasReqId(rData?.id)">
         مدیریت انشعابات گاز
@@ -428,8 +440,13 @@
       </button>
     </nb-option>
 
+<<<<<<< HEAD
     <nb-option *ngIf="rData?.endOrBlockRequestId" >
       <button fullWidth nbButton status="success" *appHasRole="['Admin']"
+=======
+    <nb-option *ngIf="rData?.endOrBlockRequestId">
+      <button fullWidth nbButton status="success" *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']"
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
         (click)="onStopEndOrBlockRequest()">
         فعال سازی
       </button>

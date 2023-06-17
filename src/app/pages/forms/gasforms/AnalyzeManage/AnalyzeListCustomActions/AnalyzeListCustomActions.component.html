@@ -48,13 +48,21 @@
         </nb-option>
 
         <nb-option *ngIf="rData.referralMethod === 0 && rData.isReferredTo === false">
+<<<<<<< HEAD
           <button *appHasRole="['Admin','AnalyzeEmployee']" fullWidth nbButton status="warning" (click)="onProjectEngineer(rData.id)">
+=======
+          <button *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']" fullWidth nbButton status="warning" (click)="onProjectEngineer(rData.id)">
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
             تعیین ناظر
           </button>
         </nb-option>
 
         <nb-option *ngIf= "rData.canReject === true">
+<<<<<<< HEAD
           <button *appHasRole="['Admin','AnalyzeEmployee']" fullWidth nbButton status="primary" (click)="onSetting()">
+=======
+          <button *appHasRole="['Admin', 'GasEmployee','AnalyzeEmployee']" fullWidth nbButton status="primary" (click)="onSetting()">
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
             تنظیمات
           </button>
         </nb-option>

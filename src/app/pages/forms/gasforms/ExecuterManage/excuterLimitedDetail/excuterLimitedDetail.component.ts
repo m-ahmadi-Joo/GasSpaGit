@@ -10,7 +10,15 @@ export class ExcuterLimitedDetailComponent implements OnInit {
   imagePathEdit = [];
   constructor(private api: ApiCommandCenter) { }
   @Input() id: number;
+<<<<<<< HEAD
   history = [];
+=======
+<<<<<<< HEAD
+  history = [];
+=======
+  history;
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
   excuterInf;
 
   ngOnInit() {

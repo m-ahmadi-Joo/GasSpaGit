@@ -67,9 +67,15 @@ export class AnalyzeListComponent implements OnInit {
     private windowService: NbWindowService,
     private customWindowService: CustomWindowServiceService,
     private fbRejection: FormBuilder,
+<<<<<<< HEAD
     private persianDate: PersianDate,
     private auth: Auth
   ) {
+=======
+    private persianDate: PersianDate
+  )
+  {
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
 
   }
   windowRef: NbWindowRef;
@@ -111,9 +117,78 @@ export class AnalyzeListComponent implements OnInit {
   createAnalyzeList: TemplateRef<any>;
 
   selectedId: number;
+<<<<<<< HEAD
 
 
 
+=======
+
+
+  settings = {
+    hideSubHeader: true,
+    noDataMessage: ".داده یافت نشد",
+    actions: false,
+    pager: {
+      display: false,
+    },
+    columns: {
+      works: {
+        title: "عملیات",
+        type: "custom",
+        width: "240px",
+        valuePrepareFunction: (cell, row) => {
+          return row;
+        },
+        renderComponent: AnalyzeListCustomActionsComponent,
+        onComponentInitFunction: (instance: any) => {
+          instance.deleteConfirm.subscribe((row) => {
+            this.deleteRecord(row);
+          });
+          instance.rejectConfirm.subscribe((row) => {
+            this.rejectInspection(row);
+          });
+          instance.showAvailableEngineers.subscribe((id) => {
+            this.onShowAvailableEngineers(id);
+          });
+          instance.exportAvailableEngineers.subscribe((id) => {
+            this.onExportAvailableEngineers(id);
+          });
+          instance.showRefferingHistory.subscribe((id) => {
+            this.onShowRefferingHistory(id);
+          });
+        },
+      },
+      totalInspectionPrice: {
+        title: "مبلغ کل بازرسی",
+        filter: true,
+      },
+      workingInspectionTime: {
+        title: "تاریخ بازرسی",
+        filter: true,
+      },
+      engineerName: {
+        title: "نام مهندس",
+        filter: true,
+      },
+      isReferredWithTime: {
+        title: "وضعیت",
+        filter: true,
+      },
+      baseArea: {
+        title: "ناحیه",
+        filter: true,
+      },
+      rdateTime: {
+        title: "تاریخ ثبت",
+        filter: true,
+      },
+      number: {
+        title: "شماره لیست",
+        filter: true,
+      },
+    },
+  };
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
   areas = [];
   id;
   showRequests = true;

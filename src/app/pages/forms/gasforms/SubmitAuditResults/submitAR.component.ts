@@ -112,6 +112,7 @@ export class SubmitAuditResultFormComponent implements OnInit {
     RejectReason;
     NotConfirmedReason;
     safetyInspectionCount: number;
+<<<<<<< HEAD
     pipeType: string;
     connectionType: string;
     haveAlamak : boolean;
@@ -120,6 +121,14 @@ export class SubmitAuditResultFormComponent implements OnInit {
     itMatches : boolean;
     needInstallMachine : boolean;
     needExtraGas : boolean;
+=======
+<<<<<<< HEAD
+    pipeType: string;
+    connectionType: string;
+=======
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
+
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
   };
   sarInfo: {
     Result: number;
@@ -303,12 +312,15 @@ export class SubmitAuditResultFormComponent implements OnInit {
       connectionType: [""],
       NotConfirmedReason: [""],
       safetyInspectionCount: [1], // only numbers
+<<<<<<< HEAD
       haveAlamak : [""],
       needInquiry :[""],
       mapApproved :[""],
       itMatches : [""],
       needInstallMachine : [""],
       needExtraGas : [""],
+=======
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
     });
 
     this.unitStateService.className.subscribe(
@@ -940,6 +952,7 @@ export class SubmitAuditResultFormComponent implements OnInit {
           weldingInfos: this.sarForm.controls.weldingInfoModels.value,
           pipeType: this.sarForm.controls.pipeType.value,
           connectionType: this.sarForm.controls.connectionType.value,
+<<<<<<< HEAD
           NotConfirmedReason: this.sarForm.controls.NotConfirmedReason.value,
           haveAlamak: this.sarForm.controls.haveAlamak.value,
           needInquiry: this.sarForm.controls.needInquiry.value,
@@ -947,6 +960,10 @@ export class SubmitAuditResultFormComponent implements OnInit {
           itMatches: this.sarForm.controls.itMatches.value,
           needInstallMachine: this.sarForm.controls.needInstallMachine.value,
           needExtraGas : this.sarForm.controls.needInstallMachine.value,
+=======
+          NotConfirmedReason: this.sarForm.controls.NotConfirmedReason.value
+
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
           // weldingInfos: this.weldingInfos
         };
         if (this.checkAnalyze === "byAnalyze") {
@@ -1177,6 +1194,7 @@ export class SubmitAuditResultFormComponent implements OnInit {
       inspectionRequestId: "",
       weldCount: weldCountForEdit,
       NotConfirmedReason: this.sarForm.controls.NotConfirmedReason.value,
+<<<<<<< HEAD
       safetyInspectionCount: this.sarForm.controls.safetyInspectionCount.value,
       pipeType: this.sarForm.controls.pipeType.value,
       connectionType: this.sarForm.controls.connectionType.value,
@@ -1186,6 +1204,15 @@ export class SubmitAuditResultFormComponent implements OnInit {
       needExtraGas: this.sarForm.controls.needExtraGas.value,
       needInquiry: this.sarForm.controls.needInquiry.value,
       needInstallMachine :  this.sarForm.controls.needInquiry.value,
+=======
+<<<<<<< HEAD
+      safetyInspectionCount: this.sarForm.controls.safetyInspectionCount.value,
+      pipeType: this.sarForm.controls.pipeType.value,
+      connectionType: this.sarForm.controls.connectionType.value
+=======
+      safetyInspectionCount: this.sarForm.controls.safetyInspectionCount.value
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
     };
     this.api
       .postTo("InspectionResult", "InspectionResultEdit", this.editInfo)

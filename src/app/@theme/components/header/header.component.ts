@@ -282,6 +282,8 @@ export class HeaderComponent implements OnInit {
           localStorage.setItem("showPopupNews", "false");
         }
       });
+
+
   }
 
   isHtml(data: string): boolean {
@@ -535,6 +537,7 @@ export class HeaderComponent implements OnInit {
       );
   }
 
+
   showWarnings() {
     this.dialogWarningsRef = this.dialog.open(this.dialogWarnings, {
       context: this.warningMessages,
@@ -605,6 +608,7 @@ export class HeaderComponent implements OnInit {
               if (res.body) {
                 this.countOfUnreadNews = res.body.count;
                 Object.assign(this.news, res.body.news);
+              
               }
             }
           });
@@ -745,19 +749,5 @@ export class HeaderComponent implements OnInit {
         }
       );
 
-  }
-  ngAfterViewInit(): void {
-    if (this.selectedRole == "Executor") {
-      if (this.warningMessages) {
-        this.showWarnings();
-      }
-    }
-  }
-  gotoDetail(value): void {
-     var url = `/pages/admin/NewsDetail/${value}`;
-    // console.log(test);
-    this.toggleDescription(value,'news')
-    window.open(url, '_blank').focus()
-    // window.open(test, '_blank') ;
   }
 }

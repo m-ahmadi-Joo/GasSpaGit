@@ -68,10 +68,22 @@ export * from './newsManagement/news-list/news-list.component';
 export * from './newsManagement/newsListCustomActions/newsListCustomActions.component';
 export * from './UploadedDocuments/UploadedDocuments.component';
 export * from './reports/gasRequestUnits/moreThanFiveUnits.component';
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
 export * from './newsManagement/NewsUserGroupsList/newsUserGroup-list.component';
 export * from './newsManagement/newsUsersGroups/addNewsUserGroupsByExcel/addNewsUserGroupsByExcel.component';
 export * from './newsManagement/newsUsersGroupCustomAction/newsUsersGroupCustomAction.component';
 export * from './newsManagement/newsUsersGroups/addNewsUserGroup/addNewsUserGroupTabs.component';
 export * from './newsManagement/newsUsersGroups/createNewsUserGroups/createNewsUserGroups.component';
 export * from './newsManagement/newsUsersGroups/addNewsUserGroup.module';
+<<<<<<< HEAD
 export * from './newsManagement/newsUsersGroups/newsUserGroupsCheckBox/newsUserGroupsCheckBox.component';
+=======
+export * from './newsManagement/newsUsersGroups/newsUserGroupsCheckBox/newsUserGroupsCheckBox.component';
+=======
+
+
+>>>>>>> df04ced058b800a0c37086a81fe57757eb7a5881
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe

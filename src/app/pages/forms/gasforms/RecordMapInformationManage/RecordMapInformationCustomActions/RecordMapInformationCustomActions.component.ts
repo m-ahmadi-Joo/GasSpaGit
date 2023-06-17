@@ -497,9 +497,15 @@ export class RecordMapInformationCustomActionsComponent
   }
   onSuspendRequest() {
     this.suspendRequest.emit(this.rowData);
+<<<<<<< HEAD
   }
 
   onCancelSuspendedRequest() {
+=======
+   }
+
+   onCancelSuspendedRequest() {
+>>>>>>> 2563e8dd099fd27182a7cd50d46cf7ae023f6fbe
     this.cancelSuspendedRequest.emit(this.rowData);
   }
 }
